@@ -5,7 +5,7 @@ const G = "#a8ff3e";
 // ── EmailJS config — fill in your IDs from emailjs.com ──────────
 // EmailJS config
 const EMAILJS_SERVICE_ID = "service_bztsybt";
-const EMAILJS_PUBLIC_KEY  = "EtRChHElGymDPfUbo";
+const EMAILJS_PUBLIC_KEY  = "EtRChHEIGymDPfUbo";
 const EMAILJS_TEMPLATE_ADMIN  = "template_vtmfame";   // alert to you
 const EMAILJS_TEMPLATE_CLIENT = "template_8wj9zar";   // confirmation to client
 
