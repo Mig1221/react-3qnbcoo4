@@ -3,50 +3,55 @@ import React, { useState } from 'react';
 const G = "#a8ff3e";
 
 // ── EmailJS config — fill in your IDs from emailjs.com ──────────
-const EMAILJS_SERVICE_ID  = "service_bztsybt";
-const EMAILJS_TEMPLATE_ID = "0udoj4z";
-const EMAILJS_PUBLIC_KEY  = "EtRChHElGymDPfUbo";
+// Formspree endpoint — emails go directly to themigzgroupllc@gmail.com
+const FORMSPREE_URL = "https://formspree.io/f/xbdpdnby";
 
 async function sendApplicationEmail(data) {
   try {
-    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_email:      "themigzgroupllc@gmail.com",
-      alert_type:    "NEW APPLICATION",
-      alert_title:   "Application Received",
-      from_name:     data.firstName + " " + data.lastName,
-      company:       data.company,
-      email:         data.email,
-      phone:         data.phone,
-      loan_amount:   data.loanAmt,
-      purpose:       data.purpose,
-      timeline:      data.timeline,
-      industry:      data.industry,
-      years:         data.years,
-      annual_rev:    data.annualRev,
-      credit:        data.creditRating,
-      estimated:     data.estimatedQualify,
-      app_id:        data.id,
-      upload_link:   "https://aprovuit.com/?upload=" + data.id,
-      submitted_at:  data.submittedAt,
-      files_uploaded: "No documents uploaded yet.",
-    }, EMAILJS_PUBLIC_KEY);
+    await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "🔔 New Application — " + data.company + " | " + data.loanAmt,
+        _replyto: data.email,
+        "Application ID": data.id,
+        "Submitted": data.submittedAt,
+        "Name": data.firstName + " " + data.lastName,
+        "Company": data.company,
+        "Email": data.email,
+        "Phone": data.phone,
+        "Loan Amount": data.loanAmt,
+        "Purpose": data.purpose,
+        "Timeline": data.timeline,
+        "Industry": data.industry,
+        "Years in Business": data.years,
+        "Annual Revenue": data.annualRev,
+        "Credit Rating": data.creditRating,
+        "Estimated Pre-Qual": data.estimatedQualify,
+        "Upload Link": "https://aprovuit.com/?upload=" + data.id,
+      })
+    });
   } catch(e) {
-    console.error("EmailJS error:", e);
+    console.error("Formspree error:", e);
   }
 }
 
 async function sendClientEmail(data) {
+  // Client confirmation — sends via Formspree with client email as reply-to
   try {
-    await window.emailjs.send(EMAILJS_SERVICE_ID, "78h93is", {
-      to_email:    data.email,
-      first_name:  data.firstName,
-      company:     data.company,
-      app_id:      data.id,
-      upload_link: "https://aprovuit.com/?upload=" + data.id,
-      loan_amount: data.loanAmt,
-    }, EMAILJS_PUBLIC_KEY);
+    await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "✅ Application Received — " + data.company + " | Aprovuit",
+        _replyto: "themigzgroupllc@gmail.com",
+        "TO CLIENT": data.email,
+        "Message": "Hi " + data.firstName + ", your application for " + data.company + " has been received! App ID: " + data.id + ". We will be in touch within 2-4 hours. Upload your documents here: https://aprovuit.com/?upload=" + data.id,
+        "Upload Link": "https://aprovuit.com/?upload=" + data.id,
+      })
+    });
   } catch(e) {
-    console.error("EmailJS client email error:", e);
+    console.error("Client email error:", e);
   }
 }
 const BK = "#0a0a0a";
@@ -365,23 +370,18 @@ function UploadPage({ lang, appId, onBack }) {
     uploads.push(uploadData);
     localStorage.setItem("aprovuit_uploads", JSON.stringify(uploads));
 
-    // Notify you via email reusing Template 1
+    // Notify via Formspree
     try {
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email:      "themigzgroupllc@gmail.com",
-        alert_type:    "DOCUMENTS UPLOADED",
-        alert_title:   "Documents Received",
-        from_name:     "Client",
-        company:       "See App ID below",
-        app_id:        appId,
-        submitted_at:  uploadData.submittedAt,
-        files_uploaded: uploadData.files.map(f=>f.name).join("\n"),
-        email:         "—", phone: "—", loan_amount: "—",
-        purpose: "—", timeline: "—", industry: "—",
-        years: "—", annual_rev: "—", credit: "—",
-        estimated: "—",
-        upload_link:   "https://aprovuit.com/?upload=" + appId,
-      }, EMAILJS_PUBLIC_KEY);
+      await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: "📎 Documents Uploaded — " + appId + " | Aprovuit",
+          "Application ID": appId,
+          "Submitted": uploadData.submittedAt,
+          "Files Uploaded": uploadData.files.map(f=>f.name).join(", "),
+        })
+      });
     } catch(e) { console.error(e); }
 
     setUploading(false);
@@ -557,29 +557,11 @@ function ApplyPage({ lang, onBack }) {
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
     apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
-    // Send emails - wait for EmailJS to be ready
-    let attempts = 0;
-    while (!window.emailjs && attempts < 20) {
-      await new Promise(r => setTimeout(r, 200));
-      attempts++;
-    }
     await sendApplicationEmail(appData);
     await sendClientEmail(appData);
     setSending(false);
     setSubmitted(true);
   };
-
-  // Ensure EmailJS is loaded in apply page too
-  React.useEffect(() => {
-    const loadEmailJS = () => {
-      if (window.emailjs) { window.emailjs.init(EMAILJS_PUBLIC_KEY); return; }
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-      script.onload = () => { if (window.emailjs) window.emailjs.init(EMAILJS_PUBLIC_KEY); };
-      document.head.appendChild(script);
-    };
-    loadEmailJS();
-  }, []);
 
   const APPLY_CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -844,22 +826,7 @@ export default function Aprovuit() {
   const toggleLang = () => setLang(l=>l==="en"?"es":"en");
   const t = TRANSLATIONS[lang];
 
-  // Load EmailJS on mount
-  React.useEffect(() => {
-    const loadEmailJS = () => {
-      if (window.emailjs) {
-        window.emailjs.init(EMAILJS_PUBLIC_KEY);
-        return;
-      }
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-      script.onload = () => {
-        if (window.emailjs) window.emailjs.init(EMAILJS_PUBLIC_KEY);
-      };
-      document.head.appendChild(script);
-    };
-    loadEmailJS();
-  }, []);
+  // Email handled via Formspree
 
   const CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
