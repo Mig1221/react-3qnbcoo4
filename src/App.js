@@ -542,7 +542,10 @@ function ApplyPage({ lang, onBack }) {
     return Math.min(Math.round(base*0.6),400000);
   };
 
+  const [sending, setSending] = useState(false);
+
   const handleSubmit = async () => {
+    setSending(true);
     const appData = {
       id: `APP-${Date.now()}`,
       submittedAt: new Date().toLocaleString(),
@@ -554,11 +557,29 @@ function ApplyPage({ lang, onBack }) {
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
     apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
-    // Send emails
+    // Send emails - wait for EmailJS to be ready
+    let attempts = 0;
+    while (!window.emailjs && attempts < 20) {
+      await new Promise(r => setTimeout(r, 200));
+      attempts++;
+    }
     await sendApplicationEmail(appData);
     await sendClientEmail(appData);
+    setSending(false);
     setSubmitted(true);
   };
+
+  // Ensure EmailJS is loaded in apply page too
+  React.useEffect(() => {
+    const loadEmailJS = () => {
+      if (window.emailjs) { window.emailjs.init(EMAILJS_PUBLIC_KEY); return; }
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+      script.onload = () => { if (window.emailjs) window.emailjs.init(EMAILJS_PUBLIC_KEY); };
+      document.head.appendChild(script);
+    };
+    loadEmailJS();
+  }, []);
 
   const APPLY_CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -812,31 +833,32 @@ function ApplyPage({ lang, onBack }) {
 MAIN APP
 ══════════════════════════════════════════════════════════════════ */
 export default function Aprovuit() {
-  const [view, setView] = useState("landing");
-  const [uploadAppId, setUploadAppId] = useState(null);
+  // Check URL for ?upload=APP-xxx immediately on load
+  const initialParams = new URLSearchParams(window.location.search);
+  const initialUploadId = initialParams.get("upload");
 
-  // Check URL for ?upload=APP-xxx on load
-  React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const uploadId = params.get("upload");
-    if (uploadId) {
-      setUploadAppId(uploadId);
-      setView("upload");
-    }
-  }, []);
+  const [view, setView] = useState(initialUploadId ? "upload" : "landing");
+  const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
   const [lang, setLang] = useState("en");
   const [faqOpen, setFaqOpen] = useState(null);
   const toggleLang = () => setLang(l=>l==="en"?"es":"en");
   const t = TRANSLATIONS[lang];
 
-  // Load EmailJS
+  // Load EmailJS on mount
   React.useEffect(() => {
-    if (!window.emailjs) {
+    const loadEmailJS = () => {
+      if (window.emailjs) {
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+        return;
+      }
       const script = document.createElement("script");
       script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-      script.onload = () => window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      script.onload = () => {
+        if (window.emailjs) window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      };
       document.head.appendChild(script);
-    }
+    };
+    loadEmailJS();
   }, []);
 
   const CSS = `
