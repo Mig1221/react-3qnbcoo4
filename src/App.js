@@ -4,7 +4,7 @@ const G = "#a8ff3e";
 
 // ── EmailJS config — fill in your IDs from emailjs.com ──────────
 const EMAILJS_SERVICE_ID  = "service_bztsybt";
-const EMAILJS_TEMPLATE_ID = "template_0udoj4z";
+const EMAILJS_TEMPLATE_ID = "0udoj4z";
 const EMAILJS_PUBLIC_KEY  = "EtRChHElGymDPfUbo";
 
 async function sendApplicationEmail(data) {
@@ -37,7 +37,7 @@ async function sendApplicationEmail(data) {
 
 async function sendClientEmail(data) {
   try {
-    await window.emailjs.send(EMAILJS_SERVICE_ID, "template_78h93is", {
+    await window.emailjs.send(EMAILJS_SERVICE_ID, "78h93is", {
       to_email:    data.email,
       first_name:  data.firstName,
       company:     data.company,
