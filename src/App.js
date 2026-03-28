@@ -544,7 +544,7 @@ function UploadPage({ lang, appId, onBack }) {
 /* ══════════════════════════════════════════════════════════════════
 APPLY PAGE — iAdvance style
 ══════════════════════════════════════════════════════════════════ */
-function ApplyPage({ lang, onBack }) {
+function ApplyPage({ lang, onBack, onUpload }) {
   const t = TRANSLATIONS[lang].apply;
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -586,6 +586,7 @@ function ApplyPage({ lang, onBack }) {
   };
 
   const [sending, setSending] = useState(false);
+  const [appData, setAppData] = React.useState(null);
 
   const handleSubmit = async () => {
     setSending(true);
@@ -600,6 +601,7 @@ function ApplyPage({ lang, onBack }) {
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
     apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
+    setAppData(appData);
     await sendApplicationEmail(appData);
     await sendClientEmail(appData);
     setSending(false);
@@ -649,7 +651,7 @@ function ApplyPage({ lang, onBack }) {
         <div style={{ background:"#fff", border:"2px solid #a8ff3e", borderRadius:14, padding:"18px 20px", marginBottom:20 }}>
           <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:6 }}>📎 {lang==="en"?"Upload Your Documents":"Sube Tus Documentos"}</p>
           <p style={{ fontSize:13, color:"#666", marginBottom:14, lineHeight:1.5 }}>{lang==="en"?"Speed up your approval by uploading your bank statements, driver's license, and voided check now.":"Acelera tu aprobación subiendo tus estados de cuenta, licencia e cheque anulado ahora."}</p>
-          <button onClick={()=>{ window.history.pushState({}, "", "?upload=" + appData.id); window.dispatchEvent(new PopStateEvent("popstate")); onBack(); }} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
+          <button onClick={()=>onUpload(appData.id)} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
             {lang==="en"?"Upload Documents Now →":"Subir Documentos Ahora →"}
           </button>
         </div>
@@ -864,20 +866,6 @@ export default function Aprovuit() {
 
   const [view, setView] = useState(initialUploadId ? "upload" : "landing");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
-
-  // Listen for URL changes (when upload button clicked from success screen)
-  React.useEffect(() => {
-    const handlePop = () => {
-      const params = new URLSearchParams(window.location.search);
-      const uploadId = params.get("upload");
-      if (uploadId) {
-        setUploadAppId(uploadId);
-        setView("upload");
-      }
-    };
-    window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, []);
   const [lang, setLang] = useState("en");
   const [faqOpen, setFaqOpen] = useState(null);
   const toggleLang = () => setLang(l=>l==="en"?"es":"en");
@@ -911,7 +899,7 @@ export default function Aprovuit() {
   `;
 
   if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>setView("landing")} />;
-  if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} />;
+  if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onUpload={(id)=>{ setUploadAppId(id); setView("upload"); }} />;
 
   return (
     <div style={{ fontFamily:"'DM Sans',sans-serif", background:BK, color:"#fff", minHeight:"100vh" }}>
