@@ -230,6 +230,26 @@ function ApplyPage({ lang, onBack }) {
     firstName:"", lastName:"", email:"", phone:""
   });
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
+  const [errors, setErrors] = useState({});
+
+  const validateStep2 = () => {
+    const e = {};
+    if (!form.company.trim()) e.company = lang==="en" ? "Company name is required" : "El nombre de la empresa es requerido";
+    if (Object.keys(e).length > 0) { setErrors(e); return false; }
+    setErrors({});
+    return true;
+  };
+
+  const validateStep3 = () => {
+    const e = {};
+    if (!form.firstName.trim()) e.firstName = lang==="en" ? "First name is required" : "El nombre es requerido";
+    if (!form.lastName.trim()) e.lastName = lang==="en" ? "Last name is required" : "El apellido es requerido";
+    if (!form.email.trim()) e.email = lang==="en" ? "Email is required" : "El correo es requerido";
+    if (!form.phone.trim()) e.phone = lang==="en" ? "Phone number is required" : "El teléfono es requerido";
+    if (Object.keys(e).length > 0) { setErrors(e); return false; }
+    setErrors({});
+    return true;
+  };
 
   const qualAmt = () => {
     const base = loanAmt;
@@ -396,8 +416,9 @@ function ApplyPage({ lang, onBack }) {
               {step===2 && <>
                 <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[1]}</h2>
                 <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Tell us about your business.</p>
-                <span style={lbl}>{t.companyLabel}</span>
-                <input className="fc-inp" placeholder={t.companyPH} value={form.company} onChange={e=>set("company",e.target.value)} />
+                <span style={lbl}>{t.companyLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" placeholder={t.companyPH} value={form.company} onChange={e=>{set("company",e.target.value);setErrors(p=>({...p,company:""}));}} style={errors.company?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.company && <p style={{fontSize:12,color:"#ef4444",marginBottom:12}}>{errors.company}</p>}
                 <span style={lbl}>{t.industryLabel}</span>
                 <select className="fc-sel" value={form.industry} onChange={e=>set("industry",e.target.value)}>
                   {t.industryOpts.map(o=><option key={o}>{o}</option>)}
@@ -419,7 +440,7 @@ function ApplyPage({ lang, onBack }) {
                     </div>
                   ))}
                 </div>
-                <button onClick={()=>setStep(3)} style={btnDark}>{t.continueBtn}</button>
+                <button onClick={()=>{ if(validateStep2()) setStep(3); }} style={btnDark}>{t.continueBtn}</button>
                 <div><button onClick={()=>setStep(1)} style={btnBack}>{t.backBtn}</button></div>
               </>}
 
@@ -427,14 +448,24 @@ function ApplyPage({ lang, onBack }) {
                 <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[2]}</h2>
                 <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Almost done — your offer comes here.</p>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-                  <div><span style={lbl}>{t.firstName}</span><input className="fc-inp" placeholder={t.firstName} value={form.firstName} onChange={e=>set("firstName",e.target.value)} /></div>
-                  <div><span style={lbl}>{t.lastName}</span><input className="fc-inp" placeholder={t.lastName} value={form.lastName} onChange={e=>set("lastName",e.target.value)} /></div>
+                  <div>
+                    <span style={lbl}>{t.firstName} <span style={{color:"#ef4444"}}>*</span></span>
+                    <input className="fc-inp" placeholder={t.firstName} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} style={errors.firstName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    {errors.firstName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.firstName}</p>}
+                  </div>
+                  <div>
+                    <span style={lbl}>{t.lastName} <span style={{color:"#ef4444"}}>*</span></span>
+                    <input className="fc-inp" placeholder={t.lastName} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} style={errors.lastName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    {errors.lastName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.lastName}</p>}
+                  </div>
                 </div>
-                <span style={lbl}>{t.emailLabel}</span>
-                <input className="fc-inp" type="email" placeholder={t.emailPH} value={form.email} onChange={e=>set("email",e.target.value)} />
-                <span style={lbl}>{t.phoneLabel}</span>
-                <input className="fc-inp" type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>set("phone",e.target.value)} />
-                <button onClick={()=>setStep(4)} style={btnDark}>{t.continueBtn}</button>
+                <span style={lbl}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} style={errors.email?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.email && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.email}</p>}
+                <span style={lbl}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",e.target.value);setErrors(p=>({...p,phone:""}));}} style={errors.phone?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.phone && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.phone}</p>}
+                <button onClick={()=>{ if(validateStep3()) setStep(4); }} style={btnDark}>{t.continueBtn}</button>
                 <div><button onClick={()=>setStep(2)} style={btnBack}>{t.backBtn}</button></div>
               </>}
 
