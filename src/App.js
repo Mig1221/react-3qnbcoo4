@@ -3,52 +3,91 @@ import React, { useState } from 'react';
 const G = "#a8ff3e";
 
 // ── EmailJS config — fill in your IDs from emailjs.com ──────────
-// Formspree endpoint — emails go directly to themigzgroupllc@gmail.com
-const FORMSPREE_URL = "https://formspree.io/f/xbdpdnby";
+// EmailJS config
+const EMAILJS_SERVICE_ID = "service_bztsybt";
+const EMAILJS_PUBLIC_KEY  = "EtRChHElGymDPfUbo";
+const EMAILJS_TEMPLATE_ADMIN  = "template_vtmfame";   // alert to you
+const EMAILJS_TEMPLATE_CLIENT = "template_8wj9zar";   // confirmation to client
+
+// Formspree fallback for your email
+
+
+function loadEmailJS() {
+  return new Promise((resolve) => {
+    if (window.emailjs) { window.emailjs.init(EMAILJS_PUBLIC_KEY); resolve(); return; }
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+    s.onload = () => { window.emailjs.init(EMAILJS_PUBLIC_KEY); resolve(); };
+    s.onerror = () => resolve(); // continue even if fails
+    document.head.appendChild(s);
+  });
+}
 
 async function sendApplicationEmail(data) {
+  // Primary: EmailJS to you
   try {
-    await fetch(FORMSPREE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        _subject: "🔔 New Application — " + data.company + " | " + data.loanAmt,
-        _replyto: data.email,
-        "Application ID": data.id,
-        "Submitted": data.submittedAt,
-        "Name": data.firstName + " " + data.lastName,
-        "Company": data.company,
-        "Email": data.email,
-        "Phone": data.phone,
-        "Loan Amount": data.loanAmt,
-        "Purpose": data.purpose,
-        "Timeline": data.timeline,
-        "Industry": data.industry,
-        "Years in Business": data.years,
-        "Annual Revenue": data.annualRev,
-        "Credit Rating": data.creditRating,
-        "Estimated Pre-Qual": data.estimatedQualify,
-        "Upload Link": "https://aprovuit.com/?upload=" + data.id,
-      })
+    await loadEmailJS();
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, {
+      alert_type:    "NEW APPLICATION",
+      alert_title:   "Application Received",
+      from_name:     data.firstName + " " + data.lastName,
+      company:       data.company,
+      email:         data.email,
+      phone:         data.phone,
+      loan_amount:   data.loanAmt,
+      purpose:       data.purpose,
+      timeline:      data.timeline,
+      industry:      data.industry,
+      years:         data.years,
+      annual_rev:    data.annualRev,
+      credit:        data.creditRating,
+      estimated:     data.estimatedQualify,
+      app_id:        data.id,
+      upload_link:   "https://aprovuit.com/?upload=" + data.id,
+      submitted_at:  data.submittedAt,
+      files_uploaded: "No documents uploaded yet.",
     });
   } catch(e) {
-    console.error("Formspree error:", e);
+    // Fallback: Formspree
+    console.log("EmailJS failed, using Formspree fallback:", e);
+    try {
+      await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: "New Application — " + data.company + " | " + data.loanAmt,
+          _replyto: data.email,
+          "Name": data.firstName + " " + data.lastName,
+          "Company": data.company,
+          "Email": data.email,
+          "Phone": data.phone,
+          "Loan Amount": data.loanAmt,
+          "Purpose": data.purpose,
+          "Timeline": data.timeline,
+          "Industry": data.industry,
+          "Years in Business": data.years,
+          "Annual Revenue": data.annualRev,
+          "Credit": data.creditRating,
+          "Estimated": data.estimatedQualify,
+          "App ID": data.id,
+          "Upload Link": "https://aprovuit.com/?upload=" + data.id,
+        })
+      });
+    } catch(e2) { console.error("Both email methods failed:", e2); }
   }
 }
 
 async function sendClientEmail(data) {
-  // Client confirmation — sends via Formspree with client email as reply-to
+  // Send to client via EmailJS template 2
   try {
-    await fetch(FORMSPREE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        _subject: "✅ Application Received — " + data.company + " | Aprovuit",
-        _replyto: "themigzgroupllc@gmail.com",
-        "TO CLIENT": data.email,
-        "Message": "Hi " + data.firstName + ", your application for " + data.company + " has been received! App ID: " + data.id + ". We will be in touch within 2-4 hours. Upload your documents here: https://aprovuit.com/?upload=" + data.id,
-        "Upload Link": "https://aprovuit.com/?upload=" + data.id,
-      })
+    await loadEmailJS();
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CLIENT, {
+      to_email:    data.email,
+      first_name:  data.firstName,
+      company:     data.company,
+      app_id:      data.id,
+      upload_link: "https://aprovuit.com/?upload=" + data.id,
+      loan_amount: data.loanAmt,
     });
   } catch(e) {
     console.error("Client email error:", e);
@@ -370,19 +409,23 @@ function UploadPage({ lang, appId, onBack }) {
     uploads.push(uploadData);
     localStorage.setItem("aprovuit_uploads", JSON.stringify(uploads));
 
-    // Notify via Formspree
+    // Notify via EmailJS
     try {
-      await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          _subject: "📎 Documents Uploaded — " + appId + " | Aprovuit",
-          "Application ID": appId,
-          "Submitted": uploadData.submittedAt,
-          "Files Uploaded": uploadData.files.map(f=>f.name).join(", "),
-        })
+      await loadEmailJS();
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, {
+        alert_type:    "DOCUMENTS UPLOADED",
+        alert_title:   "Documents Received",
+        from_name:     "Client",
+        company:       "See App ID",
+        email:         "—", phone: "—", loan_amount: "—",
+        purpose: "—", timeline: "—", industry: "—",
+        years: "—", annual_rev: "—", credit: "—", estimated: "—",
+        app_id:        appId,
+        submitted_at:  uploadData.submittedAt,
+        files_uploaded: uploadData.files.map(f=>f.name).join(", "),
+        upload_link:   "https://aprovuit.com/?upload=" + appId,
       });
-    } catch(e) { console.error(e); }
+    } catch(e) { console.error("Upload notification error:", e); }
 
     setUploading(false);
     setSubmitted(true);
