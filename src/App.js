@@ -1,6 +1,54 @@
 import React, { useState } from 'react';
 
 const G = "#a8ff3e";
+
+// ── EmailJS config — fill in your IDs from emailjs.com ──────────
+const EMAILJS_SERVICE_ID  = "service_bztsybt";
+const EMAILJS_TEMPLATE_ID = "template_0udoj4z";
+const EMAILJS_PUBLIC_KEY  = "EtRChHElGymDPfUbo";
+
+async function sendApplicationEmail(data) {
+  try {
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email:      "themigzgroupllc@gmail.com",
+      alert_type:    "NEW APPLICATION",
+      alert_title:   "Application Received",
+      from_name:     data.firstName + " " + data.lastName,
+      company:       data.company,
+      email:         data.email,
+      phone:         data.phone,
+      loan_amount:   data.loanAmt,
+      purpose:       data.purpose,
+      timeline:      data.timeline,
+      industry:      data.industry,
+      years:         data.years,
+      annual_rev:    data.annualRev,
+      credit:        data.creditRating,
+      estimated:     data.estimatedQualify,
+      app_id:        data.id,
+      upload_link:   "https://aprovuit.com/?upload=" + data.id,
+      submitted_at:  data.submittedAt,
+      files_uploaded: "No documents uploaded yet.",
+    }, EMAILJS_PUBLIC_KEY);
+  } catch(e) {
+    console.error("EmailJS error:", e);
+  }
+}
+
+async function sendClientEmail(data) {
+  try {
+    await window.emailjs.send(EMAILJS_SERVICE_ID, "template_78h93is", {
+      to_email:    data.email,
+      first_name:  data.firstName,
+      company:     data.company,
+      app_id:      data.id,
+      upload_link: "https://aprovuit.com/?upload=" + data.id,
+      loan_amount: data.loanAmt,
+    }, EMAILJS_PUBLIC_KEY);
+  } catch(e) {
+    console.error("EmailJS client email error:", e);
+  }
+}
 const BK = "#0a0a0a";
 const BK2 = "#111111";
 const BK3 = "#1a1a1a";
@@ -215,6 +263,241 @@ function fmtAmt(n) {
   return '$' + Math.round(n).toLocaleString();
 }
 
+
+/* ══════════════════════════════════════════════════════════════════
+DOCUMENT UPLOAD PAGE
+══════════════════════════════════════════════════════════════════ */
+function UploadPage({ lang, appId, onBack }) {
+  const [files, setFiles] = useState({ bank1:null, bank2:null, bank3:null, bank4:null, bank5:null, bank6:null, license:null, voided:null });
+  const [submitted, setSubmitted] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(null);
+
+  const labels = {
+    en: {
+      title: "Upload Your Documents",
+      sub: "Securely upload your documents to complete your application.",
+      appId: "Application",
+      bankTitle: "6 Months of Bank Statements",
+      bankSub: "Upload your last 6 months of business bank statements",
+      licenseTitle: "Driver's License",
+      licenseSub: "Front of your government-issued ID",
+      voidedTitle: "Voided Check",
+      voidedSub: "A voided check from your business checking account",
+      months: ["Month 1","Month 2","Month 3","Month 4","Month 5","Month 6"],
+      drop: "Drop file here or click to upload",
+      formats: "PDF, JPG, PNG accepted",
+      uploadBtn: "Submit Documents →",
+      uploading: "Uploading...",
+      successH: "Documents Received!",
+      successP: "We've received your documents and will be in touch within 24 hours.",
+      backBtn: "← Back to Aprovuit",
+      secure: "256-bit encrypted · Your documents are safe",
+      required: "Required",
+    },
+    es: {
+      title: "Sube Tus Documentos",
+      sub: "Sube tus documentos de forma segura para completar tu solicitud.",
+      appId: "Solicitud",
+      bankTitle: "6 Meses de Estados de Cuenta",
+      bankSub: "Sube tus últimos 6 meses de estados de cuenta bancarios",
+      licenseTitle: "Licencia de Conducir",
+      licenseSub: "Frente de tu identificación oficial",
+      voidedTitle: "Cheque Anulado",
+      voidedSub: "Un cheque anulado de tu cuenta corriente empresarial",
+      months: ["Mes 1","Mes 2","Mes 3","Mes 4","Mes 5","Mes 6"],
+      drop: "Arrastra el archivo aquí o haz clic para subir",
+      formats: "Se aceptan PDF, JPG, PNG",
+      uploadBtn: "Enviar Documentos →",
+      uploading: "Subiendo...",
+      successH: "¡Documentos Recibidos!",
+      successP: "Recibimos tus documentos y nos comunicaremos contigo en 24 horas.",
+      backBtn: "← Volver a Aprovuit",
+      secure: "Encriptado 256-bit · Tus documentos están seguros",
+      required: "Requerido",
+    }
+  };
+  const t = labels[lang] || labels.en;
+
+  const handleFile = (key, file) => {
+    setFiles(f => ({...f, [key]: file}));
+  };
+
+  const FileDropZone = ({ fileKey, label, sublabel }) => {
+    const file = files[fileKey];
+    const isDrag = dragOver === fileKey;
+    return (
+      <div
+        onDragOver={e=>{e.preventDefault();setDragOver(fileKey);}}
+        onDragLeave={()=>setDragOver(null)}
+        onDrop={e=>{e.preventDefault();setDragOver(null);const f=e.dataTransfer.files[0];if(f)handleFile(fileKey,f);}}
+        style={{ border:`2px dashed ${file?"#a8ff3e":isDrag?"#1a1a1a":"#e5e8ee"}`, borderRadius:12, padding:"20px 16px", textAlign:"center", background:file?"#f0fdf4":isDrag?"#f9fafb":"#fafafa", position:"relative", transition:"all 0.15s", cursor:"pointer" }}
+      >
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={e=>handleFile(fileKey,e.target.files[0])} style={{ position:"absolute", inset:0, opacity:0, cursor:"pointer", width:"100%", height:"100%" }} />
+        {file ? (
+          <div>
+            <div style={{ fontSize:24, marginBottom:6 }}>✅</div>
+            <p style={{ fontSize:13, fontWeight:700, color:"#16a34a", marginBottom:2 }}>{file.name}</p>
+            <p style={{ fontSize:11, color:"#888" }}>{(file.size/1024).toFixed(0)} KB</p>
+          </div>
+        ) : (
+          <div>
+            <div style={{ fontSize:28, marginBottom:8, color:"#ccc" }}>📄</div>
+            <p style={{ fontSize:13, fontWeight:700, color:"#555", marginBottom:2 }}>{label}</p>
+            <p style={{ fontSize:12, color:"#aaa", marginBottom:4 }}>{sublabel}</p>
+            <p style={{ fontSize:11, color:"#ccc" }}>{t.formats}</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const handleSubmit = async () => {
+    setUploading(true);
+    // In production, files would upload to Google Drive via API
+    // For now we save to localStorage and send notification email
+    const uploadData = {
+      appId,
+      submittedAt: new Date().toLocaleString(),
+      files: Object.entries(files).filter(([,v])=>v).map(([k,v])=>({key:k, name:v?.name})),
+    };
+    const uploads = JSON.parse(localStorage.getItem("aprovuit_uploads")||"[]");
+    uploads.push(uploadData);
+    localStorage.setItem("aprovuit_uploads", JSON.stringify(uploads));
+
+    // Notify you via email reusing Template 1
+    try {
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email:      "themigzgroupllc@gmail.com",
+        alert_type:    "DOCUMENTS UPLOADED",
+        alert_title:   "Documents Received",
+        from_name:     "Client",
+        company:       "See App ID below",
+        app_id:        appId,
+        submitted_at:  uploadData.submittedAt,
+        files_uploaded: uploadData.files.map(f=>f.name).join("\n"),
+        email:         "—", phone: "—", loan_amount: "—",
+        purpose: "—", timeline: "—", industry: "—",
+        years: "—", annual_rev: "—", credit: "—",
+        estimated: "—",
+        upload_link:   "https://aprovuit.com/?upload=" + appId,
+      }, EMAILJS_PUBLIC_KEY);
+    } catch(e) { console.error(e); }
+
+    setUploading(false);
+    setSubmitted(true);
+  };
+
+  const UPLOAD_CSS = `
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'DM Sans',sans-serif; background:#f5f7fa; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .fadeup { animation:fadeUp 0.35s ease both; }
+  `;
+
+  if (submitted) return (
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+      <style>{UPLOAD_CSS}</style>
+      <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"48px 40px", maxWidth:480, width:"100%", textAlign:"center" }}>
+        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40 }}>✓</div>
+        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase" }}>{t.successH}</h2>
+        <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:32 }}>{t.successP}</p>
+        <button onClick={onBack} style={{ background:"#0a0a0a", color:"#a8ff3e", border:"none", padding:"14px 36px", borderRadius:10, fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.backBtn}</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ minHeight:"100vh", background:"#f5f7fa" }}>
+      <style>{UPLOAD_CSS}</style>
+
+      {/* NAV */}
+      <div style={{ background:"#0a0a0a", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
+        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:28, height:28, background:"#a8ff3e", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <span style={{ fontSize:14, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
+          </div>
+          <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+        </button>
+        <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(168,255,62,0.08)", border:"1px solid rgba(168,255,62,0.25)", padding:"5px 14px", borderRadius:20 }}>
+          <div style={{ width:6, height:6, background:"#a8ff3e", borderRadius:"50%" }}></div>
+          <span style={{ fontSize:12, color:"#a8ff3e", fontWeight:700 }}>🔒 {t.secure}</span>
+        </div>
+      </div>
+
+      {/* HEADER */}
+      <div style={{ background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", padding:"40px 24px 48px", textAlign:"center" }}>
+        <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(168,255,62,0.1)", border:"1px solid rgba(168,255,62,0.2)", padding:"4px 14px", borderRadius:20, marginBottom:16 }}>
+          <span style={{ fontSize:11, color:"#a8ff3e", fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t.appId}: {appId || "APP-NEW"}</span>
+        </div>
+        <h1 style={{ fontSize:"clamp(28px,5vw,44px)", fontWeight:900, color:"#fff", marginBottom:10, letterSpacing:"-0.02em" }}>{t.title}</h1>
+        <p style={{ fontSize:15, color:"rgba(255,255,255,0.5)", maxWidth:440, margin:"0 auto" }}>{t.sub}</p>
+      </div>
+
+      {/* UPLOAD FORM */}
+      <div style={{ maxWidth:640, margin:"0 auto", padding:"32px 24px 80px" }}>
+
+        {/* Bank Statements */}
+        <div style={{ background:"#fff", borderRadius:18, padding:"28px", marginBottom:20, boxShadow:"0 4px 20px rgba(0,0,0,0.08)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
+            <span style={{ fontSize:24 }}>🏦</span>
+            <div>
+              <h3 style={{ fontSize:17, fontWeight:800, color:"#1a1a1a" }}>{t.bankTitle}</h3>
+              <p style={{ fontSize:13, color:"#888" }}>{t.bankSub}</p>
+            </div>
+            <span style={{ marginLeft:"auto", fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+          </div>
+          <div style={{ height:1, background:"#f0f0f0", margin:"16px 0" }}></div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10 }}>
+            {["bank1","bank2","bank3","bank4","bank5","bank6"].map((key,i)=>(
+              <FileDropZone key={key} fileKey={key} label={t.months[i]} sublabel="PDF / IMG" />
+            ))}
+          </div>
+        </div>
+
+        {/* Driver's License */}
+        <div style={{ background:"#fff", borderRadius:18, padding:"28px", marginBottom:20, boxShadow:"0 4px 20px rgba(0,0,0,0.08)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+            <span style={{ fontSize:24 }}>🪪</span>
+            <div>
+              <h3 style={{ fontSize:17, fontWeight:800, color:"#1a1a1a" }}>{t.licenseTitle}</h3>
+              <p style={{ fontSize:13, color:"#888" }}>{t.licenseSub}</p>
+            </div>
+            <span style={{ marginLeft:"auto", fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+          </div>
+          <FileDropZone fileKey="license" label={t.licenseTitle} sublabel="JPG / PNG / PDF" />
+        </div>
+
+        {/* Voided Check */}
+        <div style={{ background:"#fff", borderRadius:18, padding:"28px", marginBottom:28, boxShadow:"0 4px 20px rgba(0,0,0,0.08)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+            <span style={{ fontSize:24 }}>📋</span>
+            <div>
+              <h3 style={{ fontSize:17, fontWeight:800, color:"#1a1a1a" }}>{t.voidedTitle}</h3>
+              <p style={{ fontSize:13, color:"#888" }}>{t.voidedSub}</p>
+            </div>
+            <span style={{ marginLeft:"auto", fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+          </div>
+          <FileDropZone fileKey="voided" label={t.voidedTitle} sublabel="JPG / PNG / PDF" />
+        </div>
+
+        {/* Submit */}
+        <button
+          onClick={handleSubmit}
+          disabled={uploading}
+          style={{ width:"100%", background: uploading?"#ccc":"#a8ff3e", color:"#000", border:"none", padding:"18px", borderRadius:12, fontSize:17, fontWeight:900, cursor:uploading?"not-allowed":"pointer", fontFamily:"'DM Sans',sans-serif", transition:"all 0.15s" }}
+        >
+          {uploading ? t.uploading : t.uploadBtn}
+        </button>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:14 }}>
+          <span style={{ fontSize:13, color:"#888" }}>🔒 {t.secure}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════════════
 APPLY PAGE — iAdvance style
 ══════════════════════════════════════════════════════════════════ */
@@ -259,10 +542,21 @@ function ApplyPage({ lang, onBack }) {
     return Math.min(Math.round(base*0.6),400000);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const appData = {
+      id: `APP-${Date.now()}`,
+      submittedAt: new Date().toLocaleString(),
+      status: "Under Review",
+      loanAmt: fmtAmt(loanAmt),
+      ...form,
+      estimatedQualify: fmtAmt(qualAmt()),
+    };
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
-    apps.push({ id:`APP-${Date.now()}`, submittedAt:new Date().toLocaleString(), status:"Under Review", loanAmt, ...form, estimatedQualify:qualAmt() });
+    apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
+    // Send emails
+    await sendApplicationEmail(appData);
+    await sendClientEmail(appData);
     setSubmitted(true);
   };
 
@@ -301,10 +595,17 @@ function ApplyPage({ lang, onBack }) {
             </div>
           ))}
         </div>
-        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"20px 24px", textAlign:"left" }}>
+        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"20px 24px", textAlign:"left", marginBottom:20 }}>
           <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>{t.estLabel}</p>
           <p style={{ fontSize:40, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-0.5px" }}>{fmtAmt(qualAmt())}</p>
           <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:4 }}>{t.estNote}</p>
+        </div>
+        <div style={{ background:"#fff", border:"2px solid #a8ff3e", borderRadius:14, padding:"18px 20px", marginBottom:20 }}>
+          <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:6 }}>📎 {lang==="en"?"Upload Your Documents":"Sube Tus Documentos"}</p>
+          <p style={{ fontSize:13, color:"#666", marginBottom:14, lineHeight:1.5 }}>{lang==="en"?"Speed up your approval by uploading your bank statements, driver's license, and voided check now.":"Acelera tu aprobación subiendo tus estados de cuenta, licencia e cheque anulado ahora."}</p>
+          <button onClick={onBack} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
+            {lang==="en"?"Upload Documents Now →":"Subir Documentos Ahora →"}
+          </button>
         </div>
       </div>
     </div>
@@ -512,10 +813,31 @@ MAIN APP
 ══════════════════════════════════════════════════════════════════ */
 export default function Aprovuit() {
   const [view, setView] = useState("landing");
+  const [uploadAppId, setUploadAppId] = useState(null);
+
+  // Check URL for ?upload=APP-xxx on load
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const uploadId = params.get("upload");
+    if (uploadId) {
+      setUploadAppId(uploadId);
+      setView("upload");
+    }
+  }, []);
   const [lang, setLang] = useState("en");
   const [faqOpen, setFaqOpen] = useState(null);
   const toggleLang = () => setLang(l=>l==="en"?"es":"en");
   const t = TRANSLATIONS[lang];
+
+  // Load EmailJS
+  React.useEffect(() => {
+    if (!window.emailjs) {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+      script.onload = () => window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      document.head.appendChild(script);
+    }
+  }, []);
 
   const CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
@@ -542,6 +864,7 @@ export default function Aprovuit() {
     .lang-btn { padding:5px 14px; font-size:12px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
   `;
 
+  if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>setView("landing")} />;
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} />;
 
   return (
