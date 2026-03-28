@@ -649,7 +649,7 @@ function ApplyPage({ lang, onBack }) {
         <div style={{ background:"#fff", border:"2px solid #a8ff3e", borderRadius:14, padding:"18px 20px", marginBottom:20 }}>
           <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:6 }}>📎 {lang==="en"?"Upload Your Documents":"Sube Tus Documentos"}</p>
           <p style={{ fontSize:13, color:"#666", marginBottom:14, lineHeight:1.5 }}>{lang==="en"?"Speed up your approval by uploading your bank statements, driver's license, and voided check now.":"Acelera tu aprobación subiendo tus estados de cuenta, licencia e cheque anulado ahora."}</p>
-          <button onClick={onBack} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
+          <button onClick={()=>{ window.history.pushState({}, "", "?upload=" + appData.id); window.dispatchEvent(new PopStateEvent("popstate")); onBack(); }} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
             {lang==="en"?"Upload Documents Now →":"Subir Documentos Ahora →"}
           </button>
         </div>
@@ -864,6 +864,20 @@ export default function Aprovuit() {
 
   const [view, setView] = useState(initialUploadId ? "upload" : "landing");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
+
+  // Listen for URL changes (when upload button clicked from success screen)
+  React.useEffect(() => {
+    const handlePop = () => {
+      const params = new URLSearchParams(window.location.search);
+      const uploadId = params.get("upload");
+      if (uploadId) {
+        setUploadAppId(uploadId);
+        setView("upload");
+      }
+    };
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, []);
   const [lang, setLang] = useState("en");
   const [faqOpen, setFaqOpen] = useState(null);
   const toggleLang = () => setLang(l=>l==="en"?"es":"en");
