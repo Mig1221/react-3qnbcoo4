@@ -75,7 +75,8 @@ const CSS = `
   ::selection { background:#a8ff3e; color:#000; }
   input,select,textarea { font-family:'DM Sans',sans-serif; }
   input[type=range] { -webkit-appearance:none; width:100%; height:8px; background:#e5e8ee; border-radius:4px; outline:none; cursor:pointer; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:24px; height:24px; background:#a8ff3e; border:3px solid #fff; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,.2); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; background:#a8ff3e; border:3px solid #fff; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,.2); }
+  input[type=range]::-webkit-slider-runnable-track { background: linear-gradient(to right, #1a1a1a var(--val, 50%), #e5e8ee var(--val, 50%)); height:8px; border-radius:4px; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   .fadeup { animation:fadeUp .35s ease both; }
   @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
@@ -133,12 +134,12 @@ const T = {
     cta: { h:"Ready to Get Funded?", sub:"Apply in minutes. No phone call. No commitment.", btn:"Apply Now — It's Free →" },
     footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com" },
     apply: {
-      noPhone:"No Salespeople. No Phone Calls.",
-      heroH1:"Apply for", heroH1b:"Business Funding",
-      heroP:"Get a decision in hours. Track everything in your dashboard.",
+      noPhone:"No Phone Calls. No Salespeople. Ever.",
+      heroH1:"Secure Your", heroH1b:"Business Funding Today",
+      heroP:"Fast approvals. No phone calls. Funding in as little as 24 hours.",
       howMuch:"How much funding do you need?",
       requestedAmt:"Requested Amount",
-      getStarted:"Get Started →",
+      getStarted:"Get Started Now →",
       secure:"100% Secure & Confidential",
       creditLabel:"Estimate your credit score",
       creditOpts:[["excellent","Excellent","750+"],["good","Good","680+"],["fair","Fair","580+"],["poor","Poor","<580"]],
@@ -167,9 +168,9 @@ const T = {
       summarySub:"Everything look right? Submit to create your account and apply.",
       summaryKeys:["Loan Amount","Purpose","Timeline","Company","Industry","Revenue","Credit","Email","Phone"],
       disclaimer:"By submitting, you create an Aprovuit account and authorize a soft credit inquiry. No impact to your score.",
-      submitBtn:"Submit & Create Account →",
-      successH:"You're In! 🎉",
-      successP:"Your application is under review and your account is ready. Log in to your dashboard to track everything.",
+      submitBtn:"Get My Offer Now →",
+      successH:"Application Received!",
+      successP:"We've received your application and will be in touch within 2–4 hours. Log in to your dashboard to track everything — no phone call required.",
       loginBtn:"Go to My Dashboard →",
       uploadBtn:"Upload Documents",
     },
@@ -189,11 +190,11 @@ const T = {
     footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com" },
     apply: {
       noPhone:"Sin Vendedores. Sin Llamadas.",
-      heroH1:"Solicita", heroH1b:"Financiamiento Empresarial",
-      heroP:"Recibe una decisión en horas. Rastrea todo en tu portal.",
+      heroH1:"Asegura el", heroH1b:"Financiamiento de tu Negocio Hoy",
+      heroP:"Aprobaciones rápidas. Sin llamadas. Fondos en tan solo 24 horas.",
       howMuch:"¿Cuánto financiamiento necesitas?",
       requestedAmt:"Monto Solicitado",
-      getStarted:"Comenzar →",
+      getStarted:"Comenzar Ahora →",
       secure:"100% Seguro y Confidencial",
       creditLabel:"Estima tu puntaje de crédito",
       creditOpts:[["excellent","Excelente","750+"],["good","Bueno","680+"],["fair","Regular","580+"],["poor","Bajo","<580"]],
@@ -222,9 +223,9 @@ const T = {
       summarySub:"¿Todo bien? Envía para crear tu cuenta y aplicar.",
       summaryKeys:["Monto","Propósito","Plazo","Empresa","Industria","Ingresos","Crédito","Correo","Teléfono"],
       disclaimer:"Al enviar, creas una cuenta en Aprovuit y autorizas una consulta suave de crédito. Sin impacto en tu puntaje.",
-      submitBtn:"Enviar y Crear Cuenta →",
-      successH:"¡Listo! 🎉",
-      successP:"Tu solicitud está en revisión y tu cuenta está lista. Entra a tu portal para rastrear todo.",
+      submitBtn:"Obtener Mi Oferta Ahora →",
+      successH:"¡Solicitud Recibida!",
+      successP:"Recibimos tu solicitud y estaremos en contacto en 2–4 horas. Entra a tu portal para rastrear todo — sin llamadas.",
       loginBtn:"Ir a Mi Portal →",
       uploadBtn:"Subir Documentos",
     },
@@ -483,27 +484,27 @@ function ApplyPage({ lang, onBack, onSuccess }) {
 
         {step===0 && (
           <div style={{ background:"#fff", borderRadius:18, padding:"32px 28px", maxWidth:540, margin:"0 auto", boxShadow:"0 16px 60px rgba(0,0,0,.35)" }} className="fadeup">
-            <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:20, textAlign:"center" }}>{t.howMuch}</h2>
+            <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:20, textAlign:"center", fontFamily:"'DM Sans',sans-serif", letterSpacing:"-0.02em" }}>{t.howMuch}</h2>
             <div style={{ textAlign:"center", marginBottom:6 }}>
-              <div style={{ fontSize:52, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1 }}>{fmtAmt(loanAmt)}</div>
-              <div style={{ fontSize:13, color:"#888", marginTop:6 }}>{t.requestedAmt}</div>
+              <div style={{ fontSize:56, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1, fontFamily:"'Barlow Condensed',sans-serif" }}>{fmtAmt(loanAmt)}</div>
+              <div style={{ fontSize:13, color:"#888", marginTop:6, fontFamily:"'DM Sans',sans-serif" }}>{t.requestedAmt}</div>
             </div>
             <input type="range" min={10000} max={2000000} step={5000} value={loanAmt} onChange={e=>setLoanAmt(Number(e.target.value))} style={{ marginBottom:6 }} />
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:24 }}>
               <span style={{ fontSize:12, color:"#aaa" }}>$10K</span><span style={{ fontSize:12, color:"#aaa" }}>$2M+</span>
             </div>
-            <span style={lbl}>{t.creditLabel}</span>
+            <span style={{...lbl, fontSize:11, letterSpacing:"0.08em"}}>{t.creditLabel}</span>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:22 }}>
               {t.creditOpts.map(([val,label,range])=>(
                 <div key={val} className={`credit-box${creditSel===val?" sel":""}`} onClick={()=>setCreditSel(val)}>
-                  <p style={{ fontSize:12, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:2 }}>{label}</p>
-                  <p style={{ fontSize:10, color:creditSel===val?"rgba(255,255,255,.5)":"#aaa" }}>{range}</p>
+                  <p style={{ fontSize:13, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:3, fontFamily:"'DM Sans',sans-serif" }}>{label}</p>
+                  <p style={{ fontSize:11, color:creditSel===val?"rgba(255,255,255,.5)":"#888", fontFamily:"'DM Sans',sans-serif" }}>{range}</p>
                 </div>
               ))}
             </div>
             <div style={{ background:"linear-gradient(135deg,#0a0a0a,#111)", borderRadius:14, padding:"22px", marginBottom:22, textAlign:"center" }}>
               <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>{t.qualifyUp}</p>
-              <p style={{ fontSize:44, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
+              <p style={{ fontSize:52, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
               <p style={{ fontSize:10, color:"rgba(255,255,255,.25)", marginTop:8 }}>{t.qualNote}</p>
             </div>
             <button onClick={()=>setStep(1)} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.getStarted}</button>
