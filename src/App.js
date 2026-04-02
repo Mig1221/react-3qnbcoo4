@@ -367,9 +367,9 @@ function UploadPage({ lang, appId, onBack }) {
   );
 }
 
-// ── APPLY PAGE ───────────────────────────────────────────────────
-function ApplyPage({ lang, onBack }) {
-  const t = TRANSLATIONS[lang].apply;
+
+function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
+  const t = T[lang].apply;
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [loanAmt, setLoanAmt] = useState(150000);
@@ -677,6 +677,10 @@ function ApplyPage({ lang, onBack }) {
     </div>
   );
 }
+
+/* ══════════════════════════════════════════════════════════════════
+MAIN APP
+══════════════════════════════════════════════════════════════════ */
 
 // ── LOGIN PAGE ───────────────────────────────────────────────────
 function LoginPage({ lang, onBack, onLogin }) {
