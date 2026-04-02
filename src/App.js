@@ -74,9 +74,9 @@ const CSS = `
   body { font-family:'DM Sans',sans-serif; background:#0a0a0a; color:#fff; }
   ::selection { background:#a8ff3e; color:#000; }
   input,select,textarea { font-family:'DM Sans',sans-serif; }
-  input[type=range] { -webkit-appearance:none; width:100%; height:8px; background:#e5e8ee; border-radius:4px; outline:none; cursor:pointer; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; background:#a8ff3e; border:3px solid #fff; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,.2); }
-  input[type=range]::-webkit-slider-runnable-track { background: linear-gradient(to right, #1a1a1a var(--val, 50%), #e5e8ee var(--val, 50%)); height:8px; border-radius:4px; }
+  input[type=range] { -webkit-appearance:none; width:100%; height:10px; background:#e5e8ee; border-radius:5px; outline:none; cursor:pointer; margin:16px 0 8px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:30px; height:30px; background:#a8ff3e; border:4px solid #fff; border-radius:50%; box-shadow:0 2px 10px rgba(0,0,0,.25); cursor:pointer; }
+  input[type=range]::-moz-range-thumb { width:30px; height:30px; background:#a8ff3e; border:4px solid #fff; border-radius:50%; cursor:pointer; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   .fadeup { animation:fadeUp .35s ease both; }
   @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
@@ -483,28 +483,28 @@ function ApplyPage({ lang, onBack, onSuccess }) {
         <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", maxWidth:400, margin:"0 auto 32px" }}>{t.heroP}</p>
 
         {step===0 && (
-          <div style={{ background:"#fff", borderRadius:18, padding:"32px 28px", maxWidth:540, margin:"0 auto", boxShadow:"0 16px 60px rgba(0,0,0,.35)" }} className="fadeup">
-            <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:20, textAlign:"center", fontFamily:"'DM Sans',sans-serif", letterSpacing:"-0.02em" }}>{t.howMuch}</h2>
+          <div style={{ background:"#fff", borderRadius:18, padding:"36px 32px", maxWidth:560, margin:"0 auto", boxShadow:"0 16px 60px rgba(0,0,0,.35)" }} className="fadeup">
+            <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:24, textAlign:"center", fontFamily:"'DM Sans',sans-serif", letterSpacing:"-0.02em" }}>{t.howMuch}</h2>
             <div style={{ textAlign:"center", marginBottom:6 }}>
-              <div style={{ fontSize:56, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1, fontFamily:"'Barlow Condensed',sans-serif" }}>{fmtAmt(loanAmt)}</div>
-              <div style={{ fontSize:13, color:"#888", marginTop:6, fontFamily:"'DM Sans',sans-serif" }}>{t.requestedAmt}</div>
+              <div style={{ fontSize:64, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1, fontFamily:"'Barlow Condensed',sans-serif" }}>{fmtAmt(loanAmt)}</div>
+              <div style={{ fontSize:14, color:"#888", marginTop:8, fontFamily:"'DM Sans',sans-serif" }}>{t.requestedAmt}</div>
             </div>
             <input type="range" min={10000} max={2000000} step={5000} value={loanAmt} onChange={e=>setLoanAmt(Number(e.target.value))} style={{ marginBottom:6 }} />
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:24 }}>
               <span style={{ fontSize:12, color:"#aaa" }}>$10K</span><span style={{ fontSize:12, color:"#aaa" }}>$2M+</span>
             </div>
-            <span style={{...lbl, fontSize:11, letterSpacing:"0.08em"}}>{t.creditLabel}</span>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:22 }}>
+            <span style={{ fontSize:13, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:10, display:"block" }}>{t.creditLabel}</span>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8, marginBottom:22, width:"100%" }}>
               {t.creditOpts.map(([val,label,range])=>(
-                <div key={val} className={`credit-box${creditSel===val?" sel":""}`} onClick={()=>setCreditSel(val)}>
-                  <p style={{ fontSize:13, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:3, fontFamily:"'DM Sans',sans-serif" }}>{label}</p>
-                  <p style={{ fontSize:11, color:creditSel===val?"rgba(255,255,255,.5)":"#888", fontFamily:"'DM Sans',sans-serif" }}>{range}</p>
+                <div key={val} onClick={()=>setCreditSel(val)} style={{ border:`2px solid ${creditSel===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"14px 6px", cursor:"pointer", textAlign:"center", background:creditSel===val?"#1a1a1a":"#fff", transition:"all .15s", minWidth:0 }}>
+                  <p style={{ fontSize:14, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:4, fontFamily:"'DM Sans',sans-serif" }}>{label}</p>
+                  <p style={{ fontSize:12, color:creditSel===val?"rgba(255,255,255,.5)":"#888", fontFamily:"'DM Sans',sans-serif" }}>{range}</p>
                 </div>
               ))}
             </div>
             <div style={{ background:"linear-gradient(135deg,#0a0a0a,#111)", borderRadius:14, padding:"22px", marginBottom:22, textAlign:"center" }}>
               <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>{t.qualifyUp}</p>
-              <p style={{ fontSize:52, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
+              <p style={{ fontSize:60, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
               <p style={{ fontSize:10, color:"rgba(255,255,255,.25)", marginTop:8 }}>{t.qualNote}</p>
             </div>
             <button onClick={()=>setStep(1)} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.getStarted}</button>
