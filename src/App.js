@@ -368,21 +368,40 @@ function UploadPage({ lang, appId, onBack }) {
 }
 
 // ── APPLY PAGE ───────────────────────────────────────────────────
-function ApplyPage({ lang, onBack, onSuccess }) {
-  const t = T[lang].apply;
+APPLY PAGE — iAdvance style
+══════════════════════════════════════════════════════════════════ */
+function ApplyPage({ lang, onBack }) {
+  const t = TRANSLATIONS[lang].apply;
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [appData, setAppData] = useState(null);
   const [loanAmt, setLoanAmt] = useState(150000);
   const [creditSel, setCreditSel] = useState("good");
-  const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
-    purpose:"", timeline:"", company:"", industry:"", years:"", annualRev:"",
-    creditRating:"good", firstName:"", lastName:"", email:"", password:"",
-    phone:""
+    purpose:"", timeline:"", company:"", industry:"",
+    years:"", annualRev:"", creditRating:"good",
+    firstName:"", lastName:"", email:"", phone:""
   });
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
+  const [errors, setErrors] = useState({});
+
+  const validateStep2 = () => {
+    const e = {};
+    if (!form.company.trim()) e.company = lang==="en" ? "Company name is required" : "El nombre de la empresa es requerido";
+    if (Object.keys(e).length > 0) { setErrors(e); return false; }
+    setErrors({});
+    return true;
+  };
+
+  const validateStep3 = () => {
+    const e = {};
+    if (!form.firstName.trim()) e.firstName = lang==="en" ? "First name is required" : "El nombre es requerido";
+    if (!form.lastName.trim()) e.lastName = lang==="en" ? "Last name is required" : "El apellido es requerido";
+    if (!form.email.trim()) e.email = lang==="en" ? "Email is required" : "El correo es requerido";
+    if (!form.phone.trim()) e.phone = lang==="en" ? "Phone number is required" : "El teléfono es requerido";
+    if (Object.keys(e).length > 0) { setErrors(e); return false; }
+    setErrors({});
+    return true;
+  };
 
   const qualAmt = () => {
     const base = loanAmt;
@@ -392,72 +411,73 @@ function ApplyPage({ lang, onBack, onSuccess }) {
     return Math.min(Math.round(base*0.6),400000);
   };
 
-  const formatPhone = (val) => {
-    const d = val.replace(/\D/g,"").slice(0,10);
-    if (d.length<=3) return d;
-    if (d.length<=6) return "("+d.slice(0,3)+") "+d.slice(3);
-    return "("+d.slice(0,3)+") "+d.slice(3,6)+"-"+d.slice(6);
-  };
-
-  const validate = () => {
-    const e = {};
-    if (step===2) {
-      if (!form.company.trim()) e.company = lang==="es"?"Requerido":"Required";
-    }
-    if (step===3) {
-      if (!form.firstName.trim()) e.firstName = lang==="es"?"Requerido":"Required";
-      if (!form.lastName.trim()) e.lastName = lang==="es"?"Requerido":"Required";
-      if (!form.email.trim()) e.email = lang==="es"?"Requerido":"Required";
-      if (!form.password.trim() || form.password.length < 8) e.password = lang==="es"?"Mín. 8 caracteres":"Min. 8 characters";
-      if (!form.phone.trim()) e.phone = lang==="es"?"Requerido":"Required";
-    }
-    if (Object.keys(e).length > 0) { setErrors(e); return false; }
-    setErrors({});
-    return true;
-  };
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = async () => {
-    if (!validate()) return;
     setSending(true);
-    const data = {
-      id:`APP-${Date.now()}`,
-      submittedAt:new Date().toLocaleString(),
-      status:"Under Review",
-      loanAmt:fmtAmt(loanAmt),
+    const appData = {
+      id: `APP-${Date.now()}`,
+      submittedAt: new Date().toLocaleString(),
+      status: "Under Review",
+      loanAmt: fmtAmt(loanAmt),
       ...form,
-      estimatedQualify:fmtAmt(qualAmt()),
+      estimatedQualify: fmtAmt(qualAmt()),
     };
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
-    apps.push(data);
+    apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
-    // Save account
-    const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
-    accounts.push({ email:form.email, password:form.password, firstName:form.firstName, lastName:form.lastName, company:form.company, phone:form.phone, appId:data.id });
-    localStorage.setItem("aprovuit_accounts", JSON.stringify(accounts));
-    setAppData(data);
-    await sendApplicationEmail(data);
-    await sendClientEmail(data);
+    await sendApplicationEmail(appData);
+    await sendClientEmail(appData);
     setSending(false);
     setSubmitted(true);
   };
 
-  const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:15, fontFamily:"'DM Sans',sans-serif", outline:"none", color:"#1a1a1a", background:"#fff", marginBottom:12, display:"block", transition:"border-color .15s" };
-  const lbl = { fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" };
-  const errStyle = { fontSize:12, color:"#ef4444", marginBottom:10, marginTop:-8 };
+  const APPLY_CSS = `
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'DM Sans',sans-serif; background:#f5f7fa; }
+    input[type=range] { -webkit-appearance:none; width:100%; height:8px; background:#e5e8ee; border-radius:4px; outline:none; cursor:pointer; margin:16px 0 8px; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:28px; height:28px; background:#a8ff3e; border:3px solid #fff; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.2); cursor:pointer; }
+    .fc-sel { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:16px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; }
+    .fc-inp { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:16px; display:block; }
+    .fc-sel:focus, .fc-inp:focus { outline:none; border-color:#a8ff3e; box-shadow:0 0 0 3px rgba(168,255,62,0.15); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .fadeup { animation:fadeUp 0.35s ease both; }
+  `;
 
-  if (submitted && appData) return (
-    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
-      <div className="fadeup" style={{ background:"#fff", borderRadius:24, padding:"48px 40px", maxWidth:520, width:"100%", textAlign:"center" }}>
-        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40 }}>✓</div>
-        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:10, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase" }}>{t.successH}</h2>
+  const lbl = { fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8, display:"block" };
+  const card = { background:"#fff", borderRadius:18, padding:"32px 28px", maxWidth:560, margin:"0 auto", boxShadow:"0 8px 40px rgba(0,0,0,0.18)" };
+  const btnPrimary = { width:"100%", background:G, color:"#000", border:"none", padding:"18px", borderRadius:12, fontSize:17, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:4, transition:"all 0.15s" };
+  const btnDark = { width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:"16px", borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:4 };
+  const btnBack = { background:"#f2f2f7", color:"#555", border:"none", padding:"12px 20px", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:10 };
+
+  if (submitted) return (
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1a0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+      <style>{APPLY_CSS}</style>
+      <div style={{ ...card, textAlign:"center", maxWidth:520 }} className="fadeup">
+        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40, color:"#16a34a", fontWeight:900 }}>✓</div>
+        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase", letterSpacing:"-0.01em" }}>{t.successH}</h2>
         <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:28 }}>{t.successP}</p>
-        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"18px 20px", textAlign:"left", marginBottom:20 }}>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>{t.qualifyUp}</p>
-          <p style={{ fontSize:40, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-0.5px" }}>{fmtAmt(qualAmt())}</p>
+        <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:14, padding:"18px 20px", marginBottom:20, textAlign:"left" }}>
+          <p style={{ fontSize:13, fontWeight:700, color:"#16a34a", marginBottom:12 }}>{t.nextTitle}</p>
+          {t.nextSteps.map(s=>(
+            <div key={s} style={{ display:"flex", gap:10, alignItems:"center", marginBottom:8 }}>
+              <div style={{ width:20, height:20, background:"#16a34a", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:10, flexShrink:0 }}>✓</div>
+              <span style={{ fontSize:14, color:"#166534" }}>{s}</span>
+            </div>
+          ))}
         </div>
-        <div style={{ display:"grid", gap:10 }}>
-          <button onClick={()=>onSuccess(form.email, form.firstName, form.company, appData.id)} className="btn-dark" style={{ width:"100%", padding:14, fontSize:15 }}>{t.loginBtn}</button>
-          <button onClick={()=>onSuccess(form.email, form.firstName, form.company, appData.id, true)} style={{ width:"100%", background:"#f9f9fb", color:"#1a1a1a", border:"1px solid #e5e5ea", padding:14, borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>📎 {t.uploadBtn}</button>
+        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"20px 24px", textAlign:"left", marginBottom:20 }}>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>{t.estLabel}</p>
+          <p style={{ fontSize:40, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-0.5px" }}>{fmtAmt(qualAmt())}</p>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:4 }}>{t.estNote}</p>
+        </div>
+        <div style={{ background:"#fff", border:"2px solid #a8ff3e", borderRadius:14, padding:"18px 20px", marginBottom:20 }}>
+          <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:6 }}>📎 {lang==="en"?"Upload Your Documents":"Sube Tus Documentos"}</p>
+          <p style={{ fontSize:13, color:"#666", marginBottom:14, lineHeight:1.5 }}>{lang==="en"?"Speed up your approval by uploading your bank statements, driver's license, and voided check now.":"Acelera tu aprobación subiendo tus estados de cuenta, licencia e cheque anulado ahora."}</p>
+          <button onClick={onBack} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
+            {lang==="en"?"Upload Documents Now →":"Subir Documentos Ahora →"}
+          </button>
         </div>
       </div>
     </div>
@@ -465,149 +485,178 @@ function ApplyPage({ lang, onBack, onSuccess }) {
 
   return (
     <div style={{ minHeight:"100vh", background:"#f5f7fa" }}>
-      <div style={{ background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
+      <style>{APPLY_CSS}</style>
+
+      {/* NAV */}
+      <div style={{ background:"rgba(10,10,10,0.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.08)", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:28, height:28, background:G, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
+          <div style={{ width:28, height:28, background:G, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <span style={{ fontSize:14, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
+          </div>
           <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
         </button>
-        <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(168,255,62,.08)", border:`1px solid ${G}30`, padding:"5px 14px", borderRadius:20 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, background:"rgba(168,255,62,0.08)", border:`1px solid ${G}30`, padding:"5px 14px", borderRadius:20 }}>
           <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
           <span style={{ fontSize:12, color:G, fontWeight:700 }}>📵 {t.noPhone}</span>
         </div>
       </div>
 
-      <div style={{ background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", padding:"44px 24px 56px", textAlign:"center" }}>
-        <h1 style={{ fontSize:"clamp(30px,5vw,50px)", fontWeight:900, color:"#fff", lineHeight:1.1, marginBottom:10, letterSpacing:"-0.02em" }}>
+      {/* HERO SECTION */}
+      <div style={{ background:"linear-gradient(135deg,#0a0a0a 0%,#0d1f0d 100%)", padding:"48px 24px 64px", textAlign:"center" }}>
+        <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(168,255,62,0.1)", border:`1px solid ${G}25`, padding:"5px 16px", borderRadius:20, marginBottom:20 }}>
+          <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
+          <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>Free · No Commitment · {t.noPhone}</span>
+        </div>
+        <h1 style={{ fontSize:"clamp(28px,6vw,48px)", fontWeight:900, color:"#fff", lineHeight:1.1, marginBottom:12, letterSpacing:"-0.02em" }}>
           {t.heroH1} <span style={{ color:G }}>{t.heroH1b}</span>
         </h1>
-        <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", maxWidth:400, margin:"0 auto 32px" }}>{t.heroP}</p>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,0.5)", maxWidth:460, margin:"0 auto 36px", lineHeight:1.7 }}>{t.heroP}</p>
 
+        {/* MAIN FORM CARD */}
         {step===0 && (
-          <div style={{ background:"#fff", borderRadius:18, padding:"36px 32px", maxWidth:560, margin:"0 auto", boxShadow:"0 16px 60px rgba(0,0,0,.35)" }} className="fadeup">
-            <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:24, textAlign:"center", fontFamily:"'DM Sans',sans-serif", letterSpacing:"-0.02em" }}>{t.howMuch}</h2>
-            <div style={{ textAlign:"center", marginBottom:6 }}>
-              <div style={{ fontSize:64, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1, fontFamily:"'Barlow Condensed',sans-serif" }}>{fmtAmt(loanAmt)}</div>
-              <div style={{ fontSize:14, color:"#888", marginTop:8, fontFamily:"'DM Sans',sans-serif" }}>{t.requestedAmt}</div>
+          <div style={card} className="fadeup">
+            <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:6, textAlign:"center" }}>{t.howMuch}</h2>
+            <p style={{ fontSize:13, color:"#888", textAlign:"center", marginBottom:24 }}>Use the slider below</p>
+
+            {/* Amount display */}
+            <div style={{ textAlign:"center", marginBottom:4 }}>
+              <div style={{ fontSize:52, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1 }}>{fmtAmt(loanAmt)}</div>
+              <div style={{ fontSize:13, color:"#888", marginTop:6 }}>{t.requestedAmt}</div>
             </div>
-            <input type="range" min={10000} max={2000000} step={5000} value={loanAmt} onChange={e=>setLoanAmt(Number(e.target.value))} style={{ marginBottom:6 }} />
-            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:24 }}>
-              <span style={{ fontSize:12, color:"#aaa" }}>$10K</span><span style={{ fontSize:12, color:"#aaa" }}>$2M+</span>
+
+            <input type="range" min={10000} max={2000000} step={5000} value={loanAmt}
+              onChange={e=>setLoanAmt(Number(e.target.value))} />
+            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:28 }}>
+              <span style={{ fontSize:12, color:"#aaa" }}>$10K</span>
+              <span style={{ fontSize:12, color:"#aaa" }}>$2M+</span>
             </div>
-            <span style={{ fontSize:13, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:10, display:"block" }}>{t.creditLabel}</span>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8, marginBottom:22, width:"100%" }}>
+
+            {/* Credit score */}
+            <span style={lbl}>{t.creditLabel}</span>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:24 }}>
               {t.creditOpts.map(([val,label,range])=>(
-                <div key={val} onClick={()=>setCreditSel(val)} style={{ border:`2px solid ${creditSel===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"14px 6px", cursor:"pointer", textAlign:"center", background:creditSel===val?"#1a1a1a":"#fff", transition:"all .15s", minWidth:0 }}>
-                  <p style={{ fontSize:14, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:4, fontFamily:"'DM Sans',sans-serif" }}>{label}</p>
-                  <p style={{ fontSize:12, color:creditSel===val?"rgba(255,255,255,.5)":"#888", fontFamily:"'DM Sans',sans-serif" }}>{range}</p>
+                <div key={val} onClick={()=>setCreditSel(val)} style={{ border:`2px solid ${creditSel===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"12px 4px", cursor:"pointer", textAlign:"center", background:creditSel===val?"#1a1a1a":"#fff", transition:"all 0.15s" }}>
+                  <p style={{ fontSize:12, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:2 }}>{label}</p>
+                  <p style={{ fontSize:10, color:creditSel===val?"rgba(255,255,255,0.5)":"#aaa" }}>{range}</p>
                 </div>
               ))}
             </div>
-            <div style={{ background:"linear-gradient(135deg,#0a0a0a,#111)", borderRadius:14, padding:"22px", marginBottom:22, textAlign:"center" }}>
-              <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>{t.qualifyUp}</p>
-              <p style={{ fontSize:60, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
-              <p style={{ fontSize:10, color:"rgba(255,255,255,.25)", marginTop:8 }}>{t.qualNote}</p>
+
+            {/* Qualify result */}
+            <div style={{ background:"linear-gradient(135deg,#0a0a0a,#111)", borderRadius:14, padding:"22px 24px", marginBottom:24, textAlign:"center" }}>
+              <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>{t.qualifyUp}</p>
+              <p style={{ fontSize:44, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
+              <p style={{ fontSize:10, color:"rgba(255,255,255,0.25)", marginTop:8 }}>{t.qualNote}</p>
             </div>
-            <button onClick={()=>setStep(1)} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.getStarted}</button>
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:12 }}>
+
+            <button onClick={()=>setStep(1)} style={btnPrimary}>{t.getStarted}</button>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:14 }}>
               <div style={{ width:14, height:14, background:"#22c55e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:8, flexShrink:0 }}>✓</div>
               <span style={{ fontSize:13, color:"#888" }}>{t.secure}</span>
             </div>
           </div>
         )}
 
+        {/* STEPS 1–4 */}
         {step>0 && (
-          <div style={{ maxWidth:540, margin:"0 auto" }}>
-            <div style={{ display:"flex", gap:8, justifyContent:"center", marginBottom:20 }}>
+          <div style={{ maxWidth:560, margin:"0 auto" }} className="fadeup">
+            {/* Progress */}
+            <div style={{ display:"flex", gap:8, justifyContent:"center", marginBottom:24 }}>
               {t.steps.map((s,i)=>(
-                <div key={s} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:5 }}>
-                  <div style={{ width:36, height:4, borderRadius:2, background:i<step?G:i===step?"#fff":"rgba(255,255,255,.2)", transition:"all .3s" }}></div>
-                  <span style={{ fontSize:10, color:i<=step?"rgba(255,255,255,.7)":"rgba(255,255,255,.25)", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.05em" }}>{s}</span>
+                <div key={s} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
+                  <div style={{ width:36, height:4, borderRadius:2, background:i<step?G:i===step?"#fff":"rgba(255,255,255,0.2)", transition:"all 0.3s" }}></div>
+                  <span style={{ fontSize:10, color:i<=step?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.25)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.05em" }}>{s}</span>
                 </div>
               ))}
             </div>
-            <div style={{ background:"#fff", borderRadius:18, padding:"32px 28px", boxShadow:"0 16px 60px rgba(0,0,0,.35)" }} className="fadeup">
 
+            <div style={card}>
               {step===1 && <>
-                <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[0]}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:22 }}>Tell us what you need.</p>
+                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[0]}</h2>
+                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Tell us what you need.</p>
                 <span style={lbl}>{t.purposeLabel}</span>
-                <select className="fc-sel" value={form.purpose} onChange={e=>set("purpose",e.target.value)}>{t.purposeOpts.map(o=><option key={o}>{o}</option>)}</select>
+                <select className="fc-sel" value={form.purpose} onChange={e=>set("purpose",e.target.value)}>
+                  {t.purposeOpts.map(o=><option key={o}>{o}</option>)}
+                </select>
                 <span style={lbl}>{t.timelineLabel}</span>
-                <select className="fc-sel" value={form.timeline} onChange={e=>set("timeline",e.target.value)}>{t.timelineOpts.map(o=><option key={o}>{o}</option>)}</select>
-                <div style={{ display:"flex", gap:10, marginTop:8 }}>
-                  <button onClick={()=>setStep(0)} style={{ flex:1, background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.backBtn}</button>
-                  <button onClick={()=>setStep(2)} style={{ flex:2, background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.continueBtn}</button>
-                </div>
+                <select className="fc-sel" value={form.timeline} onChange={e=>set("timeline",e.target.value)}>
+                  {t.timelineOpts.map(o=><option key={o}>{o}</option>)}
+                </select>
+                <button onClick={()=>setStep(2)} style={btnDark}>{t.continueBtn}</button>
+                <div><button onClick={()=>setStep(0)} style={btnBack}>{t.backBtn}</button></div>
               </>}
 
               {step===2 && <>
-                <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[1]}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:22 }}>Tell us about your business.</p>
-                <span style={lbl}>{t.companyLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                <input className="fc-inp" placeholder={t.companyPH} value={form.company} onChange={e=>{set("company",e.target.value);setErrors(p=>({...p,company:""}));}} style={errors.company?{...inp,borderColor:"#ef4444"}:inp} />
-                {errors.company && <p style={errStyle}>{errors.company}</p>}
+                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[1]}</h2>
+                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Tell us about your business.</p>
+                <span style={lbl}>{t.companyLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" placeholder={t.companyPH} value={form.company} onChange={e=>{set("company",e.target.value);setErrors(p=>({...p,company:""}));}} style={errors.company?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.company && <p style={{fontSize:12,color:"#ef4444",marginBottom:12}}>{errors.company}</p>}
                 <span style={lbl}>{t.industryLabel}</span>
-                <select className="fc-sel" value={form.industry} onChange={e=>set("industry",e.target.value)}>{t.industryOpts.map(o=><option key={o}>{o}</option>)}</select>
+                <select className="fc-sel" value={form.industry} onChange={e=>set("industry",e.target.value)}>
+                  {t.industryOpts.map(o=><option key={o}>{o}</option>)}
+                </select>
                 <span style={lbl}>{t.yearsLabel}</span>
-                <select className="fc-sel" value={form.years} onChange={e=>set("years",e.target.value)}>{t.yearsOpts.map(o=><option key={o}>{o}</option>)}</select>
+                <select className="fc-sel" value={form.years} onChange={e=>set("years",e.target.value)}>
+                  {t.yearsOpts.map(o=><option key={o}>{o}</option>)}
+                </select>
                 <span style={lbl}>{t.annualLabel}</span>
-                <select className="fc-sel" value={form.annualRev} onChange={e=>set("annualRev",e.target.value)}>{t.annualOpts.map(o=><option key={o}>{o}</option>)}</select>
-                <div style={{ display:"flex", gap:10, marginTop:8 }}>
-                  <button onClick={()=>setStep(1)} style={{ flex:1, background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.backBtn}</button>
-                  <button onClick={()=>{if(validate())setStep(3);}} style={{ flex:2, background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.continueBtn}</button>
+                <select className="fc-sel" value={form.annualRev} onChange={e=>set("annualRev",e.target.value)}>
+                  {t.annualOpts.map(o=><option key={o}>{o}</option>)}
+                </select>
+                <span style={lbl}>{t.creditEstLabel}</span>
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:20 }}>
+                  {t.creditOpts.map(([val,label,range])=>(
+                    <div key={val} onClick={()=>set("creditRating",val)} style={{ border:`2px solid ${form.creditRating===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"10px 4px", cursor:"pointer", textAlign:"center", background:form.creditRating===val?"#1a1a1a":"#fff", transition:"all 0.15s" }}>
+                      <p style={{ fontSize:11, fontWeight:800, color:form.creditRating===val?"#fff":"#1a1a1a", marginBottom:2 }}>{label}</p>
+                      <p style={{ fontSize:10, color:form.creditRating===val?"rgba(255,255,255,0.5)":"#aaa" }}>{range}</p>
+                    </div>
+                  ))}
                 </div>
+                <button onClick={()=>{ if(validateStep2()) setStep(3); }} style={btnDark}>{t.continueBtn}</button>
+                <div><button onClick={()=>setStep(1)} style={btnBack}>{t.backBtn}</button></div>
               </>}
 
               {step===3 && <>
-                <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.accountH}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:22 }}>{t.accountSub}</p>
+                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[2]}</h2>
+                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Almost done — your offer comes here.</p>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
                   <div>
-                    <span style={lbl}>{t.firstNameLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                    <input style={errors.firstName?{...inp,borderColor:"#ef4444"}:inp} placeholder={t.firstNameLabel} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} />
-                    {errors.firstName && <p style={errStyle}>{errors.firstName}</p>}
+                    <span style={lbl}>{t.firstName} <span style={{color:"#ef4444"}}>*</span></span>
+                    <input className="fc-inp" placeholder={t.firstName} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} style={errors.firstName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    {errors.firstName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.firstName}</p>}
                   </div>
                   <div>
-                    <span style={lbl}>{t.lastNameLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                    <input style={errors.lastName?{...inp,borderColor:"#ef4444"}:inp} placeholder={t.lastNameLabel} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} />
-                    {errors.lastName && <p style={errStyle}>{errors.lastName}</p>}
+                    <span style={lbl}>{t.lastName} <span style={{color:"#ef4444"}}>*</span></span>
+                    <input className="fc-inp" placeholder={t.lastName} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} style={errors.lastName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    {errors.lastName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.lastName}</p>}
                   </div>
                 </div>
-                <span style={lbl}>{t.emailLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                <input style={errors.email?{...inp,borderColor:"#ef4444"}:inp} type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} />
-                {errors.email && <p style={errStyle}>{errors.email}</p>}
-                <span style={lbl}>{t.passwordLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                <input style={errors.password?{...inp,borderColor:"#ef4444"}:inp} type="password" placeholder={t.passwordPH} value={form.password} onChange={e=>{set("password",e.target.value);setErrors(p=>({...p,password:""}));}} />
-                {errors.password && <p style={errStyle}>{errors.password}</p>}
-                <span style={lbl}>{t.phoneLabel} <span style={{ color:"#ef4444" }}>*</span></span>
-                <input style={errors.phone?{...inp,borderColor:"#ef4444"}:inp} type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",formatPhone(e.target.value));setErrors(p=>({...p,phone:""}));}} />
-                {errors.phone && <p style={errStyle}>{errors.phone}</p>}
-                <div style={{ display:"flex", gap:10, marginTop:8 }}>
-                  <button onClick={()=>setStep(2)} style={{ flex:1, background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.backBtn}</button>
-                  <button onClick={()=>{if(validate())setStep(4);}} style={{ flex:2, background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.continueBtn}</button>
-                </div>
+                <span style={lbl}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} style={errors.email?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.email && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.email}</p>}
+                <span style={lbl}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <input className="fc-inp" type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",e.target.value);setErrors(p=>({...p,phone:""}));}} style={errors.phone?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                {errors.phone && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.phone}</p>}
+                <button onClick={()=>{ if(validateStep3()) setStep(4); }} style={btnDark}>{t.continueBtn}</button>
+                <div><button onClick={()=>setStep(2)} style={btnBack}>{t.backBtn}</button></div>
               </>}
 
               {step===4 && <>
-                <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.summaryTitle}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:22 }}>{t.summarySub}</p>
-                <div style={{ background:"#f9fafb", borderRadius:12, padding:"14px 18px", marginBottom:16 }}>
+                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.reviewTitle}</h2>
+                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>{t.reviewSub}</p>
+                <div style={{ background:"#f9fafb", borderRadius:12, padding:"16px 18px", marginBottom:16 }}>
                   {t.summaryKeys.map((k,i)=>{
-                    const vals=[fmtAmt(loanAmt),form.purpose,form.timeline,form.company,form.industry,form.annualRev,form.creditRating,form.email,form.phone];
+                    const vals=[fmtAmt(loanAmt),form.purpose,form.timeline,form.company,form.industry,form.annualRev,form.creditRating,(form.firstName+" "+form.lastName).trim(),form.email,form.phone];
                     return <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"0.5px solid #eee" }}><span style={{ fontSize:13, color:"#888" }}>{k}</span><span style={{ fontSize:13, fontWeight:700, color:"#1a1a1a" }}>{vals[i]||"—"}</span></div>;
                   })}
                 </div>
-                <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"10px 14px", marginBottom:16 }}>
+                <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 14px", marginBottom:18 }}>
                   <p style={{ fontSize:12, color:"#166534", lineHeight:1.6 }}>🔒 {t.disclaimer}</p>
                 </div>
-                <div style={{ display:"flex", gap:10 }}>
-                  <button onClick={()=>setStep(3)} style={{ flex:1, background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.backBtn}</button>
-                  <button onClick={handleSubmit} disabled={sending} style={{ flex:2, background:sending?"#ccc":G, color:"#000", border:"none", padding:14, borderRadius:12, fontSize:14, fontWeight:900, cursor:sending?"not-allowed":"pointer", fontFamily:"'DM Sans',sans-serif" }}>
-                    {sending?(lang==="es"?"Enviando...":"Submitting..."):t.submitBtn}
-                  </button>
-                </div>
+                <button onClick={handleSubmit} style={btnPrimary}>{t.submitBtn}</button>
+                <div><button onClick={()=>setStep(3)} style={btnBack}>{t.backBtn}</button></div>
               </>}
-
             </div>
           </div>
         )}
@@ -615,13 +664,13 @@ function ApplyPage({ lang, onBack, onSuccess }) {
         {/* Trust stats */}
         {step===0 && (
           <div style={{ display:"flex", justifyContent:"center", gap:32, marginTop:36, flexWrap:"wrap" }}>
-            {[["$750M+","Funded"],["8,200+","Businesses"],["4.9★","Rating"],["2 hrs","Decision"]].map(([v,l],i)=>(
+            {[["$750M+","Funded"],["8,200+","Businesses Helped"],["4.9★","Google Rating"],["2 hrs","Avg Decision"]].map(([v,l],i)=>(
               <React.Fragment key={l}>
                 <div style={{ textAlign:"center" }}>
-                  <div style={{ fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.5px" }}>{v}</div>
-                  <div style={{ fontSize:11, color:"rgba(255,255,255,.4)", marginTop:3, textTransform:"uppercase", letterSpacing:"0.05em" }}>{l}</div>
+                  <div style={{ fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.5px" }}>{v}</div>
+                  <div style={{ fontSize:11, color:"rgba(255,255,255,0.45)", marginTop:3, textTransform:"uppercase", letterSpacing:"0.05em" }}>{l}</div>
                 </div>
-                {i<3 && <div style={{ width:1, background:"rgba(255,255,255,.12)", alignSelf:"stretch" }}></div>}
+                {i<3 && <div style={{ width:1, background:"rgba(255,255,255,0.12)", alignSelf:"stretch" }}></div>}
               </React.Fragment>
             ))}
           </div>
