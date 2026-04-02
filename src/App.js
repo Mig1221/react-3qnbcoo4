@@ -368,8 +368,6 @@ function UploadPage({ lang, appId, onBack }) {
 }
 
 // ── APPLY PAGE ───────────────────────────────────────────────────
-APPLY PAGE — iAdvance style
-══════════════════════════════════════════════════════════════════ */
 function ApplyPage({ lang, onBack }) {
   const t = TRANSLATIONS[lang].apply;
   const [step, setStep] = useState(0);
