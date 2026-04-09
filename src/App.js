@@ -103,6 +103,30 @@ const CSS = `
   .lang-pill { display:flex; border:1px solid rgba(255,255,255,.15); border-radius:20px; overflow:hidden; }
   .lb { padding:5px 14px; font-size:12px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all .15s; }
   .pill { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+  @media (max-width:768px) {
+    .hero-grid { grid-template-columns:1fr !important; gap:40px !important; }
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .how-grid { grid-template-columns:1fr !important; }
+    .products-grid { grid-template-columns:1fr !important; }
+    .reviews-grid { grid-template-columns:1fr !important; }
+    .why-grid { grid-template-columns:1fr !important; gap:40px !important; }
+    .dash-wrap { flex-direction:column !important; }
+    .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:8px 0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
+    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:8px 16px !important; }
+    .sb-item.active { border-bottom-color:#a8ff3e !important; border-left-color:transparent !important; }
+    .metrics-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .nav-desktop { display:none !important; }
+    .nav-mobile { display:flex !important; }
+    .offer-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .admin-wrap { flex-direction:column !important; }
+    .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
+  }
+  @media (max-width:480px) {
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .metrics-grid { grid-template-columns:1fr 1fr !important; }
+    .offer-grid { grid-template-columns:1fr 1fr !important; }
+    .hero-btns { flex-direction:column !important; }
+  }
   .pill.green { background:rgba(168,255,62,.12); color:#a8ff3e; }
   .pill.yellow { background:rgba(245,158,11,.12); color:#f59e0b; }
   .pill.blue { background:rgba(96,165,250,.12); color:#60a5fa; }
@@ -832,7 +856,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.greeting}, {user.firstName} 👋</h2>
               <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>{t.snapshot}</p>
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
+            <div className="metrics-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
               {[["Active Credit","$0","No active loans yet",""],["Pending Offers",pendingOffers.length.toString(),"Awaiting review",""],["Application",myApp?"Under Review":"—","Submitted",""],["Next Payment","—","No payments yet",""]].map(([l,v,s])=>(
                 <div key={l} className="metric">
                   <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8 }}>{l}</p>
@@ -880,7 +904,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                   <span className="pill green">New Offer</span>
                 </div>
                 <p style={{ fontSize:42, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", marginBottom:4 }}>{offer.amount}</p>
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, margin:"16px 0" }}>
+                <div className="offer-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, margin:"16px 0" }}>
                   {[["Term",offer.term],["Payment",offer.payment],["Rate",offer.rate],["Funding","Same Day"]].map(([k,v])=>(
                     <div key={k} style={{ background:"rgba(255,255,255,.04)", borderRadius:8, padding:10 }}>
                       <p style={{ fontSize:10, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:3 }}>{k}</p>
@@ -983,6 +1007,69 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
           </div>
         )}
 
+      </div>
+    </div>
+  );
+}
+
+
+// ── ADMIN GATE ───────────────────────────────────────────────────
+const ADMIN_PASSWORD = "Miguel12211221!";
+
+function AdminGate({ onExit }) {
+  const [pw, setPw] = useState("");
+  const [authed, setAuthed] = useState(false);
+  const [error, setError] = useState("");
+  const [showPw, setShowPw] = useState(false);
+
+  const handleLogin = () => {
+    if (pw === ADMIN_PASSWORD) {
+      setAuthed(true);
+      setError("");
+    } else {
+      setError("Incorrect password.");
+      setPw("");
+    }
+  };
+
+  if (authed) return (
+    <div style={{ background:"#f5f4f0", minHeight:"100vh" }}>
+      <style>{CSS}</style>
+      <div style={{ background:"#0a0a0a", padding:"0 5%", height:56, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <span style={{ fontSize:18, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+          <span style={{ marginLeft:8, fontSize:11, color:"rgba(255,255,255,.4)", background:"rgba(255,255,255,.08)", padding:"3px 10px", borderRadius:20, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em" }}>Admin</span>
+        </div>
+        <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.4)", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit</button>
+      </div>
+      <AdminDashboard onExit={onExit} />
+    </div>
+  );
+
+  return (
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+      <style>{CSS}</style>
+      <div style={{ background:"#fff", borderRadius:20, padding:"48px 40px", maxWidth:400, width:"100%", textAlign:"center" }}>
+        <div style={{ width:64, height:64, background:"#0a0a0a", borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px" }}>
+          <span style={{ fontSize:28, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:G }}>A</span>
+        </div>
+        <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>Admin Access</h2>
+        <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>Enter your admin password to continue.</p>
+        {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:13, color:"#dc2626" }}>{error}</p></div>}
+        <div style={{ position:"relative", marginBottom:20 }}>
+          <input
+            type={showPw?"text":"password"}
+            placeholder="Admin password"
+            value={pw}
+            onChange={e=>setPw(e.target.value)}
+            onKeyDown={e=>e.key==="Enter"&&handleLogin()}
+            style={{ width:"100%", padding:"13px 44px 13px 16px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:15, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }}
+          />
+          <button onClick={()=>setShowPw(p=>!p)} style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#aaa", fontSize:14 }}>{showPw?"Hide":"Show"}</button>
+        </div>
+        <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:16 }}>Enter Admin Panel →</button>
+        <button onClick={onExit} style={{ background:"none", border:"none", color:"#888", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Back to site</button>
       </div>
     </div>
   );
@@ -1162,8 +1249,317 @@ function AdminDashboard({ onExit }) {
   );
 }
 
+
+// ── PRODUCTS PAGE ────────────────────────────────────────────────
+function ProductsPage({ lang, onBack, onApply }) {
+  const products = [
+    {
+      icon:"→", name:lang==="es"?"Préstamo a Plazo":"Term Loan",
+      range:"$10K – $500K", term:lang==="es"?"3–24 meses":"3–24 months",
+      color:"#a8ff3e",
+      tagline:lang==="es"?"Capital fijo para grandes movimientos.":"Fixed capital for big moves.",
+      desc:lang==="es"
+        ?"Un préstamo a plazo te da una suma fija de dinero que pagas en cuotas mensuales fijas durante un período establecido. Ideal para inversiones únicas como expansión de ubicación, contratación de personal, renovaciones o compras de equipo grande."
+        :"A term loan gives you a fixed lump sum of money that you repay in fixed monthly installments over a set period. Ideal for one-time investments like location expansion, hiring staff, renovations, or large equipment purchases.",
+      best:lang==="es"?["Expansión de negocio","Renovaciones","Contratación","Compra de equipo grande"]:["Business expansion","Renovations","Hiring staff","Large equipment purchases"],
+      reqs:lang==="es"?["6+ meses en operación","$10K+ ingresos mensuales","580+ puntaje de crédito","Sin llamadas telefónicas"]:["6+ months in business","$10K+ monthly revenue","580+ credit score","No phone call required"],
+      how:lang==="es"?"Recibes el monto completo de una vez. Los pagos son fijos cada mes, lo que facilita la planificación. Las tasas dependen de tu historial crediticio e ingresos.":"You receive the full amount upfront. Payments are fixed each month, making planning easy. Rates depend on your credit history and revenue.",
+    },
+    {
+      icon:"⟳", name:lang==="es"?"Línea de Crédito":"Line of Credit",
+      range:"$10K – $5M", term:lang==="es"?"Revolvente":"Revolving",
+      color:"#60a5fa",
+      tagline:lang==="es"?"Accede a fondos cuando los necesites.":"Access funds exactly when you need them.",
+      desc:lang==="es"
+        ?"Una línea de crédito revolvente te da acceso a un límite de crédito que puedes usar, pagar y usar de nuevo. Solo pagas intereses sobre lo que usas. Perfecta para negocios con flujo de caja variable o necesidades de capital de trabajo continuas."
+        :"A revolving line of credit gives you access to a credit limit you can draw from, repay, and draw again. You only pay interest on what you use. Perfect for businesses with variable cash flow or ongoing working capital needs.",
+      best:lang==="es"?["Capital de trabajo","Inventario estacional","Gastos inesperados","Nómina"]:["Working capital","Seasonal inventory","Unexpected expenses","Payroll"],
+      reqs:lang==="es"?["6+ meses en operación","$15K+ ingresos mensuales","600+ puntaje de crédito","Sin llamadas telefónicas"]:["6+ months in business","$15K+ monthly revenue","600+ credit score","No phone call required"],
+      how:lang==="es"?"Aprobado una vez, accedes a tu límite cuando lo necesitas. El límite se repone automáticamente al pagar. Sin restricciones sobre cómo usar los fondos.":"Approved once, draw when needed. Limit replenishes automatically as you repay. No restrictions on how you use the funds.",
+    },
+    {
+      icon:"⚡", name:lang==="es"?"Adelanto de Ingresos":"Revenue-Based Advance",
+      range:"$5K – $500K", term:lang==="es"?"Pago diario/semanal":"Daily/weekly repayment",
+      color:"#f59e0b",
+      tagline:lang==="es"?"Fondos rápidos basados en tus ingresos.":"Fast funding based on your revenue.",
+      desc:lang==="es"
+        ?"Un adelanto de ingresos te da capital rápido a cambio de un porcentaje de tus ventas futuras. Los pagos son automáticos y se ajustan con tus ingresos — pagas más cuando ganas más, menos cuando ganas menos."
+        :"A revenue-based advance gives you fast capital in exchange for a percentage of your future sales. Payments are automatic and flex with your revenue — you pay more when you earn more, less when you earn less.",
+      best:lang==="es"?["Negocios con ventas con tarjeta","Restaurantes","Retail","Necesidades urgentes de capital"]:["Card-processing businesses","Restaurants","Retail","Urgent capital needs"],
+      reqs:lang==="es"?["3+ meses en operación","$10K+ ingresos mensuales","No se requiere puntaje mínimo","Sin llamadas"]:["3+ months in business","$10K+ monthly revenue","No minimum credit score required","No phone call"],
+      how:lang==="es"?"Aprobación en horas. Los pagos se toman automáticamente de tus ventas diarias o semanales. Sin pagos fijos — se ajusta a tu flujo de caja.":"Approved in hours. Payments are taken automatically from your daily or weekly sales. No fixed payments — adjusts to your cash flow.",
+    },
+    {
+      icon:"⚙", name:lang==="es"?"Financiamiento de Equipo":"Equipment Financing",
+      range:"$5K – $2M", term:lang==="es"?"Hasta 60 meses":"Up to 60 months",
+      color:"#c084fc",
+      tagline:lang==="es"?"Financia el equipo que hace crecer tu negocio.":"Finance the equipment that grows your business.",
+      desc:lang==="es"
+        ?"El financiamiento de equipo te permite adquirir la maquinaria, vehículos o tecnología que necesitas sin agotar tu capital de trabajo. El equipo mismo sirve como colateral, lo que significa tasas más bajas y aprobación más fácil."
+        :"Equipment financing lets you acquire the machinery, vehicles, or technology you need without draining your working capital. The equipment itself serves as collateral, meaning lower rates and easier approval.",
+      best:lang==="es"?["Vehículos comerciales","Maquinaria","Tecnología y software","Equipo médico"]:["Commercial vehicles","Machinery","Technology & software","Medical equipment"],
+      reqs:lang==="es"?["6+ meses en operación","$8K+ ingresos mensuales","560+ puntaje de crédito","Sin llamadas"]:["6+ months in business","$8K+ monthly revenue","560+ credit score","No phone call"],
+      how:lang==="es"?"El equipo es el colateral, lo que facilita la aprobación incluso con crédito limitado. Pagas a plazos fijos. Al final del término, el equipo es tuyo.":"The equipment is the collateral, making approval easier even with limited credit. You pay fixed installments. At term end, the equipment is yours.",
+    },
+  ];
+
+  return (
+    <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
+      <style>{CSS}</style>
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
+        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
+        </button>
+        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
+      </nav>
+
+      <div style={{ padding:"64px 5% 80px", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:64 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
+          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Encuentra el producto correcto para tu negocio. Sin vendedores. Sin llamadas.":"Find the right product for your business. No salespeople. No phone calls."}</p>
+        </div>
+
+        {products.map((p,i)=>(
+          <div key={p.name} style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"40px 44px", marginBottom:20, position:"relative", overflow:"hidden" }}>
+            <div style={{ position:"absolute", top:0, left:0, width:4, bottom:0, background:p.color, borderRadius:"16px 0 0 16px" }}></div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }}>
+              <div>
+                <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
+                  <div style={{ width:48, height:48, background:`${p.color}15`, border:`1px solid ${p.color}40`, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, color:p.color }}>{p.icon}</div>
+                  <div>
+                    <h2 className="cond" style={{ fontSize:28, fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.01em" }}>{p.name}</h2>
+                    <p style={{ fontSize:13, color:p.color, fontWeight:700 }}>{p.tagline}</p>
+                  </div>
+                </div>
+                <p style={{ fontSize:15, color:"rgba(255,255,255,.55)", lineHeight:1.85, marginBottom:24, fontWeight:300 }}>{p.desc}</p>
+                <div style={{ display:"flex", gap:20, marginBottom:24 }}>
+                  <div style={{ background:"rgba(255,255,255,.04)", borderRadius:10, padding:"14px 18px", flex:1 }}>
+                    <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:5 }}>{lang==="es"?"Monto":"Amount"}</p>
+                    <p style={{ fontSize:18, fontWeight:800, color:p.color }}>{p.range}</p>
+                  </div>
+                  <div style={{ background:"rgba(255,255,255,.04)", borderRadius:10, padding:"14px 18px", flex:1 }}>
+                    <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:5 }}>{lang==="es"?"Plazo":"Term"}</p>
+                    <p style={{ fontSize:18, fontWeight:800, color:"#fff" }}>{p.term}</p>
+                  </div>
+                </div>
+                <button onClick={onApply} style={{ background:p.color, color:"#000", border:"none", padding:"13px 32px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+              </div>
+              <div>
+                <div style={{ marginBottom:24 }}>
+                  <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>{lang==="es"?"Mejor para":"Best For"}</p>
+                  {p.best.map(b=>(
+                    <div key={b} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
+                      <div style={{ width:20, height:20, background:`${p.color}20`, border:`1px solid ${p.color}50`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                        <span style={{ fontSize:9, color:p.color, fontWeight:800 }}>✓</span>
+                      </div>
+                      <span style={{ fontSize:14, color:"rgba(255,255,255,.65)" }}>{b}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.06)", borderRadius:12, padding:"18px 20px", marginBottom:20 }}>
+                  <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:10 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</p>
+                  <p style={{ fontSize:14, color:"rgba(255,255,255,.5)", lineHeight:1.7, fontWeight:300 }}>{p.how}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:12 }}>{lang==="es"?"Requisitos":"Requirements"}</p>
+                  {p.reqs.map(r=>(
+                    <div key={r} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+                      <div style={{ width:6, height:6, background:G, borderRadius:"50%", flexShrink:0 }}></div>
+                      <span style={{ fontSize:13, color:"rgba(255,255,255,.5)" }}>{r}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── HOW IT WORKS PAGE ─────────────────────────────────────────────
+function HowItWorksPage({ lang, onBack, onApply }) {
+  const steps = lang==="es" ? [
+    { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"📋",
+      desc:"Llena nuestra solicitud inteligente en línea. Sin entrevistas telefónicas. Sin papeleo. Solo información básica sobre tu negocio y lo que necesitas.", details:["Información básica del negocio","Monto de financiamiento deseado","Propósito de los fondos","Sube 3-6 meses de estados bancarios"] },
+    { n:"02", title:"Crea Tu Cuenta", time:"30 segundos", icon:"👤",
+      desc:"Crea tu cuenta segura de Aprovuit. Aquí rastrearás todo — tu solicitud, ofertas, documentos y mensajes con tu asesor.", details:["Correo electrónico y contraseña","Verificación de identidad por SMS","Portal personal con dashboard en tiempo real","Sin instalación de app requerida"] },
+    { n:"03", title:"Revisión de Solicitud", time:"2-4 horas", icon:"🔍",
+      desc:"Nuestro equipo revisa tu solicitud. Evaluamos ingresos, historial crediticio y la salud general de tu negocio. Sin llamadas telefónicas de nuestra parte.", details:["Consulta suave de crédito (sin impacto)","Análisis de estados bancarios","Evaluación de ingresos mensuales","Comunicación 100% por escrito"] },
+    { n:"04", title:"Recibe tu Oferta", time:"En tu dashboard", icon:"💼",
+      desc:"Tu oferta personalizada aparece directamente en tu portal y en tu correo. Cada término es transparente — monto, tasa, pagos mensuales, todo claro antes de aceptar.", details:["Monto aprobado","Tasa de interés o factor","Calendario de pagos","Fecha estimada de fondeo"] },
+    { n:"05", title:"Acepta y Recibe Fondos", time:"Mismo día", icon:"🚀",
+      desc:"Acepta tu oferta con un clic. Sin presión. Sin llamadas. Si aceptas antes de las 3pm EST, los fondos llegan el mismo día hábil.", details:["Acepta o rechaza con un clic","Sin presión de vendedores","Fondos via transferencia ACH","Confirmación inmediata por correo"] },
+    { n:"06", title:"Administra tu Financiamiento", time:"En cualquier momento", icon:"📊",
+      desc:"Rastrea tu saldo, pagos y renovaciones directamente en tu portal. Cuando seas elegible para renovación, aparece en tu dashboard — sin llamadas frías.", details:["Balance en tiempo real","Historial de pagos","Elegibilidad de renovación automática","Soporte por mensaje directo"] },
+  ] : [
+    { n:"01", title:"Complete Your Application", time:"5 minutes", icon:"📋",
+      desc:"Fill out our smart online application. No phone interviews. No paperwork. Just basic information about your business and what you need.", details:["Basic business information","Desired funding amount","Purpose of funds","Upload 3-6 months of bank statements"] },
+    { n:"02", title:"Create Your Account", time:"30 seconds", icon:"👤",
+      desc:"Create your secure Aprovuit account. This is where you'll track everything — your application, offers, documents, and messages with your advisor.", details:["Email and password","SMS identity verification","Personal dashboard with real-time tracking","No app download required"] },
+    { n:"03", title:"Application Review", time:"2-4 hours", icon:"🔍",
+      desc:"Our team reviews your application. We evaluate your revenue, credit history, and overall business health. No phone calls from our side — ever.", details:["Soft credit pull (zero impact to score)","Bank statement analysis","Monthly revenue evaluation","100% written communication"] },
+    { n:"04", title:"Receive Your Offer", time:"In your dashboard", icon:"💼",
+      desc:"Your personalized offer appears directly in your portal and via email. Every term is transparent — amount, rate, monthly payments, all clear before you accept.", details:["Approved amount","Interest rate or factor rate","Payment schedule","Estimated funding date"] },
+    { n:"05", title:"Accept & Get Funded", time:"Same day", icon:"🚀",
+      desc:"Accept your offer with one click. No pressure. No phone calls. Accept before 3pm EST and funds arrive the same business day.", details:["Accept or decline with one click","No salesperson pressure","Funds via ACH transfer","Immediate email confirmation"] },
+    { n:"06", title:"Manage Your Funding", time:"Anytime", icon:"📊",
+      desc:"Track your balance, payments, and renewal eligibility directly in your portal. When you're eligible for renewal, it shows up in your dashboard — no cold calls.", details:["Real-time balance tracking","Payment history","Automatic renewal eligibility","Direct message support"] },
+  ];
+
+  return (
+    <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
+      <style>{CSS}</style>
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
+        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
+        </button>
+        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
+      </nav>
+      <div style={{ padding:"64px 5% 80px", maxWidth:900, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:72 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
+          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — no calls, no salespeople, no surprises."}</p>
+        </div>
+        {steps.map((s,i)=>(
+          <div key={s.n} style={{ display:"flex", gap:32, marginBottom:40, position:"relative" }}>
+            {i < steps.length-1 && <div style={{ position:"absolute", left:23, top:56, bottom:-40, width:2, background:"rgba(255,255,255,.06)" }}></div>}
+            <div style={{ flexShrink:0 }}>
+              <div style={{ width:48, height:48, background:i===0||i===4?G:"#1a1a1a", border:`2px solid ${i===0||i===4?G:"rgba(255,255,255,.1)"}`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>{s.icon}</div>
+            </div>
+            <div style={{ flex:1, background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:14, padding:"28px 32px" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:12, flexWrap:"wrap", gap:8 }}>
+                <div>
+                  <span className="cond" style={{ fontSize:13, color:"rgba(255,255,255,.3)", letterSpacing:"0.1em" }}>{s.n}</span>
+                  <h3 className="cond" style={{ fontSize:24, fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.01em" }}>{s.title}</h3>
+                </div>
+                <span style={{ background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", color:G, fontSize:12, fontWeight:700, padding:"4px 12px", borderRadius:20, whiteSpace:"nowrap" }}>⏱ {s.time}</span>
+              </div>
+              <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:20, fontWeight:300 }}>{s.desc}</p>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:8 }}>
+                {s.details.map(d=>(
+                  <div key={d} style={{ display:"flex", alignItems:"center", gap:8 }}>
+                    <div style={{ width:6, height:6, background:G, borderRadius:"50%", flexShrink:0 }}></div>
+                    <span style={{ fontSize:13, color:"rgba(255,255,255,.45)" }}>{d}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+        <div style={{ background:G, borderRadius:16, padding:"40px 48px", textAlign:"center", marginTop:24 }}>
+          <h2 className="cond" style={{ fontSize:36, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:12 }}>{lang==="es"?"¿Listo para Comenzar?":"Ready to Get Started?"}</h2>
+          <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:24 }}>{lang==="es"?"Aplica en 5 minutos. Sin llamadas. Sin compromiso.":"Apply in 5 minutes. No calls. No commitment."}</p>
+          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"14px 40px", borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── FAQ PAGE ──────────────────────────────────────────────────────
+function FAQPage({ lang, onBack, onApply }) {
+  const [open, setOpen] = useState(null);
+  const categories = lang==="es" ? [
+    { cat:"Elegibilidad", items:[
+      ["¿Cuáles son los requisitos mínimos?","Para calificar necesitas: 6+ meses en operación, $10,000+ en ingresos mensuales, y un puntaje de crédito de 580+. Evaluamos la salud completa de tu negocio, no solo tu puntaje de crédito."],
+      ["¿Mi puntaje de crédito afecta la aprobación?","El crédito es un factor, pero no el único. Evaluamos ingresos, tiempo en operación, flujo de caja y tipo de negocio. Muchos clientes con crédito de 580-620 son aprobados."],
+      ["¿Qué tipos de negocios califican?","La mayoría de negocios legítimos califican — retail, restaurantes, construcción, salud, transporte, servicios profesionales, y más. Negocios que no califican incluyen casinos, negocios ilegales y algunas industrias restringidas."],
+      ["¿Cuánto tiempo necesito en operación?","Generalmente 6 meses mínimo para la mayoría de productos. Algunos adelantos de ingresos requieren solo 3 meses."],
+    ]},
+    { cat:"Proceso y Tiempos", items:[
+      ["¿Cuánto tiempo toma la aprobación?","La mayoría de decisiones llegan en 2–4 horas durante horario comercial. Casos más complejos pueden tomar hasta 24 horas."],
+      ["¿Cuándo recibiré los fondos?","Si aceptas tu oferta antes de las 3pm EST en un día hábil, los fondos generalmente llegan el mismo día. Aceptaciones después de las 3pm llegan el siguiente día hábil."],
+      ["¿Necesito hablar por teléfono?","Nunca. Todo el proceso ocurre en tu portal — solicitud, revisión, ofertas, mensajes y renovaciones. Sin llamadas requeridas."],
+      ["¿Qué documentos necesito?","Básicamente: información del negocio, 3-6 meses de estados de cuenta bancarios, licencia de conducir y un cheque anulado. Todo se sube directamente en el portal."],
+    ]},
+    { cat:"Crédito y Tasas", items:[
+      ["¿Aplicar afectará mi puntaje de crédito?","No. Nuestra revisión inicial usa una consulta suave — cero impacto en tu puntaje. Solo si aceptas una oferta se realiza una consulta dura."],
+      ["¿Cuáles son las tasas de interés?","Las tasas varían según el producto, monto, término e historial crediticio. Verás todos los términos claramente en tu oferta antes de aceptar — sin sorpresas."],
+      ["¿Hay cargos por prepago?","Depende del producto. Los préstamos a plazo generalmente no tienen penalidades por prepago. Los adelantos de ingresos y líneas de crédito tienen estructuras diferentes. Todo se especifica en tu oferta."],
+    ]},
+    { cat:"Tu Portal y Cuenta", items:[
+      ["¿Cómo accedo a mi portal?","En aprovuit.com haz clic en 'Entrar'. Usa el correo y contraseña que creaste al aplicar. Hay verificación por SMS por seguridad."],
+      ["¿Puedo rastrear mi solicitud en tiempo real?","Sí. Tu portal muestra exactamente en qué etapa está tu solicitud — Aplicado, En Revisión, Aprobado, Oferta Enviada, Fondos Recibidos."],
+      ["¿Cómo me comunico con mi asesor?","Directamente en tu portal en la sección de Mensajes. Sin llamadas — todo por escrito para que tengas un registro de todo."],
+      ["¿Qué pasa cuando soy elegible para renovación?","Aparece automáticamente en tu portal. Sin llamadas frías. Sin vendedores. Simplemente aparece cuando estás listo."],
+    ]},
+  ] : [
+    { cat:"Eligibility", items:[
+      ["What are the minimum requirements?","To qualify you need: 6+ months in business, $10,000+ in monthly revenue, and a 580+ credit score. We evaluate your full business health, not just your credit score."],
+      ["Does my credit score affect approval?","Credit is a factor, but not the only one. We evaluate revenue, time in business, cash flow, and business type. Many clients with 580-620 credit are approved."],
+      ["What types of businesses qualify?","Most legitimate businesses qualify — retail, restaurants, construction, healthcare, transportation, professional services, and more. Businesses that don't qualify include casinos, illegal businesses, and some restricted industries."],
+      ["How long do I need to be in business?","Generally 6 months minimum for most products. Some revenue advances require only 3 months."],
+    ]},
+    { cat:"Process & Timing", items:[
+      ["How long does approval take?","Most decisions come within 2–4 hours during business hours. More complex cases may take up to 24 hours."],
+      ["When will I receive my funds?","If you accept your offer before 3pm EST on a business day, funds generally arrive the same day. Acceptances after 3pm arrive the next business day."],
+      ["Do I need to get on the phone?","Never. The entire process happens in your portal — application, review, offers, messages, and renewals. No phone calls required."],
+      ["What documents do I need?","Basically: business information, 3-6 months of bank statements, driver's license, and a voided check. Everything is uploaded directly in the portal."],
+    ]},
+    { cat:"Credit & Rates", items:[
+      ["Will applying hurt my credit score?","No. Our initial review uses a soft pull — zero impact to your score. Only if you accept an offer is a hard pull performed."],
+      ["What are the interest rates?","Rates vary by product, amount, term, and credit history. You'll see all terms clearly in your offer before accepting — no surprises."],
+      ["Are there prepayment penalties?","Depends on the product. Term loans generally have no prepayment penalties. Revenue advances and lines of credit have different structures. All specified in your offer."],
+    ]},
+    { cat:"Your Portal & Account", items:[
+      ["How do I access my portal?","At aprovuit.com click 'Log In'. Use the email and password you created when applying. SMS verification adds security."],
+      ["Can I track my application in real time?","Yes. Your portal shows exactly what stage your application is at — Applied, Under Review, Approved, Offer Sent, Funded."],
+      ["How do I communicate with my advisor?","Directly in your portal in the Messages section. No calls — everything in writing so you have a record of everything."],
+      ["What happens when I'm eligible for renewal?","It shows up automatically in your portal. No cold calls. No salespeople. It simply appears when you're ready."],
+    ]},
+  ];
+
+  return (
+    <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
+      <style>{CSS}</style>
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
+        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
+        </button>
+        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
+      </nav>
+      <div style={{ padding:"64px 5% 80px", maxWidth:860, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:64 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
+          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:480, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Todo lo que necesitas saber sobre financiamiento con Aprovuit.":"Everything you need to know about funding with Aprovuit."}</p>
+        </div>
+        {categories.map((cat,ci)=>(
+          <div key={cat.cat} style={{ marginBottom:40 }}>
+            <h2 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", color:G, marginBottom:16, letterSpacing:"0.02em" }}>{cat.cat}</h2>
+            {cat.items.map(([q,a],i)=>{
+              const key = `${ci}-${i}`;
+              return (
+                <div key={key} style={{ borderBottom:"1px solid rgba(255,255,255,.07)" }}>
+                  <button onClick={()=>setOpen(open===key?null:key)} style={{ width:"100%", background:"none", border:"none", color:"#fff", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"20px 0", cursor:"pointer", textAlign:"left", fontFamily:"'DM Sans',sans-serif", gap:16 }}>
+                    <span style={{ fontSize:16, fontWeight:600, lineHeight:1.4 }}>{q}</span>
+                    <span style={{ fontSize:20, color:"rgba(255,255,255,.3)", flexShrink:0, transition:"transform .2s", transform:open===key?"rotate(45deg)":"none" }}>+</span>
+                  </button>
+                  {open===key && <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:20, fontWeight:300 }}>{a}</p>}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+        <div style={{ background:G, borderRadius:16, padding:"36px 48px", textAlign:"center", marginTop:16 }}>
+          <h2 className="cond" style={{ fontSize:32, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:10 }}>{lang==="es"?"¿Tienes más preguntas?":"Still have questions?"}</h2>
+          <p style={{ fontSize:15, color:"rgba(0,0,0,.6)", marginBottom:20 }}>{lang==="es"?"Aplica y tu asesor responderá todo en tu portal.":"Apply and your advisor will answer everything in your portal."}</p>
+          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"13px 36px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
-function Landing({ lang, onApply, onLogin, onAdmin }) {
+function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
   const t = T[lang];
   const [faqOpen, setFaqOpen] = useState(null);
 
@@ -1172,7 +1568,7 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
       {/* HERO */}
       <section style={{ minHeight:"92vh", display:"flex", alignItems:"center", padding:"80px 5%", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(circle at 15% 50%, ${G}12 0%, transparent 55%), radial-gradient(circle at 85% 20%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
-        <div style={{ maxWidth:1100, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
+        <div className="hero-grid" style={{ maxWidth:1100, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
           <div className="fadeup">
             <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}33`, padding:"6px 16px", borderRadius:20, marginBottom:28 }}>
               <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
@@ -1231,7 +1627,7 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
 
       {/* STATS */}
       <section style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
+        <div className="stats-grid" style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
           {t.stats.map(([v,l],i)=>(
             <div key={l} style={{ padding:"36px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.06)":"none" }}>
               <div className="cond" style={{ fontSize:48, fontWeight:900, color:G, letterSpacing:"-0.02em", lineHeight:1 }}>{v}</div>
@@ -1242,12 +1638,12 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
+      <section id="how-it-works" style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:60 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
-          <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>{t.how.h}</h2>
+          <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onHowItWorks}>{t.how.h}</h2>
         </div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+        <div className="how-grid" className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
           {t.how.steps.map(([n,title,desc],i)=>(
             <div key={n} style={{ background:i===1?G:BK3, color:i===1?"#000":"#fff", padding:"44px 36px", border:`1px solid ${i===1?G:"rgba(255,255,255,.06)"}`, borderRadius:i===0?"10px 0 0 10px":i===2?"0 10px 10px 0":"0" }}>
               <div className="cond" style={{ fontSize:56, fontWeight:900, opacity:.12, marginBottom:20, letterSpacing:"-0.04em" }}>{n}</div>
@@ -1264,11 +1660,11 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:44, flexWrap:"wrap", gap:16 }}>
             <div>
               <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
-              <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>{t.products.h}</h2>
+              <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
             </div>
             <button className="btn-green" onClick={onApply}>{t.products.cta}</button>
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
+          <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
             {t.products.items.map(p=>(
               <div key={p.name} className="prod-card">
                 <div style={{ fontSize:26, marginBottom:14, color:G }}>{p.icon}</div>
@@ -1288,7 +1684,7 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
       <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
         <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700, textAlign:"center" }}>{t.reviews.badge}</p>
         <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,46px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:52 }}>{t.reviews.h}</h2>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+        <div className="how-grid" className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
           {t.reviews.items.map(r=>(
             <div key={r.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"32px 28px", borderRadius:10 }}>
               <div style={{ display:"flex", gap:3, marginBottom:16 }}>
@@ -1340,7 +1736,7 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
           <div style={{ display:"flex", gap:28 }}>
             <button className="nav-link" onClick={onApply}>Apply</button>
             <button className="nav-link" onClick={onLogin}>Log In</button>
-            <button className="nav-link" onClick={onAdmin}>Admin</button>
+            
           </div>
           <p style={{ fontSize:12, color:"rgba(255,255,255,.2)" }}>{t.footer.rights}</p>
         </div>
@@ -1353,11 +1749,48 @@ function Landing({ lang, onApply, onLogin, onAdmin }) {
 export default function Aprovuit() {
   const initialParams = new URLSearchParams(window.location.search);
   const initialUploadId = initialParams.get("upload");
+  const initialAdmin = initialParams.get("admin") === "true";
 
-  const [view, setView] = useState(initialUploadId ? "upload" : "landing");
+  const [view, setView] = useState(initialAdmin ? "admin" : initialUploadId ? "upload" : "landing");
+  const [prevView, setPrevView] = useState("landing");
+  const navTo = (v) => { setPrevView(view); setView(v); window.scrollTo(0,0); };
   const [lang, setLang] = useState("en");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
   const [user, setUser] = useState(null);
+
+  // SEO - update title and meta based on view
+  useEffect(() => {
+    const titles = {
+      landing: "Aprovuit — Business Funding, No Phone Calls",
+      apply: "Apply for Business Funding — Aprovuit",
+      products: "Business Loan Products — Aprovuit",
+      howitworks: "How It Works — Aprovuit Business Funding",
+      faq: "FAQ — Aprovuit Business Funding",
+      login: "Log In — Aprovuit",
+      dashboard: "My Dashboard — Aprovuit",
+      admin: "Admin — Aprovuit",
+    };
+    document.title = titles[view] || "Aprovuit — Business Funding";
+    // Update meta description
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) { meta = document.createElement('meta'); meta.name = "description"; document.head.appendChild(meta); }
+    const descs = {
+      landing: "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
+      products: "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
+      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls required.",
+      faq: "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
+    };
+    meta.content = descs[view] || descs.landing;
+
+    // OG tags
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) { ogTitle = document.createElement('meta'); ogTitle.setAttribute('property','og:title'); document.head.appendChild(ogTitle); }
+    ogTitle.content = document.title;
+
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) { ogDesc = document.createElement('meta'); ogDesc.setAttribute('property','og:description'); document.head.appendChild(ogDesc); }
+    ogDesc.content = meta.content;
+  }, [view]);
 
   useEffect(() => {
     const handlePop = () => {
@@ -1389,17 +1822,7 @@ export default function Aprovuit() {
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
 
   if (view==="admin") return (
-    <div style={{ background:"#f5f4f0", minHeight:"100vh" }}>
-      <style>{CSS}</style>
-      <div style={{ background:"#0a0a0a", padding:"0 5%", height:56, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
-          <span style={{ fontSize:18, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
-          <span style={{ marginLeft:8, fontSize:11, color:"rgba(255,255,255,.4)", background:"rgba(255,255,255,.08)", padding:"3px 10px", borderRadius:20, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em" }}>Admin</span>
-        </div>
-      </div>
-      <AdminDashboard onExit={()=>setView("landing")} />
-    </div>
+    <AdminGate onExit={()=>setView("landing")} />
   );
 
   if (view==="dashboard" && user) return (
@@ -1430,9 +1853,9 @@ export default function Aprovuit() {
           </div>
           <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
         </button>
-        <div style={{ display:"flex", gap:24, alignItems:"center" }}>
-          {[T[lang].nav.products, T[lang].nav.howItWorks, T[lang].nav.faq].map((l,i)=>(
-            <button key={l} className="nav-link" onClick={()=>document.getElementById(["products","how-it-works","faq"][i])?.scrollIntoView({behavior:"smooth"})}>{l}</button>
+  <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
+          {[[T[lang].nav.products,"products"],[T[lang].nav.howItWorks,"howitworks"],[T[lang].nav.faq,"faq"]].map(([l,v])=>(
+            <button key={l} className="nav-link" onClick={()=>setView(v)}>{l}</button>
           ))}
           <div className="lang-pill">
             <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.5)" }}>EN</button>
@@ -1441,8 +1864,15 @@ export default function Aprovuit() {
           <button className="nav-link" onClick={()=>setView("login")}>{T[lang].nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>setView("apply")}>{T[lang].nav.apply}</button>
         </div>
+        <div className="nav-mobile" style={{ display:"none", gap:10, alignItems:"center" }}>
+          <div className="lang-pill">
+            <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.5)" }}>EN</button>
+            <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.5)" }}>ES</button>
+          </div>
+          <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={()=>setView("apply")}>{lang==="en"?"Apply →":"Aplicar →"}</button>
+        </div>
       </nav>
-      <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} />
+      <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
     </div>
   );
 }
