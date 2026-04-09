@@ -1250,8 +1250,29 @@ function AdminDashboard({ onExit }) {
 }
 
 
+
+// ── INNER PAGE NAV ───────────────────────────────────────────────
+function InnerNav({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin }) {
+  return (
+    <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
+      <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+        <div style={{ width:28, height:28, background:"#a8ff3e", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
+        <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+      </button>
+      <div style={{ display:"flex", gap:28, alignItems:"center" }}>
+        <button onClick={onBack} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
+        <button onClick={onProducts} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
+        <button onClick={onHowItWorks} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
+        <button onClick={onFaq} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
+        {onLogin && <button onClick={onLogin} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Entrar":"Log In"}</button>}
+        <button onClick={onApply} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"9px 20px", borderRadius:6, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
+      </div>
+    </nav>
+  );
+}
+
 // ── PRODUCTS PAGE ────────────────────────────────────────────────
-function ProductsPage({ lang, onBack, onApply }) {
+function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   const products = [
     {
       icon:"→", name:lang==="es"?"Préstamo a Plazo":"Term Loan",
@@ -1306,18 +1327,11 @@ function ProductsPage({ lang, onBack, onApply }) {
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
-        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
-          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
-        </button>
-        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
-      </nav>
-
+      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
       <div style={{ padding:"64px 5% 80px", maxWidth:1100, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
+          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
           <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Encuentra el producto correcto para tu negocio. Sin vendedores. Sin llamadas.":"Find the right product for your business. No salespeople. No phone calls."}</p>
         </div>
 
@@ -1381,7 +1395,7 @@ function ProductsPage({ lang, onBack, onApply }) {
 }
 
 // ── HOW IT WORKS PAGE ─────────────────────────────────────────────
-function HowItWorksPage({ lang, onBack, onApply }) {
+function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   const steps = lang==="es" ? [
     { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"📋",
       desc:"Llena nuestra solicitud inteligente en línea. Sin entrevistas telefónicas. Sin papeleo. Solo información básica sobre tu negocio y lo que necesitas.", details:["Información básica del negocio","Monto de financiamiento deseado","Propósito de los fondos","Sube 3-6 meses de estados bancarios"] },
@@ -1413,17 +1427,11 @@ function HowItWorksPage({ lang, onBack, onApply }) {
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
-        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
-          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
-        </button>
-        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
-      </nav>
+      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
       <div style={{ padding:"64px 5% 80px", maxWidth:900, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
+          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
           <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — no calls, no salespeople, no surprises."}</p>
         </div>
         {steps.map((s,i)=>(
@@ -1463,7 +1471,7 @@ function HowItWorksPage({ lang, onBack, onApply }) {
 }
 
 // ── FAQ PAGE ──────────────────────────────────────────────────────
-function FAQPage({ lang, onBack, onApply }) {
+function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   const [open, setOpen] = useState(null);
   const categories = lang==="es" ? [
     { cat:"Elegibilidad", items:[
@@ -1518,17 +1526,11 @@ function FAQPage({ lang, onBack, onApply }) {
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
-        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
-          <span className="cond" style={{ fontSize:20, fontWeight:800, letterSpacing:"0.02em", color:"#fff" }}>APROVUIT</span>
-        </button>
-        <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
-      </nav>
+      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
       <div style={{ padding:"64px 5% 80px", maxWidth:860, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(36px,6vw,64px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
+          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
           <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:480, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Todo lo que necesitas saber sobre financiamiento con Aprovuit.":"Everything you need to know about funding with Aprovuit."}</p>
         </div>
         {categories.map((cat,ci)=>(
@@ -1820,9 +1822,9 @@ export default function Aprovuit() {
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onSuccess={handleApplySuccess} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
-  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
-  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
-  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
+  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
+  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
+  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>setView("landing")} />
