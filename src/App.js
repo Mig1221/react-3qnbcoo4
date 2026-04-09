@@ -144,8 +144,8 @@ const CSS = `
   .cond { font-family:'Barlow Condensed',sans-serif; }
   .nav-link { font-size:14px; font-weight:500; color:rgba(255,255,255,.55); cursor:pointer; background:none; border:none; font-family:'DM Sans',sans-serif; transition:color .2s; }
   .nav-link:hover { color:#fff; }
-  .prod-card { background:#161616; border:1px solid rgba(255,255,255,.06); padding:28px; transition:all .2s; border-radius:10px; }
-  .prod-card:hover { border-color:#a8ff3e; transform:translateY(-2px); }
+  .prod-card { background:#111; border:1px solid rgba(255,255,255,.07); padding:28px; transition:all .25s; border-radius:10px; }
+  .prod-card:hover { border-color:rgba(168,255,62,.4); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.4); }
   .faq-btn { width:100%; background:none; border:none; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; border-bottom:1px solid rgba(255,255,255,.07); gap:16px; }
   .sb-item { display:flex; align-items:center; gap:10px; padding:11px 20px; font-size:13px; cursor:pointer; color:rgba(255,255,255,.4); transition:all .15s; border-left:2px solid transparent; }
   .sb-item:hover { color:#fff; background:rgba(255,255,255,.03); }
@@ -215,7 +215,7 @@ const CSS = `
 // ── TRANSLATIONS ─────────────────────────────────────────────────
 const T = {
   en: {
-    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Apply Now →" },
+    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started →" },
     hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
     ticker: ["Track Your Funding Online","Upload Documents Securely","No Phone Calls Required","Monitor Balances & Payments","Request New Financing","Get Status Notifications","Self-Service Platform","Secure & Simple","No Hassle. No Calls."],
     stats: [["10,000+","Businesses"],["$1B+","Managed"],["4.9★","App Rating"],["256-bit","Encrypted"]],
@@ -284,7 +284,7 @@ const T = {
     dash: { greeting:"Good morning", snapshot:"Here's your funding snapshot", tabs:["Overview","Offers","Loans","Documents","Messages"], signout:"Sign Out", overview:"Overview", noOffers:"No pending offers", loansEmpty:"No active loans yet", docsTitle:"Your Documents", docsUpload:"Upload Documents", msgAdvisor:"Your Advisor", msgPlaceholder:"Message your advisor...", sendBtn:"Send" },
   },
   es: {
-    nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Aplicar →" },
+    nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Get Started →" },
     hero: { badge:"Sin Llamadas. Sin Presión. Simple.", h1:"La Plataforma de", h2:"Financiamiento Digital.", sub:"Envía una solicitud. Recibe múltiples ofertas de financiamiento. Compara y elige — completamente en tus términos. Sin llamadas. Sin presión. Sin intermediarios.", cta1:"Comenzar — Gratis →", cta2:"Entrar al Portal" },
     ticker: ["Rastrea tu Financiamiento","Sube Documentos Seguro","Sin Llamadas Telefónicas","Monitorea Saldos y Pagos","Solicita Nuevo Financiamiento","Recibe Notificaciones","Plataforma de Autoservicio","Seguro y Simple","Sin Llamadas. Sin Presión."],
     stats: [["10,000+","Negocios"],["$1B+","Administrado"],["4.9★","Calificación"],["256-bit","Encriptado"]],
@@ -1362,7 +1362,7 @@ function InnerNav({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLo
         <button onClick={onHowItWorks} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
         <button onClick={onFaq} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
         {onLogin && <button onClick={onLogin} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Entrar":"Log In"}</button>}
-        <button onClick={onApply} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"9px 20px", borderRadius:6, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar →":"Apply Now →"}</button>
+        <button onClick={onApply} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"9px 20px", borderRadius:6, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
       </div>
     </nav>
   );
@@ -1455,7 +1455,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
                     <p style={{ fontSize:18, fontWeight:800, color:"#fff" }}>{p.term}</p>
                   </div>
                 </div>
-                <button onClick={onApply} style={{ background:p.color, color:"#000", border:"none", padding:"13px 32px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+                <button onClick={onApply} style={{ background:p.color, color:"#000", border:"none", padding:"13px 32px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
               </div>
               <div>
                 <div style={{ marginBottom:24 }}>
@@ -1560,7 +1560,7 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
         <div style={{ background:G, borderRadius:16, padding:"40px 48px", textAlign:"center", marginTop:24 }}>
           <h2 className="cond" style={{ fontSize:36, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:12 }}>{lang==="es"?"¿Listo para Comenzar?":"Ready to Get Started?"}</h2>
           <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:24 }}>{lang==="es"?"Aplica en 5 minutos. Sin llamadas. Sin compromiso.":"Apply in 5 minutes. No calls. No commitment."}</p>
-          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"14px 40px", borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"14px 40px", borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         </div>
       </div>
     </div>
@@ -1650,7 +1650,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
         <div style={{ background:G, borderRadius:16, padding:"36px 48px", textAlign:"center", marginTop:16 }}>
           <h2 className="cond" style={{ fontSize:32, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:10 }}>{lang==="es"?"¿Tienes más preguntas?":"Still have questions?"}</h2>
           <p style={{ fontSize:15, color:"rgba(0,0,0,.6)", marginBottom:20 }}>{lang==="es"?"Aplica y tu asesor responderá todo en tu portal.":"Apply and your advisor will answer everything in your portal."}</p>
-          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"13px 36px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Aplicar Ahora →":"Apply Now →"}</button>
+          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"13px 36px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         </div>
       </div>
     </div>
@@ -2220,7 +2220,7 @@ export default function Aprovuit() {
             <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.5)" }}>EN</button>
             <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.5)" }}>ES</button>
           </div>
-          <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={()=>setView("apply")}>{lang==="en"?"Apply →":"Aplicar →"}</button>
+          <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={()=>setView("apply")}>{lang==="en"?"Get Started →":"Comenzar →"}</button>
         </div>
       </nav>
       <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
