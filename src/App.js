@@ -2066,12 +2066,9 @@ export default function Aprovuit() {
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
-  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
-  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
-  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
-  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
-  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
-  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
+  if (view==="products") return <><ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
+  if (view==="howitworks") return <><HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
+  if (view==="faq") return <><FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>setView("landing")} />
