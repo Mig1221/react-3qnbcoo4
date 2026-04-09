@@ -406,6 +406,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   const [submitted, setSubmitted] = useState(false);
   const [loanAmt, setLoanAmt] = useState(150000);
   const [creditSel, setCreditSel] = useState("good");
+  const [savedAppId, setSavedAppId] = useState(null);
   const [form, setForm] = useState({
     purpose:"", timeline:"", company:"", industry:"",
     years:"", annualRev:"", creditRating:"good",
@@ -652,20 +653,20 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
                 <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Almost done — your offer comes here.</p>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
                   <div>
-                    <span style={lbl}>{t.firstName} <span style={{color:"#ef4444"}}>*</span></span>
-                    <input className="fc-inp" placeholder={t.firstName} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} style={errors.firstName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.firstNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
+                    <input className="fc-inp" placeholder={t.firstNameLabel} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} style={errors.firstName?{borderColor:"#ef4444",marginBottom:4}:{}} />
                     {errors.firstName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.firstName}</p>}
                   </div>
                   <div>
-                    <span style={lbl}>{t.lastName} <span style={{color:"#ef4444"}}>*</span></span>
-                    <input className="fc-inp" placeholder={t.lastName} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} style={errors.lastName?{borderColor:"#ef4444",marginBottom:4}:{}} />
+                    <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.lastNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
+                    <input className="fc-inp" placeholder={t.lastNameLabel} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} style={errors.lastName?{borderColor:"#ef4444",marginBottom:4}:{}} />
                     {errors.lastName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.lastName}</p>}
                   </div>
                 </div>
-                <span style={lbl}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></label>
                 <input className="fc-inp" type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} style={errors.email?{borderColor:"#ef4444",marginBottom:4}:{}} />
                 {errors.email && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.email}</p>}
-                <span style={lbl}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></span>
+                <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></label>
                 <input className="fc-inp" type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",e.target.value);setErrors(p=>({...p,phone:""}));}} style={errors.phone?{borderColor:"#ef4444",marginBottom:4}:{}} />
                 {errors.phone && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.phone}</p>}
                 <button onClick={()=>{ if(validateStep3()) setStep(4); }} style={btnDark}>{t.continueBtn}</button>
@@ -1819,8 +1820,10 @@ export default function Aprovuit() {
 
   const handleApplySuccess = (email, firstName, company, appId, goUpload) => {
     if (goUpload) { setUploadAppId(appId); setView("upload"); return; }
-    setUser({ email, firstName, company, appId });
+    const u = { email, firstName, company: company||"My Business", appId };
+    setUser(u);
     setView("dashboard");
+    window.scrollTo(0,0);
   };
 
   const handleUpload = (appId) => { setUploadAppId(appId); setView("upload"); };
