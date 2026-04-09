@@ -5,58 +5,118 @@ const BK = "#0a0a0a";
 const BK2 = "#111111";
 const BK3 = "#161616";
 
-// ── EmailJS config ───────────────────────────────────────────────
-const EMAILJS_SERVICE_ID = "service_bztsybt";
-const EMAILJS_PUBLIC_KEY  = "EtRChHEIGymDPfUbo";
-const EMAILJS_TEMPLATE_ADMIN  = "template_vtmfame";
-const EMAILJS_TEMPLATE_CLIENT = "template_8wj9zar";
-const FORMSPREE_URL = "https://formspree.io/f/xbdpdnby";
+// ── SUPABASE CONFIG ──────────────────────────────────────────────
+// Replace with your actual Supabase URL and anon key from supabase.com
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-function loadEmailJS() {
-  return new Promise((resolve) => {
-    if (window.emailjs) { window.emailjs.init(EMAILJS_PUBLIC_KEY); resolve(); return; }
-    const s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-    s.onload = () => { window.emailjs.init(EMAILJS_PUBLIC_KEY); resolve(); };
-    s.onerror = () => resolve();
-    document.head.appendChild(s);
-  });
+// Supabase helper — lightweight fetch wrapper (no SDK needed)
+const db = {
+  async insert(table, data) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
+        body:JSON.stringify(data)
+      });
+      return await res.json();
+    } catch(e) { console.error("DB insert error:", e); return null; }
+  },
+  async select(table, filter="") {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}
+      });
+      return await res.json();
+    } catch(e) { console.error("DB select error:", e); return []; }
+  },
+  async update(table, filter, data) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+        method:"PATCH",
+        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
+        body:JSON.stringify(data)
+      });
+      return await res.json();
+    } catch(e) { console.error("DB update error:", e); return null; }
+  },
+  async uploadFile(bucket, path, file) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+        method:"POST",
+        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type},
+        body:file
+      });
+      return await res.json();
+    } catch(e) { console.error("Storage upload error:", e); return null; }
+  }
+};
+
+const useDB = SUPABASE_URL !== "YOUR_SUPABASE_URL"; // true when configured
+
+// ── EMAIL CONFIG ─────────────────────────────────────────────────
+const ADMIN_EMAIL = "info@aprovuit.com"; // Make sure Formspree forms send to this email
+const FORMSPREE_ADMIN  = "https://formspree.io/f/xbdpdnby";
+const FORMSPREE_CLIENT = "https://formspree.io/f/xdapaqvw";
+
+async function sendEmail(url, data) {
+  try {
+    const res = await fetch(url, {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json.ok;
+  } catch(e) { console.error("Email error:", e); return false; }
 }
 
 async function sendApplicationEmail(data) {
-  try {
-    await loadEmailJS();
-    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, {
-      alert_type: "NEW APPLICATION", alert_title: "Application Received",
-      from_name: data.firstName + " " + data.lastName,
-      company: data.company, email: data.email, phone: data.phone,
-      loan_amount: data.loanAmt, purpose: data.purpose, timeline: data.timeline,
-      industry: data.industry, years: data.years, annual_rev: data.annualRev,
-      credit: data.creditRating, estimated: data.estimatedQualify,
-      app_id: data.id, upload_link: "https://aprovuit.com/?upload=" + data.id,
-      submitted_at: data.submittedAt, files_uploaded: "None yet.",
-    });
-  } catch(e) {
-    try {
-      await fetch(FORMSPREE_URL, { method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"},
-        body: JSON.stringify({ _subject:"New Application — "+data.company, _replyto:data.email,
-          Name:data.firstName+" "+data.lastName, Company:data.company, Email:data.email,
-          Phone:data.phone, "Loan Amount":data.loanAmt, Purpose:data.purpose,
-          "App ID":data.id, "Upload Link":"https://aprovuit.com/?upload="+data.id }) });
-    } catch(e2) { console.error(e2); }
-  }
+  await sendEmail(FORMSPREE_ADMIN, {
+    _subject:`🔔 New Application — ${data.company} | ${data.loanAmt}`,
+    _replyto:data.email,
+    "App ID":data.id, "Submitted":data.submittedAt,
+    "Name":`${data.firstName} ${data.lastName}`,
+    "Email":data.email, "Phone":data.phone,
+    "Loan Amount":data.loanAmt, "Purpose":data.purpose,
+    "Timeline":data.timeline, "Estimated":data.estimatedQualify,
+    "Company":data.company, "Industry":data.industry,
+    "Years":data.years, "Revenue":data.annualRev,
+    "Credit":data.creditRating,
+    "Upload Link":`https://aprovuit.com/?upload=${data.id}`,
+  });
 }
 
 async function sendClientEmail(data) {
-  try {
-    await loadEmailJS();
-    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CLIENT, {
-      to_email: data.email, first_name: data.firstName,
-      company: data.company, app_id: data.id,
-      upload_link: "https://aprovuit.com/?upload=" + data.id,
-      loan_amount: data.loanAmt,
-    });
-  } catch(e) { console.error(e); }
+  await sendEmail(FORMSPREE_CLIENT, {
+    _subject:`✅ Application Received — ${data.company} | Aprovuit`,
+    _replyto:ADMIN_EMAIL,
+    email:data.email,
+    "Hi":`${data.firstName},`,
+    "Message":`Your application for ${data.company} (ID: ${data.id}) has been received! We will be in touch within 2-4 hours. No phone call required.`,
+    "Upload your documents here":`https://aprovuit.com/?upload=${data.id}`,
+  });
+}
+
+async function sendOfferEmail(merchantEmail, merchantName, offer) {
+  await sendEmail(FORMSPREE_CLIENT, {
+    _subject:`💼 You Have a New Funding Offer — Aprovuit`,
+    _replyto:ADMIN_EMAIL,
+    email:merchantEmail,
+    "Hi":`${merchantName},`,
+    "Message":"You have a new funding offer in your Aprovuit dashboard. Log in to review all terms and accept or decline — no pressure, no calls.",
+    "Product":offer.product, "Amount":offer.amount,
+    "Term":offer.term, "Monthly Payment":offer.payment,
+    "View Offer At":"https://aprovuit.com",
+  });
+}
+
+async function sendUploadNotificationEmail(appId, files) {
+  await sendEmail(FORMSPREE_ADMIN, {
+    _subject:`📎 Documents Uploaded — ${appId} | Aprovuit`,
+    "App ID":appId, "Files Uploaded":files,
+    "Action":"Log in to admin panel to review documents.",
+  });
 }
 
 function fmtAmt(n) {
@@ -112,7 +172,7 @@ const CSS = `
     .why-grid { grid-template-columns:1fr !important; gap:40px !important; }
     .dash-wrap { flex-direction:column !important; }
     .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:8px 0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
-    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:8px 16px !important; }
+    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:8px 16px !important; font-size:12px !important; }
     .sb-item.active { border-bottom-color:#a8ff3e !important; border-left-color:transparent !important; }
     .metrics-grid { grid-template-columns:repeat(2,1fr) !important; }
     .nav-desktop { display:none !important; }
@@ -120,12 +180,20 @@ const CSS = `
     .offer-grid { grid-template-columns:repeat(2,1fr) !important; }
     .admin-wrap { flex-direction:column !important; }
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
+    .dash-main { padding:16px !important; }
+    section { padding-left:5% !important; padding-right:5% !important; }
+    .prod-card { padding:20px !important; }
+    .offer-card { padding:16px !important; }
+    .loan-card { padding:16px !important; }
   }
   @media (max-width:480px) {
     .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
     .offer-grid { grid-template-columns:1fr 1fr !important; }
     .hero-btns { flex-direction:column !important; }
+    .offer-btns { flex-direction:column !important; }
+    .name-row { grid-template-columns:1fr !important; }
+    .auth-card { padding:28px 20px !important; }
   }
   .pill.green { background:rgba(168,255,62,.12); color:#a8ff3e; }
   .pill.yellow { background:rgba(245,158,11,.12); color:#f59e0b; }
@@ -148,19 +216,29 @@ const CSS = `
 const T = {
   en: {
     nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Apply Now →" },
-    hero: { badge:"No Salespeople. No Phone Calls.", h1:"Business Funding.", h2:"Fully Self-Serve.", sub:"Apply, get offers, accept, and manage your funding — entirely online. No salespeople. No phone calls. Ever.", cta1:"Apply Now — Free →", cta2:"Log In to Dashboard" },
-    ticker: ["Apply in Minutes","No Salespeople","Get Offers Instantly","Accept with One Click","Track Everything Online","No Phone Calls","Funded Same Day","580+ Credit Score OK","Full Self-Service"],
-    stats: [["$750M+","Funded"],["8,200+","Businesses"],["2 hrs","Avg Decision"],["4.9★","Rating"]],
-    how: { badge:"How It Works", h:"Three Steps to Funded", steps:[["01","Apply Online","Fill out our smart application in under 5 minutes. No phone interview. No paper forms."],["02","Get Your Offer","Review your personalized offer in your dashboard. Every term is clear before you accept."],["03","Get Funded","Accept your offer with one click. Funds hit your account same day. Track everything online."]] },
-    products: { badge:"Funding Products", h:"Every Type of Funding", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed payments, ideal for hiring, expansion, or equipment."},{icon:"⟳",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw only what you need. Your limit replenishes automatically."},{icon:"⚡",name:"Revenue Advance",range:"$5K–$500K",term:"Daily repayment",desc:"Based on monthly revenue. Fastest approval — funded today."},{icon:"⚙",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance equipment you need. Equipment serves as collateral."}], amount:"Amount", term:"Term" },
-    reviews: { badge:"Real Results", h:"Business Owners Trust Aprovuit", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Applied at 9am, approved by noon, funded next morning. Zero phone calls. This is how lending should work.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"The dashboard showed me exactly where my application was at every step. No chasing anyone down.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"Got a $200K line of credit. Saw every term clearly before I signed. No surprises whatsoever.",stars:5}] },
-    faq: { badge:"FAQ", h:"Common Questions", items:[["How long does approval take?","Most decisions come within 2–4 hours during business hours. Funds can hit your account same day."],["Will applying hurt my credit?","Our initial review uses a soft pull — zero impact to your score."],["Do I need to get on the phone?","Never. Everything happens in your dashboard. Apply, track, accept — no phone call required."],["What are the minimum requirements?","6+ months in business, $10K+ monthly revenue, 580+ credit score."],["How do I track my application?","Log into your dashboard anytime to see real-time status updates, offers, and loan balances."]] },
-    cta: { h:"Ready to Get Funded?", sub:"Apply in minutes. No phone call. No commitment.", btn:"Apply Now — It's Free →" },
-    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com" },
+    hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
+    ticker: ["Track Your Funding Online","Upload Documents Securely","No Phone Calls Required","Monitor Balances & Payments","Request New Financing","Get Status Notifications","Self-Service Platform","Secure & Simple","No Hassle. No Calls."],
+    stats: [["10,000+","Businesses"],["$1B+","Managed"],["4.9★","App Rating"],["256-bit","Encrypted"]],
+    how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
+    features: { badge:"Platform Features", h:"Everything You Need in One Dashboard",
+      items:[
+        {icon:"📊",name:"Balance & Payment Tracking",desc:"Monitor your current funding balances, upcoming payments, and payment history in real time."},
+        {icon:"📋",name:"Application Tracking",desc:"Submit financing requests and track their status from submission to decision — no calls needed."},
+        {icon:"📁",name:"Secure Document Upload",desc:"Upload bank statements, ID, and other documents directly through the platform. 256-bit encrypted."},
+        {icon:"🔔",name:"Status Notifications",desc:"Get notified when your status updates, when a decision is made, or when action is needed."},
+        {icon:"🔐",name:"Secure Login",desc:"Email, password, and SMS verification keep your financial information protected at all times."},
+        {icon:"💬",name:"In-App Messaging",desc:"Communicate with your account team entirely within the platform. Everything in writing, always."},
+      ]
+    },
+    products: { badge:"Financing Options", h:"Explore Financing Options", items:[{icon:"→",name:"Term Financing",range:"$10K–$500K",term:"3–24 months",desc:"Fixed payment structure for planned investments like expansion, hiring, or equipment."},{icon:"⟳",name:"Revolving Credit",range:"$10K–$5M",term:"Revolving",desc:"Access funds as needed. Draw, repay, and draw again. Only pay for what you use."},{icon:"⚡",name:"Revenue-Based Financing",range:"$5K–$500K",term:"Flexible repayment",desc:"Financing tied to your monthly revenue. Flexible repayment that adjusts with your business."},{icon:"⚙",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance business equipment through the platform. Equipment may serve as collateral."}], amount:"Amount", term:"Term" },
+    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"I tracked everything through the dashboard from day one. No phone calls, no chasing anyone. The platform made the whole process simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"I could see exactly where my request was at every step. Uploaded all my documents in minutes. Total transparency.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"The self-service experience was exactly what I needed. I managed everything myself, on my own schedule, with no pressure.",stars:5}] },
+    faq: { badge:"FAQ", h:"Common Questions", items:[["What is Aprovuit?","Aprovuit is a financing marketplace platform. Business owners submit one application and may receive multiple financing offers from our network of partners — all in one dashboard. Aprovuit is not a lender and does not act as a broker or negotiate on your behalf."],["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. Financing options available through the platform are provided by third-party financing partners. Aprovuit does not make credit decisions or directly provide loans."],["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your documents and personal information are stored securely and never shared without your consent."],["Do I need to talk to anyone on the phone?","Never. Aprovuit is fully self-service. You submit your application, financing offers appear in your dashboard, you compare and choose. No calls, no broker, no one acting on your behalf."],["How do I get started?","Create a free account, fill out your business profile, and submit a financing request through the platform. You can track everything in your dashboard from day one."]] },
+    cta: { h:"No Hassle. No Calls. Simple Funding.", sub:"One application. Multiple offers. You choose. No calls. No broker. No pressure.", btn:"Get Started — It's Free →" },
+    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit is a financing marketplace platform. Not a lender or broker. Financing provided by independent partners." },
     apply: {
       noPhone:"No Phone Calls. No Salespeople. Ever.",
       heroH1:"Secure Your", heroH1b:"Business Funding Today",
-      heroP:"Fast approvals. No phone calls. Funding in as little as 24 hours.",
+      heroP:"One application. Multiple offers. You choose. No calls, no broker, no pressure.",
       howMuch:"How much funding do you need?",
       requestedAmt:"Requested Amount",
       getStarted:"Get Started Now →",
@@ -207,19 +285,29 @@ const T = {
   },
   es: {
     nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Aplicar →" },
-    hero: { badge:"Sin Vendedores. Sin Llamadas.", h1:"Financiamiento.", h2:"100% Digital.", sub:"Aplica, recibe ofertas, acepta y administra tu financiamiento — todo en línea. Sin vendedores. Sin llamadas.", cta1:"Aplicar Ahora — Gratis →", cta2:"Entrar al Portal" },
-    ticker: ["Aplica en Minutos","Sin Vendedores","Recibe Ofertas al Instante","Acepta con un Clic","Rastrea Todo en Línea","Sin Llamadas","Fondos el Mismo Día","580+ Puntaje OK","100% Digital"],
-    stats: [["$750M+","Financiado"],["8,200+","Negocios"],["2 hrs","Decisión"],["4.9★","Rating"]],
-    how: { badge:"Cómo Funciona", h:"Tres Pasos Para Obtener Fondos", steps:[["01","Aplica en Línea","Completa nuestra solicitud en menos de 5 minutos. Sin entrevista telefónica."],["02","Recibe tu Oferta","Revisa tu oferta personalizada en tu portal. Cada término es claro antes de aceptar."],["03","Recibe tus Fondos","Acepta tu oferta con un clic. Fondos el mismo día. Rastrea todo en línea."]] },
-    products: { badge:"Productos de Financiamiento", h:"Todo Tipo de Financiamiento", items:[{icon:"→",name:"Préstamo a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Pagos fijos, ideal para contratar, expandir o equipo."},{icon:"⟳",name:"Línea de Crédito",range:"$10K–$5M",term:"Revolvente",desc:"Retira solo lo que necesitas. Tu límite se repone."},{icon:"⚡",name:"Adelanto de Ingresos",range:"$5K–$500K",term:"Pago diario",desc:"Basado en ingresos mensuales. Aprobación más rápida."},{icon:"⚙",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia el equipo. El equipo sirve como colateral."}], amount:"Monto", term:"Plazo" },
-    reviews: { badge:"Resultados Reales", h:"Dueños de Negocio Confían en Aprovuit", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Apliqué a las 9am, aprobado al mediodía, fondos a la mañana siguiente. Cero llamadas.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"El portal me mostró exactamente dónde estaba mi solicitud en cada paso. Sin perseguir a nadie.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"Obtuve una línea de crédito de $200K. Vi cada término antes de firmar. Sin sorpresas.",stars:5}] },
-    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[["¿Cuánto toma la aprobación?","La mayoría de decisiones llegan en 2–4 horas. Fondos el mismo día o siguiente día hábil."],["¿Aplicar afecta mi crédito?","Usamos consulta suave — cero impacto en tu puntaje."],["¿Necesito hablar por teléfono?","Nunca. Todo ocurre en tu portal. Sin llamadas requeridas."],["¿Cuáles son los requisitos mínimos?","6+ meses en operación, $10K+ ingresos mensuales, 580+ puntaje."],["¿Cómo rastro mi solicitud?","Entra a tu portal en cualquier momento para ver actualizaciones, ofertas y saldos."]] },
-    cta: { h:"¿Listo para Obtener Fondos?", sub:"Aplica en minutos. Sin llamadas. Sin compromiso.", btn:"Aplicar Ahora — Es Gratis →" },
-    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com" },
+    hero: { badge:"Sin Llamadas. Sin Presión. Simple.", h1:"La Plataforma de", h2:"Financiamiento Digital.", sub:"Envía una solicitud. Recibe múltiples ofertas de financiamiento. Compara y elige — completamente en tus términos. Sin llamadas. Sin presión. Sin intermediarios.", cta1:"Comenzar — Gratis →", cta2:"Entrar al Portal" },
+    ticker: ["Rastrea tu Financiamiento","Sube Documentos Seguro","Sin Llamadas Telefónicas","Monitorea Saldos y Pagos","Solicita Nuevo Financiamiento","Recibe Notificaciones","Plataforma de Autoservicio","Seguro y Simple","Sin Llamadas. Sin Presión."],
+    stats: [["10,000+","Negocios"],["$1B+","Administrado"],["4.9★","Calificación"],["256-bit","Encriptado"]],
+    how: { badge:"Cómo Funciona", h:"Administra Todo en Un Solo Lugar", steps:[["01","Crea tu Cuenta","Regístrate en minutos. Sin verificación de crédito para crear la cuenta. Tu portal está listo al instante."],["02","Envía tu Información","Envía la información de tu negocio y documentos a través de la plataforma. Tu solicitud puede ser compartida con socios de financiamiento en nuestra red."],["03","Rastrea y Administra","Las ofertas de financiamiento aparecen directamente en tu portal. Compara opciones, revisa todos los términos claramente y elige lo que más te conviene — nadie elige por ti."]] },
+    features: { badge:"Funciones de la Plataforma", h:"Todo lo que Necesitas en un Solo Portal",
+      items:[
+        {icon:"📊",name:"Seguimiento de Saldos y Pagos",desc:"Monitorea tus saldos actuales, próximos pagos e historial de pagos en tiempo real."},
+        {icon:"📋",name:"Seguimiento de Solicitudes",desc:"Envía solicitudes de financiamiento y rastrea su estado desde el envío hasta la decisión."},
+        {icon:"📁",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y otros documentos directamente. Encriptación de 256 bits."},
+        {icon:"🔔",name:"Notificaciones de Estado",desc:"Recibe notificaciones cuando tu estado cambie o cuando se requiera acción de tu parte."},
+        {icon:"🔐",name:"Acceso Seguro",desc:"Correo, contraseña y verificación por SMS mantienen tu información protegida en todo momento."},
+        {icon:"💬",name:"Mensajes en la App",desc:"Comunícate con tu equipo de cuenta dentro de la plataforma. Todo por escrito, siempre."},
+      ]
+    },
+    products: { badge:"Opciones de Financiamiento", h:"Explora Opciones de Financiamiento", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"⟳",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"⚡",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"⚙",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
+    reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Rastreé todo desde el primer día. Sin llamadas, sin perseguir a nadie. La plataforma hizo todo el proceso simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"Podía ver exactamente dónde estaba mi solicitud en cada paso. Subí mis documentos en minutos. Total transparencia.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"La experiencia de autoservicio fue exactamente lo que necesitaba. Administré todo yo mismo, a mi ritmo, sin presión.",stars:5}] },
+    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[["¿Qué es Aprovuit?","Aprovuit es una plataforma de mercado de financiamiento. Los dueños de negocios envían una solicitud y pueden recibir múltiples ofertas de socios de financiamiento — todo en un portal. Aprovuit no es un prestamista y no actúa como corredor ni negocia en tu nombre."],["¿Aprovuit presta dinero directamente?","No. Aprovuit es una plataforma de mercado. Cuando envías una solicitud, puede ser compartida con socios de financiamiento en nuestra red. Esos socios revisan tu información de forma independiente y pueden enviar ofertas. Aprovuit no toma decisiones de crédito, negocia términos ni actúa en tu nombre."],["¿Está segura mi información?","Sí. Todos los datos están encriptados con SSL de 256 bits. Tus documentos e información personal se almacenan de forma segura."],["¿Necesito hablar con alguien por teléfono?","Nunca. Aprovuit es completamente de autoservicio. Envías tu solicitud, las ofertas de financiamiento aparecen en tu portal, comparas y eliges. Sin llamadas, sin corredor, sin que nadie actúe en tu nombre."],["¿Cómo empiezo?","Crea una cuenta gratuita, completa tu perfil empresarial y envía una solicitud de financiamiento a través de la plataforma."]] },
+    cta: { h:"Sin Llamadas. Sin Presión. Simple.", sub:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas. Sin intermediarios. Sin presión.", btn:"Comenzar — Es Gratis →" },
+    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit es una plataforma de mercado. No es un prestamista ni corredor. Financiamiento provisto por socios independientes." },
     apply: {
       noPhone:"Sin Vendedores. Sin Llamadas.",
       heroH1:"Asegura el", heroH1b:"Financiamiento de tu Negocio Hoy",
-      heroP:"Aprobaciones rápidas. Sin llamadas. Fondos en tan solo 24 horas.",
+      heroP:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas, sin intermediarios, sin presión.",
       howMuch:"¿Cuánto financiamiento necesitas?",
       requestedAmt:"Monto Solicitado",
       getStarted:"Comenzar Ahora →",
@@ -317,17 +405,18 @@ function UploadPage({ lang, appId, onBack }) {
     const uploads = JSON.parse(localStorage.getItem("aprovuit_uploads")||"[]");
     uploads.push(uploadData);
     localStorage.setItem("aprovuit_uploads", JSON.stringify(uploads));
+    // Upload actual files to Supabase Storage if configured
+    if (useDB) {
+      for (const [key, file] of Object.entries(files)) {
+        if (file) {
+          await db.uploadFile("documents", `${appId}/${key}-${file.name}`, file);
+        }
+      }
+      await db.update("applications", `id=eq.${appId}`, { documents_uploaded:true, updated_at:new Date().toISOString() });
+    }
     try {
       await loadEmailJS();
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, {
-        alert_type:"DOCUMENTS UPLOADED", alert_title:"Documents Received",
-        from_name:"Client", company:"See App ID",
-        email:"—", phone:"—", loan_amount:"—", purpose:"—", timeline:"—",
-        industry:"—", years:"—", annual_rev:"—", credit:"—", estimated:"—",
-        app_id:appId, submitted_at:uploadData.submittedAt,
-        files_uploaded:uploadData.files.map(f=>f.name).join(", "),
-        upload_link:"https://aprovuit.com/?upload="+appId,
-      });
+      await sendUploadNotificationEmail(appId, uploadData.files.map(f=>f.name).join(", "))
     } catch(e) { console.error(e); }
     setUploading(false);
     setSubmitted(true);
@@ -487,27 +576,25 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
       <style>{APPLY_CSS}</style>
       <div style={{ ...card, textAlign:"center", maxWidth:520 }} className="fadeup">
         <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40, color:"#16a34a", fontWeight:900 }}>✓</div>
-        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase", letterSpacing:"-0.01em" }}>{t.successH}</h2>
-        <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:28 }}>{t.successP}</p>
-        <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:14, padding:"18px 20px", marginBottom:20, textAlign:"left" }}>
-          <p style={{ fontSize:13, fontWeight:700, color:"#16a34a", marginBottom:12 }}>{t.nextTitle}</p>
-          {t.nextSteps.map(s=>(
-            <div key={s} style={{ display:"flex", gap:10, alignItems:"center", marginBottom:8 }}>
-              <div style={{ width:20, height:20, background:"#16a34a", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:10, flexShrink:0 }}>✓</div>
-              <span style={{ fontSize:14, color:"#166534" }}>{s}</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"20px 24px", textAlign:"left", marginBottom:20 }}>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>{t.estLabel}</p>
+        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase" }}>Application Received!</h2>
+        <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:24 }}>Your account has been created and your application has been submitted. Financing offers may appear in your dashboard as partners review your information. No calls, no broker — you choose.</p>
+        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"18px 20px", textAlign:"left", marginBottom:20 }}>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>Your estimated pre-qualification</p>
           <p style={{ fontSize:40, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-0.5px" }}>{fmtAmt(qualAmt())}</p>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:4 }}>{t.estNote}</p>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:4 }}>*Subject to full underwriting and approval</p>
         </div>
-        <div style={{ background:"#fff", border:"2px solid #a8ff3e", borderRadius:14, padding:"18px 20px", marginBottom:20 }}>
-          <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:6 }}>📎 {lang==="en"?"Upload Your Documents":"Sube Tus Documentos"}</p>
-          <p style={{ fontSize:13, color:"#666", marginBottom:14, lineHeight:1.5 }}>{lang==="en"?"Speed up your approval by uploading your bank statements, driver's license, and voided check now.":"Acelera tu aprobación subiendo tus estados de cuenta, licencia e cheque anulado ahora."}</p>
-          <button onClick={onBack} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"12px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
-            {lang==="en"?"Upload Documents Now →":"Subir Documentos Ahora →"}
+        <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+          <button
+            onClick={()=> onSuccess && onSuccess(form.email, form.firstName, form.company, savedAppId)}
+            style={{ width:"100%", background:G, color:"#000", border:"none", padding:"15px", borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
+          >
+            {lang==="en"?"Go to My Dashboard →":"Ir a Mi Portal →"}
+          </button>
+          <button
+            onClick={()=> onUpload && onUpload(savedAppId)}
+            style={{ width:"100%", background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:"13px", borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
+          >
+            📎 {lang==="en"?"Upload Documents First":"Subir Documentos Primero"}
           </button>
         </div>
       </div>
@@ -903,7 +990,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
               <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
                 <div style={{ fontSize:40, marginBottom:16 }}>📭</div>
                 <p style={{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,.5)", marginBottom:8 }}>{t.noOffers}</p>
-                <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Your personalized offer will appear here once your application is reviewed.</p>
+                <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Financing offers from our partner network will appear here as partners review your application. You compare and choose — no one decides for you.</p>
               </div>
             )}
             {offers.filter(o=>o.status==="pending").map(offer=>(
@@ -1094,12 +1181,13 @@ function AdminDashboard({ onExit }) {
   const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
   const STATUS_COLORS = { "Under Review":["#fef3c7","#d97706"], "Approved":["#dcfce7","#16a34a"], "Funded":["#dbeafe","#2563eb"], "Declined":["#fee2e2","#dc2626"], "Docs Needed":["#fff7ed","#ea580c"] };
 
-  const sendOffer = () => {
+  const sendOffer = async () => {
     if (!drawer || !offerForm.amount) return;
     const offer = { id:`OFF-${Date.now()}`, appId:drawer.id, product:offerForm.product, amount:offerForm.amount, term:offerForm.term, payment:offerForm.payment, rate:offerForm.rate, expires:offerForm.expires, status:"pending" };
     const existing = JSON.parse(localStorage.getItem(`offers_${drawer.id}`)||"[]");
     existing.push(offer);
     localStorage.setItem(`offers_${drawer.id}`, JSON.stringify(existing));
+    if (drawer.email) await sendOfferEmail(drawer.email, drawer.firstName||drawer.company||"Merchant", offer);
     setSent(true);
     setTimeout(()=>setSent(false), 3000);
   };
@@ -1569,6 +1657,130 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   );
 }
 
+
+// ── CHATBOT ──────────────────────────────────────────────────────
+function Chatbot({ lang, onApply }) {
+  const [open, setOpen] = useState(false);
+  const [msgs, setMsgs] = useState([{
+    role:"assistant",
+    content: lang==="es"
+      ? "¡Hola! Soy el asistente de Aprovuit. ¿Tienes preguntas sobre financiamiento o quieres saber si calificas? 👋"
+      : "Hi! I'm the Aprovuit assistant. Have questions about funding or want to find out if you qualify? 👋"
+  }]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const endRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (open) endRef.current?.scrollIntoView({ behavior:"smooth" });
+  }, [msgs, open]);
+
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg = input.trim();
+    setInput("");
+    setMsgs(p => [...p, { role:"user", content:userMsg }]);
+    setLoading(true);
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:1000,
+          system:`You are Aprovuit's friendly funding assistant. Aprovuit is a financing marketplace platform — like Kayak but for business funding. Business owners submit one application and may receive multiple financing offers from our partner network. They compare and choose entirely on their own. Aprovuit is NOT a lender or broker. We do not negotiate on anyone's behalf or make credit decisions.
+
+Key facts:
+- Products: Term Loans ($10K-$500K, 3-24mo), Lines of Credit ($10K-$5M, revolving), Revenue Advances ($5K-$500K, daily repayment), Equipment Financing ($5K-$2M, up to 60mo)
+- Requirements: 6+ months in business, $10K+ monthly revenue, 580+ credit score
+- Process: Apply online → get offer in dashboard → accept with one click → funded same day
+- No phone calls ever. Everything in the merchant dashboard.
+- Decisions in 2-4 hours. Soft credit pull only (no impact to score).
+- Language: ${lang === "es" ? "Respond in Spanish" : "Respond in English"}
+
+Be conversational, helpful, and concise. If they want to apply, encourage them to get started. Never guarantee approvals or specific rates — those come from financing partners. Never say Aprovuit lends money or acts as a broker. Keep responses under 3 sentences when possible.`,
+          messages:[...msgs, { role:"user", content:userMsg }]
+        })
+      });
+      const data = await response.json();
+      const reply = data.content?.[0]?.text || (lang==="es" ? "Lo siento, intenta de nuevo." : "Sorry, please try again.");
+      setMsgs(p => [...p, { role:"assistant", content:reply }]);
+    } catch(e) {
+      setMsgs(p => [...p, { role:"assistant", content: lang==="es" ? "Error de conexión. Intenta de nuevo." : "Connection error. Please try again." }]);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <>
+      {/* Chat bubble */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ position:"fixed", bottom:24, right:24, width:56, height:56, background:"#a8ff3e", border:"none", borderRadius:"50%", cursor:"pointer", boxShadow:"0 4px 20px rgba(168,255,62,0.4)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, zIndex:1000, transition:"all 0.2s" }}
+      >
+        {open ? "✕" : "💬"}
+      </button>
+
+      {/* Chat window */}
+      {open && (
+        <div style={{ position:"fixed", bottom:92, right:24, width:360, height:480, background:"#fff", borderRadius:20, boxShadow:"0 20px 60px rgba(0,0,0,0.25)", display:"flex", flexDirection:"column", overflow:"hidden", zIndex:1000 }}>
+          {/* Header */}
+          <div style={{ background:"#0a0a0a", padding:"16px 20px", display:"flex", alignItems:"center", gap:10 }}>
+            <div style={{ width:36, height:36, background:"#a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, fontWeight:900, color:"#000", flexShrink:0 }}>A</div>
+            <div>
+              <p style={{ fontSize:14, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
+              <p style={{ fontSize:11, color:"#a8ff3e", margin:0 }}>● {lang==="es"?"En línea":"Online"} · {lang==="es"?"Sin llamadas":"No phone calls"}</p>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div style={{ flex:1, overflowY:"auto", padding:"16px", display:"flex", flexDirection:"column", gap:10, background:"#f9fafb" }}>
+            {msgs.map((m,i) => (
+              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start" }}>
+                <div style={{ maxWidth:"80%", padding:"10px 14px", borderRadius:m.role==="user"?"14px 4px 14px 14px":"4px 14px 14px 14px", background:m.role==="user"?"#1a1a1a":"#fff", color:m.role==="user"?"#fff":"#1a1a1a", fontSize:14, lineHeight:1.5, boxShadow:"0 1px 4px rgba(0,0,0,0.08)", fontFamily:"'DM Sans',sans-serif" }}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div style={{ display:"flex", gap:4, padding:"10px 14px", background:"#fff", borderRadius:"4px 14px 14px 14px", width:"fit-content", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>
+                {[0,1,2].map(i => <div key={i} style={{ width:6, height:6, background:"#ccc", borderRadius:"50%", animation:`bounce 1s ease ${i*0.15}s infinite` }}></div>)}
+              </div>
+            )}
+            <div ref={endRef} />
+          </div>
+
+          {/* Quick replies */}
+          {msgs.length <= 2 && (
+            <div style={{ padding:"8px 12px", display:"flex", gap:6, flexWrap:"wrap", background:"#f9fafb", borderTop:"1px solid #f0f0f0" }}>
+              {(lang==="es"
+                ? ["¿Cuánto califico?","¿Cuáles son los requisitos?","¿Afecta mi crédito?","Quiero aplicar"]
+                : ["How much do I qualify for?","What are the requirements?","Will it hurt my credit?","I want to apply"]
+              ).map(q => (
+                <button key={q} onClick={() => { setInput(q); }} style={{ background:"#fff", border:"1px solid #e5e8ee", borderRadius:20, padding:"5px 12px", fontSize:12, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", color:"#555", whiteSpace:"nowrap" }}>{q}</button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <div style={{ padding:"12px 14px", borderTop:"1px solid #f0f0f0", display:"flex", gap:8, background:"#fff" }}>
+            <input
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key==="Enter" && send()}
+              placeholder={lang==="es"?"Escribe tu pregunta...":"Ask me anything..."}
+              style={{ flex:1, border:"1.5px solid #e5e8ee", borderRadius:10, padding:"10px 14px", fontSize:14, fontFamily:"'DM Sans',sans-serif", outline:"none", color:"#1a1a1a" }}
+            />
+            <button onClick={send} disabled={loading} style={{ width:40, height:40, background:loading?"#ccc":"#a8ff3e", border:"none", borderRadius:10, cursor:loading?"not-allowed":"pointer", fontSize:18, fontWeight:900, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>↑</button>
+          </div>
+          <style>{`@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }`}</style>
+        </div>
+      )}
+    </>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
 function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
   const t = T[lang];
@@ -1585,7 +1797,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
               <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
               <span style={{ fontSize:12, color:G, fontWeight:600, letterSpacing:"0.1em", textTransform:"uppercase" }}>{t.hero.badge}</span>
             </div>
-            <h1 className="cond" style={{ fontSize:"clamp(52px,7vw,86px)", fontWeight:900, lineHeight:0.93, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
+            <h1 className="cond" style={{ fontSize:"clamp(48px,6vw,80px)", fontWeight:900, lineHeight:0.93, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
               {t.hero.h1}<br /><span style={{ color:G }}>{t.hero.h2}</span>
             </h1>
             <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:40, fontWeight:300, maxWidth:460 }}>{t.hero.sub}</p>
@@ -1665,28 +1877,38 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </section>
 
-      {/* PRODUCTS */}
-      <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+      {/* FEATURES */}
+      <section id="products" style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:44, flexWrap:"wrap", gap:16 }}>
-            <div>
-              <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
-              <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
-            </div>
-            <button className="btn-green" onClick={onApply}>{t.products.cta}</button>
+          <div style={{ textAlign:"center", marginBottom:56 }}>
+            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.features.badge}</p>
+            <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>{t.features.h}</h2>
           </div>
-          <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
-            {t.products.items.map(p=>(
-              <div key={p.name} className="prod-card">
-                <div style={{ fontSize:26, marginBottom:14, color:G }}>{p.icon}</div>
-                <h3 className="cond" style={{ fontSize:24, fontWeight:800, textTransform:"uppercase", marginBottom:8 }}>{p.name}</h3>
-                <p style={{ fontSize:14, color:"rgba(255,255,255,.45)", lineHeight:1.75, marginBottom:18, fontWeight:300 }}>{p.desc}</p>
-                <div style={{ display:"flex", gap:22 }}>
-                  <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.amount}</p><p style={{ fontSize:13, fontWeight:600, color:G }}>{p.range}</p></div>
-                  <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.term}</p><p style={{ fontSize:13, fontWeight:600, color:"#fff" }}>{p.term}</p></div>
-                </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+            {t.features.items.map(f=>(
+              <div key={f.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"32px 28px", borderRadius:4 }}>
+                <div style={{ fontSize:32, marginBottom:16 }}>{f.icon}</div>
+                <h3 style={{ fontSize:16, fontWeight:700, color:"#fff", marginBottom:10 }}>{f.name}</h3>
+                <p style={{ fontSize:14, color:"rgba(255,255,255,.45)", lineHeight:1.75, fontWeight:300 }}>{f.desc}</p>
               </div>
             ))}
+          </div>
+          <div style={{ marginTop:48, textAlign:"center" }}>
+            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
+            <h2 className="cond" style={{ fontSize:"clamp(24px,3vw,40px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:32, cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
+            <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2, textAlign:"left" }}>
+              {t.products.items.map(p=>(
+                <div key={p.name} className="prod-card">
+                  <div style={{ fontSize:22, marginBottom:12, color:G }}>{p.icon}</div>
+                  <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:8 }}>{p.name}</h3>
+                  <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, marginBottom:16, fontWeight:300 }}>{p.desc}</p>
+                  <div style={{ display:"flex", gap:22 }}>
+                    <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.amount}</p><p style={{ fontSize:13, fontWeight:600, color:G }}>{p.range}</p></div>
+                    <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.term}</p><p style={{ fontSize:13, fontWeight:600, color:"#fff" }}>{p.term}</p></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1736,20 +1958,31 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"36px 5%" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <span style={{ fontSize:13, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
+      <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"48px 5% 32px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:24, paddingBottom:24, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+              <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ fontSize:13, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
+              </div>
+              <span className="cond" style={{ fontSize:18, fontWeight:800, letterSpacing:"0.02em" }}>APROVUIT</span>
             </div>
-            <span className="cond" style={{ fontSize:18, fontWeight:800, letterSpacing:"0.02em" }}>APROVUIT</span>
+            <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
+              <button className="nav-link" onClick={()=>setView&&setView("apply")||onApply()}>{lang==="es"?"Comenzar":"Get Started"}</button>
+              <button className="nav-link" onClick={()=>setView&&setView("login")||onLogin()}>{lang==="es"?"Entrar":"Log In"}</button>
+              <button className="nav-link" onClick={onProducts}>{lang==="es"?"Opciones":"Options"}</button>
+              <button className="nav-link" onClick={onHowItWorks}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
+              <button className="nav-link" onClick={onFaq}>FAQ</button>
+            </div>
           </div>
-          <div style={{ display:"flex", gap:28 }}>
-            <button className="nav-link" onClick={onApply}>Apply</button>
-            <button className="nav-link" onClick={onLogin}>Log In</button>
-            
+          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"16px 20px", marginBottom:16 }}>
+            <p style={{ fontSize:11, color:"rgba(255,255,255,.35)", lineHeight:1.8 }}>
+              {lang==="es"
+                ? "⚖️ Aviso Legal: Aprovuit es una plataforma de mercado de financiamiento, no un prestamista ni corredor. Aprovuit no toma decisiones de crédito, negocia términos de financiamiento, ni actúa en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento. Todas las decisiones son tomadas por los socios de financiamiento."
+                : "⚖️ Legal Disclaimer: Aprovuit is a financing marketplace platform, not a lender or broker. Aprovuit does not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications submitted through the platform may be shared with independent third-party financing partners who independently determine eligibility and offer terms. Aprovuit does not guarantee financing approval. All financing decisions are made solely by the financing partners."}
+            </p>
           </div>
-          <p style={{ fontSize:12, color:"rgba(255,255,255,.2)" }}>{t.footer.rights}</p>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
         </div>
       </footer>
     </div>
@@ -1830,12 +2063,15 @@ export default function Aprovuit() {
 
   if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>setView(user?"dashboard":"landing")} />;
 
-  if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onSuccess={handleApplySuccess} />;
+  if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
-  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
-  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
-  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />;
+  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
+  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
+  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
+  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
+  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
+  <Chatbot lang={lang} onApply={()=>setView("apply")} />;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>setView("landing")} />
@@ -1855,6 +2091,7 @@ export default function Aprovuit() {
         </div>
       </div>
       <Dashboard lang={lang} user={user} onSignOut={()=>{setUser(null);setView("landing");}} onUpload={handleUpload} />
+      <Chatbot lang={lang} onApply={()=>setView("apply")} />
     </div>
   );
 
@@ -1889,6 +2126,7 @@ export default function Aprovuit() {
         </div>
       </nav>
       <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
+      <Chatbot lang={lang} onApply={()=>setView("apply")} />
     </div>
   );
 }
