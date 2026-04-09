@@ -1820,6 +1820,9 @@ export default function Aprovuit() {
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>setView("landing")} onSuccess={handleApplySuccess} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
+  if (view==="products") return <ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
+  if (view==="howitworks") return <HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
+  if (view==="faq") return <FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} />;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>setView("landing")} />
