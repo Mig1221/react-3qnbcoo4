@@ -1787,58 +1787,113 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
   const [faqOpen, setFaqOpen] = useState(null);
 
   return (
-    <div style={{ background:BK, color:"#fff" }}>
-      {/* HERO */}
-      <section style={{ minHeight:"92vh", display:"flex", alignItems:"center", padding:"80px 5%", position:"relative", overflow:"hidden" }}>
-        <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(circle at 15% 50%, ${G}12 0%, transparent 55%), radial-gradient(circle at 85% 20%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
-        <div className="hero-grid" style={{ maxWidth:1100, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
+    <div style={{ background:BK, color:"#fff", fontFamily:"'DM Sans',sans-serif" }}>
+
+      {/* ── HERO ── */}
+      <section style={{ minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 5% 60px", position:"relative", overflow:"hidden" }}>
+        <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 20% 60%, ${G}0f 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
+        <div style={{ maxWidth:1100, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }} className="hero-grid">
+
+          {/* Left */}
           <div className="fadeup">
-            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}33`, padding:"6px 16px", borderRadius:20, marginBottom:28 }}>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}30`, padding:"5px 16px", borderRadius:20, marginBottom:28 }}>
               <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-              <span style={{ fontSize:12, color:G, fontWeight:600, letterSpacing:"0.1em", textTransform:"uppercase" }}>{t.hero.badge}</span>
+              <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase" }}>{lang==="es"?"Plataforma de Financiamiento · No un Corredor":"Financing Platform · Not a Broker"}</span>
             </div>
-            <h1 className="cond" style={{ fontSize:"clamp(48px,6vw,80px)", fontWeight:900, lineHeight:0.93, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
-              {t.hero.h1}<br /><span style={{ color:G }}>{t.hero.h2}</span>
+            <h1 className="cond" style={{ fontSize:"clamp(48px,6.5vw,82px)", fontWeight:900, lineHeight:0.94, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
+              {lang==="es" ? <>SIN LLAMADAS.<br /><span style={{color:G}}>SIN PRESIÓN.</span><br />SIMPLE.</> : <>NO HASSLE.<br /><span style={{color:G}}>NO CALLS.</span><br />SIMPLE.</>}
             </h1>
-            <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:40, fontWeight:300, maxWidth:460 }}>{t.hero.sub}</p>
-            <div style={{ display:"flex", gap:14, flexWrap:"wrap" }}>
-              <button className="btn-green" style={{ fontSize:16, padding:"16px 40px" }} onClick={onApply}>{t.hero.cta1}</button>
-              <button className="btn-ghost" onClick={onLogin}>{t.hero.cta2}</button>
+            <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:16, fontWeight:300, maxWidth:460 }}>
+              {lang==="es"
+                ? "Envía una solicitud, rastrea tu financiamiento y ve las ofertas disponibles — todo en un solo lugar."
+                : "Submit one request, track your funding, and view available offers — all in one place."}
+            </p>
+            <p style={{ fontSize:14, color:"rgba(255,255,255,.3)", lineHeight:1.6, marginBottom:40, maxWidth:420, fontWeight:300 }}>
+              {lang==="es"
+                ? "Aprovuit es una plataforma tecnológica. No somos un prestamista ni un corredor."
+                : "Aprovuit is a technology platform. We are not a lender or broker."}
+            </p>
+            <div style={{ display:"flex", gap:14, flexWrap:"wrap" }} className="hero-btns">
+              <button className="btn-green" style={{ fontSize:16, padding:"15px 36px" }} onClick={onApply}>
+                {lang==="es"?"Comenzar →":"Get Started →"}
+              </button>
+              <button className="btn-ghost" onClick={onLogin}>
+                {lang==="es"?"Entrar al Portal":"Log In to Dashboard"}
+              </button>
             </div>
           </div>
-          {/* Dashboard preview */}
+
+          {/* Right — Dashboard mockup */}
           <div style={{ display:"flex", justifyContent:"center" }}>
-            <div style={{ background:BK2, border:`1px solid ${G}25`, borderRadius:20, padding:20, width:320, position:"relative" }}>
-              <div style={{ position:"absolute", inset:-16, background:`radial-gradient(circle, ${G}18 0%, transparent 70%)`, filter:"blur(16px)", borderRadius:"50%" }}></div>
-              <div style={{ position:"relative", zIndex:1 }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
-                  <span className="cond" style={{ fontSize:15, fontWeight:800, color:G, letterSpacing:"0.05em" }}>APROVUIT</span>
-                  <span className="pill green">Live Dashboard</span>
-                </div>
-                {[{label:"APP-2041 · Term Loan",status:"Approved ✓",sc:G,amt:"$145,000",sub:"Offer ready to accept"},{label:"APP-2038 · Line of Credit",status:"Under Review",sc:"#f59e0b",amt:"$75,000",sub:"Decision in ~2 hours"},{label:"LN-10042 · Active Loan",status:"Current",sc:"#60a5fa",amt:"$84,200",sub:"44% paid · Due Apr 1"}].map((item,i)=>(
-                  <div key={i} style={{ background:BK3, borderRadius:12, padding:"13px 14px", marginBottom:8, border:"1px solid rgba(255,255,255,.05)" }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>{item.label}</span>
-                      <span style={{ fontSize:11, fontWeight:700, color:item.sc }}>{item.status}</span>
-                    </div>
-                    <div style={{ fontSize:20, fontWeight:900, color:"#fff", marginBottom:3, fontFamily:"'Barlow Condensed',sans-serif" }}>{item.amt}</div>
-                    <div style={{ fontSize:11, color:"rgba(255,255,255,.35)" }}>{item.sub}</div>
+            <div style={{ position:"relative", width:"100%", maxWidth:380 }}>
+              <div style={{ position:"absolute", inset:-24, background:`radial-gradient(circle, ${G}15 0%, transparent 70%)`, filter:"blur(24px)", borderRadius:"50%" }}></div>
+              {/* App frame */}
+              <div style={{ background:"#0f0f0f", border:"1px solid rgba(255,255,255,.1)", borderRadius:24, overflow:"hidden", position:"relative", zIndex:1, boxShadow:"0 40px 80px rgba(0,0,0,.6)" }}>
+                {/* App header */}
+                <div style={{ background:"#0a0a0a", padding:"16px 20px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                    <div style={{ width:24, height:24, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:900, color:"#000" }}>A</div>
+                    <span style={{ fontSize:14, fontWeight:700, color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
                   </div>
-                ))}
-                <button onClick={onApply} style={{ width:"100%", background:G, border:"none", borderRadius:10, padding:"11px", textAlign:"center", fontSize:13, fontWeight:800, color:"#000", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:4 }}>Apply Now — Free →</button>
+                  <span style={{ fontSize:11, color:G, fontWeight:700, background:"rgba(168,255,62,.1)", padding:"3px 10px", borderRadius:20 }}>● {lang==="es"?"En línea":"Live"}</span>
+                </div>
+                {/* App nav tabs */}
+                <div style={{ display:"flex", background:"#111", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
+                  {(lang==="es"?["Resumen","Ofertas","Documentos"]:["Overview","Offers","Documents"]).map((tab,i)=>(
+                    <div key={tab} style={{ flex:1, padding:"10px 4px", textAlign:"center", fontSize:11, fontWeight:700, color:i===1?G:"rgba(255,255,255,.35)", borderBottom:i===1?`2px solid ${G}`:"2px solid transparent", cursor:"pointer" }}>{tab}</div>
+                  ))}
+                </div>
+                {/* Content */}
+                <div style={{ padding:20 }}>
+                  {/* Status card */}
+                  <div style={{ background:"#161616", borderRadius:12, padding:"14px 16px", marginBottom:12, border:"1px solid rgba(255,255,255,.05)" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>APP-2041 · {lang==="es"?"Financiamiento a Plazo":"Term Financing"}</span>
+                      <span style={{ fontSize:11, fontWeight:700, color:G }}>✓ {lang==="es"?"Activo":"Active"}</span>
+                    </div>
+                    <div style={{ fontSize:22, fontWeight:900, color:"#fff", fontFamily:"'Barlow Condensed',sans-serif", marginBottom:4 }}>$145,000</div>
+                    <div style={{ height:4, background:"rgba(255,255,255,.08)", borderRadius:2, overflow:"hidden", marginBottom:4 }}>
+                      <div style={{ height:"100%", width:"44%", background:G, borderRadius:2 }}></div>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"space-between" }}>
+                      <span style={{ fontSize:10, color:"rgba(255,255,255,.3)" }}>44% {lang==="es"?"pagado":"paid"}</span>
+                      <span style={{ fontSize:10, color:"rgba(255,255,255,.3)" }}>{lang==="es"?"Próximo: $6,250":"Next: $6,250"}</span>
+                    </div>
+                  </div>
+                  {/* Offer card */}
+                  <div style={{ background:"linear-gradient(135deg,#0d1f0d,#111)", borderRadius:12, padding:"14px 16px", marginBottom:12, border:`1px solid ${G}25` }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,.5)" }}>{lang==="es"?"Nueva Oferta Disponible":"New Offer Available"}</span>
+                      <span style={{ fontSize:11, fontWeight:700, color:"#f59e0b" }}>⏳ {lang==="es"?"Pendiente":"Pending"}</span>
+                    </div>
+                    <div style={{ fontSize:28, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", marginBottom:10 }}>$200,000</div>
+                    <div style={{ display:"flex", gap:8 }}>
+                      <button onClick={onApply} style={{ flex:1, background:G, border:"none", borderRadius:8, padding:"9px 0", fontSize:12, fontWeight:800, color:"#000", cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Ver Oferta":"View Offer"}</button>
+                      <button style={{ flex:1, background:"rgba(255,255,255,.06)", border:"1px solid rgba(255,255,255,.1)", borderRadius:8, padding:"9px 0", fontSize:12, fontWeight:600, color:"rgba(255,255,255,.5)", cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Después":"Later"}</button>
+                    </div>
+                  </div>
+                  {/* Upload prompt */}
+                  <div style={{ background:"#161616", borderRadius:12, padding:"12px 16px", border:"1px solid rgba(255,255,255,.05)", display:"flex", alignItems:"center", gap:12 }}>
+                    <div style={{ width:32, height:32, background:"rgba(168,255,62,.1)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, flexShrink:0 }}>📁</div>
+                    <div>
+                      <p style={{ fontSize:12, fontWeight:600, color:"#fff", margin:0 }}>{lang==="es"?"Sube tus documentos":"Upload your documents"}</p>
+                      <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", margin:0 }}>{lang==="es"?"Estados de cuenta · ID · Cheque":"Bank statements · ID · Check"}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TICKER */}
-      <div style={{ background:G, padding:"12px 0", overflow:"hidden" }}>
+      {/* ── TICKER ── */}
+      <div style={{ background:G, padding:"11px 0", overflow:"hidden" }}>
         <div className="tick">
           {[...Array(2)].map((_,ti)=>(
             <span key={ti} style={{ display:"flex" }}>
               {t.ticker.map(text=>(
-                <span key={text} style={{ display:"inline-flex", alignItems:"center", gap:14, padding:"0 28px" }}>
+                <span key={text} style={{ display:"inline-flex", alignItems:"center", gap:12, padding:"0 28px" }}>
                   <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
                   <span style={{ color:"#000", opacity:.3 }}>◆</span>
                 </span>
@@ -1848,84 +1903,128 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </div>
 
-      {/* STATS */}
+      {/* ── STATS ── */}
       <section style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
         <div className="stats-grid" style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
           {t.stats.map(([v,l],i)=>(
             <div key={l} style={{ padding:"36px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.06)":"none" }}>
-              <div className="cond" style={{ fontSize:48, fontWeight:900, color:G, letterSpacing:"-0.02em", lineHeight:1 }}>{v}</div>
+              <div className="cond" style={{ fontSize:44, fontWeight:900, color:G, letterSpacing:"-0.02em", lineHeight:1 }}>{v}</div>
               <div style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:8, fontWeight:500, letterSpacing:"0.04em" }}>{l}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section id="how-it-works" style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:60 }}>
+      {/* ── HOW IT WORKS ── */}
+      <section style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
           <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onHowItWorks}>{t.how.h}</h2>
         </div>
-        <div className="how-grid" className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
-          {t.how.steps.map(([n,title,desc],i)=>(
-            <div key={n} style={{ background:i===1?G:BK3, color:i===1?"#000":"#fff", padding:"44px 36px", border:`1px solid ${i===1?G:"rgba(255,255,255,.06)"}`, borderRadius:i===0?"10px 0 0 10px":i===2?"0 10px 10px 0":"0" }}>
-              <div className="cond" style={{ fontSize:56, fontWeight:900, opacity:.12, marginBottom:20, letterSpacing:"-0.04em" }}>{n}</div>
-              <h3 className="cond" style={{ fontSize:24, fontWeight:800, textTransform:"uppercase", marginBottom:14 }}>{title}</h3>
-              <p style={{ fontSize:14, lineHeight:1.8, opacity:i===1?.7:.5, fontWeight:300 }}>{desc}</p>
+        <div className="how-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:2 }}>
+          {(lang==="es"
+            ? [["01","Envía tu Solicitud","Completa un formulario simple. Sin entrevistas. Sin llamadas."],["02","Socios lo Revisan","Tu información puede ser compartida con socios de financiamiento en nuestra red."],["03","Ve las Ofertas","Las ofertas disponibles aparecen en tu portal. Tú compara y decides."],["04","Tú Eliges","Selecciona lo que funciona para tu negocio. Sin presión. Sin intermediarios."]]
+            : [["01","Submit Your Request","Fill out a simple form. No interviews. No phone calls."],["02","Partners Review","Your info may be shared with financing partners in our network."],["03","View Offers","Available offers appear in your dashboard. You compare and decide."],["04","You Choose","Select what works for your business. No pressure. No broker."]]
+          ).map(([n,title,desc],i)=>(
+            <div key={n} style={{ background:i===2?G:BK3, color:i===2?"#000":"#fff", padding:"36px 28px", border:`1px solid ${i===2?G:"rgba(255,255,255,.06)"}` }}>
+              <div className="cond" style={{ fontSize:52, fontWeight:900, opacity:.12, marginBottom:16, letterSpacing:"-0.04em" }}>{n}</div>
+              <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:10 }}>{title}</h3>
+              <p style={{ fontSize:13, lineHeight:1.8, opacity:i===2?.7:.5, fontWeight:300 }}>{desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section id="products" style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+      {/* ── PLATFORM FEATURES ── */}
+      <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:56 }}>
-            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.features.badge}</p>
-            <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>{t.features.h}</h2>
+            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{lang==="es"?"Funciones de la Plataforma":"Platform Features"}</p>
+            <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>
+              {lang==="es"?"Todo en un Solo Portal":"Everything in One Dashboard"}
+            </h2>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
-            {t.features.items.map(f=>(
-              <div key={f.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"32px 28px", borderRadius:4 }}>
-                <div style={{ fontSize:32, marginBottom:16 }}>{f.icon}</div>
-                <h3 style={{ fontSize:16, fontWeight:700, color:"#fff", marginBottom:10 }}>{f.name}</h3>
-                <p style={{ fontSize:14, color:"rgba(255,255,255,.45)", lineHeight:1.75, fontWeight:300 }}>{f.desc}</p>
+            {(t.features?.items||[]).map(f=>(
+              <div key={f.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"28px 24px", borderRadius:4 }}>
+                <div style={{ fontSize:28, marginBottom:14 }}>{f.icon}</div>
+                <h3 style={{ fontSize:15, fontWeight:700, color:"#fff", marginBottom:8 }}>{f.name}</h3>
+                <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, fontWeight:300 }}>{f.desc}</p>
               </div>
             ))}
-          </div>
-          <div style={{ marginTop:48, textAlign:"center" }}>
-            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
-            <h2 className="cond" style={{ fontSize:"clamp(24px,3vw,40px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:32, cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
-            <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2, textAlign:"left" }}>
-              {t.products.items.map(p=>(
-                <div key={p.name} className="prod-card">
-                  <div style={{ fontSize:22, marginBottom:12, color:G }}>{p.icon}</div>
-                  <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:8 }}>{p.name}</h3>
-                  <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, marginBottom:16, fontWeight:300 }}>{p.desc}</p>
-                  <div style={{ display:"flex", gap:22 }}>
-                    <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.amount}</p><p style={{ fontSize:13, fontWeight:600, color:G }}>{p.range}</p></div>
-                    <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.term}</p><p style={{ fontSize:13, fontWeight:600, color:"#fff" }}>{p.term}</p></div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
 
-      {/* REVIEWS */}
+      {/* ── FINANCING OPTIONS ── */}
+      <section id="products" style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:48 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
+          <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginTop:12, maxWidth:500, margin:"12px auto 0" }}>
+            {lang==="es"
+              ? "Las siguientes son opciones de financiamiento que pueden estar disponibles a través de nuestra red de socios. Aprovuit no proporciona estas opciones directamente."
+              : "The following are financing options that may be available through our partner network. Aprovuit does not directly provide these options."}
+          </p>
+        </div>
+        <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
+          {t.products.items.map(p=>(
+            <div key={p.name} className="prod-card">
+              <div style={{ fontSize:22, marginBottom:12, color:G }}>{p.icon}</div>
+              <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:8 }}>{p.name}</h3>
+              <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, marginBottom:16, fontWeight:300 }}>{p.desc}</p>
+              <div style={{ display:"flex", gap:20 }}>
+                <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.amount}</p><p style={{ fontSize:13, fontWeight:600, color:G }}>{p.range}</p></div>
+                <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.term}</p><p style={{ fontSize:13, fontWeight:600, color:"#fff" }}>{p.term}</p></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PLATFORM EXPLANATION ── */}
+      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
+          <div style={{ width:56, height:56, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:24 }}>🏛️</div>
+          <h2 className="cond" style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:20 }}>
+            {lang==="es"?"¿Qué es Aprovuit?":"What is Aprovuit?"}
+          </h2>
+          <p style={{ fontSize:16, color:"rgba(255,255,255,.55)", lineHeight:1.85, marginBottom:28, fontWeight:300 }}>
+            {lang==="es"
+              ? "Aprovuit es una plataforma tecnológica que permite a los dueños de negocios gestionar y explorar opciones de financiamiento en un solo lugar. Piensa en nosotros como el Kayak del financiamiento empresarial — no vendemos vuelos, te mostramos las opciones para que tú elijas."
+              : "Aprovuit is a technology platform that allows business owners to manage and explore financing options in one place. Think of us as the Kayak of business funding — we don't sell flights, we show you the options so you can choose."}
+          </p>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, textAlign:"left", marginBottom:32 }}>
+            {(lang==="es"
+              ? [["❌","Lo que NO somos","Un prestamista, corredor o asesor financiero. No tomamos decisiones de crédito ni negociamos en tu nombre."],["✅","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["🔒","Tu privacidad","Tu información es segura. Solo puede ser compartida con socios de financiamiento con tu consentimiento."]]
+              : [["❌","What we're NOT","A lender, broker, or financial advisor. We don't make credit decisions or negotiate on your behalf."],["✅","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["🔒","Your privacy","Your information is secure. It may only be shared with financing partners with your consent."]]
+            ).map(([icon,title,desc])=>(
+              <div key={title} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"24px 20px" }}>
+                <div style={{ fontSize:22, marginBottom:12 }}>{icon}</div>
+                <h3 style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:8 }}>{title}</h3>
+                <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", lineHeight:1.7, fontWeight:300 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+          <button onClick={onApply} className="btn-green" style={{ fontSize:15, padding:"14px 40px" }}>
+            {lang==="es"?"Comenzar Gratis →":"Get Started Free →"}
+          </button>
+        </div>
+      </section>
+
+      {/* ── REVIEWS (clean, no fake energy) ── */}
       <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
         <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700, textAlign:"center" }}>{t.reviews.badge}</p>
-        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,46px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:52 }}>{t.reviews.h}</h2>
-        <div className="how-grid" className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:48 }}>{t.reviews.h}</h2>
+        <div className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
           {t.reviews.items.map(r=>(
-            <div key={r.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"32px 28px", borderRadius:10 }}>
-              <div style={{ display:"flex", gap:3, marginBottom:16 }}>
-                {[...Array(r.stars)].map((_,i)=><span key={i} style={{ color:G, fontSize:15 }}>★</span>)}
+            <div key={r.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"28px 24px", borderRadius:4 }}>
+              <div style={{ display:"flex", gap:2, marginBottom:14 }}>
+                {[...Array(r.stars)].map((_,i)=><span key={i} style={{ color:G, fontSize:13 }}>★</span>)}
               </div>
-              <p style={{ fontSize:14, lineHeight:1.85, color:"rgba(255,255,255,.55)", marginBottom:24, fontStyle:"italic", fontWeight:300 }}>"{r.text}"</p>
-              <div style={{ borderTop:"1px solid rgba(255,255,255,.07)", paddingTop:16 }}>
-                <p style={{ fontWeight:700, fontSize:14 }}>{r.name}</p>
+              <p style={{ fontSize:14, lineHeight:1.85, color:"rgba(255,255,255,.55)", marginBottom:20, fontStyle:"italic", fontWeight:300 }}>"{r.text}"</p>
+              <div style={{ borderTop:"1px solid rgba(255,255,255,.07)", paddingTop:14 }}>
+                <p style={{ fontWeight:700, fontSize:13, color:"#fff" }}>{r.name}</p>
                 <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", marginTop:2 }}>{r.biz}</p>
               </div>
             </div>
@@ -1933,31 +2032,31 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </section>
 
-      {/* FAQ */}
-      <section style={{ padding:"80px 5%", maxWidth:740, margin:"0 auto" }}>
+      {/* ── FAQ ── */}
+      <section id="faq" style={{ padding:"80px 5%", maxWidth:720, margin:"0 auto" }}>
         <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700, textAlign:"center" }}>{t.faq.badge}</p>
-        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,46px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:44 }}>{t.faq.h}</h2>
+        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:44 }}>{t.faq.h}</h2>
         {t.faq.items.map(([q,a],i)=>(
           <div key={i}>
             <button className="faq-btn" onClick={()=>setFaqOpen(faqOpen===i?null:i)}>
-              <span style={{ fontSize:16, fontWeight:600 }}>{q}</span>
+              <span style={{ fontSize:15, fontWeight:600 }}>{q}</span>
               <span style={{ fontSize:20, color:"rgba(255,255,255,.3)", flexShrink:0, transition:"transform .2s", transform:faqOpen===i?"rotate(45deg)":"none" }}>+</span>
             </button>
-            {faqOpen===i && <p style={{ fontSize:14, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:22, fontWeight:300, borderBottom:"1px solid rgba(255,255,255,.07)" }}>{a}</p>}
+            {faqOpen===i && <p style={{ fontSize:14, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:20, fontWeight:300, borderBottom:"1px solid rgba(255,255,255,.07)" }}>{a}</p>}
           </div>
         ))}
       </section>
 
-      {/* CTA */}
-      <section style={{ background:G, padding:"80px 5%", textAlign:"center" }}>
-        <h2 className="cond" style={{ fontSize:"clamp(36px,6vw,68px)", fontWeight:900, color:"#000", textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:16 }}>{t.cta.h}</h2>
-        <p style={{ fontSize:17, color:"rgba(0,0,0,.6)", marginBottom:36, fontWeight:300 }}>{t.cta.sub}</p>
-        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"17px 56px", fontSize:17, fontWeight:800, cursor:"pointer", fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"0.04em", textTransform:"uppercase", borderRadius:4 }}>
+      {/* ── CTA ── */}
+      <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
+        <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,64px)", fontWeight:900, color:"#000", textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:14 }}>{t.cta.h}</h2>
+        <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:32, fontWeight:300 }}>{t.cta.sub}</p>
+        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"16px 48px", fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"0.04em", textTransform:"uppercase", borderRadius:4 }}>
           {t.cta.btn}
         </button>
       </section>
 
-      {/* FOOTER */}
+      {/* ── FOOTER ── */}
       <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"48px 5% 32px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:24, paddingBottom:24, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
@@ -1968,26 +2067,28 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
               <span className="cond" style={{ fontSize:18, fontWeight:800, letterSpacing:"0.02em" }}>APROVUIT</span>
             </div>
             <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
-              <button className="nav-link" onClick={()=>setView&&setView("apply")||onApply()}>{lang==="es"?"Comenzar":"Get Started"}</button>
-              <button className="nav-link" onClick={()=>setView&&setView("login")||onLogin()}>{lang==="es"?"Entrar":"Log In"}</button>
+              <button className="nav-link" onClick={onApply}>{lang==="es"?"Comenzar":"Get Started"}</button>
+              <button className="nav-link" onClick={onLogin}>{lang==="es"?"Entrar":"Log In"}</button>
               <button className="nav-link" onClick={onProducts}>{lang==="es"?"Opciones":"Options"}</button>
               <button className="nav-link" onClick={onHowItWorks}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
               <button className="nav-link" onClick={onFaq}>FAQ</button>
             </div>
           </div>
-          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"16px 20px", marginBottom:16 }}>
-            <p style={{ fontSize:11, color:"rgba(255,255,255,.35)", lineHeight:1.8 }}>
+          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"14px 18px", marginBottom:16 }}>
+            <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.8 }}>
               {lang==="es"
-                ? "⚖️ Aviso Legal: Aprovuit es una plataforma de mercado de financiamiento, no un prestamista ni corredor. Aprovuit no toma decisiones de crédito, negocia términos de financiamiento, ni actúa en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento. Todas las decisiones son tomadas por los socios de financiamiento."
-                : "⚖️ Legal Disclaimer: Aprovuit is a financing marketplace platform, not a lender or broker. Aprovuit does not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications submitted through the platform may be shared with independent third-party financing partners who independently determine eligibility and offer terms. Aprovuit does not guarantee financing approval. All financing decisions are made solely by the financing partners."}
+                ? "⚖️ Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, no un prestamista ni corredor. No tomamos decisiones de crédito, negociamos términos de financiamiento, ni actuamos en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento."
+                : "⚖️ Legal: Aprovuit is a technology marketplace platform, not a lender or broker. We do not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications may be shared with independent third-party financing partners who independently determine eligibility and terms. Aprovuit does not guarantee financing approval."}
             </p>
           </div>
           <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
         </div>
       </footer>
+
     </div>
   );
 }
+
 
 // ── MAIN APP ─────────────────────────────────────────────────────
 export default function Aprovuit() {
