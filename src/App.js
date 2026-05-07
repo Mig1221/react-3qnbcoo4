@@ -89,7 +89,7 @@ async function sendApplicationEmail(data) {
 
 async function sendClientEmail(data) {
   await sendEmail(FORMSPREE_CLIENT, {
-    _subject:`✅ Application Received — ${data.company} | Aprovuit`,
+    _subject:`Done Application Received — ${data.company} | Aprovuit`,
     _replyto:ADMIN_EMAIL,
     email:data.email,
     "Hi":`${data.firstName},`,
@@ -113,7 +113,7 @@ async function sendOfferEmail(merchantEmail, merchantName, offer) {
 
 async function sendUploadNotificationEmail(appId, files) {
   await sendEmail(FORMSPREE_ADMIN, {
-    _subject:`📎 Documents Uploaded — ${appId} | Aprovuit`,
+    _subject:`Documents Uploaded — ${appId} | Aprovuit`,
     "App ID":appId, "Files Uploaded":files,
     "Action":"Log in to admin panel to review documents.",
   });
@@ -128,51 +128,67 @@ function fmtAmt(n) {
 
 // ── CSS ──────────────────────────────────────────────────────────
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
-  body { font-family:'DM Sans',sans-serif; background:#0a0a0a; color:#fff; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
   ::selection { background:#a8ff3e; color:#000; }
-  input,select,textarea { font-family:'DM Sans',sans-serif; }
-  input[type=range] { -webkit-appearance:none; width:100%; height:10px; background:#e5e8ee; border-radius:5px; outline:none; cursor:pointer; margin:16px 0 8px; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:30px; height:30px; background:#a8ff3e; border:4px solid #fff; border-radius:50%; box-shadow:0 2px 10px rgba(0,0,0,.25); cursor:pointer; }
-  input[type=range]::-moz-range-thumb { width:30px; height:30px; background:#a8ff3e; border:4px solid #fff; border-radius:50%; cursor:pointer; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  .fadeup { animation:fadeUp .35s ease both; }
-  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-  .tick { display:flex; animation:ticker 28s linear infinite; width:max-content; }
-  .cond { font-family:'Barlow Condensed',sans-serif; }
-  .nav-link { font-size:14px; font-weight:500; color:rgba(255,255,255,.55); cursor:pointer; background:none; border:none; font-family:'DM Sans',sans-serif; transition:color .2s; }
+  input, select, textarea, button { font-family:'Sora',sans-serif; }
+  .cond { font-family:'Sora',sans-serif; letter-spacing:-.03em; }
+  .mono { font-family:'DM Mono',monospace; }
+  .nav-link { font-size:13px; font-weight:500; color:rgba(255,255,255,.4); cursor:pointer; background:none; border:none; font-family:'Sora',sans-serif; transition:color .15s; letter-spacing:-.01em; }
   .nav-link:hover { color:#fff; }
-  .prod-card { background:#111; border:1px solid rgba(255,255,255,.07); padding:28px; transition:all .25s; border-radius:10px; }
-  .prod-card:hover { border-color:rgba(168,255,62,.4); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.4); }
-  .faq-btn { width:100%; background:none; border:none; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; border-bottom:1px solid rgba(255,255,255,.07); gap:16px; }
-  .sb-item { display:flex; align-items:center; gap:10px; padding:11px 20px; font-size:13px; cursor:pointer; color:rgba(255,255,255,.4); transition:all .15s; border-left:2px solid transparent; }
-  .sb-item:hover { color:#fff; background:rgba(255,255,255,.03); }
-  .sb-item.active { color:#a8ff3e; border-left-color:#a8ff3e; background:rgba(168,255,62,.05); }
-  .metric { background:#161616; border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:18px; }
-  .fc-inp { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:14px; display:block; outline:none; transition:border-color .15s; }
-  .fc-inp:focus { border-color:#1a1a1a; }
-  .fc-sel { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:14px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; outline:none; }
-  .fc-sel:focus { border-color:#1a1a1a; }
-  .btn-green { background:#a8ff3e; color:#000; border:none; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:800; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; }
-  .btn-green:hover { background:#c2ff52; transform:translateY(-1px); }
-  .btn-dark { background:#1a1a1a; color:#fff; border:none; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:800; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; }
-  .btn-ghost { background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.12); padding:13px 28px; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; }
-  .btn-ghost:hover { background:rgba(255,255,255,.1); }
-  .lang-pill { display:flex; border:1px solid rgba(255,255,255,.15); border-radius:20px; overflow:hidden; }
-  .lb { padding:5px 14px; font-size:12px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all .15s; }
-  .pill { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+  .btn-green { display:inline-flex; align-items:center; justify-content:center; background:#a8ff3e; color:#000; border:none; padding:11px 24px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
+  .btn-green:hover { background:#bfff52; }
+  .btn-ghost { display:inline-flex; align-items:center; justify-content:center; background:transparent; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.12); padding:11px 24px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
+  .btn-ghost:hover { border-color:rgba(255,255,255,.3); color:#fff; }
+  .card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; }
+  .prod-card { background:#111; border:1px solid rgba(255,255,255,.07); padding:28px; transition:all .2s; border-radius:10px; }
+  .prod-card:hover { border-color:rgba(168,255,62,.3); transform:translateY(-2px); }
+  .sb-item { display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:13px; cursor:pointer; color:rgba(255,255,255,.35); transition:all .15s; border-left:2px solid transparent; letter-spacing:-.01em; font-weight:500; }
+  .sb-item:hover { color:rgba(255,255,255,.7); background:rgba(255,255,255,.02); }
+  .sb-item.active { color:#fff; border-left-color:#a8ff3e; background:rgba(168,255,62,.04); }
+  .fc-inp { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; display:block; outline:none; transition:border-color .15s; }
+  .fc-inp:focus { border-color:rgba(168,255,62,.5); }
+  .fc-inp::placeholder { color:rgba(255,255,255,.2); }
+  .fc-sel { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; outline:none; transition:border-color .15s; }
+  .fc-sel:focus { border-color:rgba(168,255,62,.5); }
+  .fc-sel option { background:#1a1a1a; color:#fff; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .tick { display:flex; animation:ticker 35s linear infinite; width:max-content; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fadeup { animation:fadeUp .4s ease both; }
+  .pill { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:.02em; }
+  .pill.green { background:rgba(168,255,62,.1); color:#a8ff3e; }
+  .pill.yellow { background:rgba(245,158,11,.1); color:#f59e0b; }
+  .pill.blue { background:rgba(96,165,250,.1); color:#60a5fa; }
+  .pill.red { background:rgba(239,68,68,.1); color:#ef4444; }
+  .metric { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:18px; }
+  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
+  .faq-btn { width:100%; background:none; border:none; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; text-align:left; font-family:'Sora',sans-serif; border-bottom:1px solid rgba(255,255,255,.06); gap:16px; }
+  .dash-main { flex:1; padding:32px; background:#0a0a0a; overflow:auto; }
+  .offer-card { background:#0f1a0f; border:1px solid rgba(168,255,62,.12); border-radius:12px; padding:24px; margin-bottom:14px; }
+  .loan-card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:20px; margin-bottom:12px; }
+  .progress-bar { height:2px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; margin:10px 0 6px; }
+  .progress-fill { height:100%; border-radius:2px; }
+  .msg { max-width:75%; padding:10px 14px; border-radius:10px; font-size:13px; line-height:1.55; }
+  .msg.advisor { background:#161616; color:rgba(255,255,255,.75); align-self:flex-start; }
+  .msg.client { background:#a8ff3e; color:#000; align-self:flex-end; font-weight:600; }
+  .lang-pill { display:flex; border:1px solid rgba(255,255,255,.1); border-radius:6px; overflow:hidden; }
+  .lb { padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; border:none; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:.02em; }
+  .tbl-row:hover td { background:rgba(255,255,255,.02); }
+  .credit-box { border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:rgba(255,255,255,.03); }
+  .credit-box.sel { border-color:#a8ff3e; background:rgba(168,255,62,.06); }
   @media (max-width:768px) {
-    .hero-grid { grid-template-columns:1fr !important; gap:40px !important; }
+    .hero-grid { grid-template-columns:1fr !important; gap:48px !important; }
     .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
     .how-grid { grid-template-columns:1fr !important; }
     .products-grid { grid-template-columns:1fr !important; }
     .reviews-grid { grid-template-columns:1fr !important; }
-    .why-grid { grid-template-columns:1fr !important; gap:40px !important; }
     .dash-wrap { flex-direction:column !important; }
-    .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:8px 0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
-    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:8px 16px !important; font-size:12px !important; }
+    .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
+    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:12px 16px !important; }
     .sb-item.active { border-bottom-color:#a8ff3e !important; border-left-color:transparent !important; }
     .metrics-grid { grid-template-columns:repeat(2,1fr) !important; }
     .nav-desktop { display:none !important; }
@@ -181,35 +197,13 @@ const CSS = `
     .admin-wrap { flex-direction:column !important; }
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
-    section { padding-left:5% !important; padding-right:5% !important; }
-    .prod-card { padding:20px !important; }
-    .offer-card { padding:16px !important; }
-    .loan-card { padding:16px !important; }
   }
   @media (max-width:480px) {
-    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
-    .offer-grid { grid-template-columns:1fr 1fr !important; }
-    .hero-btns { flex-direction:column !important; }
+    .hero-btns { flex-direction:column !important; align-items:flex-start !important; }
     .offer-btns { flex-direction:column !important; }
     .name-row { grid-template-columns:1fr !important; }
-    .auth-card { padding:28px 20px !important; }
   }
-  .pill.green { background:rgba(168,255,62,.12); color:#a8ff3e; }
-  .pill.yellow { background:rgba(245,158,11,.12); color:#f59e0b; }
-  .pill.blue { background:rgba(96,165,250,.12); color:#60a5fa; }
-  .pill.red { background:rgba(239,68,68,.12); color:#ef4444; }
-  .offer-card { background:linear-gradient(135deg,#0d1f0d,#111); border:1px solid rgba(168,255,62,.2); border-radius:16px; padding:22px; margin-bottom:14px; }
-  .loan-card { background:#161616; border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:20px; margin-bottom:14px; }
-  .progress-bar { height:6px; background:rgba(255,255,255,.08); border-radius:3px; overflow:hidden; margin:10px 0 6px; }
-  .progress-fill { height:100%; border-radius:3px; }
-  .msg { max-width:75%; padding:10px 14px; border-radius:12px; font-size:14px; line-height:1.5; }
-  .msg.advisor { background:#1e1e1e; color:rgba(255,255,255,.8); align-self:flex-start; border-radius:4px 12px 12px 12px; }
-  .msg.client { background:#a8ff3e; color:#000; align-self:flex-end; border-radius:12px 4px 12px 12px; font-weight:600; }
-  .tbl-row:hover td { background:#f9f8f5; }
-  .credit-box { border:2px solid #e5e8ee; border-radius:10px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; }
-  .credit-box.sel { border-color:#1a1a1a; background:#1a1a1a; }
-  .step-tab { flex:1; height:4px; border-radius:2px; transition:background .3s; }
 `;
 
 // ── TRANSLATIONS ─────────────────────────────────────────────────
@@ -222,15 +216,15 @@ const T = {
     how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
     features: { badge:"Platform Features", h:"Everything You Need in One Dashboard",
       items:[
-        {icon:"📊",name:"Balance & Payment Tracking",desc:"Monitor your current funding balances, upcoming payments, and payment history in real time."},
-        {icon:"📋",name:"Application Tracking",desc:"Submit financing requests and track their status from submission to decision — no calls needed."},
-        {icon:"📁",name:"Secure Document Upload",desc:"Upload bank statements, ID, and other documents directly through the platform. 256-bit encrypted."},
-        {icon:"🔔",name:"Status Notifications",desc:"Get notified when your status updates, when a decision is made, or when action is needed."},
-        {icon:"🔐",name:"Secure Login",desc:"Email, password, and SMS verification keep your financial information protected at all times."},
-        {icon:"💬",name:"In-App Messaging",desc:"Communicate with your account team entirely within the platform. Everything in writing, always."},
+        {icon:"↗",name:"Balance & Payment Tracking",desc:"Monitor your current funding balances, upcoming payments, and payment history in real time."},
+        {icon:"◻",name:"Application Tracking",desc:"Submit financing requests and track their status from submission to decision — no calls needed."},
+        {icon:"↑",name:"Secure Document Upload",desc:"Upload bank statements, ID, and other documents directly through the platform. 256-bit encrypted."},
+        {icon:"◎",name:"Status Notifications",desc:"Get notified when your status updates, when a decision is made, or when action is needed."},
+        {icon:"◈",name:"Secure Login",desc:"Email, password, and SMS verification keep your financial information protected at all times."},
+        {icon:"◉",name:"In-App Messaging",desc:"Communicate with your account team entirely within the platform. Everything in writing, always."},
       ]
     },
-    products: { badge:"Financing Options", h:"Explore Financing Options", items:[{icon:"→",name:"Term Financing",range:"$10K–$500K",term:"3–24 months",desc:"Fixed payment structure for planned investments like expansion, hiring, or equipment."},{icon:"⟳",name:"Revolving Credit",range:"$10K–$5M",term:"Revolving",desc:"Access funds as needed. Draw, repay, and draw again. Only pay for what you use."},{icon:"⚡",name:"Revenue-Based Financing",range:"$5K–$500K",term:"Flexible repayment",desc:"Financing tied to your monthly revenue. Flexible repayment that adjusts with your business."},{icon:"⚙",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance business equipment through the platform. Equipment may serve as collateral."}], amount:"Amount", term:"Term" },
+    products: { badge:"Financing Options", h:"Explore Financing Options", items:[{icon:"→",name:"Term Financing",range:"$10K–$500K",term:"3–24 months",desc:"Fixed payment structure for planned investments like expansion, hiring, or equipment."},{icon:"↺",name:"Revolving Credit",range:"$10K–$5M",term:"Revolving",desc:"Access funds as needed. Draw, repay, and draw again. Only pay for what you use."},{icon:"↯",name:"Revenue-Based Financing",range:"$5K–$500K",term:"Flexible repayment",desc:"Financing tied to your monthly revenue. Flexible repayment that adjusts with your business."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance business equipment through the platform. Equipment may serve as collateral."}], amount:"Amount", term:"Term" },
     reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"I tracked everything through the dashboard from day one. No phone calls, no chasing anyone. The platform made the whole process simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"I could see exactly where my request was at every step. Uploaded all my documents in minutes. Total transparency.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"The self-service experience was exactly what I needed. I managed everything myself, on my own schedule, with no pressure.",stars:5}] },
     faq: { badge:"FAQ", h:"Common Questions", items:[["What is Aprovuit?","Aprovuit is a financing marketplace platform. Business owners submit one application and may receive multiple financing offers from our network of partners — all in one dashboard. Aprovuit is not a lender and does not act as a broker or negotiate on your behalf."],["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. Financing options available through the platform are provided by third-party financing partners. Aprovuit does not make credit decisions or directly provide loans."],["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your documents and personal information are stored securely and never shared without your consent."],["Do I need to talk to anyone on the phone?","Never. Aprovuit is fully self-service. You submit your application, financing offers appear in your dashboard, you compare and choose. No calls, no broker, no one acting on your behalf."],["How do I get started?","Create a free account, fill out your business profile, and submit a financing request through the platform. You can track everything in your dashboard from day one."]] },
     cta: { h:"No Hassle. No Calls. Simple Funding.", sub:"One application. Multiple offers. You choose. No calls. No broker. No pressure.", btn:"Get Started — It's Free →" },
@@ -291,15 +285,15 @@ const T = {
     how: { badge:"Cómo Funciona", h:"Administra Todo en Un Solo Lugar", steps:[["01","Crea tu Cuenta","Regístrate en minutos. Sin verificación de crédito para crear la cuenta. Tu portal está listo al instante."],["02","Envía tu Información","Envía la información de tu negocio y documentos a través de la plataforma. Tu solicitud puede ser compartida con socios de financiamiento en nuestra red."],["03","Rastrea y Administra","Las ofertas de financiamiento aparecen directamente en tu portal. Compara opciones, revisa todos los términos claramente y elige lo que más te conviene — nadie elige por ti."]] },
     features: { badge:"Funciones de la Plataforma", h:"Todo lo que Necesitas en un Solo Portal",
       items:[
-        {icon:"📊",name:"Seguimiento de Saldos y Pagos",desc:"Monitorea tus saldos actuales, próximos pagos e historial de pagos en tiempo real."},
-        {icon:"📋",name:"Seguimiento de Solicitudes",desc:"Envía solicitudes de financiamiento y rastrea su estado desde el envío hasta la decisión."},
-        {icon:"📁",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y otros documentos directamente. Encriptación de 256 bits."},
-        {icon:"🔔",name:"Notificaciones de Estado",desc:"Recibe notificaciones cuando tu estado cambie o cuando se requiera acción de tu parte."},
-        {icon:"🔐",name:"Acceso Seguro",desc:"Correo, contraseña y verificación por SMS mantienen tu información protegida en todo momento."},
-        {icon:"💬",name:"Mensajes en la App",desc:"Comunícate con tu equipo de cuenta dentro de la plataforma. Todo por escrito, siempre."},
+        {icon:"↗",name:"Seguimiento de Saldos y Pagos",desc:"Monitorea tus saldos actuales, próximos pagos e historial de pagos en tiempo real."},
+        {icon:"◻",name:"Seguimiento de Solicitudes",desc:"Envía solicitudes de financiamiento y rastrea su estado desde el envío hasta la decisión."},
+        {icon:"↑",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y otros documentos directamente. Encriptación de 256 bits."},
+        {icon:"◎",name:"Notificaciones de Estado",desc:"Recibe notificaciones cuando tu estado cambie o cuando se requiera acción de tu parte."},
+        {icon:"◈",name:"Acceso Seguro",desc:"Correo, contraseña y verificación por SMS mantienen tu información protegida en todo momento."},
+        {icon:"◉",name:"Mensajes en la App",desc:"Comunícate con tu equipo de cuenta dentro de la plataforma. Todo por escrito, siempre."},
       ]
     },
-    products: { badge:"Opciones de Financiamiento", h:"Explora Opciones de Financiamiento", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"⟳",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"⚡",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"⚙",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
+    products: { badge:"Opciones de Financiamiento", h:"Explora Opciones de Financiamiento", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"↺",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"↯",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"◈",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
     reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Rastreé todo desde el primer día. Sin llamadas, sin perseguir a nadie. La plataforma hizo todo el proceso simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"Podía ver exactamente dónde estaba mi solicitud en cada paso. Subí mis documentos en minutos. Total transparencia.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"La experiencia de autoservicio fue exactamente lo que necesitaba. Administré todo yo mismo, a mi ritmo, sin presión.",stars:5}] },
     faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[["¿Qué es Aprovuit?","Aprovuit es una plataforma de mercado de financiamiento. Los dueños de negocios envían una solicitud y pueden recibir múltiples ofertas de socios de financiamiento — todo en un portal. Aprovuit no es un prestamista y no actúa como corredor ni negocia en tu nombre."],["¿Aprovuit presta dinero directamente?","No. Aprovuit es una plataforma de mercado. Cuando envías una solicitud, puede ser compartida con socios de financiamiento en nuestra red. Esos socios revisan tu información de forma independiente y pueden enviar ofertas. Aprovuit no toma decisiones de crédito, negocia términos ni actúa en tu nombre."],["¿Está segura mi información?","Sí. Todos los datos están encriptados con SSL de 256 bits. Tus documentos e información personal se almacenan de forma segura."],["¿Necesito hablar con alguien por teléfono?","Nunca. Aprovuit es completamente de autoservicio. Envías tu solicitud, las ofertas de financiamiento aparecen en tu portal, comparas y eliges. Sin llamadas, sin corredor, sin que nadie actúe en tu nombre."],["¿Cómo empiezo?","Crea una cuenta gratuita, completa tu perfil empresarial y envía una solicitud de financiamiento a través de la plataforma."]] },
     cta: { h:"Sin Llamadas. Sin Presión. Simple.", sub:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas. Sin intermediarios. Sin presión.", btn:"Comenzar — Es Gratis →" },
@@ -391,9 +385,9 @@ function UploadPage({ lang, appId, onBack }) {
       <div style={{ border:`2px dashed ${file?"#a8ff3e":"#e5e8ee"}`, borderRadius:12, padding:"18px 14px", textAlign:"center", background:file?"#f0fdf4":"#fafafa", position:"relative", cursor:"pointer", transition:"all .15s" }}>
         <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={e=>handleFile(fileKey,e.target.files[0])} style={{ position:"absolute", inset:0, opacity:0, cursor:"pointer", width:"100%", height:"100%" }} />
         {file ? (
-          <div><div style={{ fontSize:20, marginBottom:4 }}>✅</div><p style={{ fontSize:12, fontWeight:700, color:"#16a34a" }}>{file.name}</p></div>
+          <div><div style={{ fontSize:20, marginBottom:4 }}>Done</div><p style={{ fontSize:12, fontWeight:700, color:"#16a34a" }}>{file.name}</p></div>
         ) : (
-          <div><div style={{ fontSize:24, marginBottom:6, color:"#ccc" }}>📄</div><p style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:2 }}>{label}</p><p style={{ fontSize:11, color:"#aaa" }}>{t.formats}</p></div>
+          <div><div style={{ fontSize:24, marginBottom:6, color:"#ccc" }}></div><p style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:2 }}>{label}</p><p style={{ fontSize:11, color:"#aaa" }}>{t.formats}</p></div>
         )}
       </div>
     );
@@ -425,7 +419,7 @@ function UploadPage({ lang, appId, onBack }) {
   if (submitted) return (
     <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
       <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"48px 40px", maxWidth:480, width:"100%", textAlign:"center" }}>
-        <div style={{ width:80, height:80, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:36 }}>✓</div>
+        <div style={{ width:80, height:80, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:36 }}>Done</div>
         <h2 style={{ fontSize:26, fontWeight:900, color:"#1a1a1a", marginBottom:10 }}>{t.successH}</h2>
         <p style={{ fontSize:15, color:"#666", lineHeight:1.7, marginBottom:28 }}>{t.successP}</p>
         <button onClick={onBack} className="btn-dark" style={{ width:"100%", padding:14 }}>← Back to Aprovuit</button>
@@ -442,7 +436,7 @@ function UploadPage({ lang, appId, onBack }) {
         </button>
         <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(168,255,62,0.08)", border:`1px solid ${G}30`, padding:"5px 14px", borderRadius:20 }}>
           <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-          <span style={{ fontSize:12, color:G, fontWeight:700 }}>🔒 {t.secure}</span>
+          <span style={{ fontSize:12, color:G, fontWeight:700 }}>{t.secure}</span>
         </div>
       </div>
       <div style={{ background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", padding:"40px 24px 48px", textAlign:"center" }}>
@@ -455,7 +449,7 @@ function UploadPage({ lang, appId, onBack }) {
       <div style={{ maxWidth:640, margin:"0 auto", padding:"28px 24px 80px" }}>
         <div style={{ background:"#fff", borderRadius:18, padding:28, marginBottom:16, boxShadow:"0 4px 20px rgba(0,0,0,.08)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
-            <span style={{ fontSize:22 }}>🏦</span>
+            <span style={{ fontSize:13, fontWeight:700, color:G }}>BANK</span>
             <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.bankTitle}</h3><p style={{ fontSize:13, color:"#888" }}>{t.bankSub}</p></div>
             <span style={{ fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
           </div>
@@ -473,7 +467,7 @@ function UploadPage({ lang, appId, onBack }) {
         </div>
         <div style={{ background:"#fff", borderRadius:18, padding:28, marginBottom:28, boxShadow:"0 4px 20px rgba(0,0,0,.08)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
-            <span style={{ fontSize:22 }}>📋</span>
+            <span style={{ fontSize:13, fontWeight:700, color:G }}>CHECK</span>
             <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.voidedTitle}</h3><p style={{ fontSize:13, color:"#888" }}>{t.voidedSub}</p></div>
             <span style={{ fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
           </div>
@@ -482,7 +476,7 @@ function UploadPage({ lang, appId, onBack }) {
         <button onClick={handleSubmit} disabled={uploading} style={{ width:"100%", background:uploading?"#ccc":G, color:"#000", border:"none", padding:18, borderRadius:12, fontSize:16, fontWeight:900, cursor:uploading?"not-allowed":"pointer", fontFamily:"'DM Sans',sans-serif" }}>
           {uploading ? t.uploading : t.uploadBtn}
         </button>
-        <p style={{ textAlign:"center", fontSize:13, color:"#888", marginTop:12 }}>🔒 {t.secure}</p>
+        <p style={{ textAlign:"center", fontSize:13, color:"#888", marginTop:12 }}>{t.secure}</p>
       </div>
     </div>
   );
@@ -553,17 +547,16 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   };
 
   const APPLY_CSS = `
-    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'DM Sans',sans-serif; background:#f5f7fa; }
-    input[type=range] { -webkit-appearance:none; width:100%; height:8px; background:#e5e8ee; border-radius:4px; outline:none; cursor:pointer; margin:16px 0 8px; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:28px; height:28px; background:#a8ff3e; border:3px solid #fff; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.2); cursor:pointer; }
-    .fc-sel { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:16px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; }
-    .fc-inp { width:100%; padding:13px 16px; border-radius:10px; border:1.5px solid #e5e8ee; font-size:15px; font-family:'DM Sans',sans-serif; color:#1a1a1a; background:#fff; margin-bottom:16px; display:block; }
-    .fc-sel:focus, .fc-inp:focus { outline:none; border-color:#a8ff3e; box-shadow:0 0 0 3px rgba(168,255,62,0.15); }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-    .fadeup { animation:fadeUp 0.35s ease both; }
-  `;
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; -webkit-font-smoothing:antialiased; }
+  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .fadeup { animation:fadeUp .35s ease both; }
+  .credit-box { border:1.5px solid #e8e8e8; border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:#fff; }
+  .credit-box.sel { border-color:#0a0a0a; background:#0a0a0a; }
+`;
 
   const lbl = { fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8, display:"block" };
   const card = { background:"#fff", borderRadius:18, padding:"32px 28px", maxWidth:560, margin:"0 auto", boxShadow:"0 8px 40px rgba(0,0,0,0.18)" };
@@ -575,7 +568,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
     <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1a0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
       <style>{APPLY_CSS}</style>
       <div style={{ ...card, textAlign:"center", maxWidth:520 }} className="fadeup">
-        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40, color:"#16a34a", fontWeight:900 }}>✓</div>
+        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40, color:"#16a34a", fontWeight:900 }}>Done</div>
         <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase" }}>Application Received!</h2>
         <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:24 }}>Your account has been created and your application has been submitted. Financing offers may appear in your dashboard as partners review your information. No calls, no broker — you choose.</p>
         <div style={{ background:"#1a1a1a", borderRadius:14, padding:"18px 20px", textAlign:"left", marginBottom:20 }}>
@@ -594,7 +587,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
             onClick={()=> onUpload && onUpload(savedAppId)}
             style={{ width:"100%", background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:"13px", borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
           >
-            📎 {lang==="en"?"Upload Documents First":"Subir Documentos Primero"}
+            {lang==="en"?"Upload Documents First":"Subir Documentos Primero"}
           </button>
         </div>
       </div>
@@ -615,7 +608,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
         </button>
         <div style={{ display:"flex", alignItems:"center", gap:8, background:"rgba(168,255,62,0.08)", border:`1px solid ${G}30`, padding:"5px 14px", borderRadius:20 }}>
           <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-          <span style={{ fontSize:12, color:G, fontWeight:700 }}>📵 {t.noPhone}</span>
+          <span style={{ fontSize:12, color:G, fontWeight:700 }}>{t.noPhone}</span>
         </div>
       </div>
 
@@ -669,7 +662,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
 
             <button onClick={()=>setStep(1)} style={btnPrimary}>{t.getStarted}</button>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:14 }}>
-              <div style={{ width:14, height:14, background:"#22c55e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:8, flexShrink:0 }}>✓</div>
+              <div style={{ width:14, height:14, background:"#22c55e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:8, flexShrink:0 }}>Done</div>
               <span style={{ fontSize:13, color:"#888" }}>{t.secure}</span>
             </div>
           </div>
@@ -770,7 +763,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
                   })}
                 </div>
                 <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 14px", marginBottom:18 }}>
-                  <p style={{ fontSize:12, color:"#166534", lineHeight:1.6 }}>🔒 {t.disclaimer}</p>
+                  <p style={{ fontSize:12, color:"#166534", lineHeight:1.6 }}>{t.disclaimer}</p>
                 </div>
                 <button onClick={handleSubmit} style={btnPrimary}>{t.submitBtn}</button>
                 <div><button onClick={()=>setStep(3)} style={btnBack}>{t.backBtn}</button></div>
@@ -855,7 +848,7 @@ function LoginPage({ lang, onBack, onLogin }) {
           </div>
         ) : (
           <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%", textAlign:"center" }}>
-            <div style={{ width:60, height:60, background:"#f0fdf4", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:24 }}>🔐</div>
+            <div style={{ width:60, height:60, background:"#f0fdf4", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:16, fontWeight:800, color:"#fff" }}>—</div>
             <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.smsH}</h2>
             <p style={{ fontSize:14, color:"#888", marginBottom:24 }}>{t.smsSub}</p>
             <div style={{ display:"flex", gap:8, justifyContent:"center", marginBottom:24 }}>
@@ -949,7 +942,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
         {tab==="overview" && (
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.greeting}, {user.firstName} 👋</h2>
+              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.greeting}, {user.firstName} </h2>
               <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>{t.snapshot}</p>
             </div>
             <div className="metrics-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
@@ -969,7 +962,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                 {["Applied","Under Review","Decision","Offer Sent","Funded"].map((step,i)=>(
                   <React.Fragment key={step}>
                     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                      <div style={{ width:32, height:32, borderRadius:"50%", background:i<=1?G:"rgba(255,255,255,.08)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:i<=1?"#000":"rgba(255,255,255,.3)" }}>{i<=1?"✓":(i+1)}</div>
+                      <div style={{ width:32, height:32, borderRadius:"50%", background:i<=1?G:"rgba(255,255,255,.08)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:i<=1?"#000":"rgba(255,255,255,.3)" }}>{i<=1?"Done":(i+1)}</div>
                       <p style={{ fontSize:10, color:i<=1?G:"rgba(255,255,255,.3)", textAlign:"center", fontWeight:700, whiteSpace:"nowrap" }}>{step}</p>
                     </div>
                     {i<4 && <div style={{ flex:1, height:2, background:i<1?G:"rgba(255,255,255,.06)", margin:"0 4px 16px" }}></div>}
@@ -988,7 +981,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
             </div>
             {pendingOffers.length === 0 && (
               <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
-                <div style={{ fontSize:40, marginBottom:16 }}>📭</div>
+                <div style={{ fontSize:40, marginBottom:16 }}></div>
                 <p style={{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,.5)", marginBottom:8 }}>{t.noOffers}</p>
                 <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Financing offers from our partner network will appear here as partners review your application. You compare and choose — no one decides for you.</p>
               </div>
@@ -1009,7 +1002,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                   ))}
                 </div>
                 <div style={{ display:"flex", gap:10 }}>
-                  <button onClick={()=>acceptOffer(offer.id)} style={{ flex:1, background:G, color:"#000", border:"none", padding:13, borderRadius:10, fontSize:14, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Accept Offer ✓</button>
+                  <button onClick={()=>acceptOffer(offer.id)} style={{ flex:1, background:G, color:"#000", border:"none", padding:13, borderRadius:10, fontSize:14, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Accept Offer Done</button>
                   <button onClick={()=>declineOffer(offer.id)} style={{ flex:1, background:"rgba(255,255,255,.06)", color:"rgba(255,255,255,.5)", border:"1px solid rgba(255,255,255,.1)", padding:13, borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Decline</button>
                 </div>
                 {offer.expires && <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", textAlign:"center", marginTop:8 }}>Expires {offer.expires}</p>}
@@ -1024,7 +1017,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                       <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{offer.product} · {offer.amount}</p>
                       <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:2 }}>{offer.term} · {offer.rate}</p>
                     </div>
-                    <span className={`pill ${offer.status==="accepted"?"green":"red"}`}>{offer.status==="accepted"?"Accepted ✓":"Declined"}</span>
+                    <span className={`pill ${offer.status==="accepted"?"green":"red"}`}>{offer.status==="accepted"?"Accepted Done":"Declined"}</span>
                   </div>
                 ))}
               </div>
@@ -1039,7 +1032,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
               <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>Track your balances and payment schedule</p>
             </div>
             <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
-              <div style={{ fontSize:40, marginBottom:16 }}>💳</div>
+              <div style={{ fontSize:40, marginBottom:16 }}></div>
               <p style={{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,.5)", marginBottom:8 }}>{t.loansEmpty}</p>
               <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Once your offer is accepted and funded, your loan details will appear here.</p>
             </div>
@@ -1054,7 +1047,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
             </div>
             <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:22, marginBottom:16 }}>
               <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:16 }}>Required Documents</p>
-              {[["Bank Statements","Last 6 months","📄"],["Driver's License","Government-issued ID","🪪"],["Voided Check","Business checking account","📋"]].map(([name,desc,icon])=>(
+              {[["Bank Statements","Last 6 months",""],["Driver's License","Government-issued ID","🪪"],["Voided Check","Business checking account","C"]].map(([name,desc,icon])=>(
                 <div key={name} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
                   <div style={{ width:36, height:36, background:"rgba(255,255,255,.06)", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>{icon}</div>
                   <div style={{ flex:1 }}>
@@ -1065,7 +1058,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                 </div>
               ))}
             </div>
-            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:15, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>📎 {t.docsUpload}</button>
+            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:15, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.docsUpload}</button>
           </div>
         )}
 
@@ -1078,9 +1071,9 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
               <div style={{ width:40, height:40, background:"#1a1a1a", border:"2px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
               <div style={{ flex:1 }}>
                 <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>Tanya Williams</p>
-                <p style={{ fontSize:12, color:G, fontWeight:600 }}>● Online · {t.msgAdvisor}</p>
+                <p style={{ fontSize:12, color:G, fontWeight:600 }}>Online · {t.msgAdvisor}</p>
               </div>
-              <div style={{ background:"rgba(239,68,68,.1)", borderRadius:20, padding:"4px 12px", fontSize:11, fontWeight:700, color:"#ef4444" }}>📵 No Calls</div>
+              <div style={{ background:"rgba(239,68,68,.1)", borderRadius:20, padding:"4px 12px", fontSize:11, fontWeight:700, color:"#ef4444" }}>No Calls</div>
             </div>
             <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:10, paddingBottom:16 }}>
               {msgs.map((m,i)=>(
@@ -1259,7 +1252,7 @@ function AdminDashboard({ onExit }) {
           <div>
             <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:4, letterSpacing:"-0.02em" }}>Send Offer</h2>
             <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Create and send a funding offer to a merchant.</p>
-            {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 16px", marginBottom:20 }}><p style={{ fontSize:14, fontWeight:700, color:"#16a34a" }}>✓ Offer sent! Merchant can see it in their dashboard.</p></div>}
+            {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 16px", marginBottom:20 }}><p style={{ fontSize:14, fontWeight:700, color:"#16a34a" }}>Offer sent! Merchant can see it in their dashboard.</p></div>}
             <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:28, maxWidth:560 }}>
               {drawer && (
                 <div style={{ background:"#f9fafb", borderRadius:10, padding:"14px 16px", marginBottom:22 }}>
@@ -1463,7 +1456,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
                   {p.best.map(b=>(
                     <div key={b} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
                       <div style={{ width:20, height:20, background:`${p.color}20`, border:`1px solid ${p.color}50`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                        <span style={{ fontSize:9, color:p.color, fontWeight:800 }}>✓</span>
+                        <span style={{ fontSize:9, color:p.color, fontWeight:800 }}>Done</span>
                       </div>
                       <span style={{ fontSize:14, color:"rgba(255,255,255,.65)" }}>{b}</span>
                     </div>
@@ -1494,30 +1487,30 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
 // ── HOW IT WORKS PAGE ─────────────────────────────────────────────
 function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   const steps = lang==="es" ? [
-    { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"📋",
+    { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"01",
       desc:"Llena nuestra solicitud inteligente en línea. Sin entrevistas telefónicas. Sin papeleo. Solo información básica sobre tu negocio y lo que necesitas.", details:["Información básica del negocio","Monto de financiamiento deseado","Propósito de los fondos","Sube 3-6 meses de estados bancarios"] },
-    { n:"02", title:"Crea Tu Cuenta", time:"30 segundos", icon:"👤",
+    { n:"02", title:"Crea Tu Cuenta", time:"30 segundos", icon:"02",
       desc:"Crea tu cuenta segura de Aprovuit. Aquí rastrearás todo — tu solicitud, ofertas, documentos y mensajes con tu asesor.", details:["Correo electrónico y contraseña","Verificación de identidad por SMS","Portal personal con dashboard en tiempo real","Sin instalación de app requerida"] },
-    { n:"03", title:"Revisión de Solicitud", time:"2-4 horas", icon:"🔍",
+    { n:"03", title:"Revisión de Solicitud", time:"2-4 horas", icon:"03",
       desc:"Nuestro equipo revisa tu solicitud. Evaluamos ingresos, historial crediticio y la salud general de tu negocio. Sin llamadas telefónicas de nuestra parte.", details:["Consulta suave de crédito (sin impacto)","Análisis de estados bancarios","Evaluación de ingresos mensuales","Comunicación 100% por escrito"] },
-    { n:"04", title:"Recibe tu Oferta", time:"En tu dashboard", icon:"💼",
+    { n:"04", title:"Recibe tu Oferta", time:"En tu dashboard", icon:"04",
       desc:"Tu oferta personalizada aparece directamente en tu portal y en tu correo. Cada término es transparente — monto, tasa, pagos mensuales, todo claro antes de aceptar.", details:["Monto aprobado","Tasa de interés o factor","Calendario de pagos","Fecha estimada de fondeo"] },
-    { n:"05", title:"Acepta y Recibe Fondos", time:"Mismo día", icon:"🚀",
+    { n:"05", title:"Acepta y Recibe Fondos", time:"Mismo día", icon:"05",
       desc:"Acepta tu oferta con un clic. Sin presión. Sin llamadas. Si aceptas antes de las 3pm EST, los fondos llegan el mismo día hábil.", details:["Acepta o rechaza con un clic","Sin presión de vendedores","Fondos via transferencia ACH","Confirmación inmediata por correo"] },
-    { n:"06", title:"Administra tu Financiamiento", time:"En cualquier momento", icon:"📊",
+    { n:"06", title:"Administra tu Financiamiento", time:"En cualquier momento", icon:"06",
       desc:"Rastrea tu saldo, pagos y renovaciones directamente en tu portal. Cuando seas elegible para renovación, aparece en tu dashboard — sin llamadas frías.", details:["Balance en tiempo real","Historial de pagos","Elegibilidad de renovación automática","Soporte por mensaje directo"] },
   ] : [
-    { n:"01", title:"Complete Your Application", time:"5 minutes", icon:"📋",
+    { n:"01", title:"Complete Your Application", time:"5 minutes", icon:"01",
       desc:"Fill out our smart online application. No phone interviews. No paperwork. Just basic information about your business and what you need.", details:["Basic business information","Desired funding amount","Purpose of funds","Upload 3-6 months of bank statements"] },
-    { n:"02", title:"Create Your Account", time:"30 seconds", icon:"👤",
+    { n:"02", title:"Create Your Account", time:"30 seconds", icon:"02",
       desc:"Create your secure Aprovuit account. This is where you'll track everything — your application, offers, documents, and messages with your advisor.", details:["Email and password","SMS identity verification","Personal dashboard with real-time tracking","No app download required"] },
-    { n:"03", title:"Application Review", time:"2-4 hours", icon:"🔍",
+    { n:"03", title:"Application Review", time:"2-4 hours", icon:"03",
       desc:"Our team reviews your application. We evaluate your revenue, credit history, and overall business health. No phone calls from our side — ever.", details:["Soft credit pull (zero impact to score)","Bank statement analysis","Monthly revenue evaluation","100% written communication"] },
-    { n:"04", title:"Receive Your Offer", time:"In your dashboard", icon:"💼",
+    { n:"04", title:"Receive Your Offer", time:"In your dashboard", icon:"04",
       desc:"Your personalized offer appears directly in your portal and via email. Every term is transparent — amount, rate, monthly payments, all clear before you accept.", details:["Approved amount","Interest rate or factor rate","Payment schedule","Estimated funding date"] },
-    { n:"05", title:"Accept & Get Funded", time:"Same day", icon:"🚀",
+    { n:"05", title:"Accept & Get Funded", time:"Same day", icon:"05",
       desc:"Accept your offer with one click. No pressure. No phone calls. Accept before 3pm EST and funds arrive the same business day.", details:["Accept or decline with one click","No salesperson pressure","Funds via ACH transfer","Immediate email confirmation"] },
-    { n:"06", title:"Manage Your Funding", time:"Anytime", icon:"📊",
+    { n:"06", title:"Manage Your Funding", time:"Anytime", icon:"06",
       desc:"Track your balance, payments, and renewal eligibility directly in your portal. When you're eligible for renewal, it shows up in your dashboard — no cold calls.", details:["Real-time balance tracking","Payment history","Automatic renewal eligibility","Direct message support"] },
   ];
 
@@ -1664,8 +1657,8 @@ function Chatbot({ lang, onApply }) {
   const [msgs, setMsgs] = useState([{
     role:"assistant",
     content: lang==="es"
-      ? "¡Hola! Soy el asistente de Aprovuit. ¿Tienes preguntas sobre financiamiento o quieres saber si calificas? 👋"
-      : "Hi! I'm the Aprovuit assistant. Have questions about funding or want to find out if you qualify? 👋"
+      ? "¡Hola! Soy el asistente de Aprovuit. ¿Tienes preguntas sobre financiamiento o quieres saber si calificas? "
+      : "Hi! I'm the Aprovuit assistant. Have questions about funding or want to find out if you qualify? "
   }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -1719,7 +1712,7 @@ Be conversational, helpful, and concise. If they want to apply, encourage them t
         onClick={() => setOpen(o => !o)}
         style={{ position:"fixed", bottom:24, right:24, width:56, height:56, background:"#a8ff3e", border:"none", borderRadius:"50%", cursor:"pointer", boxShadow:"0 4px 20px rgba(168,255,62,0.4)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, zIndex:1000, transition:"all 0.2s" }}
       >
-        {open ? "✕" : "💬"}
+        {open ? "×" : ""}
       </button>
 
       {/* Chat window */}
@@ -1730,7 +1723,7 @@ Be conversational, helpful, and concise. If they want to apply, encourage them t
             <div style={{ width:36, height:36, background:"#a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, fontWeight:900, color:"#000", flexShrink:0 }}>A</div>
             <div>
               <p style={{ fontSize:14, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
-              <p style={{ fontSize:11, color:"#a8ff3e", margin:0 }}>● {lang==="es"?"En línea":"Online"} · {lang==="es"?"Sin llamadas":"No phone calls"}</p>
+              <p style={{ fontSize:11, color:"#a8ff3e", margin:0 }}>{lang==="es"?"En línea":"Online"} · {lang==="es"?"Sin llamadas":"No phone calls"}</p>
             </div>
           </div>
 
@@ -1835,7 +1828,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
                     <div style={{ width:24, height:24, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:900, color:"#000" }}>A</div>
                     <span style={{ fontSize:14, fontWeight:700, color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
                   </div>
-                  <span style={{ fontSize:11, color:G, fontWeight:700, background:"rgba(168,255,62,.1)", padding:"3px 10px", borderRadius:20 }}>● {lang==="es"?"En línea":"Live"}</span>
+                  <span style={{ fontSize:11, color:G, fontWeight:700, background:"rgba(168,255,62,.1)", padding:"3px 10px", borderRadius:20 }}>{lang==="es"?"En línea":"Live"}</span>
                 </div>
                 {/* App nav tabs */}
                 <div style={{ display:"flex", background:"#111", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
@@ -1849,7 +1842,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
                   <div style={{ background:"#161616", borderRadius:12, padding:"14px 16px", marginBottom:12, border:"1px solid rgba(255,255,255,.05)" }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
                       <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>APP-2041 · {lang==="es"?"Financiamiento a Plazo":"Term Financing"}</span>
-                      <span style={{ fontSize:11, fontWeight:700, color:G }}>✓ {lang==="es"?"Activo":"Active"}</span>
+                      <span style={{ fontSize:11, fontWeight:700, color:G }}>{lang==="es"?"Activo":"Active"}</span>
                     </div>
                     <div style={{ fontSize:22, fontWeight:900, color:"#fff", fontFamily:"'Barlow Condensed',sans-serif", marginBottom:4 }}>$145,000</div>
                     <div style={{ height:4, background:"rgba(255,255,255,.08)", borderRadius:2, overflow:"hidden", marginBottom:4 }}>
@@ -1874,7 +1867,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
                   </div>
                   {/* Upload prompt */}
                   <div style={{ background:"#161616", borderRadius:12, padding:"12px 16px", border:"1px solid rgba(255,255,255,.05)", display:"flex", alignItems:"center", gap:12 }}>
-                    <div style={{ width:32, height:32, background:"rgba(168,255,62,.1)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, flexShrink:0 }}>📁</div>
+                    <div style={{ width:32, height:32, background:"rgba(168,255,62,.1)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700, color:G }}>DOC</div>
                     <div>
                       <p style={{ fontSize:12, fontWeight:600, color:"#fff", margin:0 }}>{lang==="es"?"Sube tus documentos":"Upload your documents"}</p>
                       <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", margin:0 }}>{lang==="es"?"Estados de cuenta · ID · Cheque":"Bank statements · ID · Check"}</p>
@@ -1895,7 +1888,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
               {t.ticker.map(text=>(
                 <span key={text} style={{ display:"inline-flex", alignItems:"center", gap:12, padding:"0 28px" }}>
                   <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
-                  <span style={{ color:"#000", opacity:.3 }}>◆</span>
+                  <span style={{ color:"#000", opacity:.3 }}>·</span>
                 </span>
               ))}
             </span>
@@ -1985,7 +1978,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
       {/* ── PLATFORM EXPLANATION ── */}
       <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
         <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ width:56, height:56, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:24 }}>🏛️</div>
+          <div style={{ width:56, height:56, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:16, fontWeight:800, color:G }}>A</div>
           <h2 className="cond" style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:20 }}>
             {lang==="es"?"¿Qué es Aprovuit?":"What is Aprovuit?"}
           </h2>
@@ -1996,8 +1989,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           </p>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, textAlign:"left", marginBottom:32 }}>
             {(lang==="es"
-              ? [["❌","Lo que NO somos","Un prestamista, corredor o asesor financiero. No tomamos decisiones de crédito ni negociamos en tu nombre."],["✅","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["🔒","Tu privacidad","Tu información es segura. Solo puede ser compartida con socios de financiamiento con tu consentimiento."]]
-              : [["❌","What we're NOT","A lender, broker, or financial advisor. We don't make credit decisions or negotiate on your behalf."],["✅","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["🔒","Your privacy","Your information is secure. It may only be shared with financing partners with your consent."]]
+              ? [["×","Lo que NO somos","Un prestamista, corredor o asesor financiero. No tomamos decisiones de crédito ni negociamos en tu nombre."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["—","Tu privacidad","Tu información es segura. Solo puede ser compartida con socios de financiamiento con tu consentimiento."]]
+              : [["×","What we're NOT","A lender, broker, or financial advisor. We don't make credit decisions or negotiate on your behalf."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["—","Your privacy","Your information is secure. It may only be shared with financing partners with your consent."]]
             ).map(([icon,title,desc])=>(
               <div key={title} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"24px 20px" }}>
                 <div style={{ fontSize:22, marginBottom:12 }}>{icon}</div>
@@ -2077,8 +2070,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"14px 18px", marginBottom:16 }}>
             <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.8 }}>
               {lang==="es"
-                ? "⚖️ Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, no un prestamista ni corredor. No tomamos decisiones de crédito, negociamos términos de financiamiento, ni actuamos en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento."
-                : "⚖️ Legal: Aprovuit is a technology marketplace platform, not a lender or broker. We do not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications may be shared with independent third-party financing partners who independently determine eligibility and terms. Aprovuit does not guarantee financing approval."}
+                ? "Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, no un prestamista ni corredor. No tomamos decisiones de crédito, negociamos términos de financiamiento, ni actuamos en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento."
+                : "Legal: Aprovuit is a technology marketplace platform, not a lender or broker. We do not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications may be shared with independent third-party financing partners who independently determine eligibility and terms. Aprovuit does not guarantee financing approval."}
             </p>
           </div>
           <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
