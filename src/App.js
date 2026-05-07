@@ -211,21 +211,263 @@ const T = {
   en: {
     nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started →" },
     hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
-    ticker: ["Track Your Funding Online","Upload Documents Securely","No Phone Calls Required","Monitor Balances & Payments","Request New Financing","Get Status Notifications","Self-Service Platform","Secure & Simple","No Hassle. No Calls."],
-    stats: [["10,000+","Businesses"],["$1B+","Managed"],["4.9★","App Rating"],["256-bit","Encrypted"]],
+    ticker: ["Working Capital","Revenue-Based Financing","Term Loans","Lines of Credit","Equipment Financing","Same-Day Funding","Track Your Deal Live","Upload Docs Securely","580+ Credit OK","No Hidden Fees","Real Humans. Real Funding."],
+    stats: [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Funding Time"],["580+","Min. Credit Score"]],
     how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
-    features: { badge:"Platform Features", h:"Everything You Need in One Dashboard",
+    features: { badge:"Platform Features", h:"Your Funding. Fully Visible.",
       items:[
-        {icon:"↗",name:"Balance & Payment Tracking",desc:"Monitor your current funding balances, upcoming payments, and payment history in real time."},
-        {icon:"◻",name:"Application Tracking",desc:"Submit financing requests and track their status from submission to decision — no calls needed."},
-        {icon:"↑",name:"Secure Document Upload",desc:"Upload bank statements, ID, and other documents directly through the platform. 256-bit encrypted."},
-        {icon:"◎",name:"Status Notifications",desc:"Get notified when your status updates, when a decision is made, or when action is needed."},
-        {icon:"◈",name:"Secure Login",desc:"Email, password, and SMS verification keep your financial information protected at all times."},
-        {icon:"◉",name:"In-App Messaging",desc:"Communicate with your account team entirely within the platform. Everything in writing, always."},
+        {icon:"↗",name:"Real-Time Deal Tracking",desc:"See exactly where your deal stands at every stage — submitted, under review, approved, funded. No guessing."},
+        {icon:"◻",name:"Offer Management",desc:"Review every term of your offer clearly before you sign. Factor rate, payment amount, term — all in one place."},
+        {icon:"↑",name:"Secure Document Upload",desc:"Upload bank statements, ID, and voided checks directly through the platform. 256-bit encrypted."},
+        {icon:"◎",name:"Balance & Payment Tracking",desc:"Once funded, monitor your outstanding balance, payment schedule, and history directly in your dashboard."},
+        {icon:"◈",name:"Renewal Tracking",desc:"When you're eligible for renewal, it appears in your dashboard automatically. No cold calls."},
+        {icon:"◉",name:"Direct Messaging",desc:"Message your Aprovuit advisor directly through the platform. Every conversation is in writing."},
       ]
     },
-    products: { badge:"Financing Options", h:"Explore Financing Options", items:[{icon:"→",name:"Term Financing",range:"$10K–$500K",term:"3–24 months",desc:"Fixed payment structure for planned investments like expansion, hiring, or equipment."},{icon:"↺",name:"Revolving Credit",range:"$10K–$5M",term:"Revolving",desc:"Access funds as needed. Draw, repay, and draw again. Only pay for what you use."},{icon:"↯",name:"Revenue-Based Financing",range:"$5K–$500K",term:"Flexible repayment",desc:"Financing tied to your monthly revenue. Flexible repayment that adjusts with your business."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance business equipment through the platform. Equipment may serve as collateral."}], amount:"Amount", term:"Term" },
-    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"I tracked everything through the dashboard from day one. No phone calls, no chasing anyone. The platform made the whole process simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"I could see exactly where my request was at every step. Uploaded all my documents in minutes. Total transparency.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"The self-service experience was exactly what I needed. I managed everything myself, on my own schedule, with no pressure.",stars:5}] },
+    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. Fast approvals."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue — pay more when business is good, less when it's slow. Fast funding."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
+    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5}] },
+    faq: { badge:"FAQ", h:"Common Questions", items:[
+      ["What is Aprovuit?","Aprovuit is a licensed commercial funding broker. We work with a network of funders and lenders to get small businesses the working capital they need — fast. We handle the process end to end and use our platform to give you full visibility into every step of your deal."],
+      ["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. When you submit a request, it may be shared with independent third-party financing partners who determine eligibility and offer terms on their own. Aprovuit does not make credit decisions or negotiate on your behalf."],
+      ["What are the minimum requirements?","Requirements vary by financing partner and product type. Generally, most partners look for: 6+ months in business, $10,000+ in monthly revenue, and a 580+ credit score. Some revenue-based options have more flexible credit requirements. Submitting a request does not guarantee an offer."],
+      ["Will submitting a request affect my credit score?","Submitting a request through Aprovuit triggers a soft credit inquiry — which has zero impact on your credit score. A hard inquiry may only occur if you choose to accept an offer from a financing partner."],
+      ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All documents are uploaded securely through the platform — no emailing PDFs."],
+      ["How long does the process take?","Most financing partners review requests within 2–4 business hours. Once a decision is made, offers appear directly in your dashboard. If you accept, funding timelines depend on the partner — many can fund within 1–2 business days."],
+      ["What types of financing are available?","Through our partner network, you may see options including: term financing ($10K–$500K), revolving credit lines ($10K–$5M), revenue-based financing ($5K–$500K), and equipment financing ($5K–$2M). Availability depends on your business profile."],
+      ["How does Aprovuit make money?","Aprovuit earns fees from its financing partners — not from you. You pay nothing to create an account, submit a request, or use the platform."],
+      ["Is my information shared with anyone?","Your information may be shared with financing partners in our network for the purpose of evaluating your request. We do not sell your data to third parties or use it for marketing without your consent."],
+      ["What if I don't qualify?","Not every request results in an offer — financing eligibility is determined solely by our partners. If no offer is extended, your dashboard will reflect that status. You can update your profile and resubmit as your business grows."],
+      ["Can I use the platform to manage existing funding?","Yes. Once you have active financing, your dashboard shows balances, payment schedules, and status updates. You can upload additional documents and message your account team directly through the platform."],
+      ["Is Aprovuit available in all states?","Aprovuit's platform is available nationwide. However, specific financing products may have geographic restrictions based on the financing partner's licensing. This will be reflected in the offers you receive."],
+    ] },
+    port React, { useState, useEffect } from 'react';
+
+const G = "#a8ff3e";
+const BK = "#0a0a0a";
+const BK2 = "#111111";
+const BK3 = "#161616";
+
+// ── SUPABASE CONFIG ──────────────────────────────────────────────
+// Replace with your actual Supabase URL and anon key from supabase.com
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+// Supabase helper — lightweight fetch wrapper (no SDK needed)
+const db = {
+  async insert(table, data) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
+        body:JSON.stringify(data)
+      });
+      return await res.json();
+    } catch(e) { console.error("DB insert error:", e); return null; }
+  },
+  async select(table, filter="") {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}
+      });
+      return await res.json();
+    } catch(e) { console.error("DB select error:", e); return []; }
+  },
+  async update(table, filter, data) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+        method:"PATCH",
+        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
+        body:JSON.stringify(data)
+      });
+      return await res.json();
+    } catch(e) { console.error("DB update error:", e); return null; }
+  },
+  async uploadFile(bucket, path, file) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+        method:"POST",
+        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type},
+        body:file
+      });
+      return await res.json();
+    } catch(e) { console.error("Storage upload error:", e); return null; }
+  }
+};
+
+const useDB = SUPABASE_URL !== "YOUR_SUPABASE_URL"; // true when configured
+
+// ── EMAIL CONFIG ─────────────────────────────────────────────────
+const ADMIN_EMAIL = "info@aprovuit.com"; // Make sure Formspree forms send to this email
+const FORMSPREE_ADMIN  = "https://formspree.io/f/xbdpdnby";
+const FORMSPREE_CLIENT = "https://formspree.io/f/xdapaqvw";
+
+async function sendEmail(url, data) {
+  try {
+    const res = await fetch(url, {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json.ok;
+  } catch(e) { console.error("Email error:", e); return false; }
+}
+
+async function sendApplicationEmail(data) {
+  await sendEmail(FORMSPREE_ADMIN, {
+    _subject:`🔔 New Application — ${data.company} | ${data.loanAmt}`,
+    _replyto:data.email,
+    "App ID":data.id, "Submitted":data.submittedAt,
+    "Name":`${data.firstName} ${data.lastName}`,
+    "Email":data.email, "Phone":data.phone,
+    "Loan Amount":data.loanAmt, "Purpose":data.purpose,
+    "Timeline":data.timeline, "Estimated":data.estimatedQualify,
+    "Company":data.company, "Industry":data.industry,
+    "Years":data.years, "Revenue":data.annualRev,
+    "Credit":data.creditRating,
+    "Upload Link":`https://aprovuit.com/?upload=${data.id}`,
+  });
+}
+
+async function sendClientEmail(data) {
+  await sendEmail(FORMSPREE_CLIENT, {
+    _subject:`Done Application Received — ${data.company} | Aprovuit`,
+    _replyto:ADMIN_EMAIL,
+    email:data.email,
+    "Hi":`${data.firstName},`,
+    "Message":`Your application for ${data.company} (ID: ${data.id}) has been received! We will be in touch within 2-4 hours. No phone call required.`,
+    "Upload your documents here":`https://aprovuit.com/?upload=${data.id}`,
+  });
+}
+
+async function sendOfferEmail(merchantEmail, merchantName, offer) {
+  await sendEmail(FORMSPREE_CLIENT, {
+    _subject:`💼 You Have a New Funding Offer — Aprovuit`,
+    _replyto:ADMIN_EMAIL,
+    email:merchantEmail,
+    "Hi":`${merchantName},`,
+    "Message":"You have a new funding offer in your Aprovuit dashboard. Log in to review all terms and accept or decline — no pressure, no calls.",
+    "Product":offer.product, "Amount":offer.amount,
+    "Term":offer.term, "Monthly Payment":offer.payment,
+    "View Offer At":"https://aprovuit.com",
+  });
+}
+
+async function sendUploadNotificationEmail(appId, files) {
+  await sendEmail(FORMSPREE_ADMIN, {
+    _subject:`Documents Uploaded — ${appId} | Aprovuit`,
+    "App ID":appId, "Files Uploaded":files,
+    "Action":"Log in to admin panel to review documents.",
+  });
+}
+
+function fmtAmt(n) {
+  if (!n) return "$0";
+  const num = typeof n === "string" ? parseInt(n.replace(/\D/g,"")) : n;
+  if (num >= 1000000) return "$" + (num/1000000).toFixed(1) + "M";
+  return "$" + Math.round(num).toLocaleString();
+}
+
+// ── CSS ──────────────────────────────────────────────────────────
+const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#a8ff3e; color:#000; }
+  input, select, textarea, button { font-family:'Sora',sans-serif; }
+  .cond { font-family:'Sora',sans-serif; letter-spacing:-.03em; }
+  .mono { font-family:'DM Mono',monospace; }
+  .nav-link { font-size:13px; font-weight:500; color:rgba(255,255,255,.4); cursor:pointer; background:none; border:none; font-family:'Sora',sans-serif; transition:color .15s; letter-spacing:-.01em; }
+  .nav-link:hover { color:#fff; }
+  .btn-green { display:inline-flex; align-items:center; justify-content:center; background:#a8ff3e; color:#000; border:none; padding:11px 24px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
+  .btn-green:hover { background:#bfff52; }
+  .btn-ghost { display:inline-flex; align-items:center; justify-content:center; background:transparent; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.12); padding:11px 24px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
+  .btn-ghost:hover { border-color:rgba(255,255,255,.3); color:#fff; }
+  .card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; }
+  .prod-card { background:#111; border:1px solid rgba(255,255,255,.07); padding:28px; transition:all .2s; border-radius:10px; }
+  .prod-card:hover { border-color:rgba(168,255,62,.3); transform:translateY(-2px); }
+  .sb-item { display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:13px; cursor:pointer; color:rgba(255,255,255,.35); transition:all .15s; border-left:2px solid transparent; letter-spacing:-.01em; font-weight:500; }
+  .sb-item:hover { color:rgba(255,255,255,.7); background:rgba(255,255,255,.02); }
+  .sb-item.active { color:#fff; border-left-color:#a8ff3e; background:rgba(168,255,62,.04); }
+  .fc-inp { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; display:block; outline:none; transition:border-color .15s; }
+  .fc-inp:focus { border-color:rgba(168,255,62,.5); }
+  .fc-inp::placeholder { color:rgba(255,255,255,.2); }
+  .fc-sel { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; outline:none; transition:border-color .15s; }
+  .fc-sel:focus { border-color:rgba(168,255,62,.5); }
+  .fc-sel option { background:#1a1a1a; color:#fff; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .tick { display:flex; animation:ticker 35s linear infinite; width:max-content; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fadeup { animation:fadeUp .4s ease both; }
+  .pill { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:.02em; }
+  .pill.green { background:rgba(168,255,62,.1); color:#a8ff3e; }
+  .pill.yellow { background:rgba(245,158,11,.1); color:#f59e0b; }
+  .pill.blue { background:rgba(96,165,250,.1); color:#60a5fa; }
+  .pill.red { background:rgba(239,68,68,.1); color:#ef4444; }
+  .metric { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:18px; }
+  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
+  .faq-btn { width:100%; background:none; border:none; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; text-align:left; font-family:'Sora',sans-serif; border-bottom:1px solid rgba(255,255,255,.06); gap:16px; }
+  .dash-main { flex:1; padding:32px; background:#0a0a0a; overflow:auto; }
+  .offer-card { background:#0f1a0f; border:1px solid rgba(168,255,62,.12); border-radius:12px; padding:24px; margin-bottom:14px; }
+  .loan-card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:20px; margin-bottom:12px; }
+  .progress-bar { height:2px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; margin:10px 0 6px; }
+  .progress-fill { height:100%; border-radius:2px; }
+  .msg { max-width:75%; padding:10px 14px; border-radius:10px; font-size:13px; line-height:1.55; }
+  .msg.advisor { background:#161616; color:rgba(255,255,255,.75); align-self:flex-start; }
+  .msg.client { background:#a8ff3e; color:#000; align-self:flex-end; font-weight:600; }
+  .lang-pill { display:flex; border:1px solid rgba(255,255,255,.1); border-radius:6px; overflow:hidden; }
+  .lb { padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; border:none; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:.02em; }
+  .tbl-row:hover td { background:rgba(255,255,255,.02); }
+  .credit-box { border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:rgba(255,255,255,.03); }
+  .credit-box.sel { border-color:#a8ff3e; background:rgba(168,255,62,.06); }
+  @media (max-width:768px) {
+    .hero-grid { grid-template-columns:1fr !important; gap:48px !important; }
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .how-grid { grid-template-columns:1fr !important; }
+    .products-grid { grid-template-columns:1fr !important; }
+    .reviews-grid { grid-template-columns:1fr !important; }
+    .dash-wrap { flex-direction:column !important; }
+    .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
+    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:12px 16px !important; }
+    .sb-item.active { border-bottom-color:#a8ff3e !important; border-left-color:transparent !important; }
+    .metrics-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .nav-desktop { display:none !important; }
+    .nav-mobile { display:flex !important; }
+    .offer-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .admin-wrap { flex-direction:column !important; }
+    .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
+    .dash-main { padding:16px !important; }
+  }
+  @media (max-width:480px) {
+    .metrics-grid { grid-template-columns:1fr 1fr !important; }
+    .hero-btns { flex-direction:column !important; align-items:flex-start !important; }
+    .offer-btns { flex-direction:column !important; }
+    .name-row { grid-template-columns:1fr !important; }
+  }
+`;
+
+// ── TRANSLATIONS ─────────────────────────────────────────────────
+const T = {
+  en: {
+    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started →" },
+    hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
+    ticker: ["Working Capital","Revenue-Based Financing","Term Loans","Lines of Credit","Equipment Financing","Same-Day Funding","Track Your Deal Live","Upload Docs Securely","580+ Credit OK","No Hidden Fees","Real Humans. Real Funding."],
+    stats: [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Funding Time"],["580+","Min. Credit Score"]],
+    how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
+    features: { badge:"Platform Features", h:"Your Funding. Fully Visible.",
+      items:[
+        {icon:"↗",name:"Real-Time Deal Tracking",desc:"See exactly where your deal stands at every stage — submitted, under review, approved, funded. No guessing."},
+        {icon:"◻",name:"Offer Management",desc:"Review every term of your offer clearly before you sign. Factor rate, payment amount, term — all in one place."},
+        {icon:"↑",name:"Secure Document Upload",desc:"Upload bank statements, ID, and voided checks directly through the platform. 256-bit encrypted."},
+        {icon:"◎",name:"Balance & Payment Tracking",desc:"Once funded, monitor your outstanding balance, payment schedule, and history directly in your dashboard."},
+        {icon:"◈",name:"Renewal Tracking",desc:"When you're eligible for renewal, it appears in your dashboard automatically. No cold calls."},
+        {icon:"◉",name:"Direct Messaging",desc:"Message your Aprovuit advisor directly through the platform. Every conversation is in writing."},
+      ]
+    },
+    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. Fast approvals."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue — pay more when business is good, less when it's slow. Fast funding."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
+    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5}] },
     faq: { badge:"FAQ", h:"Common Questions", items:[["What is Aprovuit?","Aprovuit is a financing marketplace platform. Business owners submit one application and may receive multiple financing offers from our network of partners — all in one dashboard. Aprovuit is not a lender and does not act as a broker or negotiate on your behalf."],["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. Financing options available through the platform are provided by third-party financing partners. Aprovuit does not make credit decisions or directly provide loans."],["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your documents and personal information are stored securely and never shared without your consent."],["Do I need to talk to anyone on the phone?","Never. Aprovuit is fully self-service. You submit your application, financing offers appear in your dashboard, you compare and choose. No calls, no broker, no one acting on your behalf."],["How do I get started?","Create a free account, fill out your business profile, and submit a financing request through the platform. You can track everything in your dashboard from day one."]] },
     cta: { h:"No Hassle. No Calls. Simple Funding.", sub:"One application. Multiple offers. You choose. No calls. No broker. No pressure.", btn:"Get Started — It's Free →" },
     footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit is a financing marketplace platform. Not a lender or broker. Financing provided by independent partners." },
@@ -280,22 +522,35 @@ const T = {
   es: {
     nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Get Started →" },
     hero: { badge:"Sin Llamadas. Sin Presión. Simple.", h1:"La Plataforma de", h2:"Financiamiento Digital.", sub:"Envía una solicitud. Recibe múltiples ofertas de financiamiento. Compara y elige — completamente en tus términos. Sin llamadas. Sin presión. Sin intermediarios.", cta1:"Comenzar — Gratis →", cta2:"Entrar al Portal" },
-    ticker: ["Rastrea tu Financiamiento","Sube Documentos Seguro","Sin Llamadas Telefónicas","Monitorea Saldos y Pagos","Solicita Nuevo Financiamiento","Recibe Notificaciones","Plataforma de Autoservicio","Seguro y Simple","Sin Llamadas. Sin Presión."],
-    stats: [["10,000+","Negocios"],["$1B+","Administrado"],["4.9★","Calificación"],["256-bit","Encriptado"]],
+    ticker: ["Capital de Trabajo","Financiamiento por Ingresos","Préstamos a Plazo","Líneas de Crédito","Equipo","Fondos el Mismo Día","Rastrea tu Proceso","Sube Documentos","580+ Puntaje OK","Sin Cargos Ocultos","Personas Reales. Fondos Reales."],
+    stats: [["$500M+","Fondeado"],["10,000+","Negocios Atendidos"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]],
     how: { badge:"Cómo Funciona", h:"Administra Todo en Un Solo Lugar", steps:[["01","Crea tu Cuenta","Regístrate en minutos. Sin verificación de crédito para crear la cuenta. Tu portal está listo al instante."],["02","Envía tu Información","Envía la información de tu negocio y documentos a través de la plataforma. Tu solicitud puede ser compartida con socios de financiamiento en nuestra red."],["03","Rastrea y Administra","Las ofertas de financiamiento aparecen directamente en tu portal. Compara opciones, revisa todos los términos claramente y elige lo que más te conviene — nadie elige por ti."]] },
-    features: { badge:"Funciones de la Plataforma", h:"Todo lo que Necesitas en un Solo Portal",
+    features: { badge:"Funciones de la Plataforma", h:"Tu Financiamiento. Completamente Visible.",
       items:[
-        {icon:"↗",name:"Seguimiento de Saldos y Pagos",desc:"Monitorea tus saldos actuales, próximos pagos e historial de pagos en tiempo real."},
-        {icon:"◻",name:"Seguimiento de Solicitudes",desc:"Envía solicitudes de financiamiento y rastrea su estado desde el envío hasta la decisión."},
-        {icon:"↑",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y otros documentos directamente. Encriptación de 256 bits."},
-        {icon:"◎",name:"Notificaciones de Estado",desc:"Recibe notificaciones cuando tu estado cambie o cuando se requiera acción de tu parte."},
-        {icon:"◈",name:"Acceso Seguro",desc:"Correo, contraseña y verificación por SMS mantienen tu información protegida en todo momento."},
-        {icon:"◉",name:"Mensajes en la App",desc:"Comunícate con tu equipo de cuenta dentro de la plataforma. Todo por escrito, siempre."},
+        {icon:"↗",name:"Seguimiento del Proceso en Tiempo Real",desc:"Ve exactamente en qué etapa está tu trato — enviado, en revisión, aprobado, fondeado. Sin adivinar."},
+        {icon:"◻",name:"Gestión de Ofertas",desc:"Revisa cada término de tu oferta claramente antes de firmar. Factor rate, pago, plazo — todo en un lugar."},
+        {icon:"↑",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y cheques anulados directamente desde la plataforma. Encriptado 256 bits."},
+        {icon:"◎",name:"Seguimiento de Saldo y Pagos",desc:"Una vez fondeado, monitorea tu saldo, calendario de pagos e historial directamente en tu portal."},
+        {icon:"◈",name:"Seguimiento de Renovación",desc:"Cuando seas elegible para renovación, aparece en tu portal automáticamente. Sin llamadas frías."},
+        {icon:"◉",name:"Mensajes Directos",desc:"Escríbele a tu asesor de Aprovuit directamente desde la plataforma. Todo queda por escrito."},
       ]
     },
-    products: { badge:"Opciones de Financiamiento", h:"Explora Opciones de Financiamiento", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"↺",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"↯",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"◈",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
-    reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Rastreé todo desde el primer día. Sin llamadas, sin perseguir a nadie. La plataforma hizo todo el proceso simple.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"Podía ver exactamente dónde estaba mi solicitud en cada paso. Subí mis documentos en minutos. Total transparencia.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"La experiencia de autoservicio fue exactamente lo que necesitaba. Administré todo yo mismo, a mi ritmo, sin presión.",stars:5}] },
-    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[["¿Qué es Aprovuit?","Aprovuit es una plataforma de mercado de financiamiento. Los dueños de negocios envían una solicitud y pueden recibir múltiples ofertas de socios de financiamiento — todo en un portal. Aprovuit no es un prestamista y no actúa como corredor ni negocia en tu nombre."],["¿Aprovuit presta dinero directamente?","No. Aprovuit es una plataforma de mercado. Cuando envías una solicitud, puede ser compartida con socios de financiamiento en nuestra red. Esos socios revisan tu información de forma independiente y pueden enviar ofertas. Aprovuit no toma decisiones de crédito, negocia términos ni actúa en tu nombre."],["¿Está segura mi información?","Sí. Todos los datos están encriptados con SSL de 256 bits. Tus documentos e información personal se almacenan de forma segura."],["¿Necesito hablar con alguien por teléfono?","Nunca. Aprovuit es completamente de autoservicio. Envías tu solicitud, las ofertas de financiamiento aparecen en tu portal, comparas y eliges. Sin llamadas, sin corredor, sin que nadie actúe en tu nombre."],["¿Cómo empiezo?","Crea una cuenta gratuita, completa tu perfil empresarial y envía una solicitud de financiamiento a través de la plataforma."]] },
+    products: { badge:"Productos de Financiamiento", h:"Soluciones de Capital de Trabajo", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"↺",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"↯",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"◈",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
+    reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Aprobado en horas y fondeado a la mañana siguiente. El portal me mostró cada paso del proceso — sin perseguir, sin sorpresas. La mejor experiencia de financiamiento que he tenido.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"Mi asesor me consiguió una mejor tasa de lo que esperaba. Subí mis documentos a través de la plataforma y pude ver la oferta el mismo día. Increíblemente fluido.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"He trabajado con otros brokers antes pero nunca tuve este nivel de visibilidad del proceso. Me fondearon, vi cada término claramente, supe exactamente lo que firmé.",stars:5}] },
+    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[
+      ["¿Qué es Aprovuit?","Aprovuit es un broker de financiamiento comercial con licencia. Trabajamos con una red de fondeadores y prestamistas para conseguir a los pequeños negocios el capital de trabajo que necesitan — rápido. Manejamos el proceso de principio a fin y usamos nuestra plataforma para darte visibilidad total de cada paso de tu trato."],
+      ["¿Aprovuit presta dinero directamente?","No. Aprovuit es un broker, no un prestamista directo. Trabajamos con una red de fondeadores de confianza que proporcionan el capital. Nuestro trabajo es conectarte con el fondeador correcto, negociar los mejores términos disponibles y gestionar el proceso desde la solicitud hasta el fondeo."],
+      ["¿Cuáles son los requisitos mínimos?","Los requisitos varían según el socio de financiamiento y el tipo de producto. En general, la mayoría de los socios buscan: 6+ meses en operación, $10,000+ en ingresos mensuales y un puntaje de crédito de 580+. Algunas opciones tienen requisitos más flexibles. Enviar una solicitud no garantiza una oferta."],
+      ["¿Afectará mi puntaje de crédito?","Enviar una solicitud a través de Aprovuit genera una consulta suave de crédito — sin impacto en tu puntaje. Una consulta dura solo puede ocurrir si decides aceptar una oferta de un socio de financiamiento."],
+      ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, una identificación oficial y un cheque anulado de tu cuenta empresarial. Todo se sube de forma segura a través de la plataforma."],
+      ["¿Cuánto tiempo toma el proceso?","La mayoría de los socios revisan las solicitudes en 2–4 horas hábiles. Una vez tomada la decisión, las ofertas aparecen en tu portal. Si aceptas, los plazos de financiamiento dependen del socio — muchos pueden financiar en 1–2 días hábiles."],
+      ["¿Qué tipos de financiamiento están disponibles?","A través de nuestra red de socios, puedes ver opciones que incluyen: financiamiento a plazo ($10K–$500K), líneas de crédito revolventes ($10K–$5M), financiamiento basado en ingresos ($5K–$500K) y financiamiento de equipo ($5K–$2M)."],
+      ["¿Cómo genera dinero Aprovuit?","Aprovuit recibe tarifas de sus socios de financiamiento — no de ti. Crear una cuenta, enviar una solicitud y usar la plataforma es completamente gratuito."],
+      ["¿Mi información es compartida con alguien?","Tu información puede ser compartida con socios de financiamiento en nuestra red para evaluar tu solicitud. No vendemos tus datos a terceros ni los usamos para marketing sin tu consentimiento."],
+      ["¿Qué pasa si no califico?","No toda solicitud resulta en una oferta — la elegibilidad la determinan exclusivamente nuestros socios. Si no se extiende ninguna oferta, tu portal reflejará ese estado. Puedes actualizar tu perfil y volver a enviar a medida que tu negocio crece."],
+      ["¿Puedo usar la plataforma para administrar financiamiento existente?","Sí. Una vez que tienes financiamiento activo, tu portal muestra saldos, calendarios de pago y actualizaciones de estado. Puedes subir documentos adicionales y enviar mensajes a tu equipo directamente desde la plataforma."],
+      ["¿Aprovuit está disponible en todos los estados?","La plataforma de Aprovuit está disponible a nivel nacional. Sin embargo, productos específicos pueden tener restricciones geográficas según la licencia del socio de financiamiento."],
+    ] },
     cta: { h:"Sin Llamadas. Sin Presión. Simple.", sub:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas. Sin intermediarios. Sin presión.", btn:"Comenzar — Es Gratis →" },
     footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit es una plataforma de mercado. No es un prestamista ni corredor. Financiamiento provisto por socios independientes." },
     apply: {
@@ -485,315 +740,423 @@ function UploadPage({ lang, appId, onBack }) {
 
 function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   const t = T[lang].apply;
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(0); // 0=qualify, 1=funding, 2=business, 3=account, 4=review
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [loanAmt, setLoanAmt] = useState(150000);
   const [creditSel, setCreditSel] = useState("good");
   const [savedAppId, setSavedAppId] = useState(null);
+  const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
-    purpose:"", timeline:"", company:"", industry:"",
-    years:"", annualRev:"", creditRating:"good",
-    firstName:"", lastName:"", email:"", phone:""
+    purpose:"", timeline:"", company:"", industry:"", years:"", annualRev:"",
+    creditRating:"good", firstName:"", lastName:"", email:"", password:"", phone:""
   });
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
-  const [errors, setErrors] = useState({});
-
-  const validateStep2 = () => {
-    const e = {};
-    if (!form.company.trim()) e.company = lang==="en" ? "Company name is required" : "El nombre de la empresa es requerido";
-    if (Object.keys(e).length > 0) { setErrors(e); return false; }
-    setErrors({});
-    return true;
-  };
-
-  const validateStep3 = () => {
-    const e = {};
-    if (!form.firstName.trim()) e.firstName = lang==="en" ? "First name is required" : "El nombre es requerido";
-    if (!form.lastName.trim()) e.lastName = lang==="en" ? "Last name is required" : "El apellido es requerido";
-    if (!form.email.trim()) e.email = lang==="en" ? "Email is required" : "El correo es requerido";
-    if (!form.phone.trim()) e.phone = lang==="en" ? "Phone number is required" : "El teléfono es requerido";
-    if (Object.keys(e).length > 0) { setErrors(e); return false; }
-    setErrors({});
-    return true;
-  };
 
   const qualAmt = () => {
     const base = loanAmt;
-    if (creditSel==="excellent") return Math.min(Math.round(base*1.3),2000000);
-    if (creditSel==="good") return Math.min(Math.round(base*1.1),1500000);
-    if (creditSel==="fair") return Math.min(Math.round(base*0.85),800000);
+    if (creditSel==="excellent") return Math.min(Math.round(base*1.35),2000000);
+    if (creditSel==="good")      return Math.min(Math.round(base*1.15),1500000);
+    if (creditSel==="fair")      return Math.min(Math.round(base*0.85),800000);
     return Math.min(Math.round(base*0.6),400000);
   };
 
-  const [sending, setSending] = useState(false);
+  const fmtSlider = (n) => {
+    if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000) return '$' + Math.round(n/1000) + 'K';
+    return '$' + n;
+  };
+
+  const formatPhone = (v) => {
+    const d = v.replace(/\D/g,'').slice(0,10);
+    if (d.length<=3) return d;
+    if (d.length<=6) return '('+d.slice(0,3)+') '+d.slice(3);
+    return '('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6);
+  };
+
+  const validate = () => {
+    const e = {};
+    if (step===2 && !form.company.trim()) e.company = lang==="es"?"Requerido":"Required";
+    if (step===3) {
+      if (!form.firstName.trim()) e.firstName = lang==="es"?"Requerido":"Required";
+      if (!form.lastName.trim()) e.lastName = lang==="es"?"Requerido":"Required";
+      if (!form.email.trim()) e.email = lang==="es"?"Requerido":"Required";
+      if (!form.password || form.password.length < 8) e.password = lang==="es"?"Mín. 8 caracteres":"Min. 8 characters";
+      if (!form.phone.trim()) e.phone = lang==="es"?"Requerido":"Required";
+    }
+    if (Object.keys(e).length > 0) { setErrors(e); return false; }
+    setErrors({});
+    return true;
+  };
 
   const handleSubmit = async () => {
+    if (!validate()) return;
     setSending(true);
+    const newAppId = `APP-${Date.now()}`;
+    setSavedAppId(newAppId);
     const appData = {
-      id: `APP-${Date.now()}`,
-      submittedAt: new Date().toLocaleString(),
-      status: "Under Review",
-      loanAmt: fmtAmt(loanAmt),
-      ...form,
-      estimatedQualify: fmtAmt(qualAmt()),
+      id:newAppId, submittedAt:new Date().toLocaleString(), status:"Under Review",
+      loanAmt:fmtSlider(loanAmt), ...form, estimatedQualify:fmtSlider(qualAmt())
     };
     const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
     apps.push(appData);
     localStorage.setItem("aprovuit_apps", JSON.stringify(apps));
+    const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
+    accounts.push({ email:form.email, password:form.password, firstName:form.firstName, lastName:form.lastName, company:form.company, phone:form.phone, appId:newAppId });
+    localStorage.setItem("aprovuit_accounts", JSON.stringify(accounts));
+    if (useDB) {
+      await db.insert("applications", { id:newAppId, status:"Under Review", loan_amt:fmtSlider(loanAmt), purpose:form.purpose, timeline:form.timeline, company:form.company, industry:form.industry, years:form.years, annual_rev:form.annualRev, credit_rating:form.creditRating, first_name:form.firstName, last_name:form.lastName, email:form.email, phone:form.phone, estimated_qualify:fmtSlider(qualAmt()), submitted_at:new Date().toISOString() });
+    }
     await sendApplicationEmail(appData);
     await sendClientEmail(appData);
     setSending(false);
     setSubmitted(true);
   };
 
-  const APPLY_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Sora',sans-serif; background:#0a0a0a; -webkit-font-smoothing:antialiased; }
-  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  .fadeup { animation:fadeUp .35s ease both; }
-  .credit-box { border:1.5px solid #e8e8e8; border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:#fff; }
-  .credit-box.sel { border-color:#0a0a0a; background:#0a0a0a; }
-`;
+  const G = "#a8ff3e";
 
-  const lbl = { fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8, display:"block" };
-  const card = { background:"#fff", borderRadius:18, padding:"32px 28px", maxWidth:560, margin:"0 auto", boxShadow:"0 8px 40px rgba(0,0,0,0.18)" };
-  const btnPrimary = { width:"100%", background:G, color:"#000", border:"none", padding:"18px", borderRadius:12, fontSize:17, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:4, transition:"all 0.15s" };
-  const btnDark = { width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:"16px", borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:4 };
-  const btnBack = { background:"#f2f2f7", color:"#555", border:"none", padding:"12px 20px", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:10 };
+  // ── STYLES ──────────────────────────────────────────────────────
+  const pageStyle = { minHeight:"100vh", background:"#0a0a0a", fontFamily:"'Sora',sans-serif", color:"#fff" };
+  const navStyle = { background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", height:58, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 };
+  const labelStyle = { fontSize:11, fontWeight:600, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:10, display:"block" };
+  const errStyle = { fontSize:12, color:"#ef4444", marginTop:-8, marginBottom:10 };
 
+  // ── SUCCESS SCREEN ───────────────────────────────────────────────
   if (submitted) return (
-    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1a0d)", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+    <div style={pageStyle}>
       <style>{APPLY_CSS}</style>
-      <div style={{ ...card, textAlign:"center", maxWidth:520 }} className="fadeup">
-        <div style={{ width:88, height:88, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:40, color:"#16a34a", fontWeight:900 }}>Done</div>
-        <h2 style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", marginBottom:12, fontFamily:"'Barlow Condensed',sans-serif", textTransform:"uppercase" }}>Application Received!</h2>
-        <p style={{ fontSize:15, color:"#666", lineHeight:1.75, marginBottom:24 }}>Your account has been created and your application has been submitted. Financing offers may appear in your dashboard as partners review your information. No calls, no broker — you choose.</p>
-        <div style={{ background:"#1a1a1a", borderRadius:14, padding:"18px 20px", textAlign:"left", marginBottom:20 }}>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>Your estimated pre-qualification</p>
-          <p style={{ fontSize:40, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-0.5px" }}>{fmtAmt(qualAmt())}</p>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:4 }}>*Subject to full underwriting and approval</p>
+      <div style={navStyle}>
+        <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:700, color:"#000" }}>A</div>
+          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+        </button>
+      </div>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", minHeight:"calc(100vh - 58px)", padding:24 }}>
+        <div className="fadeup" style={{ maxWidth:520, width:"100%", textAlign:"center" }}>
+          <div style={{ width:72, height:72, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 32px", fontSize:28, color:G }}>—</div>
+          <h2 style={{ fontSize:32, fontWeight:700, color:"#fff", marginBottom:12, letterSpacing:"-.03em" }}>
+            {lang==="es"?"Solicitud Enviada":"Request Submitted"}
+          </h2>
+          <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.75, marginBottom:40 }}>
+            {lang==="es"
+              ? "Tu solicitud está siendo revisada por nuestro equipo. Trabajaremos para conseguirte una oferta en 2–4 horas hábiles. Rastrea el estado de tu trato en tiempo real en tu portal."
+              : "Your application is being reviewed by our team. We'll work to get you an offer within 2–4 business hours. Track your deal status live in your dashboard."}
+          </p>
+          <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"24px", marginBottom:24, textAlign:"left" }}>
+            <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
+              {lang==="es"?"Pre-calificación estimada":"Estimated pre-qualification"}
+            </p>
+            <p style={{ fontSize:48, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1 }}>{fmtSlider(qualAmt())}</p>
+            <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:8 }}>
+              {lang==="es"?"Para fines ilustrativos. Sujeto a revisión.":"For illustrative purposes. Subject to review."}
+            </p>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            <button onClick={()=>onSuccess&&onSuccess(form.email, form.firstName, form.company, savedAppId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"14px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
+              {lang==="es"?"Ir a Mi Portal →":"Go to My Dashboard →"}
+            </button>
+            <button onClick={()=>onUpload&&onUpload(savedAppId)} style={{ width:"100%", background:"transparent", color:"rgba(255,255,255,.5)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer", letterSpacing:"-.01em" }}>
+              {lang==="es"?"Subir Documentos":"Upload Documents"}
+            </button>
+          </div>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-          <button
-            onClick={()=> onSuccess && onSuccess(form.email, form.firstName, form.company, savedAppId)}
-            style={{ width:"100%", background:G, color:"#000", border:"none", padding:"15px", borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
-          >
-            {lang==="en"?"Go to My Dashboard →":"Ir a Mi Portal →"}
-          </button>
-          <button
-            onClick={()=> onUpload && onUpload(savedAppId)}
-            style={{ width:"100%", background:"#f2f2f7", color:"#1a1a1a", border:"none", padding:"13px", borderRadius:12, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}
-          >
-            {lang==="en"?"Upload Documents First":"Subir Documentos Primero"}
-          </button>
+      </div>
+    </div>
+  );
+
+  // ── STEP 0: QUALIFY ─────────────────────────────────────────────
+  const renderStep0 = () => (
+    <div style={{ maxWidth:680, margin:"0 auto", padding:"60px 24px 80px" }}>
+      {/* Header */}
+      <div style={{ textAlign:"center", marginBottom:56 }}>
+        <p style={{ fontSize:11, fontWeight:600, color:G, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:16 }}>
+          {lang==="es"?"Aprobaciones Rápidas · Asesores Reales · Sin Cargos Ocultos":"Fast Approvals · Real Advisors · No Hidden Fees"}
+        </p>
+        <h1 style={{ fontSize:"clamp(32px,5vw,52px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", lineHeight:1.1, marginBottom:16 }}>
+          {lang==="es" ? <>Solicita<br /><span style={{color:G}}>Capital de Trabajo</span></> : <>Apply for<br /><span style={{color:G}}>Working Capital</span></>}
+        </h1>
+        <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", lineHeight:1.7 }}>
+          {lang==="es"
+            ? "Nuestro equipo revisa tu solicitud y trabaja para conseguirte fondos — a menudo en 24 horas."
+            : "Our team reviews your application and works to get you funded — often within 24 hours."}
+        </p>
+      </div>
+
+      {/* Credit selector */}
+      <div style={{ marginBottom:40 }}>
+        <p style={labelStyle}>{lang==="es"?"Mi crédito es...":"My credit is..."}</p>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8 }}>
+          {(lang==="es"
+            ? [["excellent","Excelente","750+"],["good","Bueno","680+"],["fair","Regular","580+"],["poor","Bajo","<580"]]
+            : [["excellent","Excellent","750+"],["good","Good","680+"],["fair","Fair","580+"],["poor","Poor","<580"]]
+          ).map(([val,label,range])=>(
+            <button key={val} onClick={()=>setCreditSel(val)} style={{ background:creditSel===val?"#fff":"rgba(255,255,255,.04)", border:`1px solid ${creditSel===val?"#fff":"rgba(255,255,255,.1)"}`, borderRadius:8, padding:"16px 8px", cursor:"pointer", textAlign:"center", transition:"all .15s" }}>
+              <p style={{ fontSize:14, fontWeight:600, color:creditSel===val?"#0a0a0a":"#fff", marginBottom:4, letterSpacing:"-.01em" }}>{label}</p>
+              <p style={{ fontSize:11, color:creditSel===val?"rgba(0,0,0,.5)":"rgba(255,255,255,.3)", fontWeight:500 }}>{range}</p>
+            </button>
+          ))}
         </div>
+      </div>
+
+      {/* Revenue slider */}
+      <div style={{ marginBottom:40 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
+          <p style={labelStyle}>{lang==="es"?"Mis ventas mensuales son...":"My monthly sales volume is..."}</p>
+          <span style={{ fontSize:20, fontWeight:700, color:G, letterSpacing:"-.02em" }}>{fmtSlider(loanAmt)}</span>
+        </div>
+        <input type="range" min={10000} max={2000000} step={5000} value={loanAmt} onChange={e=>setLoanAmt(Number(e.target.value))} style={{ width:"100%" }} />
+        <div style={{ display:"flex", justifyContent:"space-between", marginTop:8 }}>
+          <span style={{ fontSize:11, color:"rgba(255,255,255,.25)" }}>$10K</span>
+          <span style={{ fontSize:11, color:"rgba(255,255,255,.25)" }}>$2M+</span>
+        </div>
+      </div>
+
+      {/* Qualification result */}
+      <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"32px", marginBottom:32, textAlign:"center" }}>
+        <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
+          {lang==="es"?"¿Cuánto podría calificar?":"How much could I qualify for?"}
+        </p>
+        <p style={{ fontSize:64, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1, marginBottom:8 }}>{fmtSlider(qualAmt())}</p>
+        <p style={{ fontSize:12, color:"rgba(255,255,255,.2)" }}>
+          {lang==="es"?"Para fines ilustrativos. Solicitudes sujetas a revisión.":"For illustrative purposes only. Applications subject to review."}
+        </p>
+      </div>
+
+      {/* Requirements */}
+      <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:12, padding:"20px 24px", marginBottom:32 }}>
+        <p style={{ fontSize:12, fontWeight:600, color:G, marginBottom:14, letterSpacing:"-.01em" }}>
+          {lang==="es"?"Todo lo que necesitas:":"All you need to qualify:"}
+        </p>
+        {(lang==="es"
+          ? ["6+ meses en operación","$10K+ en ingresos mensuales","580+ puntaje de crédito","Solo consulta suave — sin impacto al crédito"]
+          : ["6+ months in business","$10K+ in monthly revenue","580+ credit score","Soft pull only — no credit impact"]
+        ).map(r=>(
+          <div key={r} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+            <div style={{ width:4, height:4, background:G, borderRadius:"50%", flexShrink:0 }}></div>
+            <span style={{ fontSize:13, color:"rgba(255,255,255,.6)", letterSpacing:"-.01em" }}>{r}</span>
+          </div>
+        ))}
+      </div>
+
+      <button onClick={()=>setStep(1)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"16px", borderRadius:8, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
+        {lang==="es"?"Comenzar Mi Solicitud →":"Start My Request →"}
+      </button>
+      <p style={{ textAlign:"center", fontSize:12, color:"rgba(255,255,255,.25)", marginTop:14 }}>
+        {lang==="es"?"Sin impacto a tu crédito · Gratis · Sin presión":"No credit impact · Free · No pressure"}
+      </p>
+    </div>
+  );
+
+  // ── STEPS 1–4 ───────────────────────────────────────────────────
+  const stepTitles = lang==="es"
+    ? ["Fondos","Negocio","Tu Cuenta","Revisar"]
+    : ["Funding","Business","Your Account","Review"];
+
+  const inp = { width:"100%", padding:"13px 16px", borderRadius:8, border:"1px solid rgba(255,255,255,.1)", fontSize:14, fontFamily:"'Sora',sans-serif", color:"#fff", background:"rgba(255,255,255,.04)", marginBottom:12, display:"block", outline:"none", transition:"border-color .15s", letterSpacing:"-.01em" };
+  const inpFocus = { ...inp, borderColor:"rgba(168,255,62,.5)" };
+  const sel = { ...inp, appearance:"none", backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 14px center", cursor:"pointer", paddingRight:40 };
+
+  const renderSteps = () => (
+    <div style={{ maxWidth:580, margin:"0 auto", padding:"48px 24px 80px" }}>
+      {/* Progress */}
+      <div style={{ marginBottom:40 }}>
+        <div style={{ display:"flex", gap:6, marginBottom:10 }}>
+          {stepTitles.map((s,i)=>(
+            <div key={s} style={{ flex:1, height:2, borderRadius:2, background:i<step?G:i===step?"rgba(255,255,255,.4)":"rgba(255,255,255,.1)", transition:"background .3s" }}></div>
+          ))}
+        </div>
+        <div style={{ display:"flex", justifyContent:"space-between" }}>
+          {stepTitles.map((s,i)=>(
+            <span key={s} style={{ fontSize:10, fontWeight:600, color:i<=step?"rgba(255,255,255,.5)":"rgba(255,255,255,.2)", letterSpacing:"0.08em", textTransform:"uppercase" }}>{s}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Card */}
+      <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:14, padding:"36px 32px" }} className="fadeup">
+
+        {/* Step 1 — Funding */}
+        {step===1 && <>
+          <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
+            {lang==="es"?"¿Para qué necesitas los fondos?":"What are you looking for?"}
+          </h2>
+          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+            {lang==="es"?"Cuéntanos sobre tu solicitud.":"Tell us about your request."}
+          </p>
+
+          {/* Loan amount display */}
+          <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:10, padding:"20px 24px", marginBottom:24, textAlign:"center" }}>
+            <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
+              {lang==="es"?"Monto estimado":"Estimated amount"}
+            </p>
+            <p style={{ fontSize:44, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1 }}>{fmtSlider(qualAmt())}</p>
+          </div>
+
+          <span style={labelStyle}>{lang==="es"?"Propósito del financiamiento":"Purpose of financing"}</span>
+          <select style={sel} value={form.purpose} onChange={e=>set("purpose",e.target.value)}>
+            {t.purposeOpts.map(o=><option key={o} style={{background:"#1a1a1a"}}>{o}</option>)}
+          </select>
+
+          <span style={labelStyle}>{lang==="es"?"¿Cuándo necesitas los fondos?":"When do you need funds?"}</span>
+          <select style={sel} value={form.timeline} onChange={e=>set("timeline",e.target.value)}>
+            {t.timelineOpts.map(o=><option key={o} style={{background:"#1a1a1a"}}>{o}</option>)}
+          </select>
+
+          <div style={{ display:"flex", gap:10, marginTop:8 }}>
+            <button onClick={()=>setStep(0)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>setStep(2)} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
+          </div>
+        </>}
+
+        {/* Step 2 — Business */}
+        {step===2 && <>
+          <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
+            {lang==="es"?"Tu Negocio":"Your Business"}
+          </h2>
+          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+            {lang==="es"?"Cuéntanos sobre tu negocio.":"Tell us about your business."}
+          </p>
+
+          <span style={labelStyle}>{t.companyLabel} <span style={{color:"#ef4444"}}>*</span></span>
+          <input style={errors.company?{...inp,borderColor:"#ef4444"}:inp} placeholder={t.companyPH} value={form.company} onChange={e=>{set("company",e.target.value);setErrors(p=>({...p,company:""}));}} />
+          {errors.company && <p style={errStyle}>{errors.company}</p>}
+
+          <span style={labelStyle}>{t.industryLabel}</span>
+          <select style={sel} value={form.industry} onChange={e=>set("industry",e.target.value)}>
+            {t.industryOpts.map(o=><option key={o} style={{background:"#1a1a1a"}}>{o}</option>)}
+          </select>
+
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }} className="name-row">
+            <div>
+              <span style={labelStyle}>{t.yearsLabel}</span>
+              <select style={sel} value={form.years} onChange={e=>set("years",e.target.value)}>
+                {t.yearsOpts.map(o=><option key={o} style={{background:"#1a1a1a"}}>{o}</option>)}
+              </select>
+            </div>
+            <div>
+              <span style={labelStyle}>{t.annualLabel}</span>
+              <select style={sel} value={form.annualRev} onChange={e=>set("annualRev",e.target.value)}>
+                {t.annualOpts.map(o=><option key={o} style={{background:"#1a1a1a"}}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div style={{ display:"flex", gap:10, marginTop:8 }}>
+            <button onClick={()=>setStep(1)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{if(validate())setStep(3);}} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
+          </div>
+        </>}
+
+        {/* Step 3 — Account */}
+        {step===3 && <>
+          <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
+            {lang==="es"?"Crea Tu Cuenta":"Create Your Account"}
+          </h2>
+          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+            {lang==="es"?"Tu portal para rastrear todo.":"Your dashboard to track everything."}
+          </p>
+
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }} className="name-row">
+            <div>
+              <label style={labelStyle}>{t.firstNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
+              <input style={errors.firstName?{...inp,borderColor:"#ef4444"}:inp} placeholder={t.firstNameLabel} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} />
+              {errors.firstName && <p style={errStyle}>{errors.firstName}</p>}
+            </div>
+            <div>
+              <label style={labelStyle}>{t.lastNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
+              <input style={errors.lastName?{...inp,borderColor:"#ef4444"}:inp} placeholder={t.lastNameLabel} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} />
+              {errors.lastName && <p style={errStyle}>{errors.lastName}</p>}
+            </div>
+          </div>
+
+          <label style={labelStyle}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></label>
+          <input style={errors.email?{...inp,borderColor:"#ef4444"}:inp} type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} />
+          {errors.email && <p style={errStyle}>{errors.email}</p>}
+
+          <label style={labelStyle}>{t.passwordLabel} <span style={{color:"#ef4444"}}>*</span></label>
+          <input style={errors.password?{...inp,borderColor:"#ef4444"}:inp} type="password" placeholder={t.passwordPH} value={form.password} onChange={e=>{set("password",e.target.value);setErrors(p=>({...p,password:""}));}} />
+          {errors.password && <p style={errStyle}>{errors.password}</p>}
+
+          <label style={labelStyle}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></label>
+          <input style={errors.phone?{...inp,borderColor:"#ef4444"}:inp} type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",formatPhone(e.target.value));setErrors(p=>({...p,phone:""}));}} />
+          {errors.phone && <p style={errStyle}>{errors.phone}</p>}
+
+          <div style={{ display:"flex", gap:10, marginTop:8 }}>
+            <button onClick={()=>setStep(2)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{if(validate())setStep(4);}} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
+          </div>
+        </>}
+
+        {/* Step 4 — Review */}
+        {step===4 && <>
+          <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
+            {lang==="es"?"Revisa tu Solicitud":"Review Your Request"}
+          </h2>
+          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+            {lang==="es"?"¿Todo correcto? Envía para continuar.":"Everything look right? Submit to continue."}
+          </p>
+
+          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.08)", borderRadius:10, padding:"20px", marginBottom:20 }}>
+            {[
+              [lang==="es"?"Monto estimado":"Est. Amount", fmtSlider(qualAmt())],
+              [lang==="es"?"Propósito":"Purpose", form.purpose||"—"],
+              [lang==="es"?"Plazo":"Timeline", form.timeline||"—"],
+              [lang==="es"?"Empresa":"Company", form.company||"—"],
+              [lang==="es"?"Industria":"Industry", form.industry||"—"],
+              [lang==="es"?"Ingresos":"Revenue", form.annualRev||"—"],
+              [lang==="es"?"Nombre":"Name", `${form.firstName} ${form.lastName}`.trim()||"—"],
+              ["Email", form.email||"—"],
+            ].map(([k,v])=>(
+              <div key={k} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"10px 0", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+                <span style={{ fontSize:13, color:"rgba(255,255,255,.35)", letterSpacing:"-.01em" }}>{k}</span>
+                <span style={{ fontSize:13, fontWeight:600, color:"#fff", letterSpacing:"-.01em", textAlign:"right", maxWidth:"60%" }}>{v}</span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:10, padding:"14px 16px", marginBottom:20 }}>
+            <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.7, letterSpacing:"-.01em" }}>
+              {lang==="es"
+                ? "Al enviar, autorizas a Aprovuit a revisar tu solicitud y presentarla a socios de financiamiento en nuestra red en tu nombre. Esto genera una consulta suave de crédito sin impacto a tu puntaje. Todas las comisiones de broker son pagadas por el fondeador, no por ti."
+                : "By submitting, you authorize Aprovuit to review your application and present it to funding partners in our network on your behalf. This triggers a soft credit inquiry with no impact to your score. All broker fees are paid by the funder, not you."}
+            </p>
+          </div>
+
+          <div style={{ display:"flex", gap:10 }}>
+            <button onClick={()=>setStep(3)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={handleSubmit} disabled={sending} style={{ flex:2, background:sending?"rgba(168,255,62,.4)":G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:sending?"not-allowed":"pointer" }}>
+              {sending?(lang==="es"?"Enviando...":"Submitting..."):(lang==="es"?"Enviar Solicitud →":"Submit Request →")}
+            </button>
+          </div>
+        </>}
+
       </div>
     </div>
   );
 
   return (
-    <div style={{ minHeight:"100vh", background:"#f5f7fa" }}>
+    <div style={pageStyle}>
       <style>{APPLY_CSS}</style>
-
-      {/* NAV */}
-      <div style={{ background:"rgba(10,10,10,0.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.08)", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
+      {/* Nav */}
+      <div style={navStyle}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:28, height:28, background:G, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <span style={{ fontSize:14, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
-          </div>
-          <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:700, color:"#000" }}>A</div>
+          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
         </button>
-        <div style={{ display:"flex", alignItems:"center", gap:8, background:"rgba(168,255,62,0.08)", border:`1px solid ${G}30`, padding:"5px 14px", borderRadius:20 }}>
-          <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-          <span style={{ fontSize:12, color:G, fontWeight:700 }}>{t.noPhone}</span>
+        <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(168,255,62,.06)", border:`1px solid ${G}20`, padding:"5px 14px", borderRadius:20 }}>
+          <div style={{ width:5, height:5, background:G, borderRadius:"50%" }}></div>
+          <span style={{ fontSize:11, color:G, fontWeight:600, letterSpacing:"0.05em" }}>
+            {lang==="es"?"Sin Cargos Ocultos · Asesores Reales":"No Hidden Fees · Real Advisors"}
+          </span>
         </div>
       </div>
 
-      {/* HERO SECTION */}
-      <div style={{ background:"linear-gradient(135deg,#0a0a0a 0%,#0d1f0d 100%)", padding:"48px 24px 64px", textAlign:"center" }}>
-        <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(168,255,62,0.1)", border:`1px solid ${G}25`, padding:"5px 16px", borderRadius:20, marginBottom:20 }}>
-          <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-          <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>Free · No Commitment · {t.noPhone}</span>
-        </div>
-        <h1 style={{ fontSize:"clamp(28px,6vw,48px)", fontWeight:900, color:"#fff", lineHeight:1.1, marginBottom:12, letterSpacing:"-0.02em" }}>
-          {t.heroH1} <span style={{ color:G }}>{t.heroH1b}</span>
-        </h1>
-        <p style={{ fontSize:16, color:"rgba(255,255,255,0.5)", maxWidth:460, margin:"0 auto 36px", lineHeight:1.7 }}>{t.heroP}</p>
-
-        {/* MAIN FORM CARD */}
-        {step===0 && (
-          <div style={card} className="fadeup">
-            <h2 style={{ fontSize:20, fontWeight:800, color:"#1a1a1a", marginBottom:6, textAlign:"center" }}>{t.howMuch}</h2>
-            <p style={{ fontSize:13, color:"#888", textAlign:"center", marginBottom:24 }}>Use the slider below</p>
-
-            {/* Amount display */}
-            <div style={{ textAlign:"center", marginBottom:4 }}>
-              <div style={{ fontSize:52, fontWeight:900, color:"#1a1a1a", letterSpacing:"-2px", lineHeight:1 }}>{fmtAmt(loanAmt)}</div>
-              <div style={{ fontSize:13, color:"#888", marginTop:6 }}>{t.requestedAmt}</div>
-            </div>
-
-            <input type="range" min={10000} max={2000000} step={5000} value={loanAmt}
-              onChange={e=>setLoanAmt(Number(e.target.value))} />
-            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:28 }}>
-              <span style={{ fontSize:12, color:"#aaa" }}>$10K</span>
-              <span style={{ fontSize:12, color:"#aaa" }}>$2M+</span>
-            </div>
-
-            {/* Credit score */}
-            <span style={lbl}>{t.creditLabel}</span>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:24 }}>
-              {t.creditOpts.map(([val,label,range])=>(
-                <div key={val} onClick={()=>setCreditSel(val)} style={{ border:`2px solid ${creditSel===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"12px 4px", cursor:"pointer", textAlign:"center", background:creditSel===val?"#1a1a1a":"#fff", transition:"all 0.15s" }}>
-                  <p style={{ fontSize:12, fontWeight:800, color:creditSel===val?"#fff":"#1a1a1a", marginBottom:2 }}>{label}</p>
-                  <p style={{ fontSize:10, color:creditSel===val?"rgba(255,255,255,0.5)":"#aaa" }}>{range}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Qualify result */}
-            <div style={{ background:"linear-gradient(135deg,#0a0a0a,#111)", borderRadius:14, padding:"22px 24px", marginBottom:24, textAlign:"center" }}>
-              <p style={{ fontSize:11, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>{t.qualifyUp}</p>
-              <p style={{ fontSize:44, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", lineHeight:1 }}>{fmtAmt(qualAmt())}</p>
-              <p style={{ fontSize:10, color:"rgba(255,255,255,0.25)", marginTop:8 }}>{t.qualNote}</p>
-            </div>
-
-            <button onClick={()=>setStep(1)} style={btnPrimary}>{t.getStarted}</button>
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:14 }}>
-              <div style={{ width:14, height:14, background:"#22c55e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:8, flexShrink:0 }}>Done</div>
-              <span style={{ fontSize:13, color:"#888" }}>{t.secure}</span>
-            </div>
-          </div>
-        )}
-
-        {/* STEPS 1–4 */}
-        {step>0 && (
-          <div style={{ maxWidth:560, margin:"0 auto" }} className="fadeup">
-            {/* Progress */}
-            <div style={{ display:"flex", gap:8, justifyContent:"center", marginBottom:24 }}>
-              {t.steps.map((s,i)=>(
-                <div key={s} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                  <div style={{ width:36, height:4, borderRadius:2, background:i<step?G:i===step?"#fff":"rgba(255,255,255,0.2)", transition:"all 0.3s" }}></div>
-                  <span style={{ fontSize:10, color:i<=step?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.25)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.05em" }}>{s}</span>
-                </div>
-              ))}
-            </div>
-
-            <div style={card}>
-              {step===1 && <>
-                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[0]}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Tell us what you need.</p>
-                <span style={lbl}>{t.purposeLabel}</span>
-                <select className="fc-sel" value={form.purpose} onChange={e=>set("purpose",e.target.value)}>
-                  {t.purposeOpts.map(o=><option key={o}>{o}</option>)}
-                </select>
-                <span style={lbl}>{t.timelineLabel}</span>
-                <select className="fc-sel" value={form.timeline} onChange={e=>set("timeline",e.target.value)}>
-                  {t.timelineOpts.map(o=><option key={o}>{o}</option>)}
-                </select>
-                <button onClick={()=>setStep(2)} style={btnDark}>{t.continueBtn}</button>
-                <div><button onClick={()=>setStep(0)} style={btnBack}>{t.backBtn}</button></div>
-              </>}
-
-              {step===2 && <>
-                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[1]}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Tell us about your business.</p>
-                <span style={lbl}>{t.companyLabel} <span style={{color:"#ef4444"}}>*</span></span>
-                <input className="fc-inp" placeholder={t.companyPH} value={form.company} onChange={e=>{set("company",e.target.value);setErrors(p=>({...p,company:""}));}} style={errors.company?{borderColor:"#ef4444",marginBottom:4}:{}} />
-                {errors.company && <p style={{fontSize:12,color:"#ef4444",marginBottom:12}}>{errors.company}</p>}
-                <span style={lbl}>{t.industryLabel}</span>
-                <select className="fc-sel" value={form.industry} onChange={e=>set("industry",e.target.value)}>
-                  {t.industryOpts.map(o=><option key={o}>{o}</option>)}
-                </select>
-                <span style={lbl}>{t.yearsLabel}</span>
-                <select className="fc-sel" value={form.years} onChange={e=>set("years",e.target.value)}>
-                  {t.yearsOpts.map(o=><option key={o}>{o}</option>)}
-                </select>
-                <span style={lbl}>{t.annualLabel}</span>
-                <select className="fc-sel" value={form.annualRev} onChange={e=>set("annualRev",e.target.value)}>
-                  {t.annualOpts.map(o=><option key={o}>{o}</option>)}
-                </select>
-                <span style={lbl}>{t.creditEstLabel}</span>
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:20 }}>
-                  {t.creditOpts.map(([val,label,range])=>(
-                    <div key={val} onClick={()=>set("creditRating",val)} style={{ border:`2px solid ${form.creditRating===val?"#1a1a1a":"#e5e8ee"}`, borderRadius:10, padding:"10px 4px", cursor:"pointer", textAlign:"center", background:form.creditRating===val?"#1a1a1a":"#fff", transition:"all 0.15s" }}>
-                      <p style={{ fontSize:11, fontWeight:800, color:form.creditRating===val?"#fff":"#1a1a1a", marginBottom:2 }}>{label}</p>
-                      <p style={{ fontSize:10, color:form.creditRating===val?"rgba(255,255,255,0.5)":"#aaa" }}>{range}</p>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={()=>{ if(validateStep2()) setStep(3); }} style={btnDark}>{t.continueBtn}</button>
-                <div><button onClick={()=>setStep(1)} style={btnBack}>{t.backBtn}</button></div>
-              </>}
-
-              {step===3 && <>
-                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.steps[2]}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Almost done — your offer comes here.</p>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-                  <div>
-                    <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.firstNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
-                    <input className="fc-inp" placeholder={t.firstNameLabel} value={form.firstName} onChange={e=>{set("firstName",e.target.value);setErrors(p=>({...p,firstName:""}));}} style={errors.firstName?{borderColor:"#ef4444",marginBottom:4}:{}} />
-                    {errors.firstName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.firstName}</p>}
-                  </div>
-                  <div>
-                    <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.lastNameLabel} <span style={{color:"#ef4444"}}>*</span></label>
-                    <input className="fc-inp" placeholder={t.lastNameLabel} value={form.lastName} onChange={e=>{set("lastName",e.target.value);setErrors(p=>({...p,lastName:""}));}} style={errors.lastName?{borderColor:"#ef4444",marginBottom:4}:{}} />
-                    {errors.lastName && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.lastName}</p>}
-                  </div>
-                </div>
-                <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.emailLabel} <span style={{color:"#ef4444"}}>*</span></label>
-                <input className="fc-inp" type="email" placeholder={t.emailPH} value={form.email} onChange={e=>{set("email",e.target.value);setErrors(p=>({...p,email:""}));}} style={errors.email?{borderColor:"#ef4444",marginBottom:4}:{}} />
-                {errors.email && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.email}</p>}
-                <label style={{fontSize:12,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:7,display:"block"}}>{t.phoneLabel} <span style={{color:"#ef4444"}}>*</span></label>
-                <input className="fc-inp" type="tel" placeholder={t.phonePH} value={form.phone} onChange={e=>{set("phone",e.target.value);setErrors(p=>({...p,phone:""}));}} style={errors.phone?{borderColor:"#ef4444",marginBottom:4}:{}} />
-                {errors.phone && <p style={{fontSize:12,color:"#ef4444",marginBottom:8}}>{errors.phone}</p>}
-                <button onClick={()=>{ if(validateStep3()) setStep(4); }} style={btnDark}>{t.continueBtn}</button>
-                <div><button onClick={()=>setStep(2)} style={btnBack}>{t.backBtn}</button></div>
-              </>}
-
-              {step===4 && <>
-                <h2 style={{ fontSize:22, fontWeight:800, color:"#1a1a1a", marginBottom:4 }}>{t.reviewTitle}</h2>
-                <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>{t.reviewSub}</p>
-                <div style={{ background:"#f9fafb", borderRadius:12, padding:"16px 18px", marginBottom:16 }}>
-                  {t.summaryKeys.map((k,i)=>{
-                    const vals=[fmtAmt(loanAmt),form.purpose,form.timeline,form.company,form.industry,form.annualRev,form.creditRating,(form.firstName+" "+form.lastName).trim(),form.email,form.phone];
-                    return <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"0.5px solid #eee" }}><span style={{ fontSize:13, color:"#888" }}>{k}</span><span style={{ fontSize:13, fontWeight:700, color:"#1a1a1a" }}>{vals[i]||"—"}</span></div>;
-                  })}
-                </div>
-                <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 14px", marginBottom:18 }}>
-                  <p style={{ fontSize:12, color:"#166534", lineHeight:1.6 }}>{t.disclaimer}</p>
-                </div>
-                <button onClick={handleSubmit} style={btnPrimary}>{t.submitBtn}</button>
-                <div><button onClick={()=>setStep(3)} style={btnBack}>{t.backBtn}</button></div>
-              </>}
-            </div>
-          </div>
-        )}
-
-        {/* Trust stats */}
-        {step===0 && (
-          <div style={{ display:"flex", justifyContent:"center", gap:32, marginTop:36, flexWrap:"wrap" }}>
-            {[["$750M+","Funded"],["8,200+","Businesses Helped"],["4.9★","Google Rating"],["2 hrs","Avg Decision"]].map(([v,l],i)=>(
-              <React.Fragment key={l}>
-                <div style={{ textAlign:"center" }}>
-                  <div style={{ fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.5px" }}>{v}</div>
-                  <div style={{ fontSize:11, color:"rgba(255,255,255,0.45)", marginTop:3, textTransform:"uppercase", letterSpacing:"0.05em" }}>{l}</div>
-                </div>
-                {i<3 && <div style={{ width:1, background:"rgba(255,255,255,0.12)", alignSelf:"stretch" }}></div>}
-              </React.Fragment>
-            ))}
-          </div>
-        )}
-      </div>
+      {step===0 ? renderStep0() : renderSteps()}
     </div>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════
-MAIN APP
-══════════════════════════════════════════════════════════════════ */
+
 
 // ── LOGIN PAGE ───────────────────────────────────────────────────
 function LoginPage({ lang, onBack, onLogin }) {
@@ -1452,13 +1815,11 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
               </div>
               <div>
                 <div style={{ marginBottom:24 }}>
-                  <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>{lang==="es"?"Mejor para":"Best For"}</p>
+                  <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:14 }}>{lang==="es"?"Ideal para":"Best For"}</p>
                   {p.best.map(b=>(
-                    <div key={b} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
-                      <div style={{ width:20, height:20, background:`${p.color}20`, border:`1px solid ${p.color}50`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                        <span style={{ fontSize:9, color:p.color, fontWeight:800 }}>Done</span>
-                      </div>
-                      <span style={{ fontSize:14, color:"rgba(255,255,255,.65)" }}>{b}</span>
+                    <div key={b} style={{ display:"flex", alignItems:"center", gap:12, marginBottom:10, paddingBottom:10, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+                      <div style={{ width:4, height:4, background:p.color, borderRadius:"50%", flexShrink:0 }}></div>
+                      <span style={{ fontSize:13, color:"rgba(255,255,255,.6)", fontWeight:400, letterSpacing:"-.01em" }}>{b}</span>
                     </div>
                   ))}
                 </div>
@@ -1522,7 +1883,7 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
           <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — no calls, no salespeople, no surprises."}</p>
+          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — our team works the deal, you track every step."}</p>
         </div>
         {steps.map((s,i)=>(
           <div key={s.n} style={{ display:"flex", gap:32, marginBottom:40, position:"relative" }}>
@@ -1564,52 +1925,62 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
 function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   const [open, setOpen] = useState(null);
   const categories = lang==="es" ? [
-    { cat:"Elegibilidad", items:[
-      ["¿Cuáles son los requisitos mínimos?","Para calificar necesitas: 6+ meses en operación, $10,000+ en ingresos mensuales, y un puntaje de crédito de 580+. Evaluamos la salud completa de tu negocio, no solo tu puntaje de crédito."],
-      ["¿Mi puntaje de crédito afecta la aprobación?","El crédito es un factor, pero no el único. Evaluamos ingresos, tiempo en operación, flujo de caja y tipo de negocio. Muchos clientes con crédito de 580-620 son aprobados."],
-      ["¿Qué tipos de negocios califican?","La mayoría de negocios legítimos califican — retail, restaurantes, construcción, salud, transporte, servicios profesionales, y más. Negocios que no califican incluyen casinos, negocios ilegales y algunas industrias restringidas."],
-      ["¿Cuánto tiempo necesito en operación?","Generalmente 6 meses mínimo para la mayoría de productos. Algunos adelantos de ingresos requieren solo 3 meses."],
+    { cat:"La Plataforma", items:[
+      ["¿Qué es Aprovuit?","Aprovuit es una plataforma de mercado de financiamiento — no un prestamista ni corredor. Envías una solicitud, socios de financiamiento independientes la revisan y pueden extender ofertas. Tú compara y eliges. Aprovuit no toma decisiones de crédito."],
+      ["¿Cómo genera dinero Aprovuit?","Aprovuit gana una comisión de broker pagada por el socio de financiamiento cuando un trato se fondea exitosamente — no de ti. No hay costo por aplicar o usar la plataforma. Todas las comisiones se divulgan completamente antes de que firmes cualquier acuerdo."],
+      ["¿Mi información está segura?","Sí. Todos los datos están encriptados con SSL de 256 bits. Tu información solo puede ser compartida con socios de financiamiento para evaluar tu solicitud."],
+      ["¿Está disponible en todos los estados?","La plataforma está disponible a nivel nacional. Productos específicos pueden tener restricciones geográficas según la licencia del socio de financiamiento."],
+    ]},
+    { cat:"Elegibilidad y Requisitos", items:[
+      ["¿Cuáles son los requisitos mínimos?","Los requisitos varían por socio y producto. En general: 6+ meses en operación, $10,000+ en ingresos mensuales, 580+ puntaje de crédito. Algunas opciones basadas en ingresos son más flexibles. Enviar una solicitud no garantiza una oferta."],
+      ["¿Qué tipos de negocios pueden aplicar?","La mayoría de negocios legítimos — retail, restaurantes, construcción, salud, transporte, servicios profesionales, tecnología, y más. Los socios determinan elegibilidad de forma independiente."],
+      ["¿Cuánto tiempo necesito en operación?","Generalmente 6 meses mínimo. Algunas opciones basadas en ingresos aceptan negocios con 3+ meses en operación."],
+      ["¿Qué pasa si no califico?","No toda solicitud resulta en una oferta. Si no se extiende ninguna, tu portal lo reflejará. Puedes actualizar tu perfil y reenviar a medida que tu negocio crece."],
     ]},
     { cat:"Proceso y Tiempos", items:[
-      ["¿Cuánto tiempo toma la aprobación?","La mayoría de decisiones llegan en 2–4 horas durante horario comercial. Casos más complejos pueden tomar hasta 24 horas."],
-      ["¿Cuándo recibiré los fondos?","Si aceptas tu oferta antes de las 3pm EST en un día hábil, los fondos generalmente llegan el mismo día. Aceptaciones después de las 3pm llegan el siguiente día hábil."],
-      ["¿Necesito hablar por teléfono?","Nunca. Todo el proceso ocurre en tu portal — solicitud, revisión, ofertas, mensajes y renovaciones. Sin llamadas requeridas."],
-      ["¿Qué documentos necesito?","Básicamente: información del negocio, 3-6 meses de estados de cuenta bancarios, licencia de conducir y un cheque anulado. Todo se sube directamente en el portal."],
+      ["¿Cuánto tiempo toma el proceso?","La mayoría de socios revisan solicitudes en 2–4 horas hábiles. Los plazos de financiamiento dependen del socio — muchos pueden financiar en 1–2 días hábiles tras la aceptación."],
+      ["¿Necesito hablar por teléfono?","Nunca. Aprovuit es completamente de autoservicio. Envías tu solicitud, las ofertas aparecen en tu portal, comparas y eliges. Sin llamadas."],
+      ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, identificación oficial y cheque anulado. Todo se sube de forma segura a través de la plataforma."],
     ]},
-    { cat:"Crédito y Tasas", items:[
-      ["¿Aplicar afectará mi puntaje de crédito?","No. Nuestra revisión inicial usa una consulta suave — cero impacto en tu puntaje. Solo si aceptas una oferta se realiza una consulta dura."],
-      ["¿Cuáles son las tasas de interés?","Las tasas varían según el producto, monto, término e historial crediticio. Verás todos los términos claramente en tu oferta antes de aceptar — sin sorpresas."],
-      ["¿Hay cargos por prepago?","Depende del producto. Los préstamos a plazo generalmente no tienen penalidades por prepago. Los adelantos de ingresos y líneas de crédito tienen estructuras diferentes. Todo se especifica en tu oferta."],
+    { cat:"Crédito y Financiamiento", items:[
+      ["¿Afectará mi puntaje de crédito enviar una solicitud?","Enviar una solicitud genera una consulta suave — sin impacto en tu puntaje. Una consulta dura solo puede ocurrir si aceptas una oferta de un socio."],
+      ["¿Qué tipos de financiamiento están disponibles?","A través de nuestra red: financiamiento a plazo ($10K–$500K), líneas de crédito ($10K–$5M), financiamiento basado en ingresos ($5K–$500K) y financiamiento de equipo ($5K–$2M). Disponibilidad varía."],
+      ["¿Puedo ver los términos antes de aceptar?","Sí. Todas las ofertas en tu portal muestran el monto, tasa, pago y plazo claramente antes de que tomes ninguna decisión."],
     ]},
-    { cat:"Tu Portal y Cuenta", items:[
-      ["¿Cómo accedo a mi portal?","En aprovuit.com haz clic en 'Entrar'. Usa el correo y contraseña que creaste al aplicar. Hay verificación por SMS por seguridad."],
-      ["¿Puedo rastrear mi solicitud en tiempo real?","Sí. Tu portal muestra exactamente en qué etapa está tu solicitud — Aplicado, En Revisión, Aprobado, Oferta Enviada, Fondos Recibidos."],
-      ["¿Cómo me comunico con mi asesor?","Directamente en tu portal en la sección de Mensajes. Sin llamadas — todo por escrito para que tengas un registro de todo."],
-      ["¿Qué pasa cuando soy elegible para renovación?","Aparece automáticamente en tu portal. Sin llamadas frías. Sin vendedores. Simplemente aparece cuando estás listo."],
+    { cat:"Tu Portal", items:[
+      ["¿Cómo accedo a mi portal?","En aprovuit.com haz clic en 'Entrar'. Usa el correo y contraseña que creaste. Hay verificación por SMS para mayor seguridad."],
+      ["¿Puedo rastrear mi solicitud en tiempo real?","Sí. Tu portal muestra el estado exacto — Enviado, En Revisión, Oferta Disponible, Aceptado."],
+      ["¿Puedo administrar financiamiento existente desde el portal?","Sí. Una vez activo, tu portal muestra saldos, pagos próximos e historial. Puedes subir documentos y enviar mensajes a tu equipo directamente."],
+      ["¿Cómo me comunico con el equipo de Aprovuit?","Directamente en tu portal en la sección de Mensajes. Todo por escrito para que tengas registro de cada conversación."],
     ]},
   ] : [
-    { cat:"Eligibility", items:[
-      ["What are the minimum requirements?","To qualify you need: 6+ months in business, $10,000+ in monthly revenue, and a 580+ credit score. We evaluate your full business health, not just your credit score."],
-      ["Does my credit score affect approval?","Credit is a factor, but not the only one. We evaluate revenue, time in business, cash flow, and business type. Many clients with 580-620 credit are approved."],
-      ["What types of businesses qualify?","Most legitimate businesses qualify — retail, restaurants, construction, healthcare, transportation, professional services, and more. Businesses that don't qualify include casinos, illegal businesses, and some restricted industries."],
-      ["How long do I need to be in business?","Generally 6 months minimum for most products. Some revenue advances require only 3 months."],
+    { cat:"The Platform", items:[
+      ["What is Aprovuit?","Aprovuit is a financing marketplace platform — not a lender or broker. You submit one request, independent financing partners review it and may extend offers. You compare and choose. Aprovuit does not make credit decisions."],
+      ["How does Aprovuit make money?","Aprovuit earns a broker fee paid by the funding partner when a deal is successfully funded — not from you. There is no cost to apply or use the platform. All fees are fully disclosed before you sign any agreement."],
+      ["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your information may only be shared with financing partners for the purpose of evaluating your request."],
+      ["Is Aprovuit available in all states?","The platform is available nationwide. Specific products may have geographic restrictions based on financing partner licensing."],
+    ]},
+    { cat:"Eligibility & Requirements", items:[
+      ["What are the minimum requirements?","Requirements vary by partner and product. Generally: 6+ months in business, $10,000+ monthly revenue, 580+ credit score. Some revenue-based options are more flexible. Submitting a request does not guarantee an offer."],
+      ["What types of businesses can apply?","Most legitimate businesses — retail, restaurants, construction, healthcare, transportation, professional services, technology, and more. Financing partners independently determine eligibility."],
+      ["How long do I need to be in business?","Generally 6 months minimum. Some revenue-based options accept businesses with 3+ months in operation."],
+      ["What if I don't qualify?","Not every request results in an offer. If none is extended, your dashboard will reflect that. You can update your profile and resubmit as your business grows."],
     ]},
     { cat:"Process & Timing", items:[
-      ["How long does approval take?","Most decisions come within 2–4 hours during business hours. More complex cases may take up to 24 hours."],
-      ["When will I receive my funds?","If you accept your offer before 3pm EST on a business day, funds generally arrive the same day. Acceptances after 3pm arrive the next business day."],
-      ["Do I need to get on the phone?","Never. The entire process happens in your portal — application, review, offers, messages, and renewals. No phone calls required."],
-      ["What documents do I need?","Basically: business information, 3-6 months of bank statements, driver's license, and a voided check. Everything is uploaded directly in the portal."],
+      ["How long does the process take?","Most partners review requests within 2–4 business hours. Funding timelines depend on the partner — many can fund within 1–2 business days of acceptance."],
+      ["Do I need to get on the phone?","Never. Aprovuit is fully self-service. You submit your request, offers appear in your dashboard, you compare and choose. No phone calls."],
+      ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All uploaded securely through the platform."],
     ]},
-    { cat:"Credit & Rates", items:[
-      ["Will applying hurt my credit score?","No. Our initial review uses a soft pull — zero impact to your score. Only if you accept an offer is a hard pull performed."],
-      ["What are the interest rates?","Rates vary by product, amount, term, and credit history. You'll see all terms clearly in your offer before accepting — no surprises."],
-      ["Are there prepayment penalties?","Depends on the product. Term loans generally have no prepayment penalties. Revenue advances and lines of credit have different structures. All specified in your offer."],
+    { cat:"Credit & Financing", items:[
+      ["Will submitting a request affect my credit score?","Submitting a request triggers a soft credit inquiry — zero impact to your score. A hard inquiry may only occur if you choose to accept an offer from a financing partner."],
+      ["What financing options are available?","Through our network: term financing ($10K–$500K), revolving credit ($10K–$5M), revenue-based financing ($5K–$500K), and equipment financing ($5K–$2M). Availability varies by profile."],
+      ["Can I see all terms before accepting?","Yes. Every offer in your dashboard shows the amount, rate, payment, and term clearly before you make any decision."],
     ]},
-    { cat:"Your Portal & Account", items:[
-      ["How do I access my portal?","At aprovuit.com click 'Log In'. Use the email and password you created when applying. SMS verification adds security."],
-      ["Can I track my application in real time?","Yes. Your portal shows exactly what stage your application is at — Applied, Under Review, Approved, Offer Sent, Funded."],
-      ["How do I communicate with my advisor?","Directly in your portal in the Messages section. No calls — everything in writing so you have a record of everything."],
-      ["What happens when I'm eligible for renewal?","It shows up automatically in your portal. No cold calls. No salespeople. It simply appears when you're ready."],
+    { cat:"Your Dashboard", items:[
+      ["How do I access my dashboard?","Go to aprovuit.com and click 'Log In'. Use the email and password you created when submitting your request. SMS verification adds security."],
+      ["Can I track my request in real time?","Yes. Your dashboard shows the exact status — Submitted, Under Review, Offer Available, Accepted."],
+      ["Can I manage existing financing from the dashboard?","Yes. Once active, your dashboard shows balances, upcoming payments, and payment history. Upload documents and message your account team directly."],
+      ["How do I contact the Aprovuit team?","Directly in your dashboard in the Messages section. Everything is in writing so you have a record of every conversation."],
     ]},
   ];
 
@@ -1956,8 +2327,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
           <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginTop:12, maxWidth:500, margin:"12px auto 0" }}>
             {lang==="es"
-              ? "Las siguientes son opciones de financiamiento que pueden estar disponibles a través de nuestra red de socios. Aprovuit no proporciona estas opciones directamente."
-              : "The following are financing options that may be available through our partner network. Aprovuit does not directly provide these options."}
+              ? "Aprovuit trabaja con una red de socios de confianza para conectar tu negocio con el producto adecuado. Nosotros buscamos la mejor opción — tú eliges la mejor oferta."
+              : "Aprovuit works with a network of trusted funding partners to match your business with the right product. We shop your deal — you choose the best offer."}
           </p>
         </div>
         <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
@@ -1989,8 +2360,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           </p>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, textAlign:"left", marginBottom:32 }}>
             {(lang==="es"
-              ? [["×","Lo que NO somos","Un prestamista, corredor o asesor financiero. No tomamos decisiones de crédito ni negociamos en tu nombre."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["—","Tu privacidad","Tu información es segura. Solo puede ser compartida con socios de financiamiento con tu consentimiento."]]
-              : [["×","What we're NOT","A lender, broker, or financial advisor. We don't make credit decisions or negotiate on your behalf."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["—","Your privacy","Your information is secure. It may only be shared with financing partners with your consent."]]
+              ? [["×","Lo que NO somos","Un prestamista directo. No fondeamos tratos nosotros mismos — te conectamos con el fondeador correcto de nuestra red."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["—","Nuestro compromiso","Financiamiento honesto y transparente. Te decimos lo que ganamos. Sin cargos ocultos. Sin sorpresas."]]
+              : [["×","What we're NOT","A direct lender. We don't fund deals ourselves — we connect you with the right funder from our network."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["—","Our commitment","Honest, transparent funding. We tell you what we earn. No hidden fees. No bait-and-switch."]]
             ).map(([icon,title,desc])=>(
               <div key={title} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"24px 20px" }}>
                 <div style={{ fontSize:22, marginBottom:12 }}>{icon}</div>
