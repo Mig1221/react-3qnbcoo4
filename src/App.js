@@ -224,7 +224,7 @@ const T = {
         {icon:"◉",name:"Direct Messaging",desc:"Message your Aprovuit advisor directly through the platform. Every conversation is in writing."},
       ]
     },
-    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. Fast approvals."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue — pay more when business is good, less when it's slow. Fast funding."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
+    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. No prepayment penalties — strong discounts if paid off early."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue. Pay more when business is good, less when slow. Industry-leading prepayment discounts."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
     reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5}] },
     faq: { badge:"FAQ", h:"Common Questions", items:[
       ["What is Aprovuit?","Aprovuit is a licensed commercial funding broker. We work with a network of funders and lenders to get small businesses the working capital they need — fast. We handle the process end to end and use our platform to give you full visibility into every step of your deal."],
@@ -243,362 +243,7 @@ const T = {
   },
 };
 
-// ── SUPABASE CONFIG ──────────────────────────────────────────────
-// Replace with your actual Supabase URL and anon key from supabase.com
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
-
-// Supabase helper — lightweight fetch wrapper (no SDK needed)
-const db = {
-  async insert(table, data) {
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-        method:"POST",
-        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
-        body:JSON.stringify(data)
-      });
-      return await res.json();
-    } catch(e) { console.error("DB insert error:", e); return null; }
-  },
-  async select(table, filter="") {
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
-        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}
-      });
-      return await res.json();
-    } catch(e) { console.error("DB select error:", e); return []; }
-  },
-  async update(table, filter, data) {
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
-        method:"PATCH",
-        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Prefer":"return=representation"},
-        body:JSON.stringify(data)
-      });
-      return await res.json();
-    } catch(e) { console.error("DB update error:", e); return null; }
-  },
-  async uploadFile(bucket, path, file) {
-    try {
-      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
-        method:"POST",
-        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type},
-        body:file
-      });
-      return await res.json();
-    } catch(e) { console.error("Storage upload error:", e); return null; }
-  }
-};
-
-const useDB = SUPABASE_URL !== "YOUR_SUPABASE_URL"; // true when configured
-
-// ── EMAIL CONFIG ─────────────────────────────────────────────────
-const ADMIN_EMAIL = "info@aprovuit.com"; // Make sure Formspree forms send to this email
-const FORMSPREE_ADMIN  = "https://formspree.io/f/xbdpdnby";
-const FORMSPREE_CLIENT = "https://formspree.io/f/xdapaqvw";
-
-async function sendEmail(url, data) {
-  try {
-    const res = await fetch(url, {
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify(data),
-    });
-    const json = await res.json();
-    return json.ok;
-  } catch(e) { console.error("Email error:", e); return false; }
-}
-
-async function sendApplicationEmail(data) {
-  await sendEmail(FORMSPREE_ADMIN, {
-    _subject:`🔔 New Application — ${data.company} | ${data.loanAmt}`,
-    _replyto:data.email,
-    "App ID":data.id, "Submitted":data.submittedAt,
-    "Name":`${data.firstName} ${data.lastName}`,
-    "Email":data.email, "Phone":data.phone,
-    "Loan Amount":data.loanAmt, "Purpose":data.purpose,
-    "Timeline":data.timeline, "Estimated":data.estimatedQualify,
-    "Company":data.company, "Industry":data.industry,
-    "Years":data.years, "Revenue":data.annualRev,
-    "Credit":data.creditRating,
-    "Upload Link":`https://aprovuit.com/?upload=${data.id}`,
-  });
-}
-
-async function sendClientEmail(data) {
-  await sendEmail(FORMSPREE_CLIENT, {
-    _subject:`Done Application Received — ${data.company} | Aprovuit`,
-    _replyto:ADMIN_EMAIL,
-    email:data.email,
-    "Hi":`${data.firstName},`,
-    "Message":`Your application for ${data.company} (ID: ${data.id}) has been received! We will be in touch within 2-4 hours. No phone call required.`,
-    "Upload your documents here":`https://aprovuit.com/?upload=${data.id}`,
-  });
-}
-
-async function sendOfferEmail(merchantEmail, merchantName, offer) {
-  await sendEmail(FORMSPREE_CLIENT, {
-    _subject:`💼 You Have a New Funding Offer — Aprovuit`,
-    _replyto:ADMIN_EMAIL,
-    email:merchantEmail,
-    "Hi":`${merchantName},`,
-    "Message":"You have a new funding offer in your Aprovuit dashboard. Log in to review all terms and accept or decline — no pressure, no calls.",
-    "Product":offer.product, "Amount":offer.amount,
-    "Term":offer.term, "Monthly Payment":offer.payment,
-    "View Offer At":"https://aprovuit.com",
-  });
-}
-
-async function sendUploadNotificationEmail(appId, files) {
-  await sendEmail(FORMSPREE_ADMIN, {
-    _subject:`Documents Uploaded — ${appId} | Aprovuit`,
-    "App ID":appId, "Files Uploaded":files,
-    "Action":"Log in to admin panel to review documents.",
-  });
-}
-
-function fmtAmt(n) {
-  if (!n) return "$0";
-  const num = typeof n === "string" ? parseInt(n.replace(/\D/g,"")) : n;
-  if (num >= 1000000) return "$" + (num/1000000).toFixed(1) + "M";
-  return "$" + Math.round(num).toLocaleString();
-}
-
-// ── CSS ──────────────────────────────────────────────────────────
-const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
-  ::selection { background:#a8ff3e; color:#000; }
-  input, select, textarea, button { font-family:'Sora',sans-serif; }
-  .cond { font-family:'Sora',sans-serif; letter-spacing:-.03em; }
-  .mono { font-family:'DM Mono',monospace; }
-  .nav-link { font-size:13px; font-weight:500; color:rgba(255,255,255,.4); cursor:pointer; background:none; border:none; font-family:'Sora',sans-serif; transition:color .15s; letter-spacing:-.01em; }
-  .nav-link:hover { color:#fff; }
-  .btn-green { display:inline-flex; align-items:center; justify-content:center; background:#a8ff3e; color:#000; border:none; padding:11px 24px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
-  .btn-green:hover { background:#bfff52; }
-  .btn-ghost { display:inline-flex; align-items:center; justify-content:center; background:transparent; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.12); padding:11px 24px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:-.01em; }
-  .btn-ghost:hover { border-color:rgba(255,255,255,.3); color:#fff; }
-  .card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; }
-  .prod-card { background:#111; border:1px solid rgba(255,255,255,.07); padding:28px; transition:all .2s; border-radius:10px; }
-  .prod-card:hover { border-color:rgba(168,255,62,.3); transform:translateY(-2px); }
-  .sb-item { display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:13px; cursor:pointer; color:rgba(255,255,255,.35); transition:all .15s; border-left:2px solid transparent; letter-spacing:-.01em; font-weight:500; }
-  .sb-item:hover { color:rgba(255,255,255,.7); background:rgba(255,255,255,.02); }
-  .sb-item.active { color:#fff; border-left-color:#a8ff3e; background:rgba(168,255,62,.04); }
-  .fc-inp { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; display:block; outline:none; transition:border-color .15s; }
-  .fc-inp:focus { border-color:rgba(168,255,62,.5); }
-  .fc-inp::placeholder { color:rgba(255,255,255,.2); }
-  .fc-sel { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1); font-size:14px; font-family:'Sora',sans-serif; color:#fff; background:rgba(255,255,255,.04); margin-bottom:12px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; cursor:pointer; outline:none; transition:border-color .15s; }
-  .fc-sel:focus { border-color:rgba(168,255,62,.5); }
-  .fc-sel option { background:#1a1a1a; color:#fff; }
-  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-  .tick { display:flex; animation:ticker 35s linear infinite; width:max-content; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-  .fadeup { animation:fadeUp .4s ease both; }
-  .pill { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:.02em; }
-  .pill.green { background:rgba(168,255,62,.1); color:#a8ff3e; }
-  .pill.yellow { background:rgba(245,158,11,.1); color:#f59e0b; }
-  .pill.blue { background:rgba(96,165,250,.1); color:#60a5fa; }
-  .pill.red { background:rgba(239,68,68,.1); color:#ef4444; }
-  .metric { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:18px; }
-  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
-  .faq-btn { width:100%; background:none; border:none; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; text-align:left; font-family:'Sora',sans-serif; border-bottom:1px solid rgba(255,255,255,.06); gap:16px; }
-  .dash-main { flex:1; padding:32px; background:#0a0a0a; overflow:auto; }
-  .offer-card { background:#0f1a0f; border:1px solid rgba(168,255,62,.12); border-radius:12px; padding:24px; margin-bottom:14px; }
-  .loan-card { background:#111; border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:20px; margin-bottom:12px; }
-  .progress-bar { height:2px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; margin:10px 0 6px; }
-  .progress-fill { height:100%; border-radius:2px; }
-  .msg { max-width:75%; padding:10px 14px; border-radius:10px; font-size:13px; line-height:1.55; }
-  .msg.advisor { background:#161616; color:rgba(255,255,255,.75); align-self:flex-start; }
-  .msg.client { background:#a8ff3e; color:#000; align-self:flex-end; font-weight:600; }
-  .lang-pill { display:flex; border:1px solid rgba(255,255,255,.1); border-radius:6px; overflow:hidden; }
-  .lb { padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; border:none; font-family:'Sora',sans-serif; transition:all .15s; letter-spacing:.02em; }
-  .tbl-row:hover td { background:rgba(255,255,255,.02); }
-  .credit-box { border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:rgba(255,255,255,.03); }
-  .credit-box.sel { border-color:#a8ff3e; background:rgba(168,255,62,.06); }
-  @media (max-width:768px) {
-    .hero-grid { grid-template-columns:1fr !important; gap:48px !important; }
-    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
-    .how-grid { grid-template-columns:1fr !important; }
-    .products-grid { grid-template-columns:1fr !important; }
-    .reviews-grid { grid-template-columns:1fr !important; }
-    .dash-wrap { flex-direction:column !important; }
-    .sidebar { width:100% !important; display:flex !important; overflow-x:auto !important; padding:0 !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.06) !important; }
-    .sb-item { border-left:none !important; border-bottom:2px solid transparent !important; white-space:nowrap !important; padding:12px 16px !important; }
-    .sb-item.active { border-bottom-color:#a8ff3e !important; border-left-color:transparent !important; }
-    .metrics-grid { grid-template-columns:repeat(2,1fr) !important; }
-    .nav-desktop { display:none !important; }
-    .nav-mobile { display:flex !important; }
-    .offer-grid { grid-template-columns:repeat(2,1fr) !important; }
-    .admin-wrap { flex-direction:column !important; }
-    .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
-    .dash-main { padding:16px !important; }
-  }
-  @media (max-width:480px) {
-    .metrics-grid { grid-template-columns:1fr 1fr !important; }
-    .hero-btns { flex-direction:column !important; align-items:flex-start !important; }
-    .offer-btns { flex-direction:column !important; }
-    .name-row { grid-template-columns:1fr !important; }
-  }
-`;
-
-// ── TRANSLATIONS ─────────────────────────────────────────────────
-const T = {
-  en: {
-    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started →" },
-    hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
-    ticker: ["Working Capital","Revenue-Based Financing","Term Loans","Lines of Credit","Equipment Financing","Same-Day Funding","Track Your Deal Live","Upload Docs Securely","580+ Credit OK","No Hidden Fees","Real Humans. Real Funding."],
-    stats: [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Funding Time"],["580+","Min. Credit Score"]],
-    how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
-    features: { badge:"Platform Features", h:"Your Funding. Fully Visible.",
-      items:[
-        {icon:"↗",name:"Real-Time Deal Tracking",desc:"See exactly where your deal stands at every stage — submitted, under review, approved, funded. No guessing."},
-        {icon:"◻",name:"Offer Management",desc:"Review every term of your offer clearly before you sign. Factor rate, payment amount, term — all in one place."},
-        {icon:"↑",name:"Secure Document Upload",desc:"Upload bank statements, ID, and voided checks directly through the platform. 256-bit encrypted."},
-        {icon:"◎",name:"Balance & Payment Tracking",desc:"Once funded, monitor your outstanding balance, payment schedule, and history directly in your dashboard."},
-        {icon:"◈",name:"Renewal Tracking",desc:"When you're eligible for renewal, it appears in your dashboard automatically. No cold calls."},
-        {icon:"◉",name:"Direct Messaging",desc:"Message your Aprovuit advisor directly through the platform. Every conversation is in writing."},
-      ]
-    },
-    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. Fast approvals."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue — pay more when business is good, less when it's slow. Fast funding."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
-    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5}] },
-    faq: { badge:"FAQ", h:"Common Questions", items:[["What is Aprovuit?","Aprovuit is a financing marketplace platform. Business owners submit one application and may receive multiple financing offers from our network of partners — all in one dashboard. Aprovuit is not a lender and does not act as a broker or negotiate on your behalf."],["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. Financing options available through the platform are provided by third-party financing partners. Aprovuit does not make credit decisions or directly provide loans."],["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your documents and personal information are stored securely and never shared without your consent."],["Do I need to talk to anyone on the phone?","Never. Aprovuit is fully self-service. You submit your application, financing offers appear in your dashboard, you compare and choose. No calls, no broker, no one acting on your behalf."],["How do I get started?","Create a free account, fill out your business profile, and submit a financing request through the platform. You can track everything in your dashboard from day one."]] },
-    cta: { h:"No Hassle. No Calls. Simple Funding.", sub:"One application. Multiple offers. You choose. No calls. No broker. No pressure.", btn:"Get Started — It's Free →" },
-    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit is a financing marketplace platform. Not a lender or broker. Financing provided by independent partners." },
-    apply: {
-      noPhone:"No Phone Calls. No Salespeople. Ever.",
-      heroH1:"Secure Your", heroH1b:"Business Funding Today",
-      heroP:"One application. Multiple offers. You choose. No calls, no broker, no pressure.",
-      howMuch:"How much funding do you need?",
-      requestedAmt:"Requested Amount",
-      getStarted:"Get Started Now →",
-      secure:"100% Secure & Confidential",
-      creditLabel:"Estimate your credit score",
-      creditOpts:[["excellent","Excellent","750+"],["good","Good","680+"],["fair","Fair","580+"],["poor","Poor","<580"]],
-      qualifyUp:"You may qualify for up to",
-      qualNote:"*Estimate only. Subject to approval.",
-      steps:["Funding","Business","Account","Contact"],
-      continueBtn:"Continue →", backBtn:"← Back",
-      purposeLabel:"What do you need funding for?",
-      purposeOpts:["Select...","Working Capital","Equipment Purchase","Business Expansion","Payroll","Inventory","Marketing","Hiring Staff","Debt Refinancing","Other"],
-      timelineLabel:"How soon do you need funds?",
-      timelineOpts:["Select...","As soon as possible (1–3 days)","Within 1 week","Within 2 weeks","Within 30 days","Just exploring"],
-      companyLabel:"Company Name", companyPH:"Your business name",
-      industryLabel:"Industry",
-      industryOpts:["Select...","Retail","Restaurant / Food Service","Construction","Healthcare","Transportation","Beauty / Salon","Fitness","Automotive","Professional Services","Real Estate","Technology","Manufacturing","Other"],
-      yearsLabel:"Years in Business",
-      yearsOpts:["Select...","Less than 6 months","6–12 months","1–2 years","2–5 years","5–10 years","10+ years"],
-      annualLabel:"Annual Revenue",
-      annualOpts:["Select...","Under $120K","$120K–$250K","$250K–$500K","$500K–$1M","$1M–$2.5M","$2.5M–$5M","$5M+"],
-      accountH:"Create Your Account",
-      accountSub:"Your dashboard to track everything.",
-      emailLabel:"Email Address", emailPH:"you@yourbusiness.com",
-      passwordLabel:"Create Password", passwordPH:"Min. 8 characters",
-      phoneLabel:"Phone Number", phonePH:"(555) 000-0000",
-      firstNameLabel:"First Name", lastNameLabel:"Last Name",
-      summaryTitle:"Review & Submit",
-      summarySub:"Everything look right? Submit to create your account and apply.",
-      summaryKeys:["Loan Amount","Purpose","Timeline","Company","Industry","Revenue","Credit","Email","Phone"],
-      disclaimer:"By submitting, you create an Aprovuit account and authorize a soft credit inquiry. No impact to your score.",
-      submitBtn:"Get My Offer Now →",
-      successH:"Application Received!",
-      successP:"We've received your application and will be in touch within 2–4 hours. Log in to your dashboard to track everything — no phone call required.",
-      loginBtn:"Go to My Dashboard →",
-      uploadBtn:"Upload Documents",
-      nextTitle:"What happens next:",
-      nextSteps:["Application reviewed within 2–4 hours","Personalized offer sent to your email","Review terms and accept — no pressure, no calls"],
-      estLabel:"Your estimated pre-qualification",
-      estNote:"*Subject to full underwriting and approval",
-    },
-    login: { h:"Welcome Back", sub:"Log in to your Aprovuit dashboard.", email:"Email Address", password:"Password", btn:"Log In →", forgot:"Forgot password?", noAccount:"No account?", applyLink:"Apply Now", smsH:"Verify Your Identity", smsSub:"Enter the 6-digit code sent to your phone.", verify:"Verify & Continue →", resend:"Resend code" },
-    dash: { greeting:"Good morning", snapshot:"Here's your funding snapshot", tabs:["Overview","Offers","Loans","Documents","Messages"], signout:"Sign Out", overview:"Overview", noOffers:"No pending offers", loansEmpty:"No active loans yet", docsTitle:"Your Documents", docsUpload:"Upload Documents", msgAdvisor:"Your Advisor", msgPlaceholder:"Message your advisor...", sendBtn:"Send" },
-  },
-  es: {
-    nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Get Started →" },
-    hero: { badge:"Sin Llamadas. Sin Presión. Simple.", h1:"La Plataforma de", h2:"Financiamiento Digital.", sub:"Envía una solicitud. Recibe múltiples ofertas de financiamiento. Compara y elige — completamente en tus términos. Sin llamadas. Sin presión. Sin intermediarios.", cta1:"Comenzar — Gratis →", cta2:"Entrar al Portal" },
-    ticker: ["Capital de Trabajo","Financiamiento por Ingresos","Préstamos a Plazo","Líneas de Crédito","Equipo","Fondos el Mismo Día","Rastrea tu Proceso","Sube Documentos","580+ Puntaje OK","Sin Cargos Ocultos","Personas Reales. Fondos Reales."],
-    stats: [["$500M+","Fondeado"],["10,000+","Negocios Atendidos"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]],
-    how: { badge:"Cómo Funciona", h:"Administra Todo en Un Solo Lugar", steps:[["01","Crea tu Cuenta","Regístrate en minutos. Sin verificación de crédito para crear la cuenta. Tu portal está listo al instante."],["02","Envía tu Información","Envía la información de tu negocio y documentos a través de la plataforma. Tu solicitud puede ser compartida con socios de financiamiento en nuestra red."],["03","Rastrea y Administra","Las ofertas de financiamiento aparecen directamente en tu portal. Compara opciones, revisa todos los términos claramente y elige lo que más te conviene — nadie elige por ti."]] },
-    features: { badge:"Funciones de la Plataforma", h:"Tu Financiamiento. Completamente Visible.",
-      items:[
-        {icon:"↗",name:"Seguimiento del Proceso en Tiempo Real",desc:"Ve exactamente en qué etapa está tu trato — enviado, en revisión, aprobado, fondeado. Sin adivinar."},
-        {icon:"◻",name:"Gestión de Ofertas",desc:"Revisa cada término de tu oferta claramente antes de firmar. Factor rate, pago, plazo — todo en un lugar."},
-        {icon:"↑",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y cheques anulados directamente desde la plataforma. Encriptado 256 bits."},
-        {icon:"◎",name:"Seguimiento de Saldo y Pagos",desc:"Una vez fondeado, monitorea tu saldo, calendario de pagos e historial directamente en tu portal."},
-        {icon:"◈",name:"Seguimiento de Renovación",desc:"Cuando seas elegible para renovación, aparece en tu portal automáticamente. Sin llamadas frías."},
-        {icon:"◉",name:"Mensajes Directos",desc:"Escríbele a tu asesor de Aprovuit directamente desde la plataforma. Todo queda por escrito."},
-      ]
-    },
-    products: { badge:"Productos de Financiamiento", h:"Soluciones de Capital de Trabajo", items:[{icon:"→",name:"Financiamiento a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Estructura de pagos fijos, ideal para inversiones planeadas como expansión, contratación o equipo."},{icon:"↺",name:"Crédito Revolvente",range:"$10K–$5M",term:"Revolvente",desc:"Accede a fondos cuando los necesites. Retira, paga y vuelve a retirar."},{icon:"↯",name:"Financiamiento Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Financiamiento vinculado a tus ingresos mensuales. Pagos flexibles que se ajustan a tu negocio."},{icon:"◈",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia equipo empresarial a través de la plataforma. El equipo puede servir como colateral."}], amount:"Monto", term:"Plazo" },
-    reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.", items:[{name:"Marcus T.",biz:"Logística, Texas",text:"Aprobado en horas y fondeado a la mañana siguiente. El portal me mostró cada paso del proceso — sin perseguir, sin sorpresas. La mejor experiencia de financiamiento que he tenido.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"Mi asesor me consiguió una mejor tasa de lo que esperaba. Subí mis documentos a través de la plataforma y pude ver la oferta el mismo día. Increíblemente fluido.",stars:5},{name:"Darnell R.",biz:"Construcción, Georgia",text:"He trabajado con otros brokers antes pero nunca tuve este nivel de visibilidad del proceso. Me fondearon, vi cada término claramente, supe exactamente lo que firmé.",stars:5}] },
-    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[
-      ["¿Qué es Aprovuit?","Aprovuit es un broker de financiamiento comercial con licencia. Trabajamos con una red de fondeadores y prestamistas para conseguir a los pequeños negocios el capital de trabajo que necesitan — rápido. Manejamos el proceso de principio a fin y usamos nuestra plataforma para darte visibilidad total de cada paso de tu trato."],
-      ["¿Aprovuit presta dinero directamente?","No. Aprovuit es un broker, no un prestamista directo. Trabajamos con una red de fondeadores de confianza que proporcionan el capital. Nuestro trabajo es conectarte con el fondeador correcto, negociar los mejores términos disponibles y gestionar el proceso desde la solicitud hasta el fondeo."],
-      ["¿Cuáles son los requisitos mínimos?","Los requisitos varían según el socio de financiamiento y el tipo de producto. En general, la mayoría de los socios buscan: 6+ meses en operación, $10,000+ en ingresos mensuales y un puntaje de crédito de 580+. Algunas opciones tienen requisitos más flexibles. Enviar una solicitud no garantiza una oferta."],
-      ["¿Afectará mi puntaje de crédito?","Enviar una solicitud a través de Aprovuit genera una consulta suave de crédito — sin impacto en tu puntaje. Una consulta dura solo puede ocurrir si decides aceptar una oferta de un socio de financiamiento."],
-      ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, una identificación oficial y un cheque anulado de tu cuenta empresarial. Todo se sube de forma segura a través de la plataforma."],
-      ["¿Cuánto tiempo toma el proceso?","La mayoría de los socios revisan las solicitudes en 2–4 horas hábiles. Una vez tomada la decisión, las ofertas aparecen en tu portal. Si aceptas, los plazos de financiamiento dependen del socio — muchos pueden financiar en 1–2 días hábiles."],
-      ["¿Qué tipos de financiamiento están disponibles?","A través de nuestra red de socios, puedes ver opciones que incluyen: financiamiento a plazo ($10K–$500K), líneas de crédito revolventes ($10K–$5M), financiamiento basado en ingresos ($5K–$500K) y financiamiento de equipo ($5K–$2M)."],
-      ["¿Cómo genera dinero Aprovuit?","Aprovuit recibe tarifas de sus socios de financiamiento — no de ti. Crear una cuenta, enviar una solicitud y usar la plataforma es completamente gratuito."],
-      ["¿Mi información es compartida con alguien?","Tu información puede ser compartida con socios de financiamiento en nuestra red para evaluar tu solicitud. No vendemos tus datos a terceros ni los usamos para marketing sin tu consentimiento."],
-      ["¿Qué pasa si no califico?","No toda solicitud resulta en una oferta — la elegibilidad la determinan exclusivamente nuestros socios. Si no se extiende ninguna oferta, tu portal reflejará ese estado. Puedes actualizar tu perfil y volver a enviar a medida que tu negocio crece."],
-      ["¿Puedo usar la plataforma para administrar financiamiento existente?","Sí. Una vez que tienes financiamiento activo, tu portal muestra saldos, calendarios de pago y actualizaciones de estado. Puedes subir documentos adicionales y enviar mensajes a tu equipo directamente desde la plataforma."],
-      ["¿Aprovuit está disponible en todos los estados?","La plataforma de Aprovuit está disponible a nivel nacional. Sin embargo, productos específicos pueden tener restricciones geográficas según la licencia del socio de financiamiento."],
-    ] },
-    cta: { h:"Sin Llamadas. Sin Presión. Simple.", sub:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas. Sin intermediarios. Sin presión.", btn:"Comenzar — Es Gratis →" },
-    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit es una plataforma de mercado. No es un prestamista ni corredor. Financiamiento provisto por socios independientes." },
-    apply: {
-      noPhone:"Sin Vendedores. Sin Llamadas.",
-      heroH1:"Asegura el", heroH1b:"Financiamiento de tu Negocio Hoy",
-      heroP:"Una solicitud. Múltiples ofertas. Tú decides. Sin llamadas, sin intermediarios, sin presión.",
-      howMuch:"¿Cuánto financiamiento necesitas?",
-      requestedAmt:"Monto Solicitado",
-      getStarted:"Comenzar Ahora →",
-      secure:"100% Seguro y Confidencial",
-      creditLabel:"Estima tu puntaje de crédito",
-      creditOpts:[["excellent","Excelente","750+"],["good","Bueno","680+"],["fair","Regular","580+"],["poor","Bajo","<580"]],
-      qualifyUp:"Podrías calificar para hasta",
-      qualNote:"*Solo estimado. Sujeto a aprobación.",
-      steps:["Fondos","Negocio","Cuenta","Contacto"],
-      continueBtn:"Continuar →", backBtn:"← Atrás",
-      purposeLabel:"¿Para qué necesitas el dinero?",
-      purposeOpts:["Selecciona...","Capital de Trabajo","Equipo","Expansión","Nómina","Inventario","Marketing","Contratar Personal","Refinanciamiento","Otro"],
-      timelineLabel:"¿Cuándo necesitas los fondos?",
-      timelineOpts:["Selecciona...","Lo antes posible (1–3 días)","En 1 semana","En 2 semanas","En 30 días","Solo explorando"],
-      companyLabel:"Nombre de la Empresa", companyPH:"Nombre de tu negocio",
-      industryLabel:"Industria",
-      industryOpts:["Selecciona...","Retail","Restaurante","Construcción","Salud","Transporte","Belleza / Salón","Fitness","Automotriz","Servicios Profesionales","Bienes Raíces","Tecnología","Manufactura","Otro"],
-      yearsLabel:"Años en Operación",
-      yearsOpts:["Selecciona...","Menos de 6 meses","6–12 meses","1–2 años","2–5 años","5–10 años","10+ años"],
-      annualLabel:"Ingresos Anuales",
-      annualOpts:["Selecciona...","Menos de $120K","$120K–$250K","$250K–$500K","$500K–$1M","$1M–$2.5M","$2.5M–$5M","$5M+"],
-      accountH:"Crea Tu Cuenta",
-      accountSub:"Tu portal para rastrear todo.",
-      emailLabel:"Correo Electrónico", emailPH:"tu@negocio.com",
-      passwordLabel:"Crea tu Contraseña", passwordPH:"Mín. 8 caracteres",
-      phoneLabel:"Número de Teléfono", phonePH:"(555) 000-0000",
-      firstNameLabel:"Nombre", lastNameLabel:"Apellido",
-      summaryTitle:"Revisar y Enviar",
-      summarySub:"¿Todo bien? Envía para crear tu cuenta y aplicar.",
-      summaryKeys:["Monto","Propósito","Plazo","Empresa","Industria","Ingresos","Crédito","Correo","Teléfono"],
-      disclaimer:"Al enviar, creas una cuenta en Aprovuit y autorizas una consulta suave de crédito. Sin impacto en tu puntaje.",
-      submitBtn:"Obtener Mi Oferta Ahora →",
-      successH:"¡Solicitud Recibida!",
-      successP:"Recibimos tu solicitud y estaremos en contacto en 2–4 horas. Entra a tu portal para rastrear todo — sin llamadas.",
-      loginBtn:"Ir a Mi Portal →",
-      uploadBtn:"Subir Documentos",
-      nextTitle:"¿Qué pasa ahora?",
-      nextSteps:["Solicitud revisada en 2–4 horas","Oferta personalizada enviada a tu correo","Revisas los términos y aceptas — sin presión, sin llamadas"],
-      estLabel:"Tu pre-calificación estimada",
-      estNote:"*Sujeto a revisión y aprobación completa",
-    },
-    login: { h:"Bienvenido", sub:"Entra a tu portal de Aprovuit.", email:"Correo Electrónico", password:"Contraseña", btn:"Entrar →", forgot:"¿Olvidaste tu contraseña?", noAccount:"¿No tienes cuenta?", applyLink:"Aplicar Ahora", smsH:"Verifica tu Identidad", smsSub:"Ingresa el código de 6 dígitos enviado a tu teléfono.", verify:"Verificar y Continuar →", resend:"Reenviar código" },
-    dash: { greeting:"Buenos días", snapshot:"Tu resumen de financiamiento", tabs:["Resumen","Ofertas","Préstamos","Documentos","Mensajes"], signout:"Salir", overview:"Resumen", noOffers:"Sin ofertas pendientes", loansEmpty:"Sin préstamos activos aún", docsTitle:"Tus Documentos", docsUpload:"Subir Documentos", msgAdvisor:"Tu Asesor", msgPlaceholder:"Escribe a tu asesor...", sendBtn:"Enviar" },
-  }
-};
-
+//
 // ── UPLOAD PAGE ──────────────────────────────────────────────────
 function UploadPage({ lang, appId, onBack }) {
   const [files, setFiles] = useState({bank1:null,bank2:null,bank3:null,bank4:null,bank5:null,bank6:null,license:null,voided:null});
@@ -1939,7 +1584,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
       ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, identificación oficial y cheque anulado. Todo se sube de forma segura a través de la plataforma."],
     ]},
     { cat:"Crédito y Financiamiento", items:[
-      ["¿Afectará mi puntaje de crédito enviar una solicitud?","Enviar una solicitud genera una consulta suave — sin impacto en tu puntaje. Una consulta dura solo puede ocurrir si aceptas una oferta de un socio."],
+      ["¿Afectará mi puntaje de crédito enviar una solicitud?","Enviar una solicitud genera una consulta suave — sin impacto en tu puntaje. Una consulta dura solo puede ocurrir si aceptas una oferta de un socio."],["¿Hay penalidades por pago anticipado?","No. Ofrecemos descuentos líderes en la industria por pago anticipado — entre más rápido pagues, más ahorras. Por ejemplo, un adelanto de $50K con pagos mensuales de $625 puede costar significativamente menos si se liquida antes. Creemos que debes ser recompensado por pagar anticipado, no penalizado."],
       ["¿Qué tipos de financiamiento están disponibles?","A través de nuestra red: financiamiento a plazo ($10K–$500K), líneas de crédito ($10K–$5M), financiamiento basado en ingresos ($5K–$500K) y financiamiento de equipo ($5K–$2M). Disponibilidad varía."],
       ["¿Puedo ver los términos antes de aceptar?","Sí. Todas las ofertas en tu portal muestran el monto, tasa, pago y plazo claramente antes de que tomes ninguna decisión."],
     ]},
@@ -1957,7 +1602,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
       ["Is Aprovuit available in all states?","The platform is available nationwide. Specific products may have geographic restrictions based on financing partner licensing."],
     ]},
     { cat:"Eligibility & Requirements", items:[
-      ["What are the minimum requirements?","Requirements vary by partner and product. Generally: 6+ months in business, $10,000+ monthly revenue, 580+ credit score. Some revenue-based options are more flexible. Submitting a request does not guarantee an offer."],
+      ["What are the minimum requirements?","Requirements vary by partner and product. Generally: 6+ months in business, $10,000+ monthly revenue, 580+ credit score. Some revenue-based options are more flexible. Submitting does not guarantee an offer."],
       ["What types of businesses can apply?","Most legitimate businesses — retail, restaurants, construction, healthcare, transportation, professional services, technology, and more. Financing partners independently determine eligibility."],
       ["How long do I need to be in business?","Generally 6 months minimum. Some revenue-based options accept businesses with 3+ months in operation."],
       ["What if I don't qualify?","Not every request results in an offer. If none is extended, your dashboard will reflect that. You can update your profile and resubmit as your business grows."],
@@ -1968,7 +1613,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
       ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All uploaded securely through the platform."],
     ]},
     { cat:"Credit & Financing", items:[
-      ["Will submitting a request affect my credit score?","Submitting a request triggers a soft credit inquiry — zero impact to your score. A hard inquiry may only occur if you choose to accept an offer from a financing partner."],
+      ["Will submitting a request affect my credit score?","Submitting a request triggers a soft credit inquiry — zero impact to your score. A hard inquiry may only occur if you choose to accept an offer from a financing partner."],["Are there prepayment penalties?","No. We offer industry-leading prepayment discounts — the earlier you pay off, the more you save. For example, a $50K advance with $625 monthly payments could cost significantly less if paid off ahead of schedule. We believe you should be rewarded for paying early, not penalized."],
       ["What financing options are available?","Through our network: term financing ($10K–$500K), revolving credit ($10K–$5M), revenue-based financing ($5K–$500K), and equipment financing ($5K–$2M). Availability varies by profile."],
       ["Can I see all terms before accepting?","Yes. Every offer in your dashboard shows the amount, rate, payment, and term clearly before you make any decision."],
     ]},
@@ -2221,16 +1866,22 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
                     </div>
                   </div>
                   {/* Offer card */}
-                  <div style={{ background:"linear-gradient(135deg,#0d1f0d,#111)", borderRadius:12, padding:"14px 16px", marginBottom:12, border:`1px solid ${G}25` }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,.5)" }}>{lang==="es"?"Nueva Oferta Disponible":"New Offer Available"}</span>
-                      <span style={{ fontSize:11, fontWeight:700, color:"#f59e0b" }}>⏳ {lang==="es"?"Pendiente":"Pending"}</span>
+                  <div style={{ background:"#0f1a0f", border:`1px solid ${G}20`, borderRadius:12, padding:"14px 16px", marginBottom:12 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:10 }}>
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>{lang==="es"?"Oferta Disponible":"Offer Available"}</span>
+                      <span style={{ fontSize:10, fontWeight:600, color:G, background:"rgba(168,255,62,.1)", padding:"2px 8px", borderRadius:10 }}>{lang==="es"?"Nuevo":"New"}</span>
                     </div>
-                    <div style={{ fontSize:28, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", marginBottom:10 }}>$200,000</div>
-                    <div style={{ display:"flex", gap:8 }}>
-                      <button onClick={onApply} style={{ flex:1, background:G, border:"none", borderRadius:8, padding:"9px 0", fontSize:12, fontWeight:800, color:"#000", cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Ver Oferta":"View Offer"}</button>
-                      <button style={{ flex:1, background:"rgba(255,255,255,.06)", border:"1px solid rgba(255,255,255,.1)", borderRadius:8, padding:"9px 0", fontSize:12, fontWeight:600, color:"rgba(255,255,255,.5)", cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Después":"Later"}</button>
+                    <div style={{ fontSize:26, fontWeight:700, color:G, letterSpacing:"-.03em", marginBottom:10 }}>$50,000</div>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:6, marginBottom:10 }}>
+                      {[[lang==="es"?"Pago/mes":"Monthly","$625"],[lang==="es"?"Plazo":"Term","12 mo"],[lang==="es"?"Penalidad":"Penalty","None"]].map(([l,v])=>(
+                        <div key={l} style={{ background:"rgba(255,255,255,.04)", borderRadius:6, padding:"6px 8px" }}>
+                          <p style={{ fontSize:9, color:"rgba(255,255,255,.3)", marginBottom:2 }}>{l}</p>
+                          <p style={{ fontSize:12, fontWeight:600, color:"#fff" }}>{v}</p>
+                        </div>
+                      ))}
                     </div>
+                    <p style={{ fontSize:10, color:"rgba(168,255,62,.6)", marginBottom:10 }}>{lang==="es"?"Descuentos por pago anticipado disponibles":"Early payoff discounts available"}</p>
+                    <button onClick={onApply} style={{ width:"100%", background:G, border:"none", borderRadius:7, padding:"9px 0", fontSize:12, fontWeight:700, color:"#000", cursor:"pointer" }}>{lang==="es"?"Ver Oferta →":"View Offer →"}</button>
                   </div>
                   {/* Upload prompt */}
                   <div style={{ background:"#161616", borderRadius:12, padding:"12px 16px", border:"1px solid rgba(255,255,255,.05)", display:"flex", alignItems:"center", gap:12 }}>
