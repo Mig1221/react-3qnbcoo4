@@ -243,11 +243,6 @@ const T = {
   },
 };
 
-const G = "#a8ff3e";
-const BK = "#0a0a0a";
-const BK2 = "#111111";
-const BK3 = "#161616";
-
 // ── SUPABASE CONFIG ──────────────────────────────────────────────
 // Replace with your actual Supabase URL and anon key from supabase.com
 const SUPABASE_URL = "YOUR_SUPABASE_URL";
