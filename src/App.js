@@ -240,7 +240,8 @@ const T = {
       ["Can I use the platform to manage existing funding?","Yes. Once you have active financing, your dashboard shows balances, payment schedules, and status updates. You can upload additional documents and message your account team directly through the platform."],
       ["Is Aprovuit available in all states?","Aprovuit's platform is available nationwide. However, specific financing products may have geographic restrictions based on the financing partner's licensing. This will be reflected in the offers you receive."],
     ] },
-    port React, { useState, useEffect } from 'react';
+  },
+};
 
 const G = "#a8ff3e";
 const BK = "#0a0a0a";
