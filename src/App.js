@@ -1873,13 +1873,140 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
 
 // ── CHATBOT ──────────────────────────────────────────────────────
 function Chatbot({ lang, onApply }) {
+  const G = "#a8ff3e";
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState([{
     role:"assistant",
     content: lang==="es"
-      ? "¡Hola! Soy el asistente de Aprovuit. ¿Tienes preguntas sobre financiamiento o quieres saber si calificas? "
-      : "Hi! I'm the Aprovuit assistant. Have questions about funding or want to find out if you qualify? "
+      ? "¡Hola! Soy el asistente de Aprovuit. ¿En qué puedo ayudarte hoy?"
+      : "Hi! I'm the Aprovuit assistant. How can I help you today?"
   }]);
+  const [input, setInput] = useState("");
+  const endRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (open) endRef.current?.scrollIntoView({ behavior:"smooth" });
+  }, [msgs, open]);
+
+  const rules = lang === "es" ? [
+    { keys:["cuánto","calific","monto","cantidad"], reply:"Basado en tu industria e ingresos, podrías calificar desde $10,000 hasta $500,000. El mejor camino es completar una solicitud — es gratuito y no afecta tu crédito." },
+    { keys:["requisito","necesito","calificar","elegible"], reply:"Generalmente necesitas: 6+ meses en operación, $10,000+ en ingresos mensuales y un puntaje de crédito de 580+. Sin garantías personales en la mayoría de productos." },
+    { keys:["crédito","puntaje","credit score","impacto"], reply:"Solo hacemos una consulta suave — cero impacto a tu puntaje de crédito. Solo si aceptas una oferta puede ocurrir una consulta dura." },
+    { keys:["tiempo","cuándo","rápido","demora","fondos"], reply:"La mayoría de decisiones se dan en 2–4 horas hábiles. Una vez aprobado, los fondos generalmente llegan en 24 horas." },
+    { keys:["pago anticip","descuento","penalidad","pagar antes"], reply:"No hay penalidades por pago anticipado. Ofrecemos descuentos del 18% (3 meses), 12% (6 meses) y 6% (9 meses) si pagas antes." },
+    { keys:["costo","tasa","caro","interés","cargo"], reply:"Las tasas varían según tu perfil e industria. Todos los términos se muestran claramente en tu portal antes de firmar. Sin cargos ocultos." },
+    { keys:["producto","préstamo","línea","adelanto","equipo"], reply:"Ofrecemos Préstamos a Plazo ($10K–$500K), Líneas de Crédito ($10K–$5M), Adelantos por Ingresos ($5K–$500K) y Financiamiento de Equipo ($5K–$2M)." },
+    { keys:["llamada","teléfono","hablar","contacto"], reply:"Sin llamadas de ventas no solicitadas — jamás. Pero si prefieres hablar con un asesor, solo dilo y alguien te contactará. Todo también está disponible en tu portal." },
+    { keys:["aplicar","comenzar","solicitud","aplicación"], reply:"¡Perfecto! Completa tu solicitud en minutos — es gratuita y no afecta tu crédito.", action:"apply" },
+    { keys:["gracias","ok","bien","entiendo"], reply:"¡Con gusto! Si tienes más preguntas o estás listo para aplicar, aquí estaré." },
+  ] : [
+    { keys:["how much","qualify","amount","how many"], reply:"Based on your industry and revenue, you could qualify for $10,000 to $500,000+. Best way to find out is to apply — it's free and won't affect your credit." },
+    { keys:["require","need","eligible","minimum"], reply:"Generally: 6+ months in business, $10,000+ monthly revenue, and a 580+ credit score. No personal collateral required for most products." },
+    { keys:["credit","score","impact","hurt"], reply:"We only do a soft credit pull — zero impact to your score. A hard inquiry only happens if you choose to accept a final offer." },
+    { keys:["time","fast","long","when","fund"], reply:"Most decisions come back in 2–4 business hours. Once approved, funds typically arrive within 24 hours." },
+    { keys:["early","prepay","penalty","discount","pay off"], reply:"No prepayment penalties — ever. We offer discounts of 18% (3 months), 12% (6 months), and 6% (9 months) early payoff." },
+    { keys:["cost","rate","fee","interest","expensive"], reply:"Rates vary based on your profile and industry. All terms are shown clearly in your dashboard before you sign. No hidden fees." },
+    { keys:["product","loan","line","advance","equipment"], reply:"We offer Term Loans ($10K–$500K), Lines of Credit ($10K–$5M), Revenue Advances ($5K–$500K), and Equipment Financing ($5K–$2M)." },
+    { keys:["phone","call","talk","contact"], reply:"No unsolicited sales calls — ever. But if you'd like to speak with a funding advisor, just ask and we'll have someone reach out to you. Everything is also available in your dashboard." },
+    { keys:["apply","start","begin","get started"], reply:"Great! You can complete your application in minutes — free, no credit impact.", action:"apply" },
+    { keys:["thank","ok","great","got it","understand"], reply:"Happy to help! If you have more questions or are ready to apply, I'm here." },
+  ];
+
+  const send = () => {
+    if (!input.trim()) return;
+    const userMsg = input.trim();
+    setInput("");
+    const newMsgs = [...msgs, { role:"user", content:userMsg }];
+
+    const lower = userMsg.toLowerCase();
+    const match = rules.find(r => r.keys.some(k => lower.includes(k)));
+    const reply = match
+      ? match.reply
+      : (lang==="es"
+          ? "Esa es una buena pregunta. Para obtener información específica sobre tu situación, lo mejor es completar una solicitud gratuita — sin impacto al crédito."
+          : "That's a great question. For information specific to your situation, the best step is to complete a free application — no credit impact.");
+
+    setMsgs([...newMsgs, { role:"assistant", content:reply }]);
+
+    if (match?.action === "apply") {
+      setTimeout(() => onApply(), 1200);
+    }
+  };
+
+  const quickReplies = lang==="es"
+    ? ["¿Cuánto califico?","¿Cuáles son los requisitos?","¿Afecta mi crédito?","Quiero aplicar"]
+    : ["How much do I qualify for?","What are the requirements?","Will it hurt my credit?","I want to apply"];
+
+  return (
+    <>
+      {/* Chat bubble */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ position:"fixed", bottom:24, right:24, width:56, height:56, background:G, border:"none", borderRadius:"50%", cursor:"pointer", boxShadow:"0 4px 20px rgba(168,255,62,0.4)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:1000, transition:"all 0.2s" }}
+      >
+        {open
+          ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        }
+      </button>
+
+      {/* Chat window */}
+      {open && (
+        <div style={{ position:"fixed", bottom:92, right:24, width:340, height:460, background:"#fff", borderRadius:20, boxShadow:"0 20px 60px rgba(0,0,0,0.25)", display:"flex", flexDirection:"column", overflow:"hidden", zIndex:1000 }}>
+          {/* Header */}
+          <div style={{ background:"#0a0a0a", padding:"14px 18px", display:"flex", alignItems:"center", gap:10 }}>
+            <svg width="32" height="32" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
+              <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <div>
+              <p style={{ fontSize:13, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
+              <p style={{ fontSize:10, color:G, margin:0 }}>● {lang==="es"?"En línea · Sin llamadas":"Online · No phone calls"}</p>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div style={{ flex:1, overflowY:"auto", padding:"14px", display:"flex", flexDirection:"column", gap:10, background:"#f9fafb" }}>
+            {msgs.map((m,i) => (
+              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start" }}>
+                <div style={{ maxWidth:"82%", padding:"9px 13px", borderRadius:m.role==="user"?"12px 4px 12px 12px":"4px 12px 12px 12px", background:m.role==="user"?"#1a1a1a":"#fff", color:m.role==="user"?"#fff":"#1a1a1a", fontSize:13, lineHeight:1.55, boxShadow:"0 1px 4px rgba(0,0,0,0.08)", fontFamily:"'Sora',sans-serif" }}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+            <div ref={endRef} />
+          </div>
+
+          {/* Quick replies */}
+          {msgs.length <= 2 && (
+            <div style={{ padding:"8px 10px", display:"flex", gap:5, flexWrap:"wrap", background:"#f9fafb", borderTop:"1px solid #eee" }}>
+              {quickReplies.map(q => (
+                <button key={q} onClick={() => { setInput(q); setTimeout(()=>{ setInput(""); const lower=q.toLowerCase(); const match=rules.find(r=>r.keys.some(k=>lower.includes(k))); const reply=match?match.reply:(lang==="es"?"Para obtener información específica, completa una solicitud gratuita.":"For specific info, complete a free application."); setMsgs(p=>[...p,{role:"user",content:q},{role:"assistant",content:reply}]); if(match?.action==="apply") setTimeout(()=>onApply(),1200); },100); }} style={{ background:"#fff", border:"1px solid #e5e8ee", borderRadius:20, padding:"5px 11px", fontSize:11, cursor:"pointer", fontFamily:"'Sora',sans-serif", color:"#555", whiteSpace:"nowrap" }}>{q}</button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <div style={{ padding:"10px 12px", borderTop:"1px solid #eee", display:"flex", gap:8, background:"#fff" }}>
+            <input
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key==="Enter" && send()}
+              placeholder={lang==="es"?"Escribe tu pregunta...":"Ask me anything..."}
+              style={{ flex:1, border:"1.5px solid #e5e8ee", borderRadius:10, padding:"9px 13px", fontSize:13, fontFamily:"'Sora',sans-serif", outline:"none", color:"#1a1a1a" }}
+            />
+            <button onClick={send} style={{ width:38, height:38, background:G, border:"none", borderRadius:9, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const endRef = React.useRef(null);
@@ -1888,113 +2015,7 @@ function Chatbot({ lang, onApply }) {
     if (open) endRef.current?.scrollIntoView({ behavior:"smooth" });
   }, [msgs, open]);
 
-  const send = async () => {
-    if (!input.trim() || loading) return;
-    const userMsg = input.trim();
-    setInput("");
-    setMsgs(p => [...p, { role:"user", content:userMsg }]);
-    setLoading(true);
-
-    try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          model:"claude-sonnet-4-20250514",
-          max_tokens:1000,
-          system:`You are Aprovuit's friendly funding assistant. Aprovuit is a direct lender and licensed funding broker, powered by technology. We fund deals from our own capital and work with a network of top funders to give business owners the best options available — all managed in one platform. Aprovuit is a direct lender and licensed broker. We fund some deals from our own capital and work with a funding partner network for additional options.
-
-Key facts:
-- Products: Term Loans ($10K-$500K, 3-24mo), Lines of Credit ($10K-$5M, revolving), Revenue Advances ($5K-$500K, daily repayment), Equipment Financing ($5K-$2M, up to 60mo)
-- Requirements: 6+ months in business, $10K+ monthly revenue, 580+ credit score
-- Process: Apply online → get offer in dashboard → accept with one click → funded same day
-- No phone calls ever. Everything in the merchant dashboard.
-- Decisions in 2-4 hours. Soft credit pull only (no impact to score).
-- Language: ${lang === "es" ? "Respond in Spanish" : "Respond in English"}
-
-Be conversational, helpful, and concise. If they want to apply, encourage them to get started. Never guarantee approvals or specific rates — those come from financing partners. Never say Aprovuit lends money or acts as a broker. Keep responses under 3 sentences when possible.`,
-          messages:[...msgs, { role:"user", content:userMsg }]
-        })
-      });
-      const data = await response.json();
-      const reply = data.content?.[0]?.text || (lang==="es" ? "Lo siento, intenta de nuevo." : "Sorry, please try again.");
-      setMsgs(p => [...p, { role:"assistant", content:reply }]);
-    } catch(e) {
-      setMsgs(p => [...p, { role:"assistant", content: lang==="es" ? "Error de conexión. Intenta de nuevo." : "Connection error. Please try again." }]);
-    }
-    setLoading(false);
-  };
-
-  return (
-    <>
-      {/* Chat bubble */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{ position:"fixed", bottom:24, right:24, width:56, height:56, background:"#a8ff3e", border:"none", borderRadius:"50%", cursor:"pointer", boxShadow:"0 4px 20px rgba(168,255,62,0.4)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, zIndex:1000, transition:"all 0.2s" }}
-      >
-        {open ? "×" : ""}
-      </button>
-
-      {/* Chat window */}
-      {open && (
-        <div style={{ position:"fixed", bottom:92, right:24, width:360, height:480, background:"#fff", borderRadius:20, boxShadow:"0 20px 60px rgba(0,0,0,0.25)", display:"flex", flexDirection:"column", overflow:"hidden", zIndex:1000 }}>
-          {/* Header */}
-          <div style={{ background:"#0a0a0a", padding:"16px 20px", display:"flex", alignItems:"center", gap:10 }}>
-            <div style={{ width:36, height:36, background:"#a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, fontWeight:900, color:"#000", flexShrink:0 }}>A</div>
-            <div>
-              <p style={{ fontSize:14, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
-              <p style={{ fontSize:11, color:"#a8ff3e", margin:0 }}>{lang==="es"?"En línea":"Online"} · {lang==="es"?"Sin llamadas":"No phone calls"}</p>
-            </div>
-          </div>
-
-          {/* Messages */}
-          <div style={{ flex:1, overflowY:"auto", padding:"16px", display:"flex", flexDirection:"column", gap:10, background:"#f9fafb" }}>
-            {msgs.map((m,i) => (
-              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start" }}>
-                <div style={{ maxWidth:"80%", padding:"10px 14px", borderRadius:m.role==="user"?"14px 4px 14px 14px":"4px 14px 14px 14px", background:m.role==="user"?"#1a1a1a":"#fff", color:m.role==="user"?"#fff":"#1a1a1a", fontSize:14, lineHeight:1.5, boxShadow:"0 1px 4px rgba(0,0,0,0.08)", fontFamily:"'DM Sans',sans-serif" }}>
-                  {m.content}
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div style={{ display:"flex", gap:4, padding:"10px 14px", background:"#fff", borderRadius:"4px 14px 14px 14px", width:"fit-content", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>
-                {[0,1,2].map(i => <div key={i} style={{ width:6, height:6, background:"#ccc", borderRadius:"50%", animation:`bounce 1s ease ${i*0.15}s infinite` }}></div>)}
-              </div>
-            )}
-            <div ref={endRef} />
-          </div>
-
-          {/* Quick replies */}
-          {msgs.length <= 2 && (
-            <div style={{ padding:"8px 12px", display:"flex", gap:6, flexWrap:"wrap", background:"#f9fafb", borderTop:"1px solid #f0f0f0" }}>
-              {(lang==="es"
-                ? ["¿Cuánto califico?","¿Cuáles son los requisitos?","¿Afecta mi crédito?","Quiero aplicar"]
-                : ["How much do I qualify for?","What are the requirements?","Will it hurt my credit?","I want to apply"]
-              ).map(q => (
-                <button key={q} onClick={() => { setInput(q); }} style={{ background:"#fff", border:"1px solid #e5e8ee", borderRadius:20, padding:"5px 12px", fontSize:12, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", color:"#555", whiteSpace:"nowrap" }}>{q}</button>
-              ))}
-            </div>
-          )}
-
-          {/* Input */}
-          <div style={{ padding:"12px 14px", borderTop:"1px solid #f0f0f0", display:"flex", gap:8, background:"#fff" }}>
-            <input
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key==="Enter" && send()}
-              placeholder={lang==="es"?"Escribe tu pregunta...":"Ask me anything..."}
-              style={{ flex:1, border:"1.5px solid #e5e8ee", borderRadius:10, padding:"10px 14px", fontSize:14, fontFamily:"'DM Sans',sans-serif", outline:"none", color:"#1a1a1a" }}
-            />
-            <button onClick={send} disabled={loading} style={{ width:40, height:40, background:loading?"#ccc":"#a8ff3e", border:"none", borderRadius:10, cursor:loading?"not-allowed":"pointer", fontSize:18, fontWeight:900, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>↑</button>
-          </div>
-          <style>{`@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }`}</style>
-        </div>
-      )}
-    </>
-  );
-}
-
-
+  
 // ── ANIMATED DEMO COMPONENT ──────────────────────────────────────
 function AnimatedDemo({ lang }) {
   const [activeStep, setActiveStep] = useState(0);
