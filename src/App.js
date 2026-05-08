@@ -1659,7 +1659,6 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
           </div>
         ))}
       </div>
-    </div>
 
       {/* DON'T SEE YOUR INDUSTRY */}
       <section style={{ background:BK2, padding:"72px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
