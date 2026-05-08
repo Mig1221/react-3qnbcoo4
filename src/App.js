@@ -2007,15 +2007,8 @@ function Chatbot({ lang, onApply }) {
 }
 
 
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const endRef = React.useRef(null);
 
-  React.useEffect(() => {
-    if (open) endRef.current?.scrollIntoView({ behavior:"smooth" });
-  }, [msgs, open]);
 
-  
 // ── ANIMATED DEMO COMPONENT ──────────────────────────────────────
 function AnimatedDemo({ lang }) {
   const [activeStep, setActiveStep] = useState(0);
