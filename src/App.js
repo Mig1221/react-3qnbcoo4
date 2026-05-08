@@ -2785,7 +2785,7 @@ function AboutSection({ lang, onApply }) {
 
 
 // ── ABOUT PAGE ───────────────────────────────────────────────────
-function AboutPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
+function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
   const G = "#a8ff3e";
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
