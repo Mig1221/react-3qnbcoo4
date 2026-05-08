@@ -2380,9 +2380,9 @@ function WhyAprovuit({ lang, onApply }) {
   const G = "#a8ff3e";
   const cards = lang === "es" ? [
     {
-      n:"01", title:"Fondos Rápidos y Confiables",
-      desc:"Aprobación y fondos en tan solo 24 horas. Sin esperar semanas. Sin papeleo interminable. Tu negocio no puede esperar — nosotros tampoco.",
-      highlight:"$500M+ fondeado a más de 10,000 negocios.",
+      n:"01", title:"Fondeado en 24 Horas",
+      desc:"Envía tu solicitud hoy y recibe fondos mañana. Nos movemos rápido porque tu negocio no se detiene. Decisiones en horas, no semanas — sin idas y venidas interminables.",
+      highlight:"La mayoría de clientes recibe fondos dentro de un día hábil de la aprobación.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
@@ -2401,9 +2401,9 @@ function WhyAprovuit({ lang, onApply }) {
       )
     },
     {
-      n:"02", title:"Descuentos por Pago Anticipado",
-      desc:"Sin penalidades por pago anticipado — ever. Paga antes y ahorra. Ofrecemos los mejores descuentos de la industria. Cuanto antes pagues, más ahorras.",
-      highlight:"Un adelanto de $50K puede costar hasta $1,350 menos si pagas anticipado.",
+      n:"02", title:"Paga Antes. Quédate Con Más.",
+      desc:"A diferencia de la mayoría de fondeadores, te recompensamos por pagar anticipado. Sin penalidades — nunca. Cuanto más rápido pagas, más ahorras. Es tu dinero y queremos que te quedes con la mayor cantidad posible.",
+      highlight:"Hasta 18% de descuento por pago anticipado. Un adelanto de $50K puede ahorrarte $1,350+.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <p style={{fontSize:9,fontWeight:700,color:G,textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Descuentos Disponibles</p>
@@ -2427,7 +2427,7 @@ function WhyAprovuit({ lang, onApply }) {
       highlight:"Comunicación directa. Todo por escrito. Sin llamadas.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
-          {[["¿Qué tipo de financiamiento necesitas?","Expansión y equipo nuevo.","Tu Asesor · 9:14 AM"],["Perfecto. Con tus ingresos mensuales de $85K, te consigo varias opciones. Te envío las ofertas hoy.","","Tu Asesor · 9:31 AM"]].map(([msg,reply,time],i)=>(
+          {[["¡Hola! Una pregunta rápida — ¿cuál es la razón principal por la que necesitas fondos ahora?","","Tu Asesor · 9:14 AM"],["Abrir una segunda ubicación.","Tu · 9:18 AM",""],["Entendido. Basado en tu perfil tengo algunas opciones fuertes. Tendré ofertas en tu portal en menos de una hora.","","Tu Asesor · 9:22 AM"]].map(([msg,reply,time],i)=>(
             <div key={i} style={{marginBottom:8}}>
               {reply&&<div style={{background:"rgba(168,255,62,.08)",border:"1px solid rgba(168,255,62,.15)",borderRadius:"4px 10px 10px 10px",padding:"8px 12px",marginBottom:4}}>
                 <p style={{fontSize:11,color:"rgba(255,255,255,.7)",lineHeight:1.5}}>{reply||msg}</p>
@@ -2442,9 +2442,9 @@ function WhyAprovuit({ lang, onApply }) {
       )
     },
     {
-      n:"04", title:"Enfoque a Tu Medida",
-      desc:"Cada negocio es único. Evaluamos tu flujo de caja, industria y necesidades específicas — no solo tu puntaje de crédito. Encontramos la solución correcta para ti.",
-      highlight:"580+ puntaje de crédito. Consulta suave. Sin impacto a tu score.",
+      n:"04", title:"Miramos el Panorama Completo",
+      desc:"No solo corremos tu puntaje de crédito y seguimos. Miramos tus ingresos, tu industria, tu flujo de caja y para qué realmente necesitas el dinero. Mejor contexto significa mejores ofertas.",
+      highlight:"580+ puntaje OK. Solo consulta suave. Sin impacto a tu puntaje.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Tu Perfil de Negocio</p>
@@ -2466,9 +2466,9 @@ function WhyAprovuit({ lang, onApply }) {
     },
   ] : [
     {
-      n:"01", title:"Fast, Reliable Funding",
-      desc:"Approved and funded in as little as 24 hours. No waiting weeks. No endless paperwork. Your business can't wait — and neither can we.",
-      highlight:"$500M+ funded to 10,000+ businesses nationwide.",
+      n:"01", title:"Funded in 24 Hours",
+      desc:"Submit your application today and get funded tomorrow. We move fast because your business doesn't stop. Decisions in hours, not weeks — no endless back-and-forth.",
+      highlight:"Most clients receive funds within one business day of approval.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
@@ -2487,9 +2487,9 @@ function WhyAprovuit({ lang, onApply }) {
       )
     },
     {
-      n:"02", title:"Early Payment Discounts",
-      desc:"No prepayment penalties — ever. Pay off your advance early and save. We offer industry-leading early payoff discounts. The sooner you pay, the more you save.",
-      highlight:"A $50K advance can cost up to $1,350 less when paid off early.",
+      n:"02", title:"Pay Early. Keep More.",
+      desc:"Unlike most funders, we reward you for paying early. No penalties — ever. The faster you pay off, the more you save. It's your money, and we want you to keep as much of it as possible.",
+      highlight:"Up to 18% discount for early payoff. A $50K advance can save you $1,350+.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <p style={{fontSize:9,fontWeight:700,color:G,textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Discount Schedule</p>
@@ -2508,12 +2508,12 @@ function WhyAprovuit({ lang, onApply }) {
       )
     },
     {
-      n:"03", title:"Personalized Support",
-      desc:"Your dedicated advisor knows your industry and works to get you the best terms available. You're not a number — we're a partner in your business growth.",
-      highlight:"Direct communication. Everything in writing. No phone calls.",
+      n:"03", title:"A Real Person on Your Deal",
+      desc:"Every application is reviewed by a real person on our team — not just an algorithm. Your advisor learns your business, finds the right fit, and keeps you updated every step of the way.",
+      highlight:"Direct messaging with your advisor. Everything in writing. No hold music.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
-          {[["What type of funding do you need?",false],["Expansion and new equipment.",true],["Perfect. With your $85K monthly revenue, I'll find you the best options and send offers today.",false]].map(([msg,isUser],i)=>(
+          {[["Hi! Quick question — what's the main reason you need funding right now?",false],["Opening a second location.",true],["Got it. Based on your profile I have a few strong options for you. I'll have offers in your dashboard within the hour.",false]].map(([msg,isUser],i)=>(
             <div key={i} style={{marginBottom:8,display:"flex",justifyContent:isUser?"flex-end":"flex-start"}}>
               <div style={{maxWidth:"85%",background:isUser?G:"rgba(255,255,255,.06)",borderRadius:isUser?"10px 4px 10px 10px":"4px 10px 10px 10px",padding:"8px 12px"}}>
                 <p style={{fontSize:11,color:isUser?"#000":"rgba(255,255,255,.65)",lineHeight:1.5,fontWeight:isUser?500:400}}>{msg}</p>
@@ -2524,9 +2524,9 @@ function WhyAprovuit({ lang, onApply }) {
       )
     },
     {
-      n:"04", title:"Tailored to Your Business",
-      desc:"Every business is unique. We evaluate your cash flow, industry, and specific needs — not just your credit score. We find the right solution for you, not a generic one.",
-      highlight:"580+ credit score. Soft pull only. Zero impact to your score.",
+      n:"04", title:"We Look at the Full Picture",
+      desc:"We don't just run your credit score and move on. We look at your revenue, your industry, your cash flow, and what you actually need the money for. Better context means better offers.",
+      highlight:"580+ credit score OK. Soft pull only. No impact to your score.",
       ui:(
         <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
           <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Your Business Profile</p>
@@ -2562,8 +2562,8 @@ function WhyAprovuit({ lang, onApply }) {
           </h2>
           <p style={{fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
             {lang==="es"
-              ? "Entendemos que el tiempo es dinero para tu negocio. Por eso simplificamos todo para que obtengas fondos rápido con términos claros."
-              : "We understand that time is money for your business. That's why we've streamlined everything to get you funded fast with clear, honest terms."}
+              ? "Cuatro razones por las que los dueños de negocios eligen Aprovuit sobre cualquier otra opción."
+              : "Four reasons business owners choose Aprovuit over every other option."}
           </p>
         </div>
 
@@ -2590,6 +2590,178 @@ function WhyAprovuit({ lang, onApply }) {
           <p style={{fontSize:12, color:"rgba(255,255,255,.25)", marginTop:12}}>
             {lang==="es"?"Sin impacto al crédito · Sin cargos ocultos · Sin llamadas":"No credit impact · No hidden fees · No phone calls"}
           </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+// ── INDUSTRIES SECTION ───────────────────────────────────────────
+function IndustriesSection({ lang, onApply }) {
+  const G = "#a8ff3e";
+  const industries = lang === "es" ? [
+    { name:"Restaurantes", icon:"→", desc:"Capital de trabajo para cubrir nómina, inventario y gastos operativos durante temporadas lentas.", tag:"Más solicitado" },
+    { name:"Salud y Médico", icon:"→", desc:"Soluciones para consultorios médicos y dentales que esperan pagos de seguros.", tag:"" },
+    { name:"Construcción", icon:"→", desc:"Financiamiento por proyecto para cubrir materiales, equipo y mano de obra.", tag:"" },
+    { name:"Transporte", icon:"→", desc:"Capital para fletes, camiones, combustible y operaciones de logística.", tag:"" },
+    { name:"Retail y Comercio", icon:"→", desc:"Fondos para inventario, expansión de tienda y gastos de temporada.", tag:"" },
+    { name:"Manufactura", icon:"→", desc:"Financiamiento de equipo e inventario para mantener la producción en marcha.", tag:"" },
+    { name:"Auto y Servicios", icon:"→", desc:"Capital para talleres de reparación, herramientas, inventario y gastos diarios.", tag:"" },
+    { name:"Servicios Profesionales", icon:"→", desc:"Soluciones de flujo de caja para despachos legales, contables y consultorías.", tag:"" },
+  ] : [
+    { name:"Restaurants & Food", icon:"→", desc:"Working capital to cover payroll, inventory, and operating costs through seasonal shifts.", tag:"Most common" },
+    { name:"Healthcare & Medical", icon:"→", desc:"Cash flow solutions for medical and dental practices waiting on insurance payments.", tag:"" },
+    { name:"Construction", icon:"→", desc:"Project-based financing to cover materials, equipment, and labor costs.", tag:"" },
+    { name:"Transportation & Logistics", icon:"→", desc:"Capital for freight, trucks, fuel, and logistics operations of any size.", tag:"" },
+    { name:"Retail & Commerce", icon:"→", desc:"Funding for inventory, store expansion, and seasonal demand spikes.", tag:"" },
+    { name:"Manufacturing", icon:"→", desc:"Equipment and inventory financing to keep production lines running.", tag:"" },
+    { name:"Auto & Services", icon:"→", desc:"Capital for repair shops, tools, parts inventory, and day-to-day expenses.", tag:"" },
+    { name:"Professional Services", icon:"→", desc:"Cash flow solutions for law firms, accountants, and consulting businesses.", tag:"" },
+  ];
+
+  return (
+    <section style={{background:BK, padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1100, margin:"0 auto"}}>
+        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"start", marginBottom:56}} className="hero-grid">
+          <div>
+            <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+              {lang==="es"?"Industrias":"Industries We Serve"}
+            </p>
+            <h2 style={{fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:20}}>
+              {lang==="es"
+                ? <>Tu industria.<br /><span style={{color:G}}>Nuestra especialidad.</span></>
+                : <>Your industry.<br /><span style={{color:G}}>Our specialty.</span></>}
+            </h2>
+            <p style={{fontSize:15, color:"rgba(255,255,255,.4)", lineHeight:1.8, fontWeight:300, marginBottom:28}}>
+              {lang==="es"
+                ? "Hemos fondeado negocios en docenas de industrias. Cada sector tiene sus propias necesidades de flujo de caja — y nosotros las entendemos."
+                : "We've funded businesses across dozens of industries. Every sector has its own cash flow needs — and we understand yours."}
+            </p>
+            <button onClick={onApply} className="btn-green" style={{fontSize:14, padding:"12px 32px"}}>
+              {lang==="es"?"Ver Si Califico →":"See If I Qualify →"}
+            </button>
+          </div>
+          <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:8}}>
+            {industries.map(ind=>(
+              <div key={ind.name} style={{background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"18px 16px", position:"relative", transition:"border-color .2s", cursor:"default"}}
+                onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(168,255,62,.3)"}
+                onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.07)"}>
+                {ind.tag && <span style={{position:"absolute", top:12, right:12, fontSize:8, fontWeight:700, color:G, background:"rgba(168,255,62,.1)", padding:"2px 7px", borderRadius:10, letterSpacing:".04em"}}>{ind.tag}</span>}
+                <p style={{fontSize:13, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.01em"}}>{ind.name}</p>
+                <p style={{fontSize:11, color:"rgba(255,255,255,.35)", lineHeight:1.6, fontWeight:300}}>{ind.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── TRUST BAR ────────────────────────────────────────────────────
+function TrustBar({ lang }) {
+  const G = "#a8ff3e";
+  const items = lang==="es" ? [
+    ["4.9★","Calificación Trustpilot","400+ reseñas verificadas"],
+    ["$500M+","Fondeado","A negocios en todo EE.UU."],
+    ["24 hrs","Tiempo Promedio","De solicitud a fondos"],
+    ["10,000+","Negocios Atendidos","Y contando"],
+    ["580+","Puntaje Mínimo","Consulta suave únicamente"],
+  ] : [
+    ["4.9★","Trustpilot Rating","400+ verified reviews"],
+    ["$500M+","Funded","To businesses nationwide"],
+    ["24 hrs","Avg. Time to Fund","From application to cash"],
+    ["10,000+","Businesses Served","And counting"],
+    ["580+","Min. Credit Score","Soft pull only"],
+  ];
+  return (
+    <div style={{background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)"}}>
+      <div style={{maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(5,1fr)"}} className="stats-grid">
+        {items.map(([v,l,sub],i)=>(
+          <div key={l} style={{padding:"28px 0", textAlign:"center", borderRight:i<4?"1px solid rgba(255,255,255,.05)":"none"}}>
+            <p style={{fontSize:28, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1, marginBottom:4}}>{v}</p>
+            <p style={{fontSize:12, fontWeight:600, color:"#fff", marginBottom:2}}>{l}</p>
+            <p style={{fontSize:10, color:"rgba(255,255,255,.3)"}}>{sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── ABOUT / MISSION SECTION ───────────────────────────────────────
+function AboutSection({ lang, onApply }) {
+  const G = "#a8ff3e";
+  return (
+    <section style={{background:BK2, padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center"}} className="hero-grid">
+        <div>
+          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+            {lang==="es"?"Nuestra Misión":"Our Mission"}
+          </p>
+          <h2 style={{fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:24}}>
+            {lang==="es"
+              ? <>Pequeños negocios<br />son la columna vertebral<br /><span style={{color:G}}>de la economía.</span></>
+              : <>Small businesses are the<br />backbone of the economy.<br /><span style={{color:G}}>We're here for them.</span></>}
+          </h2>
+          <p style={{fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:20, fontWeight:300}}>
+            {lang==="es"
+              ? "Aprovuit nació de una idea simple: los dueños de negocios merecen acceso rápido y transparente al capital que necesitan para crecer — sin los obstáculos del sistema bancario tradicional."
+              : "Aprovuit was built on a simple idea: business owners deserve fast, transparent access to the capital they need to grow — without the barriers of the traditional banking system."}
+          </p>
+          <p style={{fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:32, fontWeight:300}}>
+            {lang==="es"
+              ? "Somos un equipo de profesionales financieros y tecnólogos que creen que el financiamiento empresarial puede ser más rápido, más honesto y más humano. Por eso construimos Aprovuit."
+              : "We're a team of finance professionals and technologists who believe business funding can be faster, more honest, and more human. That's why we built Aprovuit."}
+          </p>
+          <div style={{display:"flex", gap:32, flexWrap:"wrap"}}>
+            {(lang==="es"
+              ? [["Honestidad","Términos claros. Sin sorpresas. Siempre."],["Velocidad","De solicitud a fondos en 24 horas."],["Personas Reales","Tu asesor conoce tu negocio."]]
+              : [["Honesty","Clear terms. No surprises. Ever."],["Speed","Application to funding in 24 hours."],["Real People","Your advisor knows your business."]]
+            ).map(([title,desc])=>(
+              <div key={title}>
+                <p style={{fontSize:12, fontWeight:700, color:G, marginBottom:4, letterSpacing:"-.01em"}}>{title}</p>
+                <p style={{fontSize:12, color:"rgba(255,255,255,.35)", fontWeight:300, maxWidth:160, lineHeight:1.5}}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Right — visual */}
+        <div>
+          <div style={{background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"32px 28px"}}>
+            <p style={{fontSize:11, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:24}}>
+              {lang==="es"?"Nuestros Principios":"Our Principles"}
+            </p>
+            {(lang==="es"
+              ? [
+                  ["Sin cargos ocultos","Todo fee se divulga antes de que firmes. Sin sorpresas al final."],
+                  ["Sin penalidades por pago anticipado","Paga antes y ahorra. Siempre."],
+                  ["Sin llamadas de ventas","Sin presión de vendedores. Jamás."],
+                  ["Consulta suave únicamente","Aplicar no afecta tu crédito."],
+                  ["Decisiones en horas","No semanas. No meses. Horas."],
+                  ["Términos claros","Ves todo antes de decidir."],
+                ]
+              : [
+                  ["No hidden fees","Every fee is disclosed before you sign. No surprises at the end."],
+                  ["No prepayment penalties","Pay off early and save. Always."],
+                  ["No sales calls","No salesperson pressure. Ever."],
+                  ["Soft pull only","Applying does not impact your credit score."],
+                  ["Decisions in hours","Not weeks. Not months. Hours."],
+                  ["Clear terms upfront","You see everything before you decide."],
+                ]
+            ).map(([title,desc])=>(
+              <div key={title} style={{display:"flex", gap:14, marginBottom:18, paddingBottom:18, borderBottom:"1px solid rgba(255,255,255,.05)"}}>
+                <div style={{width:20, height:20, background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:1}}>
+                  <div style={{width:6, height:6, background:G, borderRadius:"50%"}}></div>
+                </div>
+                <div>
+                  <p style={{fontSize:13, fontWeight:600, color:"#fff", marginBottom:3, letterSpacing:"-.01em"}}>{title}</p>
+                  <p style={{fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.55, fontWeight:300}}>{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -2736,6 +2908,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </section>
 
+      {/* ── TRUST BAR ── */}
+      <TrustBar lang={lang} />
+
       {/* ── HOW IT WORKS ── */}
       <section style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
@@ -2758,6 +2933,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
 
       {/* ── WHY APROVUIT ── */}
       <WhyAprovuit lang={lang} onApply={onApply} />
+
+      {/* ── INDUSTRIES ── */}
+      <IndustriesSection lang={lang} onApply={onApply} />
 
       {/* ── ANIMATED DEMO ── */}
       <AnimatedDemo lang={lang} />
@@ -2841,6 +3019,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           </button>
         </div>
       </section>
+
+      {/* ── ABOUT ── */}
+      <AboutSection lang={lang} onApply={onApply} />
 
       {/* ── REVIEWS (clean, no fake energy) ── */}
       <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
