@@ -3268,6 +3268,25 @@ export default function Aprovuit() {
   const navTo = (v) => { setPrevView(view); setView(v); window.scrollTo(0,0); };
   const [lang, setLang] = useState("en");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
+
+  useEffect(() => {
+    document.title = "Aprovuit — Business Funding Platform | Direct Lender & Broker";
+    const m = (k, v, n) => {
+      let t = document.querySelector('meta[' + (n?'name':'property') + '="' + k + '"]');
+      if (!t) { t = document.createElement('meta'); t.setAttribute(n?'name':'property', k); document.head.appendChild(t); }
+      t.setAttribute('content', v);
+    };
+    m('description','Aprovuit is a direct lender and licensed funding broker powered by technology. Apply in minutes, track your deal live, and get funded in 24 hours. No phone calls. No hidden fees.',true);
+    m('og:title','Aprovuit — Business Funding Platform');
+    m('og:description','Apply in minutes. Track your deal live. Funded in 24 hours. Direct lender + licensed broker.');
+    m('og:url','https://aprovuit.com');
+    m('og:type','website');
+    m('og:image','https://aprovuit.com/og-preview.png');
+    m('og:site_name','Aprovuit');
+    m('twitter:card','summary_large_image',true);
+    m('twitter:title','Aprovuit — Business Funding Platform',true);
+    m('twitter:description','Apply in minutes. Get funded in 24 hours. No phone calls.',true);
+  }, []);
   const [user, setUser] = useState(null);
 
   // SEO - update title and meta based on view
