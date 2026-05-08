@@ -2105,6 +2105,268 @@ function AnimatedDemo({ lang }) {
   );
 }
 
+
+// ── DASHBOARD SLIDER ─────────────────────────────────────────────
+function DashboardSlider({ lang }) {
+  const [slide, setSlide] = useState(0);
+  const [payoffMonths, setPayoffMonths] = useState(6);
+  const G = "#a8ff3e";
+  const totalAmount = 50000;
+  const monthlyPayment = 625;
+  const totalCost = 57500;
+  const discountRate = payoffMonths <= 3 ? 0.18 : payoffMonths <= 6 ? 0.12 : payoffMonths <= 9 ? 0.06 : 0;
+  const savings = Math.round((totalCost - totalAmount) * discountRate);
+  const youPay = totalCost - savings;
+
+  const slides = [
+    {
+      label: lang==="es" ? "Tu Dashboard" : "Your Dashboard",
+      title: lang==="es" ? "Todo en un Solo Lugar" : "Everything in One Place",
+      desc: lang==="es" ? "Rastrea tu financiamiento, saldos, pagos y estado del trato — en tiempo real, 24/7." : "Track your funding, balances, payments, and deal status — in real time, 24/7.",
+      screen: (
+        <div>
+          {/* Header */}
+          <div style={{background:"#0f0f0f",padding:"12px 16px",borderBottom:"1px solid rgba(255,255,255,.06)",display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+            <div>
+              <p style={{fontSize:10,color:"rgba(255,255,255,.35)",marginBottom:2}}>Good morning,</p>
+              <p style={{fontSize:14,fontWeight:700,color:"#fff",letterSpacing:"-.01em"}}>Marcus T.</p>
+            </div>
+            <div style={{background:"rgba(168,255,62,.1)",border:`1px solid ${G}30`,borderRadius:20,padding:"4px 12px"}}>
+              <p style={{fontSize:10,fontWeight:700,color:G}}>Active</p>
+            </div>
+          </div>
+          {/* Balance card */}
+          <div style={{background:"#0f1a0f",border:`1px solid ${G}20`,borderRadius:10,padding:"14px 16px",marginBottom:10}}>
+            <p style={{fontSize:9,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:6}}>Outstanding Balance</p>
+            <p style={{fontSize:30,fontWeight:700,color:"#fff",letterSpacing:"-.03em",marginBottom:10}}>$45,625</p>
+            <div style={{height:4,background:"rgba(255,255,255,.08)",borderRadius:2,marginBottom:6}}>
+              <div style={{width:"9%",height:"100%",background:G,borderRadius:2}}></div>
+            </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+              <p style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>9% paid of $50,000</p>
+              <p style={{fontSize:10,color:G,fontWeight:600}}>$4,375 paid</p>
+            </div>
+          </div>
+          {/* Next payment */}
+          <div style={{background:"#161616",border:"1px solid rgba(255,255,255,.06)",borderRadius:10,padding:"12px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div>
+              <p style={{fontSize:9,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:4}}>Next Payment</p>
+              <p style={{fontSize:18,fontWeight:700,color:"#fff",letterSpacing:"-.02em"}}>$625</p>
+            </div>
+            <div style={{textAlign:"right"}}>
+              <p style={{fontSize:9,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:4}}>Due Date</p>
+              <p style={{fontSize:13,fontWeight:600,color:"rgba(255,255,255,.7)"}}>May 15, 2026</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      label: lang==="es" ? "Historial" : "Payment History",
+      title: lang==="es" ? "Seguimiento Completo" : "Full Payment Tracking",
+      desc: lang==="es" ? "Ve cada pago, cuándo se procesó y tu saldo actualizado — sin llamar a nadie." : "See every payment, when it processed, and your updated balance — no need to call anyone.",
+      screen: (
+        <div>
+          <p style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:12}}>Payment History</p>
+          {[
+            ["May 7, 2026","$625","$45,625 remaining",true],
+            ["Apr 30, 2026","$625","$46,250 remaining",true],
+            ["Apr 23, 2026","$625","$46,875 remaining",true],
+            ["Apr 16, 2026","$625","$47,500 remaining",true],
+            ["Apr 9, 2026","$625","$48,125 remaining",true],
+            ["Apr 2, 2026","$625","$48,750 remaining",true],
+            ["Mar 26, 2026","$625","$49,375 remaining",true],
+          ].map(([date, amt, bal, done]) => (
+            <div key={date} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"9px 0",borderBottom:"1px solid rgba(255,255,255,.04)"}}>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <div style={{width:7,height:7,borderRadius:"50%",background:G,flexShrink:0}}></div>
+                <div>
+                  <p style={{fontSize:11,fontWeight:600,color:"#fff"}}>{amt}</p>
+                  <p style={{fontSize:9,color:"rgba(255,255,255,.3)"}}>{date}</p>
+                </div>
+              </div>
+              <p style={{fontSize:10,color:"rgba(255,255,255,.35)"}}>{bal}</p>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      label: lang==="es" ? "Pago Anticipado" : "Early Payoff",
+      title: lang==="es" ? "Paga Antes. Ahorra Más." : "Pay Early. Save More.",
+      desc: lang==="es" ? "Calcula exactamente cuánto ahorras pagando antes. Sin penalidades — solo descuentos." : "Calculate exactly how much you save by paying off early. No penalties — only discounts.",
+      screen: (
+        <div>
+          <div style={{background:"rgba(168,255,62,.06)",border:`1px solid ${G}20`,borderRadius:10,padding:"14px 16px",marginBottom:12}}>
+            <p style={{fontSize:9,fontWeight:700,color:G,textTransform:"uppercase",letterSpacing:".08em",marginBottom:10}}>Early Payoff Calculator</p>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.45)",marginBottom:8}}>Pay off in how many months?</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:14}}>
+              {[3,6,9,12].map(m => (
+                <button key={m} onClick={()=>setPayoffMonths(m)} style={{background:payoffMonths===m?G:"rgba(255,255,255,.06)",border:`1px solid ${payoffMonths===m?G:"rgba(255,255,255,.1)"}`,borderRadius:6,padding:"8px 4px",cursor:"pointer",textAlign:"center"}}>
+                  <p style={{fontSize:12,fontWeight:700,color:payoffMonths===m?"#000":"rgba(255,255,255,.6)"}}>{m} mo</p>
+                </button>
+              ))}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+              <div style={{background:"rgba(255,255,255,.04)",borderRadius:8,padding:"10px 12px"}}>
+                <p style={{fontSize:9,color:"rgba(255,255,255,.35)",marginBottom:4}}>You Pay</p>
+                <p style={{fontSize:18,fontWeight:700,color:"#fff",letterSpacing:"-.02em"}}>${youPay.toLocaleString()}</p>
+              </div>
+              <div style={{background:"rgba(168,255,62,.08)",border:`1px solid ${G}20`,borderRadius:8,padding:"10px 12px"}}>
+                <p style={{fontSize:9,color:G,marginBottom:4}}>You Save</p>
+                <p style={{fontSize:18,fontWeight:700,color:G,letterSpacing:"-.02em"}}>${savings.toLocaleString()}</p>
+              </div>
+            </div>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.3)",marginTop:10,textAlign:"center"}}>{discountRate*100}% prepayment discount applied</p>
+          </div>
+          <div style={{background:"#161616",border:"1px solid rgba(255,255,255,.06)",borderRadius:8,padding:"10px 14px",display:"flex",justifyContent:"space-between"}}>
+            <p style={{fontSize:11,color:"rgba(255,255,255,.4)"}}>Original cost</p>
+            <p style={{fontSize:11,color:"rgba(255,255,255,.5)",textDecoration:"line-through"}}>${totalCost.toLocaleString()}</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      label: lang==="es" ? "Documentos" : "Documents",
+      title: lang==="es" ? "Todo Organizado" : "Everything Organized",
+      desc: lang==="es" ? "Sube estados de cuenta, contratos y documentos directamente en tu portal. Sin correos. Sin fax." : "Upload bank statements, contracts, and documents directly in your portal. No email. No fax.",
+      screen: (
+        <div>
+          <p style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:12}}>Documents</p>
+          {[
+            ["Funding Agreement","Signed · Apr 1, 2026","PDF"],
+            ["Bank Statements (Mar)","Uploaded · Mar 28, 2026","PDF"],
+            ["Bank Statements (Feb)","Uploaded · Mar 28, 2026","PDF"],
+            ["Driver's License","Verified · Mar 28, 2026","IMG"],
+            ["Voided Check","Verified · Mar 28, 2026","IMG"],
+          ].map(([name, status, type]) => (
+            <div key={name} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid rgba(255,255,255,.04)"}}>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <div style={{width:32,height:32,background:"rgba(168,255,62,.08)",border:`1px solid ${G}20`,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                  <p style={{fontSize:9,fontWeight:700,color:G}}>{type}</p>
+                </div>
+                <div>
+                  <p style={{fontSize:12,fontWeight:600,color:"#fff",marginBottom:2}}>{name}</p>
+                  <p style={{fontSize:9,color:"rgba(255,255,255,.3)"}}>{status}</p>
+                </div>
+              </div>
+              <div style={{width:7,height:7,borderRadius:"50%",background:G}}></div>
+            </div>
+          ))}
+          <button style={{width:"100%",marginTop:12,background:"rgba(168,255,62,.08)",border:`1px solid ${G}20`,borderRadius:8,padding:"10px",cursor:"pointer"}}>
+            <p style={{fontSize:12,fontWeight:600,color:G}}>+ Upload Document</p>
+          </button>
+        </div>
+      )
+    },
+    {
+      label: lang==="es" ? "Mensajes" : "Messages",
+      title: lang==="es" ? "Tu Asesor. Siempre Disponible." : "Your Advisor. Always Available.",
+      desc: lang==="es" ? "Comunícate con tu asesor directamente en la plataforma. Todo por escrito. Sin esperas en llamadas." : "Message your advisor directly in the platform. Everything in writing. No hold music.",
+      screen: (
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          <div style={{alignSelf:"flex-start",maxWidth:"85%"}}>
+            <div style={{background:"#1a1a1a",borderRadius:"4px 12px 12px 12px",padding:"10px 14px",marginBottom:4}}>
+              <p style={{fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.5}}>Hi Marcus! Your funding of $50,000 has been deposited. Your first payment of $625 is due May 15. Let me know if you have questions!</p>
+            </div>
+            <p style={{fontSize:9,color:"rgba(255,255,255,.25)"}}>Advisor · Apr 1, 9:14 AM</p>
+          </div>
+          <div style={{alignSelf:"flex-end",maxWidth:"85%"}}>
+            <div style={{background:G,borderRadius:"12px 4px 12px 12px",padding:"10px 14px",marginBottom:4}}>
+              <p style={{fontSize:12,color:"#000",fontWeight:500,lineHeight:1.5}}>Got it, thank you! If I pay off in 6 months, what's my discount?</p>
+            </div>
+            <p style={{fontSize:9,color:"rgba(255,255,255,.25)",textAlign:"right"}}>You · Apr 1, 9:22 AM</p>
+          </div>
+          <div style={{alignSelf:"flex-start",maxWidth:"85%"}}>
+            <div style={{background:"#1a1a1a",borderRadius:"4px 12px 12px 12px",padding:"10px 14px",marginBottom:4}}>
+              <p style={{fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.5}}>At 6 months you'd get a 12% discount — saving you $900. Use the Early Payoff Calculator in your dashboard anytime to see updated numbers.</p>
+            </div>
+            <p style={{fontSize:9,color:"rgba(255,255,255,.25)"}}>Advisor · Apr 1, 9:25 AM</p>
+          </div>
+          <div style={{background:"#111",border:"1px solid rgba(255,255,255,.08)",borderRadius:8,padding:"8px 12px",display:"flex",gap:8,alignItems:"center",marginTop:4}}>
+            <input placeholder="Message your advisor..." style={{flex:1,background:"transparent",border:"none",outline:"none",fontSize:12,color:"rgba(255,255,255,.5)",fontFamily:"'Sora',sans-serif"}} readOnly />
+            <div style={{width:28,height:28,background:G,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0}}>
+              <p style={{fontSize:14,color:"#000",fontWeight:700}}>↑</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+  ];
+
+  return (
+    <section style={{background:BK, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1100, margin:"0 auto"}}>
+        {/* Header */}
+        <div style={{textAlign:"center", marginBottom:56}}>
+          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+            {lang==="es" ? "Portal del Cliente" : "Client Dashboard"}
+          </p>
+          <h2 style={{fontSize:"clamp(28px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:16}}>
+            {lang==="es" ? <>Tu dinero. Tu trato.<br /><span style={{color:G}}>Tu control.</span></> : <>Your money. Your deal.<br /><span style={{color:G}}>Your control.</span></>}
+          </h2>
+          <p style={{fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto", lineHeight:1.75, fontWeight:300}}>
+            {lang==="es"
+              ? "Una vez fondeado, tu portal te muestra todo — saldo, pagos, descuentos por pago anticipado y línea directa con tu asesor."
+              : "Once funded, your dashboard shows everything — balance, payments, early payoff discounts, and a direct line to your advisor."}
+          </p>
+        </div>
+
+        {/* Slider */}
+        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"start"}} className="hero-grid">
+
+          {/* Left — copy + nav */}
+          <div>
+            {/* Slide nav */}
+            <div style={{display:"flex", flexDirection:"column", gap:4, marginBottom:32}}>
+              {slides.map((s, i) => (
+                <button key={s.label} onClick={()=>setSlide(i)} style={{display:"flex", alignItems:"center", gap:16, padding:"14px 18px", borderRadius:10, border:`1px solid ${slide===i?G+"40":"rgba(255,255,255,.06)"}`, background:slide===i?"rgba(168,255,62,.05)":"transparent", cursor:"pointer", textAlign:"left", transition:"all .2s"}}>
+                  <div style={{width:28, height:28, borderRadius:6, background:slide===i?"rgba(168,255,62,.15)":"rgba(255,255,255,.04)", border:`1px solid ${slide===i?G+"40":"rgba(255,255,255,.08)"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+                    <p style={{fontSize:10, fontWeight:700, color:slide===i?G:"rgba(255,255,255,.3)"}}>0{i+1}</p>
+                  </div>
+                  <div>
+                    <p style={{fontSize:13, fontWeight:600, color:slide===i?"#fff":"rgba(255,255,255,.4)", marginBottom:2, letterSpacing:"-.01em"}}>{s.title}</p>
+                    <p style={{fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.5, fontWeight:300}}>{s.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — phone mockup */}
+          <div style={{position:"sticky", top:80}}>
+            <div style={{background:"#0a0a0a", border:"1px solid rgba(255,255,255,.1)", borderRadius:24, overflow:"hidden", boxShadow:"0 40px 80px rgba(0,0,0,.6)"}}>
+              {/* Phone nav */}
+              <div style={{background:"#0f0f0f", padding:"12px 16px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+                <div style={{display:"flex", alignItems:"center", gap:7}}>
+                  <div style={{width:20, height:20, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:800, color:"#000"}}>A</div>
+                  <span style={{fontSize:12, fontWeight:700, color:"#fff", letterSpacing:"-.01em"}}>APROVUIT</span>
+                </div>
+                <div style={{display:"flex", gap:12}}>
+                  {slides.map((s,i) => (
+                    <button key={s.label} onClick={()=>setSlide(i)} style={{fontSize:10, fontWeight:600, color:slide===i?G:"rgba(255,255,255,.25)", background:"none", border:"none", cursor:"pointer", fontFamily:"'Sora',sans-serif", padding:0, borderBottom:slide===i?`1px solid ${G}`:"1px solid transparent", paddingBottom:2}}>{s.label}</button>
+                  ))}
+                </div>
+              </div>
+              {/* Screen */}
+              <div style={{padding:"18px 18px 24px", minHeight:340, transition:"all .3s"}}>
+                {slides[slide].screen}
+              </div>
+            </div>
+            {/* Dots */}
+            <div style={{display:"flex", justifyContent:"center", gap:6, marginTop:16}}>
+              {slides.map((_,i) => (
+                <div key={i} onClick={()=>setSlide(i)} style={{width:i===slide?20:6, height:6, background:i===slide?G:"rgba(255,255,255,.15)", borderRadius:3, transition:"all .3s", cursor:"pointer"}}></div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
 function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
   const t = T[lang];
@@ -2267,6 +2529,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
 
       {/* ── ANIMATED DEMO ── */}
       <AnimatedDemo lang={lang} />
+
+      {/* ── DASHBOARD SLIDER ── */}
+      <DashboardSlider lang={lang} />
 
       {/* ── PLATFORM FEATURES ── */}
       <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
