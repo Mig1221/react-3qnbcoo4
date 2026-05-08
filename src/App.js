@@ -195,7 +195,7 @@ const CSS = `
   .credit-box { border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:rgba(255,255,255,.03); }
   .credit-box.sel { border-color:#a8ff3e; background:rgba(168,255,62,.06); }
   @media (max-width:768px) {
-    .hero-grid { grid-template-columns:1fr !important; gap:48px !important; }
+    .hero-grid { grid-template-columns:1fr !important; gap:40px !important; }
     .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
     .how-grid { grid-template-columns:1fr !important; }
     .products-grid { grid-template-columns:1fr !important; }
@@ -211,21 +211,29 @@ const CSS = `
     .admin-wrap { flex-direction:column !important; }
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
-    nav { padding:0 4% !important; height:52px !important; }
-    section { padding-left:4% !important; padding-right:4% !important; }
+    nav { padding:0 4% !important; height:54px !important; }
+    section { padding-left:5% !important; padding-right:5% !important; padding-top:64px !important; padding-bottom:64px !important; }
     .hero-mockup { display:none !important; }
-    .inner-nav-links { display:none !important; }
+    .hero-grid { padding-top:80px !important; padding-bottom:60px !important; }
+    .why-grid { grid-template-columns:1fr !important; }
   }
   @media (max-width:480px) {
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
-    .hero-btns { flex-direction:column !important; align-items:stretch !important; }
-    .hero-btns button { width:100% !important; justify-content:center !important; }
+    .hero-btns { flex-direction:column !important; align-items:stretch !important; gap:10px !important; }
+    .hero-btns button { width:100% !important; text-align:center !important; }
     .offer-btns { flex-direction:column !important; }
     .name-row { grid-template-columns:1fr !important; }
-    .stat-item { padding:20px 0 !important; }
     .apply-card { padding:24px 18px !important; border-radius:10px !important; }
     .credit-grid { grid-template-columns:repeat(2,1fr) !important; }
-    h1 { font-size:clamp(36px,10vw,56px) !important; }
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .reviews-grid { grid-template-columns:1fr !important; }
+    .how-grid { grid-template-columns:1fr !important; }
+    .products-grid { grid-template-columns:1fr !important; }
+    h1 { font-size:clamp(34px,9vw,52px) !important; line-height:1.05 !important; }
+    h2 { font-size:clamp(24px,7vw,36px) !important; }
+    p { font-size:14px !important; }
+    .ticker-text { font-size:10px !important; }
+    section { padding-left:4% !important; padding-right:4% !important; padding-top:52px !important; padding-bottom:52px !important; }
   }
 `;
 
@@ -1486,8 +1494,12 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
   return (
     <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
       <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-        <div style={{ width:28, height:28, background:"#a8ff3e", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
-        <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
+          <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+        <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
       </button>
       <div style={{ display:"flex", gap:28, alignItems:"center" }}>
         <button onClick={()=>go(onBack)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
@@ -2994,8 +3006,12 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       {/* NAV */}
       <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.95)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:58 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#000" }}>A</div>
-          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
+            <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+          <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
         </div>
         <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
           {[[t.nav.products,"products"],[t.nav.howItWorks,"howitworks"],[t.nav.faq,"faq"],["About","about"]].map(([l,v])=>(
@@ -3230,10 +3246,12 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:20, paddingBottom:20, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <div style={{ width:24, height:24, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ fontSize:11, fontWeight:800, color:"#000" }}>A</span>
-              </div>
-              <span style={{ fontSize:15, fontWeight:700, letterSpacing:"-.02em", color:"#fff" }}>APROVUIT</span>
+              <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
+                <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              <span style={{ fontSize:15, fontWeight:800, letterSpacing:"-.03em", color:"#fff", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
             </div>
             <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
               {[[t.nav.products,onProducts],[t.nav.howItWorks,onHowItWorks],["About",onAbout],[t.nav.faq,onFaq],[t.nav.login,onLogin]].map(([l,fn])=>(
