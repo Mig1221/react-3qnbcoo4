@@ -209,11 +209,11 @@ const CSS = `
 // ── TRANSLATIONS ─────────────────────────────────────────────────
 const T = {
   en: {
-    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started →" },
-    hero: { badge:"No Hassle. No Calls. Simple Funding.", h1:"The Self-Service", h2:"Funding Platform.", sub:"Submit one application. Receive multiple financing offers. Compare and choose — entirely on your terms. No calls. No pressure. No broker.", cta1:"Get Started — Free →", cta2:"Log In to Dashboard" },
+    nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started" },
+    hero: { badge:"Business Funding, Reimagined.", h1:"Real Funding.", h2:"Full Transparency.", sub:"Aprovuit is a business funding broker powered by technology. Apply once, track your deal in real time, and manage everything through your dashboard — no phone chasing, no runaround.", cta1:"Get Started →", cta2:"Log In to Dashboard" },
     ticker: ["Working Capital","Revenue-Based Financing","Term Loans","Lines of Credit","Equipment Financing","Same-Day Funding","Track Your Deal Live","Upload Docs Securely","580+ Credit OK","No Hidden Fees","Real Humans. Real Funding."],
     stats: [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Funding Time"],["580+","Min. Credit Score"]],
-    how: { badge:"How It Works", h:"Manage Everything in One Place", steps:[["01","Create Your Account","Sign up in minutes. No credit check to create an account. Your secure dashboard is ready instantly."],["02","Submit Your Information","Submit your business information and documents through the platform. Your application may be shared with financing partners in our network."],["03","Track & Manage","Financing offers appear directly in your dashboard. Compare options, review all terms clearly, and choose what works best for you — no one chooses for you."]] },
+    how: { badge:"How It Works", h:"Simple. Fast. Transparent.", steps:[["01","Apply in Minutes","Complete our application online. Upload your documents securely. No phone interview. No paperwork."],["02","We Work the Deal","Our team reviews your file, shops it to our funding network, and works to get you the best terms available."],["03","Track Everything Live","Your dashboard updates in real time — offer received, documents needed, deal approved. You see every step."]] },
     features: { badge:"Platform Features", h:"Your Funding. Fully Visible.",
       items:[
         {icon:"↗",name:"Real-Time Deal Tracking",desc:"See exactly where your deal stands at every stage — submitted, under review, approved, funded. No guessing."},
@@ -224,22 +224,133 @@ const T = {
         {icon:"◉",name:"Direct Messaging",desc:"Message your Aprovuit advisor directly through the platform. Every conversation is in writing."},
       ]
     },
-    products: { badge:"Funding Products", h:"Working Capital Solutions", items:[{icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. No prepayment penalties — strong discounts if paid off early."},{icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital."},{icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue. Pay more when business is good, less when slow. Industry-leading prepayment discounts."},{icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost."}], amount:"Amount", term:"Term" },
-    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US", items:[{name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},{name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},{name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5}] },
+    products: { badge:"Funding Products", h:"Working Capital Solutions", amount:"Amount", term:"Term",
+      items:[
+        {icon:"→",name:"Term Loan",range:"$10K–$500K",term:"3–24 months",desc:"Fixed daily or weekly payments. Ideal for expansion, hiring, or one-time investments. No prepayment penalties — strong discounts if paid off early.",best:["Business expansion","Hiring & payroll","Renovations","Large equipment purchases"],reqs:["6+ months in business","$10K+ monthly revenue","580+ credit score","Soft credit pull only"],how:"Receive a lump sum upfront. Fixed daily or weekly payments. Pay off early and save — we offer industry-leading prepayment discounts.",color:"#a8ff3e"},
+        {icon:"↺",name:"Line of Credit",range:"$10K–$5M",term:"Revolving",desc:"Draw what you need, repay, and draw again. Only pay for what you use. Perfect for working capital.",best:["Working capital","Seasonal inventory","Unexpected expenses","Ongoing cash flow"],reqs:["6+ months in business","$15K+ monthly revenue","600+ credit score","Soft credit pull only"],how:"Approved once, draw when needed. Your limit replenishes as you repay. Only pay interest on what you use.",color:"#60a5fa"},
+        {icon:"↯",name:"Revenue-Based Advance",range:"$5K–$500K",term:"Flexible repayment",desc:"Payments tied to your daily revenue. Pay more when business is good, less when slow. Industry-leading prepayment discounts.",best:["Restaurants & retail","Seasonal businesses","Fast cash needs","Card-processing businesses"],reqs:["3+ months in business","$10K+ monthly revenue","No minimum credit score","Soft credit pull only"],how:"Receive capital fast — often same day. Payments flex with your revenue automatically. Strong discounts for early payoff.",color:"#f59e0b"},
+        {icon:"◈",name:"Equipment Financing",range:"$5K–$2M",term:"Up to 60 months",desc:"Finance the equipment your business needs. The equipment serves as collateral — easier approval, lower cost.",best:["Commercial vehicles","Machinery & tools","Technology & software","Medical equipment"],reqs:["6+ months in business","$8K+ monthly revenue","560+ credit score","Equipment serves as collateral"],how:"Equipment is the collateral, making approval easier. Fixed payments over the term. Own the equipment outright at the end.",color:"#c084fc"},
+      ]
+    },
+    reviews: { badge:"What Business Owners Say", h:"Trusted by Business Owners Across the US",
+      items:[
+        {name:"Marcus T.",biz:"Logistics, Texas",text:"Approved in hours and funded the next morning. The dashboard showed me every step of the deal — no chasing, no surprises. Best funding experience I've had.",stars:5},
+        {name:"Priya S.",biz:"Med Spa, California",text:"My advisor found me a better rate than I expected. I uploaded my documents through the platform and could see the offer the same day. Incredibly smooth.",stars:5},
+        {name:"Darnell R.",biz:"Construction, Georgia",text:"I've worked with other brokers before but never had this level of visibility into the process. Got funded, saw every term clearly, knew exactly what I signed.",stars:5},
+      ]
+    },
     faq: { badge:"FAQ", h:"Common Questions", items:[
       ["What is Aprovuit?","Aprovuit is a licensed commercial funding broker. We work with a network of funders and lenders to get small businesses the working capital they need — fast. We handle the process end to end and use our platform to give you full visibility into every step of your deal."],
-      ["Does Aprovuit lend money directly?","No. Aprovuit is a technology platform. When you submit a request, it may be shared with independent third-party financing partners who determine eligibility and offer terms on their own. Aprovuit does not make credit decisions or negotiate on your behalf."],
-      ["What are the minimum requirements?","Requirements vary by financing partner and product type. Generally, most partners look for: 6+ months in business, $10,000+ in monthly revenue, and a 580+ credit score. Some revenue-based options have more flexible credit requirements. Submitting a request does not guarantee an offer."],
-      ["Will submitting a request affect my credit score?","Submitting a request through Aprovuit triggers a soft credit inquiry — which has zero impact on your credit score. A hard inquiry may only occur if you choose to accept an offer from a financing partner."],
-      ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All documents are uploaded securely through the platform — no emailing PDFs."],
-      ["How long does the process take?","Most financing partners review requests within 2–4 business hours. Once a decision is made, offers appear directly in your dashboard. If you accept, funding timelines depend on the partner — many can fund within 1–2 business days."],
-      ["What types of financing are available?","Through our partner network, you may see options including: term financing ($10K–$500K), revolving credit lines ($10K–$5M), revenue-based financing ($5K–$500K), and equipment financing ($5K–$2M). Availability depends on your business profile."],
-      ["How does Aprovuit make money?","Aprovuit earns fees from its financing partners — not from you. You pay nothing to create an account, submit a request, or use the platform."],
-      ["Is my information shared with anyone?","Your information may be shared with financing partners in our network for the purpose of evaluating your request. We do not sell your data to third parties or use it for marketing without your consent."],
-      ["What if I don't qualify?","Not every request results in an offer — financing eligibility is determined solely by our partners. If no offer is extended, your dashboard will reflect that status. You can update your profile and resubmit as your business grows."],
-      ["Can I use the platform to manage existing funding?","Yes. Once you have active financing, your dashboard shows balances, payment schedules, and status updates. You can upload additional documents and message your account team directly through the platform."],
-      ["Is Aprovuit available in all states?","Aprovuit's platform is available nationwide. However, specific financing products may have geographic restrictions based on the financing partner's licensing. This will be reflected in the offers you receive."],
+      ["Does Aprovuit lend money directly?","No. Aprovuit is a broker, not a direct lender. We work with a network of trusted funders who provide the capital. Our job is to match you with the right funder, negotiate the best terms available, and manage the process from application to funding."],
+      ["What are the minimum requirements?","Generally: 6+ months in business, $10,000+ monthly revenue, 580+ credit score. Some revenue-based options are more flexible. Submitting does not guarantee an offer."],
+      ["Will this affect my credit score?","No. We use a soft credit inquiry only — zero impact to your score. A hard pull may occur only if you accept a final offer from a funding partner."],
+      ["Are there prepayment penalties?","No. We offer industry-leading prepayment discounts — the earlier you pay off, the more you save. A $50K advance with $625 monthly payments could cost significantly less if paid early."],
+      ["How does Aprovuit make money?","Aprovuit earns a broker fee paid by the funding partner when a deal is successfully funded — not from you. There is no cost to apply. All fees are disclosed before you sign."],
+      ["How long does funding take?","Most deals are reviewed within 2–4 business hours. Many clients receive funding within 24 hours of approval."],
+      ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All uploaded securely through the platform."],
     ] },
+    cta: { h:"Real Funding. Full Transparency.", sub:"Apply in minutes. Our team works your deal. You track everything live.", btn:"Get Started →" },
+    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit is a licensed commercial funding broker. Not a direct lender. Funding provided by third-party partners." },
+    apply: {
+      howMuch:"How much do you need?",
+      qualAmt:"You may qualify for up to",
+      creditLabel:"My credit score is",
+      revenueLabel:"My monthly revenue is",
+      credits:[["excellent","Excellent","750+"],["good","Good","680+"],["fair","Fair","580+"],["poor","Poor","<580"]],
+      steps:["Funding","Business","Your Account","Review"],
+      continueBtn:"Continue →", backBtn:"← Back", submitBtn:"Submit Request →",
+      purposeLabel:"Purpose of financing", purposeOpts:["Select...","Working Capital","Equipment Purchase","Expansion","Hiring","Inventory","Renovation","Debt Consolidation","Other"],
+      timelineLabel:"When do you need funds?", timelineOpts:["Select...","ASAP","Within 1 week","Within 2 weeks","Within a month","No rush"],
+      companyLabel:"Business Name", companyPH:"Your business name",
+      industryLabel:"Industry", industryOpts:["Select...","Restaurant / Food Service","Retail","Construction","Healthcare / Medical","Transportation / Logistics","Professional Services","Technology","Manufacturing","Other"],
+      yearsLabel:"Time in Business", yearsOpts:["Select...","3–6 months","6–12 months","1–2 years","2–5 years","5+ years"],
+      annualLabel:"Annual Revenue", annualOpts:["Select...","Under $100K","$100K–$250K","$250K–$500K","$500K–$1M","$1M–$5M","$5M+"],
+      firstNameLabel:"First Name", lastNameLabel:"Last Name",
+      emailLabel:"Email Address", emailPH:"you@yourbusiness.com",
+      passwordLabel:"Create Password", passwordPH:"Min. 8 characters",
+      phoneLabel:"Phone Number", phonePH:"(555) 000-0000",
+      successH:"Application Received!",
+      successP:"Your application is being reviewed by our team. We'll work to get you an offer within 2–4 business hours. Track your deal status live in your dashboard.",
+      nextTitle:"What happens next:",
+      nextSteps:["Application reviewed within 2–4 hours","Offer delivered to your dashboard","Review terms and accept — no pressure"],
+      estLabel:"Your estimated pre-qualification",
+      estNote:"*For illustrative purposes. Subject to full review.",
+      loginBtn:"Go to My Dashboard →", uploadBtn:"Upload Documents",
+    },
+    login: { h:"Welcome Back", sub:"Log in to your Aprovuit dashboard.", email:"Email Address", password:"Password", btn:"Log In →", forgot:"Forgot password?", noAccount:"No account?", applyLink:"Apply Now", smsH:"Verify Your Identity", smsSub:"Enter the 6-digit code sent to your phone.", smsPlaceholder:"000000", smsBtn:"Verify →", smsResend:"Resend code" },
+    dash: { overview:"Overview", offers:"Offers", loans:"Active Funding", docs:"Documents", msgs:"Messages", settings:"Settings", signOut:"Sign Out", dealStatus:"Deal Status", noOffers:"No offers yet. Our team is reviewing your application.", noLoans:"No active funding yet.", uploadBtn:"Upload Documents", msgAdvisor:"Your Advisor", msgPlaceholder:"Message your advisor...", sendBtn:"Send" },
+  },
+  es: {
+    nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Comenzar" },
+    hero: { badge:"Financiamiento Empresarial Reinventado.", h1:"Fondos Reales.", h2:"Total Transparencia.", sub:"Aprovuit es un broker de financiamiento empresarial impulsado por tecnología. Aplica una vez, rastrea tu proceso en tiempo real y administra todo desde tu portal — sin perseguir llamadas, sin rodeos.", cta1:"Comenzar →", cta2:"Entrar al Portal" },
+    ticker: ["Capital de Trabajo","Financiamiento por Ingresos","Préstamos a Plazo","Líneas de Crédito","Equipo","Fondos el Mismo Día","Rastrea tu Proceso","Sube Documentos","580+ Puntaje OK","Sin Cargos Ocultos","Personas Reales. Fondos Reales."],
+    stats: [["$500M+","Fondeado"],["10,000+","Negocios Atendidos"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]],
+    how: { badge:"Cómo Funciona", h:"Simple. Rápido. Transparente.", steps:[["01","Aplica en Minutos","Completa nuestra solicitud en línea. Sube tus documentos. Sin entrevistas ni papeleo."],["02","Nosotros Trabajamos el Trato","Nuestro equipo revisa tu expediente y trabaja para conseguirte los mejores términos disponibles."],["03","Rastrea Todo en Tiempo Real","Tu portal se actualiza en tiempo real — oferta recibida, documentos necesarios, trato aprobado."]] },
+    features: { badge:"Funciones de la Plataforma", h:"Tu Financiamiento. Completamente Visible.",
+      items:[
+        {icon:"↗",name:"Seguimiento del Proceso",desc:"Ve exactamente en qué etapa está tu trato — enviado, en revisión, aprobado, fondeado."},
+        {icon:"◻",name:"Gestión de Ofertas",desc:"Revisa cada término de tu oferta claramente antes de firmar. Factor rate, pago, plazo — todo visible."},
+        {icon:"↑",name:"Carga Segura de Documentos",desc:"Sube estados de cuenta, ID y cheques anulados directamente. Encriptado 256 bits."},
+        {icon:"◎",name:"Seguimiento de Saldo y Pagos",desc:"Monitorea tu saldo, calendario de pagos e historial directamente en tu portal."},
+        {icon:"◈",name:"Seguimiento de Renovación",desc:"Cuando seas elegible para renovación, aparece en tu portal. Sin llamadas frías."},
+        {icon:"◉",name:"Mensajes Directos",desc:"Escríbele a tu asesor directamente desde la plataforma. Todo queda por escrito."},
+      ]
+    },
+    products: { badge:"Productos de Financiamiento", h:"Soluciones de Capital de Trabajo", amount:"Monto", term:"Plazo",
+      items:[
+        {icon:"→",name:"Préstamo a Plazo",range:"$10K–$500K",term:"3–24 meses",desc:"Pagos fijos diarios o semanales. Ideal para expansión, contratación o inversiones. Sin penalidad por pago anticipado — descuentos por pagar antes.",best:["Expansión de negocio","Contratación y nómina","Renovaciones","Compra de equipo"],reqs:["6+ meses en operación","$10K+ ingresos mensuales","580+ puntaje de crédito","Solo consulta suave"],how:"Recibe el monto completo. Pagos fijos diarios o semanales. Paga antes y ahorra — ofrecemos descuentos líderes en la industria.",color:"#a8ff3e"},
+        {icon:"↺",name:"Línea de Crédito",range:"$10K–$5M",term:"Revolvente",desc:"Retira lo que necesitas, paga y vuelve a retirar. Solo pagas por lo que usas.",best:["Capital de trabajo","Inventario estacional","Gastos inesperados","Flujo de caja continuo"],reqs:["6+ meses en operación","$15K+ ingresos mensuales","600+ puntaje de crédito","Solo consulta suave"],how:"Aprobado una vez, retira cuando necesites. Tu límite se repone al pagar. Solo pagas interés sobre lo que usas.",color:"#60a5fa"},
+        {icon:"↯",name:"Adelanto Basado en Ingresos",range:"$5K–$500K",term:"Pago flexible",desc:"Pagos vinculados a tus ingresos diarios. Pagas más cuando el negocio va bien, menos cuando va lento.",best:["Restaurantes y retail","Negocios estacionales","Necesidades urgentes","Negocios con tarjetas"],reqs:["3+ meses en operación","$10K+ ingresos mensuales","Sin puntaje mínimo","Solo consulta suave"],how:"Capital rápido — a menudo el mismo día. Los pagos se ajustan a tus ingresos automáticamente. Descuentos por pago anticipado.",color:"#f59e0b"},
+        {icon:"◈",name:"Financiamiento de Equipo",range:"$5K–$2M",term:"Hasta 60 meses",desc:"Financia el equipo que tu negocio necesita. El equipo sirve como colateral — aprobación más fácil.",best:["Vehículos comerciales","Maquinaria y herramientas","Tecnología","Equipo médico"],reqs:["6+ meses en operación","$8K+ ingresos mensuales","560+ puntaje de crédito","Equipo como colateral"],how:"El equipo es el colateral, facilitando la aprobación. Pagos fijos durante el plazo. El equipo es tuyo al final.",color:"#c084fc"},
+      ]
+    },
+    reviews: { badge:"Lo Que Dicen los Usuarios", h:"Confiado por Dueños de Negocios en Todo EE.UU.",
+      items:[
+        {name:"Marcus T.",biz:"Logística, Texas",text:"Aprobado en horas y fondeado a la mañana siguiente. El portal me mostró cada paso — sin perseguir, sin sorpresas. La mejor experiencia de financiamiento que he tenido.",stars:5},
+        {name:"Priya S.",biz:"Med Spa, California",text:"Mi asesor me consiguió una mejor tasa de lo que esperaba. Subí mis documentos y pude ver la oferta el mismo día. Increíblemente fluido.",stars:5},
+        {name:"Darnell R.",biz:"Construcción, Georgia",text:"He trabajado con otros brokers pero nunca tuve este nivel de visibilidad del proceso. Me fondearon, vi cada término claramente, supe exactamente lo que firmé.",stars:5},
+      ]
+    },
+    faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[
+      ["¿Qué es Aprovuit?","Aprovuit es un broker de financiamiento comercial con licencia. Trabajamos con una red de fondeadores y prestamistas para conseguir a los pequeños negocios el capital de trabajo que necesitan — rápido."],
+      ["¿Aprovuit presta dinero directamente?","No. Aprovuit es un broker, no un prestamista directo. Trabajamos con una red de fondeadores de confianza. Nuestro trabajo es conectarte con el fondeador correcto y gestionar el proceso de principio a fin."],
+      ["¿Cuáles son los requisitos mínimos?","Generalmente: 6+ meses en operación, $10,000+ en ingresos mensuales, 580+ puntaje de crédito. Algunas opciones son más flexibles. Enviar una solicitud no garantiza una oferta."],
+      ["¿Afectará mi puntaje de crédito?","No. Usamos una consulta suave — sin impacto en tu puntaje. Una consulta dura solo ocurre si aceptas una oferta final de un socio de financiamiento."],
+      ["¿Hay penalidades por pago anticipado?","No. Ofrecemos descuentos líderes en la industria por pago anticipado. Un adelanto de $50K con pagos de $625/mes puede costar significativamente menos si se liquida antes."],
+      ["¿Cómo genera dinero Aprovuit?","Aprovuit gana una comisión pagada por el socio de financiamiento cuando un trato se fondea — no de ti. No hay costo por aplicar. Todas las comisiones se divulgan antes de firmar."],
+      ["¿Cuánto tarda el financiamiento?","La mayoría de tratos son revisados en 2–4 horas hábiles. Muchos clientes reciben fondos dentro de 24 horas de la aprobación."],
+      ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, identificación oficial y cheque anulado. Todo se sube de forma segura a través de la plataforma."],
+    ] },
+    cta: { h:"Fondos Reales. Total Transparencia.", sub:"Aplica en minutos. Nuestro equipo trabaja tu trato. Tú rastreas todo en tiempo real.", btn:"Comenzar →" },
+    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit es un broker de financiamiento comercial con licencia. No es un prestamista directo." },
+    apply: {
+      howMuch:"¿Cuánto necesitas?",
+      qualAmt:"Podrías calificar para hasta",
+      creditLabel:"Mi puntaje de crédito es",
+      revenueLabel:"Mis ingresos mensuales son",
+      credits:[["excellent","Excelente","750+"],["good","Bueno","680+"],["fair","Regular","580+"],["poor","Bajo","<580"]],
+      steps:["Fondos","Negocio","Tu Cuenta","Revisar"],
+      continueBtn:"Continuar →", backBtn:"← Atrás", submitBtn:"Enviar Solicitud →",
+      purposeLabel:"Propósito del financiamiento", purposeOpts:["Seleccionar...","Capital de Trabajo","Compra de Equipo","Expansión","Contratación","Inventario","Renovación","Consolidación de Deuda","Otro"],
+      timelineLabel:"¿Cuándo necesitas los fondos?", timelineOpts:["Seleccionar...","Urgente","En 1 semana","En 2 semanas","En un mes","Sin prisa"],
+      companyLabel:"Nombre del Negocio", companyPH:"Nombre de tu negocio",
+      industryLabel:"Industria", industryOpts:["Seleccionar...","Restaurante / Alimentos","Retail","Construcción","Salud / Médico","Transporte / Logística","Servicios Profesionales","Tecnología","Manufactura","Otro"],
+      yearsLabel:"Tiempo en Operación", yearsOpts:["Seleccionar...","3–6 meses","6–12 meses","1–2 años","2–5 años","5+ años"],
+      annualLabel:"Ingresos Anuales", annualOpts:["Seleccionar...","Menos de $100K","$100K–$250K","$250K–$500K","$500K–$1M","$1M–$5M","$5M+"],
+      firstNameLabel:"Nombre", lastNameLabel:"Apellido",
+      emailLabel:"Correo Electrónico", emailPH:"tu@tunegocio.com",
+      passwordLabel:"Crear Contraseña", passwordPH:"Mín. 8 caracteres",
+      phoneLabel:"Número de Teléfono", phonePH:"(555) 000-0000",
+      successH:"¡Solicitud Recibida!",
+      successP:"Tu solicitud está siendo revisada por nuestro equipo. Trabajaremos para conseguirte una oferta en 2–4 horas hábiles. Rastrea el estado de tu trato en tu portal.",
+      nextTitle:"¿Qué sigue?",
+      nextSteps:["Solicitud revisada en 2–4 horas","Oferta entregada a tu portal","Revisa los términos y acepta — sin presión"],
+      estLabel:"Tu pre-calificación estimada",
+      estNote:"*Para fines ilustrativos. Sujeto a revisión completa.",
+      loginBtn:"Ir a Mi Portal →", uploadBtn:"Subir Documentos",
+    },
+    login: { h:"Bienvenido de Nuevo", sub:"Entra a tu portal de Aprovuit.", email:"Correo Electrónico", password:"Contraseña", btn:"Entrar →", forgot:"¿Olvidaste tu contraseña?", noAccount:"¿Sin cuenta?", applyLink:"Aplicar Ahora", smsH:"Verifica Tu Identidad", smsSub:"Ingresa el código de 6 dígitos enviado a tu teléfono.", smsPlaceholder:"000000", smsBtn:"Verificar →", smsResend:"Reenviar código" },
+    dash: { overview:"Resumen", offers:"Ofertas", loans:"Financiamiento Activo", docs:"Documentos", msgs:"Mensajes", settings:"Ajustes", signOut:"Cerrar Sesión", dealStatus:"Estado del Trato", noOffers:"Sin ofertas aún. Nuestro equipo está revisando tu solicitud.", noLoans:"Sin financiamiento activo aún.", uploadBtn:"Subir Documentos", msgAdvisor:"Tu Asesor", msgPlaceholder:"Escribe a tu asesor...", sendBtn:"Enviar" },
   },
 };
 
@@ -1786,6 +1897,200 @@ Be conversational, helpful, and concise. If they want to apply, encourage them t
   );
 }
 
+
+// ── ANIMATED DEMO COMPONENT ──────────────────────────────────────
+function AnimatedDemo({ lang }) {
+  const [activeStep, setActiveStep] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const steps = lang === "es"
+    ? ["Aplica","Revisión","Oferta","Fondeado"]
+    : ["Apply","Review","Offer","Funded"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setActiveStep(s => (s + 1) % 4);
+        setAnimating(false);
+      }, 300);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const G = "#a8ff3e";
+
+  const screens = [
+    // Step 0: Apply form
+    <div key="apply" style={{ opacity: animating ? 0 : 1, transition: "opacity .3s" }}>
+      <div style={{ marginBottom: 14 }}>
+        <p style={{ fontSize: 10, color: "rgba(255,255,255,.4)", marginBottom: 8, letterSpacing: ".06em", textTransform: "uppercase" }}>{lang==="es"?"Puntaje de crédito":"Credit score"}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6 }}>
+          {(lang==="es"?["Excelente","Bueno","Regular","Bajo"]:["Excellent","Good","Fair","Poor"]).map((l,i) => (
+            <div key={l} style={{ background: i===1 ? "#fff" : "rgba(255,255,255,.06)", border: `1px solid ${i===1?"#fff":"rgba(255,255,255,.1)"}`, borderRadius: 6, padding: "8px 4px", textAlign: "center" }}>
+              <p style={{ fontSize: 11, fontWeight: 600, color: i===1 ? "#000" : "rgba(255,255,255,.4)" }}>{l}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ marginBottom: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <p style={{ fontSize: 10, color: "rgba(255,255,255,.4)", letterSpacing: ".06em", textTransform: "uppercase" }}>{lang==="es"?"Ingresos mensuales":"Monthly revenue"}</p>
+          <p style={{ fontSize: 13, fontWeight: 700, color: G }}>$85,000</p>
+        </div>
+        <div style={{ height: 2, background: "rgba(255,255,255,.1)", borderRadius: 2, position: "relative" }}>
+          <div style={{ position: "absolute", left: 0, top: 0, width: "55%", height: "100%", background: G, borderRadius: 2 }}></div>
+          <div style={{ position: "absolute", left: "55%", top: "50%", transform: "translate(-50%,-50%)", width: 14, height: 14, background: G, borderRadius: "50%", boxShadow: `0 0 0 3px rgba(168,255,62,.2)` }}></div>
+        </div>
+      </div>
+      <div style={{ background: "rgba(168,255,62,.06)", border: `1px solid ${G}20`, borderRadius: 8, padding: "14px 16px", textAlign: "center" }}>
+        <p style={{ fontSize: 9, color: "rgba(255,255,255,.3)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 }}>{lang==="es"?"Podrías calificar para":"You may qualify for"}</p>
+        <p style={{ fontSize: 32, fontWeight: 700, color: G, letterSpacing: "-.03em" }}>$127,500</p>
+      </div>
+    </div>,
+
+    // Step 1: Under review
+    <div key="review" style={{ opacity: animating ? 0 : 1, transition: "opacity .3s" }}>
+      <div style={{ textAlign: "center", marginBottom: 20 }}>
+        <div style={{ width: 48, height: 48, background: "rgba(245,158,11,.1)", border: "1px solid rgba(245,158,11,.3)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px", fontSize: 20 }}>
+          <div style={{ width: 20, height: 20, border: "2px solid #f59e0b", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
+        </div>
+        <p style={{ fontSize: 14, fontWeight: 600, color: "#fff", marginBottom: 4 }}>{lang==="es"?"En Revisión":"Under Review"}</p>
+        <p style={{ fontSize: 11, color: "rgba(255,255,255,.4)" }}>{lang==="es"?"Nuestro equipo está trabajando en tu trato":"Our team is working your deal"}</p>
+      </div>
+      {[
+        [lang==="es"?"Solicitud recibida":"Application received", true],
+        [lang==="es"?"Revisión del equipo":"Team review", true],
+        [lang==="es"?"Buscando fondeador":"Sourcing funder", false],
+        [lang==="es"?"Oferta preparada":"Offer prepared", false],
+      ].map(([label, done]) => (
+        <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+          <div style={{ width: 18, height: 18, borderRadius: "50%", background: done ? G : "rgba(255,255,255,.08)", border: done ? "none" : "1px solid rgba(255,255,255,.15)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {done && <div style={{ width: 6, height: 6, background: "#000", borderRadius: "50%" }}></div>}
+          </div>
+          <p style={{ fontSize: 12, color: done ? "rgba(255,255,255,.8)" : "rgba(255,255,255,.25)", fontWeight: done ? 500 : 400 }}>{label}</p>
+        </div>
+      ))}
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>,
+
+    // Step 2: Offer received
+    <div key="offer" style={{ opacity: animating ? 0 : 1, transition: "opacity .3s" }}>
+      <div style={{ background: "#0f1a0f", border: `1px solid ${G}25`, borderRadius: 10, padding: "16px", marginBottom: 12 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,.5)" }}>{lang==="es"?"Tu Oferta":"Your Offer"}</p>
+          <span style={{ fontSize: 10, fontWeight: 600, color: G, background: "rgba(168,255,62,.1)", padding: "2px 8px", borderRadius: 10 }}>{lang==="es"?"Revisar":"Review"}</span>
+        </div>
+        <p style={{ fontSize: 34, fontWeight: 700, color: G, letterSpacing: "-.03em", marginBottom: 12 }}>$50,000</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6, marginBottom: 12 }}>
+          {[[lang==="es"?"Pago/mes":"Monthly","$625"],[lang==="es"?"Plazo":"Term","12 mo"],[lang==="es"?"Penalidad":"Penalty","None"]].map(([l,v]) => (
+            <div key={l} style={{ background: "rgba(255,255,255,.04)", borderRadius: 6, padding: "7px 8px" }}>
+              <p style={{ fontSize: 9, color: "rgba(255,255,255,.3)", marginBottom: 3 }}>{l}</p>
+              <p style={{ fontSize: 12, fontWeight: 600, color: "#fff" }}>{v}</p>
+            </div>
+          ))}
+        </div>
+        <p style={{ fontSize: 10, color: `${G}90`, marginBottom: 10 }}>{lang==="es"?"Sin penalidad por pago anticipado":"No prepayment penalty — early payoff discounts available"}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+          <div style={{ background: G, borderRadius: 6, padding: "9px", textAlign: "center", cursor: "pointer" }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#000" }}>{lang==="es"?"Aceptar":"Accept"}</p>
+          </div>
+          <div style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 6, padding: "9px", textAlign: "center", cursor: "pointer" }}>
+            <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,.4)" }}>{lang==="es"?"Declinar":"Decline"}</p>
+          </div>
+        </div>
+      </div>
+    </div>,
+
+    // Step 3: Funded
+    <div key="funded" style={{ opacity: animating ? 0 : 1, transition: "opacity .3s", textAlign: "center" }}>
+      <div style={{ width: 56, height: 56, background: "rgba(168,255,62,.1)", border: `1px solid ${G}30`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+        <div style={{ width: 20, height: 20, background: G, borderRadius: "50%" }}></div>
+      </div>
+      <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4, letterSpacing: "-.02em" }}>{lang==="es"?"¡Fondeado!":"Funded!"}</p>
+      <p style={{ fontSize: 12, color: "rgba(255,255,255,.4)", marginBottom: 20 }}>{lang==="es"?"Fondos depositados en tu cuenta":"Funds deposited to your account"}</p>
+      <div style={{ background: "#111", border: "1px solid rgba(255,255,255,.07)", borderRadius: 10, padding: "16px", textAlign: "left" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,.4)" }}>APP-2041 · Term Loan</p>
+          <span style={{ fontSize: 10, fontWeight: 600, color: G }}>Active</span>
+        </div>
+        <p style={{ fontSize: 26, fontWeight: 700, color: "#fff", letterSpacing: "-.03em", marginBottom: 8 }}>$50,000</p>
+        <div style={{ height: 2, background: "rgba(255,255,255,.08)", borderRadius: 2, marginBottom: 6 }}>
+          <div style={{ width: "8%", height: "100%", background: G, borderRadius: 2 }}></div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <p style={{ fontSize: 10, color: "rgba(255,255,255,.3)" }}>8% {lang==="es"?"pagado":"paid"}</p>
+          <p style={{ fontSize: 10, color: "rgba(255,255,255,.3)" }}>{lang==="es"?"Próximo pago: $625":"Next: $625"}</p>
+        </div>
+      </div>
+    </div>,
+  ];
+
+  return (
+    <section style={{ background: "#111", padding: "80px 5%", borderTop: "1px solid rgba(255,255,255,.05)", borderBottom: "1px solid rgba(255,255,255,.05)" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="hero-grid">
+
+        {/* Left — copy */}
+        <div>
+          <p style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: G, marginBottom: 14, fontWeight: 600 }}>
+            {lang==="es"?"Así Funciona":"See How It Works"}
+          </p>
+          <h2 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 20, color: "#fff" }}>
+            {lang==="es" ? <>De la solicitud<br />a los fondos.<br /><span style={{color:G}}>En 24 horas.</span></> : <>From application<br />to funded.<br /><span style={{color:G}}>In 24 hours.</span></>}
+          </h2>
+          <p style={{ fontSize: 15, color: "rgba(255,255,255,.45)", lineHeight: 1.75, marginBottom: 32, fontWeight: 300 }}>
+            {lang==="es"
+              ? "Aplica en minutos. Nuestro equipo trabaja tu trato. Ves cada paso en tiempo real en tu portal. Sin llamadas. Sin perseguir a nadie."
+              : "Apply in minutes. Our team works your deal. You watch every step in real time in your dashboard. No calls. No chasing anyone."}
+          </p>
+          {/* Step indicators */}
+          <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
+            {steps.map((s, i) => (
+              <button key={s} onClick={() => setActiveStep(i)} style={{ flex: 1, padding: "10px 8px", borderRadius: 8, border: `1px solid ${activeStep===i?G:"rgba(255,255,255,.1)"}`, background: activeStep===i?"rgba(168,255,62,.08)":"transparent", cursor: "pointer", transition: "all .2s" }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: activeStep===i?G:"rgba(255,255,255,.3)", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>0{i+1}</p>
+                <p style={{ fontSize: 11, fontWeight: 600, color: activeStep===i?"#fff":"rgba(255,255,255,.3)" }}>{s}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Right — animated phone mockup */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ width: 280, background: "#0a0a0a", border: "1px solid rgba(255,255,255,.1)", borderRadius: 24, overflow: "hidden", boxShadow: "0 40px 80px rgba(0,0,0,.6)", position: "relative" }}>
+            {/* Phone header */}
+            <div style={{ background: "#0f0f0f", padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <div style={{ width: 20, height: 20, background: G, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: "#000" }}>A</div>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "-.01em" }}>APROVUIT</span>
+              </div>
+              <div style={{ display: "flex", gap: 4 }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: G }}></div>
+                <p style={{ fontSize: 9, color: G, fontWeight: 600 }}>{lang==="es"?"En vivo":"Live"}</p>
+              </div>
+            </div>
+            {/* Step label */}
+            <div style={{ background: "rgba(168,255,62,.06)", padding: "8px 18px", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
+              <p style={{ fontSize: 10, fontWeight: 600, color: G, letterSpacing: ".06em", textTransform: "uppercase" }}>
+                {lang==="es"?"Paso":"Step"} {activeStep + 1} — {steps[activeStep]}
+              </p>
+            </div>
+            {/* Screen content */}
+            <div style={{ padding: "20px 18px", minHeight: 280 }}>
+              {screens[activeStep]}
+            </div>
+            {/* Progress dots */}
+            <div style={{ padding: "12px 18px", display: "flex", justifyContent: "center", gap: 6, borderTop: "1px solid rgba(255,255,255,.04)" }}>
+              {[0,1,2,3].map(i => (
+                <div key={i} onClick={() => setActiveStep(i)} style={{ width: i===activeStep?20:6, height: 6, background: i===activeStep?G:"rgba(255,255,255,.15)", borderRadius: 3, transition: "all .3s", cursor: "pointer" }}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
 function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
   const t = T[lang];
@@ -1945,6 +2250,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           ))}
         </div>
       </section>
+
+      {/* ── ANIMATED DEMO ── */}
+      <AnimatedDemo lang={lang} />
 
       {/* ── PLATFORM FEATURES ── */}
       <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
