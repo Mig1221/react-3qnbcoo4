@@ -3012,7 +3012,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
 
 
 // ── CONTACT PAGE ─────────────────────────────────────────────────
-function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) { onFaq, onAbout }) {
+function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const G = "#a8ff3e";
   const [form, setForm] = useState({ name:"", email:"", phone:"", subject:"", message:"" });
   const [sent, setSent] = useState(false);
