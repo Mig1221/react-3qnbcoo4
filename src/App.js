@@ -107,7 +107,7 @@ async function sendClientEmail(data) {
     _replyto:ADMIN_EMAIL,
     email:data.email,
     "Hi":`${data.firstName},`,
-    "Message":`Your application for ${data.company} (ID: ${data.id}) has been received! We will be in touch within 2-4 hours. No phone call required.`,
+    "Message":`Your application for ${data.company} (ID: ${data.id}) has been received! We will be in touch within 2-4 hours. No phone calls.`,
     "Upload your documents here":`https://aprovuit.com/?upload=${data.id}`,
   });
 }
@@ -211,12 +211,21 @@ const CSS = `
     .admin-wrap { flex-direction:column !important; }
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
+    nav { padding:0 4% !important; height:52px !important; }
+    section { padding-left:4% !important; padding-right:4% !important; }
+    .hero-mockup { display:none !important; }
+    .inner-nav-links { display:none !important; }
   }
   @media (max-width:480px) {
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
-    .hero-btns { flex-direction:column !important; align-items:flex-start !important; }
+    .hero-btns { flex-direction:column !important; align-items:stretch !important; }
+    .hero-btns button { width:100% !important; justify-content:center !important; }
     .offer-btns { flex-direction:column !important; }
     .name-row { grid-template-columns:1fr !important; }
+    .stat-item { padding:20px 0 !important; }
+    .apply-card { padding:24px 18px !important; border-radius:10px !important; }
+    .credit-grid { grid-template-columns:repeat(2,1fr) !important; }
+    h1 { font-size:clamp(36px,10vw,56px) !important; }
   }
 `;
 
@@ -508,6 +517,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   const t = T[lang].apply;
   const [step, setStep] = useState(0); // 0=qualify, 1=funding, 2=business, 3=account, 4=review
   const [submitted, setSubmitted] = useState(false);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const [sending, setSending] = useState(false);
   const [loanAmt, setLoanAmt] = useState(150000);
   const [creditSel, setCreditSel] = useState("good");
@@ -704,7 +714,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
         ))}
       </div>
 
-      <button onClick={()=>setStep(1)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"16px", borderRadius:8, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
+      <button onClick={()=>{setStep(1);window.scrollTo(0,0);}} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"16px", borderRadius:8, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
         {lang==="es"?"Comenzar Mi Solicitud →":"Start My Request →"}
       </button>
       <p style={{ textAlign:"center", fontSize:12, color:"rgba(255,255,255,.25)", marginTop:14 }}>
@@ -769,8 +779,8 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           </select>
 
           <div style={{ display:"flex", gap:10, marginTop:8 }}>
-            <button onClick={()=>setStep(0)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
-            <button onClick={()=>setStep(2)} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
+            <button onClick={()=>{setStep(0);window.scrollTo(0,0);}} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{setStep(2);window.scrollTo(0,0);}} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
           </div>
         </>}
 
@@ -808,7 +818,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           </div>
 
           <div style={{ display:"flex", gap:10, marginTop:8 }}>
-            <button onClick={()=>setStep(1)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{setStep(1);window.scrollTo(0,0);}} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
             <button onClick={()=>{if(validate())setStep(3);}} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
           </div>
         </>}
@@ -848,7 +858,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           {errors.phone && <p style={errStyle}>{errors.phone}</p>}
 
           <div style={{ display:"flex", gap:10, marginTop:8 }}>
-            <button onClick={()=>setStep(2)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{setStep(2);window.scrollTo(0,0);}} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
             <button onClick={()=>{if(validate())setStep(4);}} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:"pointer" }}>{t.continueBtn}</button>
           </div>
         </>}
@@ -889,7 +899,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           </div>
 
           <div style={{ display:"flex", gap:10 }}>
-            <button onClick={()=>setStep(3)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
+            <button onClick={()=>{setStep(3);window.scrollTo(0,0);}} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.1)", padding:"13px", borderRadius:8, fontSize:14, fontWeight:500, cursor:"pointer" }}>{t.backBtn}</button>
             <button onClick={handleSubmit} disabled={sending} style={{ flex:2, background:sending?"rgba(168,255,62,.4)":G, color:"#000", border:"none", padding:"13px", borderRadius:8, fontSize:14, fontWeight:600, cursor:sending?"not-allowed":"pointer" }}>
               {sending?(lang==="es"?"Enviando...":"Submitting..."):(lang==="es"?"Enviar Solicitud →":"Submit Request →")}
             </button>
@@ -1502,7 +1512,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
         ?"Un préstamo a plazo te da una suma fija de dinero que pagas en cuotas mensuales fijas durante un período establecido. Ideal para inversiones únicas como expansión de ubicación, contratación de personal, renovaciones o compras de equipo grande."
         :"A term loan gives you a fixed lump sum of money that you repay in fixed monthly installments over a set period. Ideal for one-time investments like location expansion, hiring staff, renovations, or large equipment purchases.",
       best:lang==="es"?["Expansión de negocio","Renovaciones","Contratación","Compra de equipo grande"]:["Business expansion","Renovations","Hiring staff","Large equipment purchases"],
-      reqs:lang==="es"?["6+ meses en operación","$10K+ ingresos mensuales","580+ puntaje de crédito","Sin llamadas telefónicas"]:["6+ months in business","$10K+ monthly revenue","580+ credit score","No phone call required"],
+      reqs:lang==="es"?["6+ meses en operación","$10K+ ingresos mensuales","580+ puntaje de crédito","Sin llamadas"]:["6+ months in business","$10K+ monthly revenue","580+ credit score","No phone calls"],
       how:lang==="es"?"Recibes el monto completo de una vez. Los pagos son fijos cada mes, lo que facilita la planificación. Las tasas dependen de tu historial crediticio e ingresos.":"You receive the full amount upfront. Payments are fixed each month, making planning easy. Rates depend on your credit history and revenue.",
     },
     {
@@ -1514,7 +1524,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
         ?"Una línea de crédito revolvente te da acceso a un límite de crédito que puedes usar, pagar y usar de nuevo. Solo pagas intereses sobre lo que usas. Perfecta para negocios con flujo de caja variable o necesidades de capital de trabajo continuas."
         :"A revolving line of credit gives you access to a credit limit you can draw from, repay, and draw again. You only pay interest on what you use. Perfect for businesses with variable cash flow or ongoing working capital needs.",
       best:lang==="es"?["Capital de trabajo","Inventario estacional","Gastos inesperados","Nómina"]:["Working capital","Seasonal inventory","Unexpected expenses","Payroll"],
-      reqs:lang==="es"?["6+ meses en operación","$15K+ ingresos mensuales","600+ puntaje de crédito","Sin llamadas telefónicas"]:["6+ months in business","$15K+ monthly revenue","600+ credit score","No phone call required"],
+      reqs:lang==="es"?["6+ meses en operación","$15K+ ingresos mensuales","600+ puntaje de crédito","Sin llamadas"]:["6+ months in business","$15K+ monthly revenue","600+ credit score","No phone calls"],
       how:lang==="es"?"Aprobado una vez, accedes a tu límite cuando lo necesitas. El límite se repone automáticamente al pagar. Sin restricciones sobre cómo usar los fondos.":"Approved once, draw when needed. Limit replenishes automatically as you repay. No restrictions on how you use the funds.",
     },
     {
@@ -1619,7 +1629,7 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
     { n:"02", title:"Crea Tu Cuenta", time:"30 segundos", icon:"02",
       desc:"Crea tu cuenta segura de Aprovuit. Aquí rastrearás todo — tu solicitud, ofertas, documentos y mensajes con tu asesor.", details:["Correo electrónico y contraseña","Verificación de identidad por SMS","Portal personal con dashboard en tiempo real","Sin instalación de app requerida"] },
     { n:"03", title:"Revisión de Solicitud", time:"2-4 horas", icon:"03",
-      desc:"Nuestro equipo revisa tu solicitud. Evaluamos ingresos, historial crediticio y la salud general de tu negocio. Sin llamadas telefónicas de nuestra parte.", details:["Consulta suave de crédito (sin impacto)","Análisis de estados bancarios","Evaluación de ingresos mensuales","Comunicación 100% por escrito"] },
+      desc:"Nuestro equipo revisa tu solicitud. Evaluamos ingresos, historial crediticio y la salud general de tu negocio. Sin llamadas de nuestra parte.", details:["Consulta suave de crédito (sin impacto)","Análisis de estados bancarios","Evaluación de ingresos mensuales","Comunicación 100% por escrito"] },
     { n:"04", title:"Recibe tu Oferta", time:"En tu dashboard", icon:"04",
       desc:"Tu oferta personalizada aparece directamente en tu portal y en tu correo. Cada término es transparente — monto, tasa, pagos mensuales, todo claro antes de aceptar.", details:["Monto aprobado","Tasa de interés o factor","Calendario de pagos","Fecha estimada de fondeo"] },
     { n:"05", title:"Acepta y Recibe Fondos", time:"Mismo día", icon:"05",
@@ -2319,26 +2329,7 @@ function DashboardSlider({ lang }) {
               </button>
             ))}
 
-            {/* Early payoff callout */}
-            <div style={{marginTop:16, background:"rgba(168,255,62,.05)", border:`1px solid ${G}20`, borderRadius:10, padding:"16px 18px"}}>
-              <p style={{fontSize:11, fontWeight:700, color:G, marginBottom:6, letterSpacing:"-.01em"}}>
-                {lang==="es"?"Descuentos por Pago Anticipado":"Early Payoff Discounts"}
-              </p>
-              <p style={{fontSize:12, color:"rgba(255,255,255,.45)", lineHeight:1.7, fontWeight:300, marginBottom:10}}>
-                {lang==="es"
-                  ? "Sin penalidades. Paga antes y ahorra. Un adelanto de $50K con pagos de $625/mes puede costar mucho menos si pagas anticipado."
-                  : "No penalties. Pay early and save. A $50K advance with $625/mo payments costs significantly less when paid off early."}
-              </p>
-              <div style={{display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:6}}>
-                {[[lang==="es"?"3 meses":"3 months","18%"],[lang==="es"?"6 meses":"6 months","12%"],[lang==="es"?"9 meses":"9 months","6%"],[lang==="es"?"12 meses":"12 months","0%"]].map(([term,disc])=>(
-                  <div key={term} style={{background:"rgba(255,255,255,.04)", borderRadius:6, padding:"8px 6px", textAlign:"center"}}>
-                    <p style={{fontSize:9, color:"rgba(255,255,255,.35)", marginBottom:3}}>{term}</p>
-                    <p style={{fontSize:13, fontWeight:700, color:disc==="0%"?"rgba(255,255,255,.3)":G}}>{disc}</p>
-                    <p style={{fontSize:8, color:"rgba(255,255,255,.2)"}}>{lang==="es"?"desc.":"disc."}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+
           </div>
 
           {/* Right — dashboard mockup */}
@@ -2382,6 +2373,228 @@ function DashboardSlider({ lang }) {
   );
 }
 
+
+
+// ── WHY APROVUIT SECTION ─────────────────────────────────────────
+function WhyAprovuit({ lang, onApply }) {
+  const G = "#a8ff3e";
+  const cards = lang === "es" ? [
+    {
+      n:"01", title:"Fondos Rápidos y Confiables",
+      desc:"Aprobación y fondos en tan solo 24 horas. Sin esperar semanas. Sin papeleo interminable. Tu negocio no puede esperar — nosotros tampoco.",
+      highlight:"$500M+ fondeado a más de 10,000 negocios.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.4)"}}>APP-2041 · Préstamo a Plazo</p>
+            <span style={{fontSize:9,fontWeight:700,color:G,background:"rgba(168,255,62,.1)",padding:"2px 8px",borderRadius:10}}>Aprobado</span>
+          </div>
+          <p style={{fontSize:26,fontWeight:700,color:"#fff",letterSpacing:"-.03em",marginBottom:8}}>$50,000</p>
+          <div style={{height:2,background:"rgba(255,255,255,.08)",borderRadius:2,marginBottom:6}}>
+            <div style={{width:"100%",height:"100%",background:G,borderRadius:2}}></div>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>Fondeado: 2 de Abril</p>
+            <p style={{fontSize:10,color:G,fontWeight:600}}>Mismo día</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      n:"02", title:"Descuentos por Pago Anticipado",
+      desc:"Sin penalidades por pago anticipado — ever. Paga antes y ahorra. Ofrecemos los mejores descuentos de la industria. Cuanto antes pagues, más ahorras.",
+      highlight:"Un adelanto de $50K puede costar hasta $1,350 menos si pagas anticipado.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <p style={{fontSize:9,fontWeight:700,color:G,textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Descuentos Disponibles</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:12}}>
+            {[["3 meses","18%"],["6 meses","12%"],["9 meses","6%"],["12 meses","0%"]].map(([t,d])=>(
+              <div key={t} style={{background:"rgba(255,255,255,.04)",borderRadius:6,padding:"8px 4px",textAlign:"center"}}>
+                <p style={{fontSize:9,color:"rgba(255,255,255,.3)",marginBottom:3}}>{t}</p>
+                <p style={{fontSize:14,fontWeight:700,color:d==="0%"?"rgba(255,255,255,.25)":G}}>{d}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:8,padding:"10px 12px"}}>
+            <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>Paga en 3 meses → <span style={{color:G,fontWeight:700}}>ahorras $1,350</span></p>
+          </div>
+        </div>
+      )
+    },
+    {
+      n:"03", title:"Apoyo Personalizado",
+      desc:"Tu asesor dedicado conoce tu industria y trabaja para conseguirte los mejores términos. No eres un número — somos socios en el crecimiento de tu negocio.",
+      highlight:"Comunicación directa. Todo por escrito. Sin llamadas.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          {[["¿Qué tipo de financiamiento necesitas?","Expansión y equipo nuevo.","Tu Asesor · 9:14 AM"],["Perfecto. Con tus ingresos mensuales de $85K, te consigo varias opciones. Te envío las ofertas hoy.","","Tu Asesor · 9:31 AM"]].map(([msg,reply,time],i)=>(
+            <div key={i} style={{marginBottom:8}}>
+              {reply&&<div style={{background:"rgba(168,255,62,.08)",border:"1px solid rgba(168,255,62,.15)",borderRadius:"4px 10px 10px 10px",padding:"8px 12px",marginBottom:4}}>
+                <p style={{fontSize:11,color:"rgba(255,255,255,.7)",lineHeight:1.5}}>{reply||msg}</p>
+              </div>}
+              {!reply&&<div style={{background:"rgba(255,255,255,.04)",borderRadius:"10px 10px 10px 4px",padding:"8px 12px",marginBottom:4}}>
+                <p style={{fontSize:11,color:"rgba(255,255,255,.5)",lineHeight:1.5}}>{msg}</p>
+              </div>}
+              <p style={{fontSize:8,color:"rgba(255,255,255,.2)"}}>{time}</p>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      n:"04", title:"Enfoque a Tu Medida",
+      desc:"Cada negocio es único. Evaluamos tu flujo de caja, industria y necesidades específicas — no solo tu puntaje de crédito. Encontramos la solución correcta para ti.",
+      highlight:"580+ puntaje de crédito. Consulta suave. Sin impacto a tu score.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Tu Perfil de Negocio</p>
+          {[["Industria","Restaurante / Alimentos"],["Tiempo en Operación","2–5 años"],["Ingresos Mensuales","$85,000"],["Puntaje de Crédito","680 (Bueno)"]].map(([l,v])=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid rgba(255,255,255,.05)"}}>
+              <p style={{fontSize:11,color:"rgba(255,255,255,.35)"}}>{l}</p>
+              <p style={{fontSize:11,fontWeight:600,color:"#fff"}}>{v}</p>
+            </div>
+          ))}
+          <div style={{marginTop:10,display:"flex",gap:6}}>
+            {["Coincide","Optimizado","Recomendado"].map(s=>(
+              <div key={s} style={{flex:1,background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:6,padding:"5px 4px",textAlign:"center"}}>
+                <p style={{fontSize:9,color:G,fontWeight:600}}>{s}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
+  ] : [
+    {
+      n:"01", title:"Fast, Reliable Funding",
+      desc:"Approved and funded in as little as 24 hours. No waiting weeks. No endless paperwork. Your business can't wait — and neither can we.",
+      highlight:"$500M+ funded to 10,000+ businesses nationwide.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.4)"}}>APP-2041 · Term Loan</p>
+            <span style={{fontSize:9,fontWeight:700,color:G,background:"rgba(168,255,62,.1)",padding:"2px 8px",borderRadius:10}}>Approved</span>
+          </div>
+          <p style={{fontSize:26,fontWeight:700,color:"#fff",letterSpacing:"-.03em",marginBottom:8}}>$50,000</p>
+          <div style={{height:2,background:"rgba(255,255,255,.08)",borderRadius:2,marginBottom:6}}>
+            <div style={{width:"100%",height:"100%",background:G,borderRadius:2}}></div>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <p style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>Funded: April 2</p>
+            <p style={{fontSize:10,color:G,fontWeight:600}}>Same day</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      n:"02", title:"Early Payment Discounts",
+      desc:"No prepayment penalties — ever. Pay off your advance early and save. We offer industry-leading early payoff discounts. The sooner you pay, the more you save.",
+      highlight:"A $50K advance can cost up to $1,350 less when paid off early.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <p style={{fontSize:9,fontWeight:700,color:G,textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Discount Schedule</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:12}}>
+            {[["3 months","18%"],["6 months","12%"],["9 months","6%"],["12 months","0%"]].map(([t,d])=>(
+              <div key={t} style={{background:"rgba(255,255,255,.04)",borderRadius:6,padding:"8px 4px",textAlign:"center"}}>
+                <p style={{fontSize:9,color:"rgba(255,255,255,.3)",marginBottom:3}}>{t}</p>
+                <p style={{fontSize:14,fontWeight:700,color:d==="0%"?"rgba(255,255,255,.25)":G}}>{d}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:8,padding:"10px 12px"}}>
+            <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>Pay off in 3 months → <span style={{color:G,fontWeight:700}}>save $1,350</span></p>
+          </div>
+        </div>
+      )
+    },
+    {
+      n:"03", title:"Personalized Support",
+      desc:"Your dedicated advisor knows your industry and works to get you the best terms available. You're not a number — we're a partner in your business growth.",
+      highlight:"Direct communication. Everything in writing. No phone calls.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          {[["What type of funding do you need?",false],["Expansion and new equipment.",true],["Perfect. With your $85K monthly revenue, I'll find you the best options and send offers today.",false]].map(([msg,isUser],i)=>(
+            <div key={i} style={{marginBottom:8,display:"flex",justifyContent:isUser?"flex-end":"flex-start"}}>
+              <div style={{maxWidth:"85%",background:isUser?G:"rgba(255,255,255,.06)",borderRadius:isUser?"10px 4px 10px 10px":"4px 10px 10px 10px",padding:"8px 12px"}}>
+                <p style={{fontSize:11,color:isUser?"#000":"rgba(255,255,255,.65)",lineHeight:1.5,fontWeight:isUser?500:400}}>{msg}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      n:"04", title:"Tailored to Your Business",
+      desc:"Every business is unique. We evaluate your cash flow, industry, and specific needs — not just your credit score. We find the right solution for you, not a generic one.",
+      highlight:"580+ credit score. Soft pull only. Zero impact to your score.",
+      ui:(
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"14px 16px",marginTop:14}}>
+          <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Your Business Profile</p>
+          {[["Industry","Restaurant & Food"],["Time in Business","2–5 years"],["Monthly Revenue","$85,000"],["Credit Score","680 (Good)"]].map(([l,v])=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid rgba(255,255,255,.05)"}}>
+              <p style={{fontSize:11,color:"rgba(255,255,255,.35)"}}>{l}</p>
+              <p style={{fontSize:11,fontWeight:600,color:"#fff"}}>{v}</p>
+            </div>
+          ))}
+          <div style={{marginTop:10,display:"flex",gap:6}}>
+            {["Matched","Optimized","Recommended"].map(s=>(
+              <div key={s} style={{flex:1,background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:6,padding:"5px 4px",textAlign:"center"}}>
+                <p style={{fontSize:9,color:G,fontWeight:600}}>{s}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
+  ];
+
+  return (
+    <section style={{background:"#0d0d0d", padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1100, margin:"0 auto"}}>
+        <div style={{textAlign:"center", marginBottom:64}}>
+          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+            {lang==="es"?"Por qué Aprovuit":"Why Aprovuit"}
+          </p>
+          <h2 style={{fontSize:"clamp(28px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:16}}>
+            {lang==="es"
+              ? <>¿Por qué elegir<br /><span style={{color:G}}>Aprovuit?</span></>
+              : <>Why Choose<br /><span style={{color:G}}>Aprovuit?</span></>}
+          </h2>
+          <p style={{fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
+            {lang==="es"
+              ? "Entendemos que el tiempo es dinero para tu negocio. Por eso simplificamos todo para que obtengas fondos rápido con términos claros."
+              : "We understand that time is money for your business. That's why we've streamlined everything to get you funded fast with clear, honest terms."}
+          </p>
+        </div>
+
+        <div style={{display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:16}} className="products-grid">
+          {cards.map((c)=>(
+            <div key={c.n} style={{background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:14, padding:"28px 28px 24px"}}>
+              <div style={{display:"flex", alignItems:"center", gap:12, marginBottom:14}}>
+                <div style={{width:32, height:32, background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+                  <p style={{fontSize:11, fontWeight:800, color:G}}>{c.n}</p>
+                </div>
+                <h3 style={{fontSize:17, fontWeight:700, color:"#fff", letterSpacing:"-.02em"}}>{c.title}</h3>
+              </div>
+              <p style={{fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.8, marginBottom:10, fontWeight:300}}>{c.desc}</p>
+              <p style={{fontSize:12, color:G, fontWeight:500, letterSpacing:"-.01em"}}>{c.highlight}</p>
+              {c.ui}
+            </div>
+          ))}
+        </div>
+
+        <div style={{textAlign:"center", marginTop:48}}>
+          <button onClick={onApply} className="btn-green" style={{fontSize:15, padding:"14px 44px"}}>
+            {lang==="es"?"Comenzar Ahora →":"Get Started Now →"}
+          </button>
+          <p style={{fontSize:12, color:"rgba(255,255,255,.25)", marginTop:12}}>
+            {lang==="es"?"Sin impacto al crédito · Sin cargos ocultos · Sin llamadas":"No credit impact · No hidden fees · No phone calls"}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 // ── LANDING PAGE ─────────────────────────────────────────────────
 function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
@@ -2542,6 +2755,9 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           ))}
         </div>
       </section>
+
+      {/* ── WHY APROVUIT ── */}
+      <WhyAprovuit lang={lang} onApply={onApply} />
 
       {/* ── ANIMATED DEMO ── */}
       <AnimatedDemo lang={lang} />
@@ -2736,7 +2952,7 @@ export default function Aprovuit() {
     const descs = {
       landing: "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
       products: "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
-      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls required.",
+      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls.",
       faq: "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
     };
     meta.content = descs[view] || descs.landing;
