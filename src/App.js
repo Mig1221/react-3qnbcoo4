@@ -5,6 +5,20 @@ const BK = "#0a0a0a";
 const BK2 = "#111111";
 const BK3 = "#161616";
 
+const APPLY_CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; -webkit-font-smoothing:antialiased; }
+  input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,.15); border-radius:2px; outline:none; cursor:pointer; margin:16px 0 8px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:#a8ff3e; border:none; border-radius:50%; cursor:pointer; box-shadow:0 0 0 4px rgba(168,255,62,.12); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .fadeup { animation:fadeUp .35s ease both; }
+  .credit-box { border:1.5px solid rgba(255,255,255,.1); border-radius:8px; padding:12px 6px; cursor:pointer; text-align:center; transition:all .15s; background:rgba(255,255,255,.04); }
+  .credit-box.sel { border-color:#a8ff3e; background:rgba(168,255,62,.06); }
+  .name-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:480px) { .name-row { grid-template-columns:1fr; } }
+`;
+
 // ── SUPABASE CONFIG ──────────────────────────────────────────────
 // Replace with your actual Supabase URL and anon key from supabase.com
 const SUPABASE_URL = "YOUR_SUPABASE_URL";
