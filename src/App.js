@@ -1481,7 +1481,7 @@ function AdminDashboard({ onExit }) {
 
 
 // ── INNER PAGE NAV ───────────────────────────────────────────────
-function InnerNav({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin }) {
+function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout }) {
   const go = (fn) => { fn && fn(); window.scrollTo(0,0); };
   return (
     <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
@@ -1494,15 +1494,20 @@ function InnerNav({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLo
         <button onClick={()=>go(onProducts)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
         <button onClick={()=>go(onHowItWorks)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
         <button onClick={()=>go(onFaq)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
-        {onLogin && <button onClick={()=>go(onLogin)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Entrar":"Log In"}</button>}
-        <button onClick={onApply} style={{ background:"#a8ff3e", color:"#000", border:"none", padding:"9px 20px", borderRadius:6, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
+        {onAbout && <button onClick={()=>go(onAbout)} className="nav-link">{lang==="es"?"Nosotros":"About"}</button>}
+        {onLogin && <button onClick={()=>go(onLogin)} className="nav-link">{lang==="es"?"Entrar":"Log In"}</button>}
+        {setLang && <div className="lang-pill">
+          <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?"#a8ff3e":"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
+          <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?"#a8ff3e":"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
+        </div>}
+        <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
       </div>
     </nav>
   );
 }
 
 // ── PRODUCTS PAGE ────────────────────────────────────────────────
-function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
+function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
   const products = [
     {
       icon:"→", name:lang==="es"?"Préstamo a Plazo":"Term Loan",
@@ -1557,7 +1562,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
       <div style={{ padding:"64px 5% 80px", maxWidth:1100, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
@@ -1623,7 +1628,7 @@ function ProductsPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }
 }
 
 // ── HOW IT WORKS PAGE ─────────────────────────────────────────────
-function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
+function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
   const steps = lang==="es" ? [
     { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"01",
       desc:"Llena nuestra solicitud inteligente en línea. Sin entrevistas telefónicas. Sin papeleo. Solo información básica sobre tu negocio y lo que necesitas.", details:["Información básica del negocio","Monto de financiamiento deseado","Propósito de los fondos","Sube 3-6 meses de estados bancarios"] },
@@ -1655,7 +1660,7 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
       <div style={{ padding:"64px 5% 80px", maxWidth:900, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
@@ -1708,7 +1713,7 @@ function HowItWorksPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq
 }
 
 // ── FAQ PAGE ──────────────────────────────────────────────────────
-function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
+function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
   const [open, setOpen] = useState(null);
   const categories = lang==="es" ? [
     { cat:"La Plataforma", items:[
@@ -1773,7 +1778,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
       <div style={{ padding:"64px 5% 80px", maxWidth:860, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
@@ -2785,7 +2790,7 @@ function AboutPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
 
       {/* HERO */}
       <section style={{ padding:"88px 5% 72px", maxWidth:900, margin:"0 auto", textAlign:"center" }}>
@@ -2929,7 +2934,7 @@ function AboutPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
 }
 
 // ── LANDING PAGE ─────────────────────────────────────────────────
-function Landing({ lang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout }) {
+function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout }) {
   const t = T[lang];
   const G = "#a8ff3e";
 
@@ -2947,8 +2952,8 @@ function Landing({ lang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAb
             <button key={v} className="nav-link" onClick={()=>{ ({products:onProducts,howitworks:onHowItWorks,faq:onFaq,about:onAbout})[v]?.(); window.scrollTo(0,0); }}>{l}</button>
           ))}
           <div className="lang-pill">
-            <button className="lb" style={{ background:"rgba(255,255,255,.08)", color:"rgba(255,255,255,.5)" }}>EN</button>
-            <button className="lb" style={{ color:"rgba(255,255,255,.3)" }}>ES</button>
+            <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
+            <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
           </div>
           <button className="nav-link" onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{t.nav.apply}</button>
@@ -3279,10 +3284,10 @@ export default function Aprovuit() {
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onLogin={handleLogin} />;
-  if (view==="products") return <><ProductsPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="howitworks") return <><HowItWorksPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="about") return <><AboutPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="faq") return <><FAQPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="products") return <><ProductsPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="about") return <><AboutPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="faq") return <><FAQPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>{setView("landing");window.scrollTo(0,0);}} />
@@ -3309,7 +3314,7 @@ export default function Aprovuit() {
   return (
     <>
       <style>{CSS}</style>
-      <Landing lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onLogin={()=>{setView("login");window.scrollTo(0,0);}} onAdmin={()=>setView("admin")} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} />
+      <Landing lang={lang} setLang={setLang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onLogin={()=>{setView("login");window.scrollTo(0,0);}} onAdmin={()=>setView("admin")} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} />
       <Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} />
     </>
   );
