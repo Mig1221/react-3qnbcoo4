@@ -1508,39 +1508,7 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
 
 // ── PRODUCTS PAGE ────────────────────────────────────────────────
 
-      {/* DON'T SEE YOUR INDUSTRY */}
-      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
-          <h2 style={{ fontSize:"clamp(22px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
-            {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
-          </h2>
-          <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
-            {lang==="es"
-              ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos escuchar tu historia."
-              : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
-          </p>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, maxWidth:640, margin:"0 auto 28px" }} className="how-grid">
-            {(lang==="es"
-              ? [["Servicios Profesionales","Abogados, contadores y otros profesionales de servicios."],["Tecnología","Empresas de software, IT y negocios digitales."],["Y Mucho Más","Hospitalidad, belleza, fitness, educación y más."]]
-              : [["Professional Services","Lawyers, accountants, and other service professionals."],["Technology","Software companies, IT services, and digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and more."]]
-            ).map(([t,d])=>(
-              <div key={t} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:10, padding:"20px 16px" }}>
-                <div style={{ width:28, height:28, background:"rgba(168,255,62,.08)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px" }}>
-                  <div style={{ width:7, height:7, background:"#a8ff3e", borderRadius:"50%" }}></div>
-                </div>
-                <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
-                <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
-              </div>
-            ))}
-          </div>
-          <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"11px 32px" }}>
-            {lang==="es" ? "Ver Si Califico →" : "See If I Qualify →"}
-          </button>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:10 }}>
-            {lang==="es" ? "6+ meses en operación · Sin impacto al crédito" : "6+ months in business · No credit impact · No phone calls"}
-          </p>
-        </div>
-      </section>
+      
 
 
 function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
@@ -1660,40 +1628,41 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
         ))}
       </div>
 
-      {/* DON'T SEE YOUR INDUSTRY */}
-      <section style={{ background:BK2, padding:"72px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:860, margin:"0 auto", textAlign:"center" }}>
-          <h2 style={{ fontSize:"clamp(22px,3vw,40px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
+      
+    </div>
+      {/* DONT SEE YOUR INDUSTRY */}
+      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
+          <h2 style={{ fontSize:"clamp(22px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
             {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
           </h2>
-          <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:540, margin:"0 auto 32px", lineHeight:1.8, fontWeight:300 }}>
+          <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
             {lang==="es"
-              ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos escuchar tu historia."
+              ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos conocer tu historia."
               : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
           </p>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, maxWidth:660, margin:"0 auto 32px" }} className="how-grid">
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, maxWidth:640, margin:"0 auto 28px" }} className="how-grid">
             {(lang==="es"
-              ? [["Servicios Profesionales","Abogados, contadores, consultores y otros profesionales."],["Tecnología","Empresas de software, servicios de TI y negocios digitales."],["Y Mucho Más","Hospitalidad, belleza, fitness, educación y más."]]
-              : [["Professional Services","Lawyers, accountants, consultants, and other service professionals."],["Technology","Software companies, IT services, and digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and more."]]
+              ? [["Servicios Profesionales","Abogados, contadores y otros profesionales."],["Tecnologia","Empresas de software, IT y negocios digitales."],["Y Mucho Mas","Hospitalidad, belleza, fitness, educacion y mas."]]
+              : [["Professional Services","Lawyers, accountants, and service professionals."],["Technology","Software companies, IT services, and digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and more."]]
             ).map(([t,d])=>(
-              <div key={t} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"22px 16px" }}>
-                <div style={{ width:32, height:32, background:"rgba(168,255,62,.08)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 12px" }}>
-                  <div style={{ width:8, height:8, background:"#a8ff3e", borderRadius:"50%" }}></div>
+              <div key={t} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:10, padding:"20px 16px" }}>
+                <div style={{ width:28, height:28, background:"rgba(168,255,62,.08)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px" }}>
+                  <div style={{ width:7, height:7, background:"#a8ff3e", borderRadius:"50%" }}></div>
                 </div>
-                <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:6 }}>{t}</p>
-                <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
+                <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
+                <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
               </div>
             ))}
           </div>
-          <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"12px 36px" }}>
-            {lang==="es" ? "Ver Si Califico →" : "See If I Qualify →"}
+          <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"11px 32px" }}>
+            {lang==="es" ? "Ver Si Califico" : "See If I Qualify"}
           </button>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:12 }}>
-            {lang==="es" ? "6+ meses en operación · Sin impacto al crédito" : "6+ months in business · No credit impact · No phone calls"}
+          <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:10 }}>
+            {lang==="es" ? "6+ meses en operacion" : "6+ months in business, no credit impact, no phone calls"}
           </p>
         </div>
       </section>
-    </div>
   );
 }
 
@@ -2989,39 +2958,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       </section>
 
 
-      {/* DON'T SEE YOUR INDUSTRY */}
-      <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:900, margin:"0 auto", textAlign:"center" }}>
-          <h2 style={{ fontSize:"clamp(24px,4vw,44px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:16 }}>
-            {lang==="es" ? "¿No ves tu industria?" : "Don't See Your Industry?"}
-          </h2>
-          <p style={{ fontSize:16, color:"rgba(255,255,255,.45)", maxWidth:580, margin:"0 auto 40px", lineHeight:1.8, fontWeight:300 }}>
-            {lang==="es"
-              ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos escuchar tu historia."
-              : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
-          </p>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, maxWidth:680, margin:"0 auto 40px" }} className="how-grid">
-            {(lang==="es"
-              ? [["Servicios Profesionales","Abogados, contadores, consultores y otros profesionales de servicios."],["Tecnología","Empresas de software, servicios de TI y negocios digitales."],["Y Mucho Más","Hospitalidad, belleza, fitness, educación y prácticamente cualquier negocio."]]
-              : [["Professional Services","Lawyers, accountants, consultants, and other service professionals."],["Technology","Software companies, IT services, and digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and virtually any business."]]
-            ).map(([title,desc])=>(
-              <div key={title} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"24px 18px" }}>
-                <div style={{ width:36, height:36, background:"rgba(168,255,62,.08)", border:"1px solid rgba(168,255,62,.2)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}>
-                  <div style={{ width:8, height:8, background:"#a8ff3e", borderRadius:"50%" }}></div>
-                </div>
-                <p style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:8, letterSpacing:"-.01em" }}>{title}</p>
-                <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.65, fontWeight:300 }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-          <button onClick={onApply} className="btn-green" style={{ fontSize:15, padding:"13px 40px" }}>
-            {lang==="es" ? "Ver Si Califico →" : "See If I Qualify →"}
-          </button>
-          <p style={{ fontSize:12, color:"rgba(255,255,255,.25)", marginTop:14 }}>
-            {lang==="es" ? "6+ meses en operación · Sin impacto al crédito · Sin llamadas" : "6+ months in business · No credit impact · No phone calls"}
-          </p>
-        </div>
-      </section>
+      
       {/* CTA */}
       <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
         <h2 style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>
