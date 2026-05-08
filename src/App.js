@@ -224,7 +224,7 @@ const CSS = `
 const T = {
   en: {
     nav: { products:"Products", howItWorks:"How It Works", faq:"FAQ", login:"Log In", apply:"Get Started" },
-    hero: { badge:"Business Funding, Reimagined.", h1:"Real Funding.", h2:"Full Transparency.", sub:"Aprovuit is a business funding broker powered by technology. Apply once, track your deal in real time, and manage everything through your dashboard — no phone chasing, no runaround.", cta1:"Get Started →", cta2:"Log In to Dashboard" },
+    hero: { badge:"Direct Lender. Trusted Broker.", h1:"Real Funding.", h2:"Full Transparency.", sub:"Aprovuit is a direct lender and funding broker powered by technology. We lend our own capital and work with a network of trusted partners — giving you more options, faster approvals, and full transparency through your dashboard.", cta1:"Get Started →", cta2:"Log In to Dashboard" },
     ticker: ["Working Capital","Revenue-Based Financing","Term Loans","Lines of Credit","Equipment Financing","Same-Day Funding","Track Your Deal Live","Upload Docs Securely","580+ Credit OK","No Hidden Fees","Real Humans. Real Funding."],
     stats: [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Funding Time"],["580+","Min. Credit Score"]],
     how: { badge:"How It Works", h:"Simple. Fast. Transparent.", steps:[["01","Apply in Minutes","Complete our application online. Upload your documents securely. No phone interview. No paperwork."],["02","We Work the Deal","Our team reviews your file, shops it to our funding network, and works to get you the best terms available."],["03","Track Everything Live","Your dashboard updates in real time — offer received, documents needed, deal approved. You see every step."]] },
@@ -254,8 +254,8 @@ const T = {
       ]
     },
     faq: { badge:"FAQ", h:"Common Questions", items:[
-      ["What is Aprovuit?","Aprovuit is a licensed commercial funding broker. We work with a network of funders and lenders to get small businesses the working capital they need — fast. We handle the process end to end and use our platform to give you full visibility into every step of your deal."],
-      ["Does Aprovuit lend money directly?","No. Aprovuit is a broker, not a direct lender. We work with a network of trusted funders who provide the capital. Our job is to match you with the right funder, negotiate the best terms available, and manage the process from application to funding."],
+      ["What is Aprovuit?","Aprovuit is a direct lender and licensed funding broker. We provide working capital from our own capital and also work with a network of top funders — giving you more options and faster approvals. Our platform gives you full visibility into every step of your deal."],
+      ["Does Aprovuit lend money directly?","Yes. Aprovuit provides funding directly from our own capital for qualifying applications. We also work with a network of trusted funding partners to offer additional products and options. In both cases, your deal is managed end to end through our platform."],
       ["What are the minimum requirements?","Generally: 6+ months in business, $10,000+ monthly revenue, 580+ credit score. Some revenue-based options are more flexible. Submitting does not guarantee an offer."],
       ["Will this affect my credit score?","No. We use a soft credit inquiry only — zero impact to your score. A hard pull may occur only if you accept a final offer from a funding partner."],
       ["Are there prepayment penalties?","No. We offer industry-leading prepayment discounts — the earlier you pay off, the more you save. A $50K advance with $625 monthly payments could cost significantly less if paid early."],
@@ -264,7 +264,7 @@ const T = {
       ["What documents do I need?","Typically: 3–6 months of business bank statements, a government-issued ID, and a voided business check. All uploaded securely through the platform."],
     ] },
     cta: { h:"Real Funding. Full Transparency.", sub:"Apply in minutes. Our team works your deal. You track everything live.", btn:"Get Started →" },
-    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit is a licensed commercial funding broker. Not a direct lender. Funding provided by third-party partners." },
+    footer: { rights:"© 2026 Aprovuit. All rights reserved. · aprovuit.com · Aprovuit operates as a direct lender and licensed funding broker." },
     apply: {
       howMuch:"How much do you need?",
       qualAmt:"You may qualify for up to",
@@ -296,7 +296,7 @@ const T = {
   },
   es: {
     nav: { products:"Productos", howItWorks:"Cómo Funciona", faq:"Preguntas", login:"Entrar", apply:"Comenzar" },
-    hero: { badge:"Financiamiento Empresarial Reinventado.", h1:"Fondos Reales.", h2:"Total Transparencia.", sub:"Aprovuit es un broker de financiamiento empresarial impulsado por tecnología. Aplica una vez, rastrea tu proceso en tiempo real y administra todo desde tu portal — sin perseguir llamadas, sin rodeos.", cta1:"Comenzar →", cta2:"Entrar al Portal" },
+    hero: { badge:"Financiamiento Empresarial Reinventado.", h1:"Fondos Reales.", h2:"Total Transparencia.", sub:"Aprovuit es un prestamista directo y broker de financiamiento impulsado por tecnología. Prestamos nuestro propio capital y trabajamos con una red de socios — más opciones, aprobaciones más rápidas y total transparencia desde tu portal.", cta1:"Comenzar →", cta2:"Entrar al Portal" },
     ticker: ["Capital de Trabajo","Financiamiento por Ingresos","Préstamos a Plazo","Líneas de Crédito","Equipo","Fondos el Mismo Día","Rastrea tu Proceso","Sube Documentos","580+ Puntaje OK","Sin Cargos Ocultos","Personas Reales. Fondos Reales."],
     stats: [["$500M+","Fondeado"],["10,000+","Negocios Atendidos"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]],
     how: { badge:"Cómo Funciona", h:"Simple. Rápido. Transparente.", steps:[["01","Aplica en Minutos","Completa nuestra solicitud en línea. Sube tus documentos. Sin entrevistas ni papeleo."],["02","Nosotros Trabajamos el Trato","Nuestro equipo revisa tu expediente y trabaja para conseguirte los mejores términos disponibles."],["03","Rastrea Todo en Tiempo Real","Tu portal se actualiza en tiempo real — oferta recibida, documentos necesarios, trato aprobado."]] },
@@ -327,7 +327,7 @@ const T = {
     },
     faq: { badge:"Preguntas Frecuentes", h:"Preguntas Comunes", items:[
       ["¿Qué es Aprovuit?","Aprovuit es un broker de financiamiento comercial con licencia. Trabajamos con una red de fondeadores y prestamistas para conseguir a los pequeños negocios el capital de trabajo que necesitan — rápido."],
-      ["¿Aprovuit presta dinero directamente?","No. Aprovuit es un broker, no un prestamista directo. Trabajamos con una red de fondeadores de confianza. Nuestro trabajo es conectarte con el fondeador correcto y gestionar el proceso de principio a fin."],
+      ["¿Aprovuit presta dinero directamente?","Sí. Aprovuit proporciona financiamiento directamente de nuestro propio capital para solicitudes calificadas. También trabajamos con una red de socios de financiamiento de confianza para ofrecer productos y opciones adicionales. En ambos casos, tu trato se gestiona de principio a fin a través de nuestra plataforma."],
       ["¿Cuáles son los requisitos mínimos?","Generalmente: 6+ meses en operación, $10,000+ en ingresos mensuales, 580+ puntaje de crédito. Algunas opciones son más flexibles. Enviar una solicitud no garantiza una oferta."],
       ["¿Afectará mi puntaje de crédito?","No. Usamos una consulta suave — sin impacto en tu puntaje. Una consulta dura solo ocurre si aceptas una oferta final de un socio de financiamiento."],
       ["¿Hay penalidades por pago anticipado?","No. Ofrecemos descuentos líderes en la industria por pago anticipado. Un adelanto de $50K con pagos de $625/mes puede costar significativamente menos si se liquida antes."],
@@ -336,7 +336,7 @@ const T = {
       ["¿Qué documentos necesito?","Típicamente: 3–6 meses de estados de cuenta bancarios, identificación oficial y cheque anulado. Todo se sube de forma segura a través de la plataforma."],
     ] },
     cta: { h:"Fondos Reales. Total Transparencia.", sub:"Aplica en minutos. Nuestro equipo trabaja tu trato. Tú rastreas todo en tiempo real.", btn:"Comenzar →" },
-    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit es un broker de financiamiento comercial con licencia. No es un prestamista directo." },
+    footer: { rights:"© 2026 Aprovuit. Todos los derechos reservados. · aprovuit.com · Aprovuit opera como prestamista directo y broker de financiamiento con licencia." },
     apply: {
       howMuch:"¿Cuánto necesitas?",
       qualAmt:"Podrías calificar para hasta",
@@ -644,7 +644,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
         <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", lineHeight:1.7 }}>
           {lang==="es"
             ? "Nuestro equipo revisa tu solicitud y trabaja para conseguirte fondos — a menudo en 24 horas."
-            : "Our team reviews your application and works to get you funded — often within 24 hours."}
+            : "Our team reviews your application for direct funding and partner options. Decisions often within 24 hours. No phone interview required."}
         </p>
       </div>
 
@@ -679,27 +679,27 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
 
       {/* Qualification result */}
       <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"32px", marginBottom:32, textAlign:"center" }}>
-        <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
+        <p style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
           {lang==="es"?"¿Cuánto podría calificar?":"How much could I qualify for?"}
         </p>
         <p style={{ fontSize:64, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1, marginBottom:8 }}>{fmtSlider(qualAmt())}</p>
-        <p style={{ fontSize:12, color:"rgba(255,255,255,.2)" }}>
+        <p style={{ fontSize:12, color:"rgba(255,255,255,.45)" }}>
           {lang==="es"?"Para fines ilustrativos. Solicitudes sujetas a revisión.":"For illustrative purposes only. Applications subject to review."}
         </p>
       </div>
 
       {/* Requirements */}
-      <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:12, padding:"20px 24px", marginBottom:32 }}>
-        <p style={{ fontSize:12, fontWeight:600, color:G, marginBottom:14, letterSpacing:"-.01em" }}>
+      <div style={{ background:"rgba(168,255,62,.07)", border:`1px solid ${G}30`, borderRadius:12, padding:"24px 28px", marginBottom:32 }}>
+        <p style={{ fontSize:13, fontWeight:700, color:G, marginBottom:16, letterSpacing:"-.01em" }}>
           {lang==="es"?"Todo lo que necesitas:":"All you need to qualify:"}
         </p>
         {(lang==="es"
           ? ["6+ meses en operación","$10K+ en ingresos mensuales","580+ puntaje de crédito","Solo consulta suave — sin impacto al crédito"]
           : ["6+ months in business","$10K+ in monthly revenue","580+ credit score","Soft pull only — no credit impact"]
         ).map(r=>(
-          <div key={r} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
-            <div style={{ width:4, height:4, background:G, borderRadius:"50%", flexShrink:0 }}></div>
-            <span style={{ fontSize:13, color:"rgba(255,255,255,.6)", letterSpacing:"-.01em" }}>{r}</span>
+          <div key={r} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
+            <div style={{ width:6, height:6, background:G, borderRadius:"50%", flexShrink:0 }}></div>
+            <span style={{ fontSize:14, color:"rgba(255,255,255,.85)", letterSpacing:"-.01em", fontWeight:500 }}>{r}</span>
           </div>
         ))}
       </div>
@@ -883,8 +883,8 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:10, padding:"14px 16px", marginBottom:20 }}>
             <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.7, letterSpacing:"-.01em" }}>
               {lang==="es"
-                ? "Al enviar, autorizas a Aprovuit a revisar tu solicitud y presentarla a socios de financiamiento en nuestra red en tu nombre. Esto genera una consulta suave de crédito sin impacto a tu puntaje. Todas las comisiones de broker son pagadas por el fondeador, no por ti."
-                : "By submitting, you authorize Aprovuit to review your application and present it to funding partners in our network on your behalf. This triggers a soft credit inquiry with no impact to your score. All broker fees are paid by the funder, not you."}
+                ? "Al enviar, autorizas a Aprovuit a revisar tu solicitud para financiamiento directo y, cuando aplique, presentarla a socios de financiamiento en nuestra red. Esto genera una consulta suave de crédito sin impacto a tu puntaje. Todos los términos y cargos se divulgan antes de firmar."
+                : "By submitting, you authorize Aprovuit to review your application for direct funding and, where applicable, to present it to funding partners in our network. This triggers a soft credit inquiry with no impact to your score. All terms and fees are disclosed before you sign."}
             </p>
           </div>
 
@@ -1721,7 +1721,7 @@ function FAQPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
     ]},
   ] : [
     { cat:"The Platform", items:[
-      ["What is Aprovuit?","Aprovuit is a financing marketplace platform — not a lender or broker. You submit one request, independent financing partners review it and may extend offers. You compare and choose. Aprovuit does not make credit decisions."],
+      ["What is Aprovuit?","Aprovuit is a direct lender and licensed funding broker. We fund deals from our own capital and work with our network of top funders — giving you more options and faster approvals. You see every offer, every term, before you decide."],
       ["How does Aprovuit make money?","Aprovuit earns a broker fee paid by the funding partner when a deal is successfully funded — not from you. There is no cost to apply or use the platform. All fees are fully disclosed before you sign any agreement."],
       ["Is my information secure?","Yes. All data is encrypted with 256-bit SSL. Your information may only be shared with financing partners for the purpose of evaluating your request."],
       ["Is Aprovuit available in all states?","The platform is available nationwide. Specific products may have geographic restrictions based on financing partner licensing."],
@@ -1819,7 +1819,7 @@ function Chatbot({ lang, onApply }) {
         body:JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:1000,
-          system:`You are Aprovuit's friendly funding assistant. Aprovuit is a financing marketplace platform — like Kayak but for business funding. Business owners submit one application and may receive multiple financing offers from our partner network. They compare and choose entirely on their own. Aprovuit is NOT a lender or broker. We do not negotiate on anyone's behalf or make credit decisions.
+          system:`You are Aprovuit's friendly funding assistant. Aprovuit is a direct lender and licensed funding broker, powered by technology. We fund deals from our own capital and work with a network of top funders to give business owners the best options available — all managed in one platform. Aprovuit is a direct lender and licensed broker. We fund some deals from our own capital and work with a funding partner network for additional options.
 
 Key facts:
 - Products: Term Loans ($10K-$500K, 3-24mo), Lines of Credit ($10K-$5M, revolving), Revenue Advances ($5K-$500K, daily repayment), Equipment Financing ($5K-$2M, up to 60mo)
@@ -2122,7 +2122,7 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           <div className="fadeup">
             <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}30`, padding:"5px 16px", borderRadius:20, marginBottom:28 }}>
               <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-              <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase" }}>{lang==="es"?"Plataforma de Financiamiento · No un Corredor":"Financing Platform · Not a Broker"}</span>
+              <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase" }}>{lang==="es"?"Prestamista Directo · Broker con Licencia":"Direct Lender · Licensed Broker"}</span>
             </div>
             <h1 className="cond" style={{ fontSize:"clamp(48px,6.5vw,82px)", fontWeight:900, lineHeight:0.94, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
               {lang==="es" ? <>SIN LLAMADAS.<br /><span style={{color:G}}>SIN PRESIÓN.</span><br />SIMPLE.</> : <>NO HASSLE.<br /><span style={{color:G}}>NO CALLS.</span><br />SIMPLE.</>}
@@ -2134,8 +2134,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
             </p>
             <p style={{ fontSize:14, color:"rgba(255,255,255,.3)", lineHeight:1.6, marginBottom:40, maxWidth:420, fontWeight:300 }}>
               {lang==="es"
-                ? "Aprovuit es una plataforma tecnológica. No somos un prestamista ni un corredor."
-                : "Aprovuit is a technology platform. We are not a lender or broker."}
+                ? "Aprovuit es una plataforma tecnológica. Somos un prestamista directo y broker de financiamiento con licencia."
+                : "Aprovuit is a direct lender and licensed funding broker powered by technology."}
             </p>
             <div style={{ display:"flex", gap:14, flexWrap:"wrap" }} className="hero-btns">
               <button className="btn-green" style={{ fontSize:16, padding:"15px 36px" }} onClick={onApply}>
@@ -2329,8 +2329,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           </p>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, textAlign:"left", marginBottom:32 }}>
             {(lang==="es"
-              ? [["×","Lo que NO somos","Un prestamista directo. No fondeamos tratos nosotros mismos — te conectamos con el fondeador correcto de nuestra red."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["—","Nuestro compromiso","Financiamiento honesto y transparente. Te decimos lo que ganamos. Sin cargos ocultos. Sin sorpresas."]]
-              : [["×","What we're NOT","A direct lender. We don't fund deals ourselves — we connect you with the right funder from our network."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["—","Our commitment","Honest, transparent funding. We tell you what we earn. No hidden fees. No bait-and-switch."]]
+              ? [["→","Prestamista Directo","Fondeamos tratos directamente con nuestro propio capital — decisiones más rápidas, sin intermediarios en nuestros productos propios."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["→","Total Transparencia","Cada oferta muestra todos los términos claramente antes de que firmes. Sin cargos ocultos. Sin sorpresas."]]
+              : [["→","Direct Lender","We fund deals directly from our own capital — faster decisions, no middleman on our own products."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["→","Full Transparency","Every offer shows all terms clearly before you sign. No hidden fees. No bait-and-switch. Ever."]]
             ).map(([icon,title,desc])=>(
               <div key={title} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"24px 20px" }}>
                 <div style={{ fontSize:22, marginBottom:12 }}>{icon}</div>
@@ -2410,8 +2410,8 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
           <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"14px 18px", marginBottom:16 }}>
             <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.8 }}>
               {lang==="es"
-                ? "Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, no un prestamista ni corredor. No tomamos decisiones de crédito, negociamos términos de financiamiento, ni actuamos en nombre de ningún usuario. Las solicitudes enviadas pueden ser compartidas con socios de financiamiento terceros independientes. Aprovuit no garantiza la aprobación de financiamiento."
-                : "Legal: Aprovuit is a technology marketplace platform, not a lender or broker. We do not make credit decisions, negotiate financing terms, or act on behalf of any user. Applications may be shared with independent third-party financing partners who independently determine eligibility and terms. Aprovuit does not guarantee financing approval."}
+                ? "Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, prestamista directo y broker de financiamiento con licencia. Parte del financiamiento es proporcionado directamente por Aprovuit; otro por socios prestamistas terceros. Los términos y la aprobación varían según el producto y el solicitante. Aprovuit no garantiza la aprobación."
+                : "Legal: Aprovuit operates as a direct lender and licensed funding broker. Some funding is provided directly by Aprovuit; other funding is provided by third-party lending partners. Terms and approval vary by product and applicant. Aprovuit does not guarantee funding approval."}
             </p>
           </div>
           <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
