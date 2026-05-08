@@ -584,7 +584,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   // ── STYLES ──────────────────────────────────────────────────────
   const pageStyle = { minHeight:"100vh", background:"#0a0a0a", fontFamily:"'Sora',sans-serif", color:"#fff" };
   const navStyle = { background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", height:58, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 };
-  const labelStyle = { fontSize:11, fontWeight:600, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:10, display:"block" };
+  const labelStyle = { fontSize:11, fontWeight:700, color:"rgba(255,255,255,.7)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:10, display:"block" };
   const errStyle = { fontSize:12, color:"#ef4444", marginTop:-8, marginBottom:10 };
 
   // ── SUCCESS SCREEN ───────────────────────────────────────────────
@@ -718,9 +718,9 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
     ? ["Fondos","Negocio","Tu Cuenta","Revisar"]
     : ["Funding","Business","Your Account","Review"];
 
-  const inp = { width:"100%", padding:"13px 16px", borderRadius:8, border:"1px solid rgba(255,255,255,.1)", fontSize:14, fontFamily:"'Sora',sans-serif", color:"#fff", background:"rgba(255,255,255,.04)", marginBottom:12, display:"block", outline:"none", transition:"border-color .15s", letterSpacing:"-.01em" };
+  const inp = { width:"100%", padding:"13px 16px", borderRadius:8, border:"1px solid rgba(255,255,255,.18)", fontSize:14, fontFamily:"'Sora',sans-serif", color:"#fff", background:"rgba(255,255,255,.08)", marginBottom:12, display:"block", outline:"none", transition:"border-color .15s", letterSpacing:"-.01em" };
   const inpFocus = { ...inp, borderColor:"rgba(168,255,62,.5)" };
-  const sel = { ...inp, appearance:"none", backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 14px center", cursor:"pointer", paddingRight:40 };
+  const sel = { ...inp, appearance:"none", backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 14px center", cursor:"pointer", paddingRight:40 };
 
   const renderSteps = () => (
     <div style={{ maxWidth:580, margin:"0 auto", padding:"48px 24px 80px" }}>
