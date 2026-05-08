@@ -3059,55 +3059,27 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
 
           {/* LEFT — contact info */}
           <div>
-            <h2 style={{ fontSize:"clamp(22px,3vw,32px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:32 }}>
-              {lang==="es"?"Información de Contacto":"Contact Information"}
+            <h2 style={{ fontSize:"clamp(22px,3vw,32px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:16 }}>
+              {lang==="es"?"¿En qué podemos ayudarte?":"What can we help you with?"}
             </h2>
-
-            {[
-              {
-                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
-                label: lang==="es"?"Correo Electrónico":"Email",
-                value:"info@aprovuit.com",
-                sub: lang==="es"?"Te respondemos en menos de 24 horas":"We respond within 24 hours"
-              },
-              {
-                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
-                label: lang==="es"?"Ubicación":"Location",
-                value:"New York, NY",
-                sub: lang==="es"?"Atendemos negocios en todo EE.UU.":"Serving businesses nationwide"
-              },
-              {
-                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-                label: lang==="es"?"Horario":"Hours",
-                value: lang==="es"?"Lun–Vie, 9am–6pm ET":"Mon–Fri, 9am–6pm ET",
-                sub: lang==="es"?"También puedes escribirnos en cualquier momento":"You can also message us anytime"
-              }
-            ].map(item => (
-              <div key={item.label} style={{ display:"flex", gap:16, marginBottom:28, padding:"20px 24px", background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12 }}>
-                <div style={{ width:40, height:40, background:"rgba(168,255,62,.08)", border:`1px solid ${G}20`, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  {item.icon}
+            <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", lineHeight:1.85, marginBottom:32, fontWeight:300 }}>
+              {lang==="es"
+                ? "Usa el formulario para enviarnos un mensaje sobre financiamiento, tu solicitud o cualquier pregunta. Te respondemos en menos de 24 horas."
+                : "Use the form to send us a message about funding, your application, or any questions you have. We'll get back to you within 24 hours."}
+            </p>
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {(lang==="es"
+                ? [["Preguntas sobre financiamiento","¿Cuánto califico? ¿Qué productos tengo disponibles?"],["Estado de tu solicitud","Seguimiento de tu trato o documentos pendientes."],["Preguntas sobre tu cuenta","Acceso, pagos, saldo y más."],["Asociaciones y referidos","¿Quieres enviar clientes y ganar comisiones?"]]
+                : [["Funding questions","How much do I qualify for? What products are available?"],["Application status","Following up on your deal or pending documents."],["Account questions","Access, payments, balance, and more."],["Partnerships & referrals","Want to refer clients and earn commissions?"]]
+              ).map(([title,desc])=>(
+                <div key={title} style={{ display:"flex", gap:12, padding:"16px 18px", background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:10 }}>
+                  <div style={{ width:8, height:8, background:G, borderRadius:"50%", flexShrink:0, marginTop:5 }}></div>
+                  <div>
+                    <p style={{ fontSize:13, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
+                    <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", fontWeight:300 }}>{desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <p style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:4 }}>{item.label}</p>
-                  <p style={{ fontSize:15, fontWeight:600, color:"#fff", marginBottom:3 }}>{item.value}</p>
-                  <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", fontWeight:300 }}>{item.sub}</p>
-                </div>
-              </div>
-            ))}
-
-            {/* Apply CTA */}
-            <div style={{ background:`rgba(168,255,62,.06)`, border:`1px solid ${G}20`, borderRadius:12, padding:"20px 24px", marginTop:8 }}>
-              <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:6 }}>
-                {lang==="es"?"¿Listo para aplicar?":"Ready to apply for funding?"}
-              </p>
-              <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.6, marginBottom:14, fontWeight:300 }}>
-                {lang==="es"
-                  ? "No necesitas llamar. Completa tu solicitud en minutos y rastrea todo en tiempo real."
-                  : "No need to call. Complete your application in minutes and track everything in real time."}
-              </p>
-              <button onClick={onApply} className="btn-green" style={{ fontSize:13, padding:"10px 24px" }}>
-                {lang==="es"?"Comenzar Ahora →":"Get Started Now →"}
-              </button>
+              ))}
             </div>
           </div>
 
