@@ -1489,7 +1489,7 @@ function AdminDashboard({ onExit }) {
 
 
 // ── INNER PAGE NAV ───────────────────────────────────────────────
-function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout }) {
+function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout, onContact }) {
   const go = (fn) => { fn && fn(); window.scrollTo(0,0); };
   return (
     <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
@@ -1507,6 +1507,7 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         <button onClick={()=>go(onHowItWorks)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
         <button onClick={()=>go(onFaq)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
         {onAbout && <button onClick={()=>go(onAbout)} className="nav-link">{lang==="es"?"Nosotros":"About"}</button>}
+        {onContact && <button onClick={()=>go(onContact)} className="nav-link">{lang==="es"?"Contacto":"Contact"}</button>}
         {onLogin && <button onClick={()=>go(onLogin)} className="nav-link">{lang==="es"?"Entrar":"Log In"}</button>}
         {setLang && <div className="lang-pill">
           <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?"#a8ff3e":"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
@@ -1563,7 +1564,7 @@ function DontSeeSection({ lang, onApply }) {
       
 
 
-function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
+function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const products = [
     {
       icon:"→", name:lang==="es"?"Préstamo a Plazo":"Term Loan",
@@ -1618,7 +1619,7 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
       <div style={{ padding:"64px 5% 80px", maxWidth:1100, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
@@ -1686,7 +1687,7 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
 
 
 // ── HOW IT WORKS PAGE ─────────────────────────────────────────────
-function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
+function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const steps = lang==="es" ? [
     { n:"01", title:"Completa tu Solicitud", time:"5 minutos", icon:"01",
       desc:"Llena nuestra solicitud inteligente en línea. Sin entrevistas telefónicas. Sin papeleo. Solo información básica sobre tu negocio y lo que necesitas.", details:["Información básica del negocio","Monto de financiamiento deseado","Propósito de los fondos","Sube 3-6 meses de estados bancarios"] },
@@ -1718,7 +1719,7 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
       <div style={{ padding:"64px 5% 80px", maxWidth:900, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
@@ -1771,7 +1772,7 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
 }
 
 // ── FAQ PAGE ──────────────────────────────────────────────────────
-function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
+function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const [open, setOpen] = useState(null);
   const categories = lang==="es" ? [
     { cat:"La Plataforma", items:[
@@ -1836,7 +1837,7 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
       <div style={{ padding:"64px 5% 80px", maxWidth:860, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
@@ -2857,12 +2858,12 @@ function AboutSection({ lang, onApply }) {
 
 
 // ── ABOUT PAGE ───────────────────────────────────────────────────
-function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
+function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const G = "#a8ff3e";
   return (
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
-      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} />
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
 
       {/* HERO */}
       <section style={{ padding:"88px 5% 72px", maxWidth:900, margin:"0 auto", textAlign:"center" }}>
@@ -3009,8 +3010,187 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
   );
 }
 
+
+// ── CONTACT PAGE ─────────────────────────────────────────────────
+function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onAbout }) {
+  const G = "#a8ff3e";
+  const [form, setForm] = useState({ name:"", email:"", phone:"", subject:"", message:"" });
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const submit = async () => {
+    if (!form.name || !form.email || !form.message) return;
+    setSending(true);
+    try {
+      await fetch("https://formspree.io/f/xbdpdnby", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ ...form, _subject:"Aprovuit Contact Form — " + form.subject })
+      });
+      setSent(true);
+    } catch(e) {}
+    setSending(false);
+  };
+
+  const inp = { width:"100%", padding:"13px 16px", borderRadius:8, border:"1px solid rgba(255,255,255,.12)", fontSize:14, fontFamily:"'Sora',sans-serif", color:"#fff", background:"rgba(255,255,255,.06)", marginBottom:14, display:"block", outline:"none", boxSizing:"border-box" };
+
+  return (
+    <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
+      <style>{CSS}</style>
+      <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
+
+      {/* HERO */}
+      <section style={{ padding:"72px 5% 56px", textAlign:"center", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+        <p style={{ fontSize:11, letterSpacing:".14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
+          {lang==="es"?"Contáctanos":"Contact Us"}
+        </p>
+        <h1 style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:16 }}>
+          {lang==="es"?"Estamos aquí para ayudarte.":"We're here to help."}
+        </h1>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto", lineHeight:1.8, fontWeight:300 }}>
+          {lang==="es"
+            ? "¿Tienes preguntas sobre financiamiento, tu solicitud o tu cuenta? Escríbenos y te respondemos en menos de 24 horas."
+            : "Have questions about funding, your application, or your account? Send us a message and we'll get back to you within 24 hours."}
+        </p>
+      </section>
+
+      <section style={{ padding:"64px 5%", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"start" }} className="hero-grid">
+
+          {/* LEFT — contact info */}
+          <div>
+            <h2 style={{ fontSize:"clamp(22px,3vw,32px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:32 }}>
+              {lang==="es"?"Información de Contacto":"Contact Information"}
+            </h2>
+
+            {[
+              {
+                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+                label: lang==="es"?"Correo Electrónico":"Email",
+                value:"info@aprovuit.com",
+                sub: lang==="es"?"Te respondemos en menos de 24 horas":"We respond within 24 hours"
+              },
+              {
+                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+                label: lang==="es"?"Ubicación":"Location",
+                value:"New York, NY",
+                sub: lang==="es"?"Atendemos negocios en todo EE.UU.":"Serving businesses nationwide"
+              },
+              {
+                icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+                label: lang==="es"?"Horario":"Hours",
+                value: lang==="es"?"Lun–Vie, 9am–6pm ET":"Mon–Fri, 9am–6pm ET",
+                sub: lang==="es"?"También puedes escribirnos en cualquier momento":"You can also message us anytime"
+              }
+            ].map(item => (
+              <div key={item.label} style={{ display:"flex", gap:16, marginBottom:28, padding:"20px 24px", background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12 }}>
+                <div style={{ width:40, height:40, background:"rgba(168,255,62,.08)", border:`1px solid ${G}20`, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <p style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:4 }}>{item.label}</p>
+                  <p style={{ fontSize:15, fontWeight:600, color:"#fff", marginBottom:3 }}>{item.value}</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", fontWeight:300 }}>{item.sub}</p>
+                </div>
+              </div>
+            ))}
+
+            {/* Apply CTA */}
+            <div style={{ background:`rgba(168,255,62,.06)`, border:`1px solid ${G}20`, borderRadius:12, padding:"20px 24px", marginTop:8 }}>
+              <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:6 }}>
+                {lang==="es"?"¿Listo para aplicar?":"Ready to apply for funding?"}
+              </p>
+              <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.6, marginBottom:14, fontWeight:300 }}>
+                {lang==="es"
+                  ? "No necesitas llamar. Completa tu solicitud en minutos y rastrea todo en tiempo real."
+                  : "No need to call. Complete your application in minutes and track everything in real time."}
+              </p>
+              <button onClick={onApply} className="btn-green" style={{ fontSize:13, padding:"10px 24px" }}>
+                {lang==="es"?"Comenzar Ahora →":"Get Started Now →"}
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT — contact form */}
+          <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"36px 32px" }}>
+            {sent ? (
+              <div style={{ textAlign:"center", padding:"40px 0" }}>
+                <div style={{ width:56, height:56, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px" }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h3 style={{ fontSize:22, fontWeight:700, color:"#fff", marginBottom:10, letterSpacing:"-.02em" }}>
+                  {lang==="es"?"¡Mensaje Enviado!":"Message Sent!"}
+                </h3>
+                <p style={{ fontSize:14, color:"rgba(255,255,255,.45)", lineHeight:1.7, fontWeight:300 }}>
+                  {lang==="es"
+                    ? "Gracias por escribirnos. Te responderemos en menos de 24 horas."
+                    : "Thanks for reaching out. We'll get back to you within 24 hours."}
+                </p>
+              </div>
+            ) : (
+              <>
+                <h3 style={{ fontSize:18, fontWeight:700, color:"#fff", marginBottom:24, letterSpacing:"-.02em" }}>
+                  {lang==="es"?"Envíanos un Mensaje":"Send Us a Message"}
+                </h3>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:0 }}>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                      {lang==="es"?"Nombre":"Name"} *
+                    </label>
+                    <input value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder={lang==="es"?"Tu nombre":"Your name"} style={inp} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                      {lang==="es"?"Correo":"Email"} *
+                    </label>
+                    <input value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))} placeholder="you@business.com" style={inp} type="email" />
+                  </div>
+                </div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                      {lang==="es"?"Teléfono":"Phone"}
+                    </label>
+                    <input value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))} placeholder="(555) 000-0000" style={inp} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                      {lang==="es"?"Asunto":"Subject"}
+                    </label>
+                    <select value={form.subject} onChange={e=>setForm(f=>({...f,subject:e.target.value}))} style={{...inp, appearance:"none", cursor:"pointer"}}>
+                      <option value="">{lang==="es"?"Seleccionar...":"Select..."}</option>
+                      <option>{lang==="es"?"Pregunta sobre financiamiento":"Funding question"}</option>
+                      <option>{lang==="es"?"Estado de mi solicitud":"Application status"}</option>
+                      <option>{lang==="es"?"Pregunta sobre mi cuenta":"Account question"}</option>
+                      <option>{lang==="es"?"Asociación o referidos":"Partnership or referrals"}</option>
+                      <option>{lang==="es"?"Otro":"Other"}</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                    {lang==="es"?"Mensaje":"Message"} *
+                  </label>
+                  <textarea value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))} placeholder={lang==="es"?"¿En qué podemos ayudarte?":"How can we help you?"} rows={5} style={{...inp, resize:"vertical", lineHeight:1.6}} />
+                </div>
+                <button onClick={submit} disabled={sending || !form.name || !form.email || !form.message} className="btn-green" style={{ width:"100%", fontSize:14, padding:"13px", opacity:(sending||!form.name||!form.email||!form.message)?0.5:1, cursor:(sending||!form.name||!form.email||!form.message)?"not-allowed":"pointer" }}>
+                  {sending ? (lang==="es"?"Enviando...":"Sending...") : (lang==="es"?"Enviar Mensaje →":"Send Message →")}
+                </button>
+                <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", textAlign:"center", marginTop:12 }}>
+                  {lang==="es"?"Te respondemos en menos de 24 horas":"We typically respond within 24 hours"}
+                </p>
+              </>
+            )}
+          </div>
+
+        </div>
+      </section>
+    </div>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
-function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout }) {
+function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const t = T[lang];
   const G = "#a8ff3e";
 
@@ -3294,7 +3474,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
               <span style={{ fontSize:15, fontWeight:800, letterSpacing:"-.03em", color:"#fff" }}>APROVUIT</span>
             </div>
             <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
-              {[[t.nav.products,onProducts],[t.nav.howItWorks,onHowItWorks],["About",onAbout],[t.nav.faq,onFaq],[t.nav.login,onLogin]].map(([l,fn])=>(
+              {[[t.nav.products,onProducts],[t.nav.howItWorks,onHowItWorks],["About",onAbout],[t.nav.faq,onFaq],[lang==="es"?"Contacto":"Contact",onContact],[t.nav.login,onLogin]].map(([l,fn])=>(
                 <button key={l} className="nav-link" onClick={()=>{fn?.();window.scrollTo(0,0);}}>{l}</button>
               ))}
             </div>
@@ -3411,10 +3591,11 @@ export default function Aprovuit() {
   if (view==="apply") return <ApplyPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
 
   if (view==="login") return <LoginPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onLogin={handleLogin} />;
-  if (view==="products") return <><ProductsPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="about") return <><AboutPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="faq") return <><FAQPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="products") return <><ProductsPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="contact") return <><ContactPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="about") return <><AboutPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
+  if (view==="faq") return <><FAQPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
 
   if (view==="admin") return (
     <AdminGate onExit={()=>{setView("landing");window.scrollTo(0,0);}} />
@@ -3441,7 +3622,7 @@ export default function Aprovuit() {
   return (
     <>
       <style>{CSS}</style>
-      <Landing lang={lang} setLang={setLang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onLogin={()=>{setView("login");window.scrollTo(0,0);}} onAdmin={()=>setView("admin")} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} />
+      <Landing lang={lang} setLang={setLang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onLogin={()=>{setView("login");window.scrollTo(0,0);}} onAdmin={()=>setView("admin")} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} />
       <Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} />
     </>
   );
