@@ -2768,110 +2768,268 @@ function AboutSection({ lang, onApply }) {
   );
 }
 
+
+// ── ABOUT PAGE ───────────────────────────────────────────────────
+function AboutPage({ lang, onBack, onApply, onProducts, onHowItWorks, onFaq }) {
+  const G = "#a8ff3e";
+  return (
+    <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
+      <style>{CSS}</style>
+      <InnerNav lang={lang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} />
+
+      {/* HERO */}
+      <section style={{ padding:"88px 5% 72px", maxWidth:900, margin:"0 auto", textAlign:"center" }}>
+        <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:16, fontWeight:700 }}>
+          {lang==="es"?"Sobre Nosotros":"About Aprovuit"}
+        </p>
+        <h1 style={{ fontSize:"clamp(36px,6vw,72px)", fontWeight:700, letterSpacing:"-.03em", lineHeight:1.0, marginBottom:24, color:"#fff" }}>
+          {lang==="es"
+            ? <>{`Construido para los`}<br /><span style={{color:G}}>{`pequeños negocios.`}</span></>
+            : <>Built for the<br /><span style={{color:G}}>small business owner.</span></>}
+        </h1>
+        <p style={{ fontSize:18, color:"rgba(255,255,255,.45)", lineHeight:1.85, maxWidth:680, margin:"0 auto", fontWeight:300 }}>
+          {lang==="es"
+            ? "Aprovuit nació de una idea simple: los dueños de negocios merecen acceso rápido y transparente al capital — sin los obstáculos de la banca tradicional. Somos un prestamista directo y broker de financiamiento, potenciados por tecnología."
+            : "Aprovuit was built on a simple idea: business owners deserve fast, transparent access to capital — without the barriers of traditional banking. We are a direct lender and licensed funding broker, powered by technology."}
+        </p>
+      </section>
+
+      {/* MISSION STATS */}
+      <div style={{ background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }} className="stats-grid">
+          {(lang==="es"
+            ? [["$500M+","Fondeado"],["10,000+","Negocios"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]]
+            : [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Time to Fund"],["580+","Min. Credit Score"]]
+          ).map(([v,l],i)=>(
+            <div key={l} style={{ padding:"32px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.06)":"none" }}>
+              <div style={{ fontSize:36, fontWeight:700, color:G, letterSpacing:"-.03em" }}>{v}</div>
+              <div style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:6 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* STORY */}
+      <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"start" }} className="hero-grid">
+          <div>
+            <h2 style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
+              {lang==="es"?"¿Por qué existe Aprovuit?":"Why does Aprovuit exist?"}
+            </h2>
+            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
+              {lang==="es"
+                ? "Los dueños de pequeños negocios son la columna vertebral de la economía — pero el sistema financiero tradicional los trata como ciudadanos de segunda clase. Proceso interminable, semanas de espera, respuestas vagas."
+                : "Small business owners are the backbone of the economy — but the traditional financial system treats them like second-class citizens. Endless paperwork, weeks of waiting, vague answers."}
+            </p>
+            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
+              {lang==="es"
+                ? "Nosotros lo arreglamos. Aprovuit combina el expertise de un broker con la velocidad y transparencia de la tecnología. Presentamos tu expediente a nuestra red de fondeadores, negociamos en tu nombre y te mantenemos informado en cada paso — a través de tu portal, no por teléfono."
+                : "We fixed that. Aprovuit combines the expertise of a seasoned broker with the speed and transparency of technology. We present your file to our network of funders, work the deal on your behalf, and keep you informed at every step — through your dashboard, not over the phone."}
+            </p>
+            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, fontWeight:300 }}>
+              {lang==="es"
+                ? "El resultado: más opciones, mejores términos y total visibilidad. Sin sorpresas. Sin llamadas de ventas. Sin papeleo interminable."
+                : "The result: more options, better terms, and total visibility. No surprises. No sales calls. No endless paperwork."}
+            </p>
+          </div>
+          <div>
+            <h2 style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
+              {lang==="es"?"Nuestros Principios":"Our Principles"}
+            </h2>
+            {(lang==="es"
+              ? [
+                  ["Sin cargos ocultos","Cada fee se divulga antes de firmar. Sin sorpresas."],
+                  ["Sin penalidades por pago anticipado","Paga antes y ahorra. Siempre recompensamos el pago anticipado."],
+                  ["Sin llamadas de ventas","Sin presión de vendedores. Sin llamadas no deseadas. Jamás."],
+                  ["Consulta suave únicamente","Aplicar no afecta tu puntaje de crédito."],
+                  ["Decisiones en horas","No semanas. No meses. La mayoría de decisiones en 2–4 horas."],
+                  ["Términos claros antes de firmar","Ves todo — monto, tasa, pagos — antes de tomar ninguna decisión."],
+                  ["Comunicación 100% escrita","Todo en tu portal. Registro completo de cada conversación."],
+                ]
+              : [
+                  ["No hidden fees","Every fee is disclosed before you sign. No surprises at the end."],
+                  ["No prepayment penalties","Pay off early and save. We always reward early payoff."],
+                  ["No sales calls","No salesperson pressure. No unsolicited calls. Ever."],
+                  ["Soft pull only","Applying does not impact your credit score."],
+                  ["Decisions in hours","Not weeks. Not months. Most decisions within 2–4 hours."],
+                  ["Clear terms before you sign","You see everything — amount, rate, payments — before any decision."],
+                  ["100% written communication","Everything in your portal. Full record of every conversation."],
+                ]
+            ).map(([title,desc])=>(
+              <div key={title} style={{ display:"flex", gap:14, marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+                <div style={{ width:18, height:18, background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:2 }}>
+                  <div style={{ width:5, height:5, background:G, borderRadius:"50%" }}></div>
+                </div>
+                <div>
+                  <p style={{ fontSize:13, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.6, fontWeight:300 }}>{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INDUSTRIES */}
+      <section style={{ background:BK2, padding:"72px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:48 }}>
+            <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
+              {lang==="es"?"Industrias":"Industries We Serve"}
+            </p>
+            <h2 style={{ fontSize:"clamp(24px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:12 }}>
+              {lang==="es"?"Tu industria. Nuestra especialidad.":"Your industry. Our specialty."}
+            </h2>
+            <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:520, margin:"0 auto", lineHeight:1.75, fontWeight:300 }}>
+              {lang==="es"
+                ? "Hemos fondeado negocios en docenas de industrias. Cada sector tiene necesidades únicas de capital — y nosotros las entendemos."
+                : "We've funded businesses across dozens of industries. Every sector has unique capital needs — and we understand yours."}
+            </p>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8 }} className="how-grid">
+            {(lang==="es"
+              ? [["Restaurantes y Alimentos","Capital de trabajo para nómina, inventario y gastos durante temporadas lentas."],["Salud y Médico","Soluciones de flujo de caja mientras esperan pagos de seguros."],["Construcción","Financiamiento por proyecto para materiales, equipo y mano de obra."],["Transporte","Capital para fletes, camiones, combustible y logística."],["Retail y Comercio","Fondos para inventario, expansión y demanda estacional."],["Manufactura","Financiamiento de equipo e inventario para producción continua."],["Auto y Servicios","Capital para talleres, herramientas, refacciones y gastos diarios."],["Servicios Profesionales","Flujo de caja para firmas legales, contables y consultoría."]]
+              : [["Restaurants & Food","Working capital for payroll, inventory, and costs through slow seasons."],["Healthcare & Medical","Cash flow solutions while waiting on insurance reimbursements."],["Construction","Project-based financing for materials, equipment, and labor."],["Transportation","Capital for freight, trucks, fuel, and logistics operations."],["Retail & Commerce","Funding for inventory, expansion, and seasonal demand."],["Manufacturing","Equipment and inventory financing to keep production running."],["Auto & Services","Capital for repair shops, tools, parts, and daily expenses."],["Professional Services","Cash flow for law firms, accountants, and consulting businesses."]]
+            ).map(([name,desc])=>(
+              <div key={name} style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"22px 20px", transition:"border-color .2s" }}
+                onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(168,255,62,.3)"}
+                onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.07)"}>
+                <p style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:8, letterSpacing:"-.01em" }}>{name}</p>
+                <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.65, fontWeight:300 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
+        <h2 style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>
+          {lang==="es"?"¿Listo para Comenzar?":"Ready to Get Started?"}
+        </h2>
+        <p style={{ fontSize:16, color:"rgba(0,0,0,.55)", marginBottom:28, fontWeight:300 }}>
+          {lang==="es"?"Aplica en minutos. Sin impacto al crédito.":"Apply in minutes. No impact to your credit score."}
+        </p>
+        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"15px 44px", fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", borderRadius:6 }}>
+          {lang==="es"?"Comenzar →":"Get Started →"}
+        </button>
+      </section>
+    </div>
+  );
+}
+
 // ── LANDING PAGE ─────────────────────────────────────────────────
-function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, onFaq }) {
+function Landing({ lang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout }) {
   const t = T[lang];
-  const [faqOpen, setFaqOpen] = useState(null);
+  const G = "#a8ff3e";
 
   return (
-    <div style={{ background:BK, color:"#fff", fontFamily:"'DM Sans',sans-serif" }}>
+    <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif" }}>
 
-      {/* ── HERO ── */}
-      <section style={{ minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 5% 60px", position:"relative", overflow:"hidden" }}>
-        <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 20% 60%, ${G}0f 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
+      {/* NAV */}
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:58 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#000" }}>A</div>
+          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+        </div>
+        <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
+          {[[t.nav.products,"products"],[t.nav.howItWorks,"howitworks"],[t.nav.faq,"faq"],["About","about"]].map(([l,v])=>(
+            <button key={v} className="nav-link" onClick={()=>{ ({products:onProducts,howitworks:onHowItWorks,faq:onFaq,about:onAbout})[v]?.(); window.scrollTo(0,0); }}>{l}</button>
+          ))}
+          <div className="lang-pill">
+            <button className="lb" style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.5)" }}>EN</button>
+            <button className="lb" style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.5)" }}>ES</button>
+          </div>
+          <button className="nav-link" onClick={onLogin}>{t.nav.login}</button>
+          <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={onApply}>{t.nav.apply}</button>
+        </div>
+        <div className="nav-mobile" style={{ display:"none", gap:10, alignItems:"center" }}>
+          <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={onApply}>{lang==="es"?"Aplicar →":"Apply →"}</button>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section style={{ minHeight:"100vh", display:"flex", alignItems:"center", padding:"0 5%", position:"relative", overflow:"hidden" }}>
+        <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 15% 60%, ${G}0d 0%, transparent 50%), radial-gradient(ellipse at 85% 20%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
         <div style={{ maxWidth:1100, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }} className="hero-grid">
 
           {/* Left */}
           <div className="fadeup">
-            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}30`, padding:"5px 16px", borderRadius:20, marginBottom:28 }}>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}25`, padding:"5px 16px", borderRadius:20, marginBottom:32 }}>
               <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
-              <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase" }}>{lang==="es"?"Prestamista Directo · Broker con Licencia":"Direct Lender · Licensed Broker"}</span>
+              <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+                {lang==="es"?"Prestamista Directo · Broker con Licencia":"Direct Lender · Licensed Broker"}
+              </span>
             </div>
-            <h1 className="cond" style={{ fontSize:"clamp(48px,6.5vw,82px)", fontWeight:900, lineHeight:0.94, marginBottom:24, letterSpacing:"-0.02em", textTransform:"uppercase" }}>
-              {lang==="es" ? <>SIN LLAMADAS.<br /><span style={{color:G}}>SIN PRESIÓN.</span><br />SIMPLE.</> : <>NO HASSLE.<br /><span style={{color:G}}>NO CALLS.</span><br />SIMPLE.</>}
+            <h1 style={{ fontSize:"clamp(44px,6vw,76px)", fontWeight:700, lineHeight:1.0, marginBottom:24, letterSpacing:"-.03em", color:"#fff" }}>
+              {lang==="es"
+                ? <>{t.hero.h1}<br /><span style={{color:G}}>{t.hero.h2}</span></>
+                : <>{t.hero.h1}<br /><span style={{color:G}}>{t.hero.h2}</span></>}
             </h1>
-            <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:16, fontWeight:300, maxWidth:460 }}>
-              {lang==="es"
-                ? "Envía una solicitud, rastrea tu financiamiento y ve las ofertas disponibles — todo en un solo lugar."
-                : "Submit one request, track your funding, and view available offers — all in one place."}
-            </p>
-            <p style={{ fontSize:14, color:"rgba(255,255,255,.3)", lineHeight:1.6, marginBottom:40, maxWidth:420, fontWeight:300 }}>
-              {lang==="es"
-                ? "Aprovuit es una plataforma tecnológica. Somos un prestamista directo y broker de financiamiento con licencia."
-                : "Aprovuit is a direct lender and licensed funding broker powered by technology."}
+            <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.75, marginBottom:40, fontWeight:300, maxWidth:480 }}>
+              {t.hero.sub}
             </p>
             <div style={{ display:"flex", gap:14, flexWrap:"wrap" }} className="hero-btns">
-              <button className="btn-green" style={{ fontSize:16, padding:"15px 36px" }} onClick={onApply}>
-                {lang==="es"?"Comenzar →":"Get Started →"}
+              <button className="btn-green" style={{ fontSize:16, padding:"15px 40px" }} onClick={onApply}>
+                {t.hero.cta1}
               </button>
               <button className="btn-ghost" onClick={onLogin}>
-                {lang==="es"?"Entrar al Portal":"Log In to Dashboard"}
+                {t.hero.cta2}
               </button>
             </div>
+            <p style={{ fontSize:12, color:"rgba(255,255,255,.2)", marginTop:18 }}>
+              {lang==="es"?"Sin impacto al crédito · Sin cargos ocultos · Sin llamadas":"No credit impact · No hidden fees · No phone calls"}
+            </p>
           </div>
 
-          {/* Right — Dashboard mockup */}
-          <div style={{ display:"flex", justifyContent:"center" }}>
-            <div style={{ position:"relative", width:"100%", maxWidth:380 }}>
-              <div style={{ position:"absolute", inset:-24, background:`radial-gradient(circle, ${G}15 0%, transparent 70%)`, filter:"blur(24px)", borderRadius:"50%" }}></div>
-              {/* App frame */}
-              <div style={{ background:"#0f0f0f", border:"1px solid rgba(255,255,255,.1)", borderRadius:24, overflow:"hidden", position:"relative", zIndex:1, boxShadow:"0 40px 80px rgba(0,0,0,.6)" }}>
-                {/* App header */}
-                <div style={{ background:"#0a0a0a", padding:"16px 20px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          {/* Right — dashboard mockup */}
+          <div style={{ display:"flex", justifyContent:"center" }} className="hero-mockup">
+            <div style={{ width:"100%", maxWidth:380, position:"relative" }}>
+              <div style={{ position:"absolute", inset:-32, background:`radial-gradient(circle, ${G}12 0%, transparent 70%)`, filter:"blur(24px)", borderRadius:"50%" }}></div>
+              <div style={{ background:"#0f0f0f", border:"1px solid rgba(255,255,255,.1)", borderRadius:22, overflow:"hidden", position:"relative", zIndex:1, boxShadow:"0 40px 80px rgba(0,0,0,.6)" }}>
+                <div style={{ background:"#0a0a0a", padding:"14px 18px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                    <div style={{ width:24, height:24, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:900, color:"#000" }}>A</div>
-                    <span style={{ fontSize:14, fontWeight:700, color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+                    <div style={{ width:22, height:22, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:800, color:"#000" }}>A</div>
+                    <span style={{ fontSize:13, fontWeight:700, color:"#fff" }}>APROVUIT</span>
                   </div>
-                  <span style={{ fontSize:11, color:G, fontWeight:700, background:"rgba(168,255,62,.1)", padding:"3px 10px", borderRadius:20 }}>{lang==="es"?"En línea":"Live"}</span>
+                  <span style={{ fontSize:10, color:G, fontWeight:700, background:"rgba(168,255,62,.1)", padding:"3px 10px", borderRadius:20 }}>Live</span>
                 </div>
-                {/* App nav tabs */}
-                <div style={{ display:"flex", background:"#111", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-                  {(lang==="es"?["Resumen","Ofertas","Documentos"]:["Overview","Offers","Documents"]).map((tab,i)=>(
-                    <div key={tab} style={{ flex:1, padding:"10px 4px", textAlign:"center", fontSize:11, fontWeight:700, color:i===1?G:"rgba(255,255,255,.35)", borderBottom:i===1?`2px solid ${G}`:"2px solid transparent", cursor:"pointer" }}>{tab}</div>
+                {/* Tabs */}
+                <div style={{ display:"flex", background:"#111", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+                  {["Overview","Offers","Docs"].map((tab,i)=>(
+                    <div key={tab} style={{ flex:1, padding:"10px 4px", textAlign:"center", fontSize:11, fontWeight:600, color:i===1?G:"rgba(255,255,255,.3)", borderBottom:i===1?`2px solid ${G}`:"2px solid transparent" }}>{tab}</div>
                   ))}
                 </div>
-                {/* Content */}
-                <div style={{ padding:20 }}>
-                  {/* Status card */}
-                  <div style={{ background:"#161616", borderRadius:12, padding:"14px 16px", marginBottom:12, border:"1px solid rgba(255,255,255,.05)" }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>APP-2041 · {lang==="es"?"Financiamiento a Plazo":"Term Financing"}</span>
-                      <span style={{ fontSize:11, fontWeight:700, color:G }}>{lang==="es"?"Activo":"Active"}</span>
-                    </div>
-                    <div style={{ fontSize:22, fontWeight:900, color:"#fff", fontFamily:"'Barlow Condensed',sans-serif", marginBottom:4 }}>$145,000</div>
-                    <div style={{ height:4, background:"rgba(255,255,255,.08)", borderRadius:2, overflow:"hidden", marginBottom:4 }}>
-                      <div style={{ height:"100%", width:"44%", background:G, borderRadius:2 }}></div>
-                    </div>
-                    <div style={{ display:"flex", justifyContent:"space-between" }}>
-                      <span style={{ fontSize:10, color:"rgba(255,255,255,.3)" }}>44% {lang==="es"?"pagado":"paid"}</span>
-                      <span style={{ fontSize:10, color:"rgba(255,255,255,.3)" }}>{lang==="es"?"Próximo: $6,250":"Next: $6,250"}</span>
-                    </div>
-                  </div>
-                  {/* Offer card */}
-                  <div style={{ background:"#0f1a0f", border:`1px solid ${G}20`, borderRadius:12, padding:"14px 16px", marginBottom:12 }}>
+                <div style={{ padding:18 }}>
+                  {/* Offer */}
+                  <div style={{ background:"#0f1a0f", border:`1px solid ${G}20`, borderRadius:12, padding:"16px", marginBottom:12 }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:10 }}>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>{lang==="es"?"Oferta Disponible":"Offer Available"}</span>
-                      <span style={{ fontSize:10, fontWeight:600, color:G, background:"rgba(168,255,62,.1)", padding:"2px 8px", borderRadius:10 }}>{lang==="es"?"Nuevo":"New"}</span>
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>New Offer Available</span>
+                      <span style={{ fontSize:10, fontWeight:700, color:G, background:"rgba(168,255,62,.1)", padding:"2px 8px", borderRadius:10 }}>Review</span>
                     </div>
-                    <div style={{ fontSize:26, fontWeight:700, color:G, letterSpacing:"-.03em", marginBottom:10 }}>$50,000</div>
-                    <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:6, marginBottom:10 }}>
-                      {[[lang==="es"?"Pago/mes":"Monthly","$625"],[lang==="es"?"Plazo":"Term","12 mo"],[lang==="es"?"Penalidad":"Penalty","None"]].map(([l,v])=>(
-                        <div key={l} style={{ background:"rgba(255,255,255,.04)", borderRadius:6, padding:"6px 8px" }}>
-                          <p style={{ fontSize:9, color:"rgba(255,255,255,.3)", marginBottom:2 }}>{l}</p>
+                    <p style={{ fontSize:30, fontWeight:700, color:G, letterSpacing:"-.03em", marginBottom:12 }}>$50,000</p>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:6, marginBottom:12 }}>
+                      {[["Monthly","$625"],["Term","12 mo"],["Penalty","None"]].map(([l,v])=>(
+                        <div key={l} style={{ background:"rgba(255,255,255,.04)", borderRadius:6, padding:"7px 8px" }}>
+                          <p style={{ fontSize:9, color:"rgba(255,255,255,.3)", marginBottom:3 }}>{l}</p>
                           <p style={{ fontSize:12, fontWeight:600, color:"#fff" }}>{v}</p>
                         </div>
                       ))}
                     </div>
-                    <p style={{ fontSize:10, color:"rgba(168,255,62,.6)", marginBottom:10 }}>{lang==="es"?"Descuentos por pago anticipado disponibles":"Early payoff discounts available"}</p>
-                    <button onClick={onApply} style={{ width:"100%", background:G, border:"none", borderRadius:7, padding:"9px 0", fontSize:12, fontWeight:700, color:"#000", cursor:"pointer" }}>{lang==="es"?"Ver Oferta →":"View Offer →"}</button>
+                    <button onClick={onApply} style={{ width:"100%", background:G, border:"none", borderRadius:8, padding:"10px", fontSize:13, fontWeight:700, color:"#000", cursor:"pointer" }}>View & Accept Offer →</button>
                   </div>
-                  {/* Upload prompt */}
-                  <div style={{ background:"#161616", borderRadius:12, padding:"12px 16px", border:"1px solid rgba(255,255,255,.05)", display:"flex", alignItems:"center", gap:12 }}>
-                    <div style={{ width:32, height:32, background:"rgba(168,255,62,.1)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700, color:G }}>DOC</div>
-                    <div>
-                      <p style={{ fontSize:12, fontWeight:600, color:"#fff", margin:0 }}>{lang==="es"?"Sube tus documentos":"Upload your documents"}</p>
-                      <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", margin:0 }}>{lang==="es"?"Estados de cuenta · ID · Cheque":"Bank statements · ID · Check"}</p>
-                    </div>
+                  {/* Status */}
+                  <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:10, padding:"12px 14px" }}>
+                    <p style={{ fontSize:10, fontWeight:600, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".06em", marginBottom:10 }}>Deal Status</p>
+                    {[["Submitted","Apr 1",true],["Under Review","Apr 1",true],["Offer Sent","Apr 1",true],["Funded","Apr 2",true]].map(([s,d,done])=>(
+                      <div key={s} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+                        <div style={{ width:14, height:14, borderRadius:"50%", background:done?G:"rgba(255,255,255,.08)", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                          {done&&<div style={{ width:5, height:5, background:"#000", borderRadius:"50%" }}></div>}
+                        </div>
+                        <p style={{ flex:1, fontSize:11, color:"rgba(255,255,255,.6)" }}>{s}</p>
+                        <p style={{ fontSize:10, color:"rgba(255,255,255,.25)" }}>{d}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -2880,15 +3038,15 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </section>
 
-      {/* ── TICKER ── */}
+      {/* TICKER */}
       <div style={{ background:G, padding:"11px 0", overflow:"hidden" }}>
         <div className="tick">
           {[...Array(2)].map((_,ti)=>(
             <span key={ti} style={{ display:"flex" }}>
               {t.ticker.map(text=>(
                 <span key={text} style={{ display:"inline-flex", alignItems:"center", gap:12, padding:"0 28px" }}>
-                  <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
-                  <span style={{ color:"#000", opacity:.3 }}>·</span>
+                  <span style={{ fontSize:11, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
+                  <span style={{ color:"rgba(0,0,0,.3)", fontSize:10 }}>◆</span>
                 </span>
               ))}
             </span>
@@ -2896,142 +3054,83 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </div>
 
-      {/* ── STATS ── */}
-      <section style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+      {/* STATS */}
+      <div style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
         <div className="stats-grid" style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
           {t.stats.map(([v,l],i)=>(
             <div key={l} style={{ padding:"36px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.06)":"none" }}>
-              <div className="cond" style={{ fontSize:44, fontWeight:900, color:G, letterSpacing:"-0.02em", lineHeight:1 }}>{v}</div>
-              <div style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:8, fontWeight:500, letterSpacing:"0.04em" }}>{l}</div>
+              <div style={{ fontSize:40, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1 }}>{v}</div>
+              <div style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:8, fontWeight:500 }}>{l}</div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* ── TRUST BAR ── */}
-      <TrustBar lang={lang} />
-
-      {/* ── HOW IT WORKS ── */}
+      {/* HOW IT WORKS — 3 steps only, clean */}
       <section style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:64 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
-          <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onHowItWorks}>{t.how.h}</h2>
+        <div style={{ textAlign:"center", marginBottom:56 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
+          <h2 style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:700, letterSpacing:"-.03em" }}>{t.how.h}</h2>
         </div>
-        <div className="how-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:2 }}>
-          {(lang==="es"
-            ? [["01","Envía tu Solicitud","Completa un formulario simple. Sin entrevistas. Sin llamadas."],["02","Socios lo Revisan","Tu información puede ser compartida con socios de financiamiento en nuestra red."],["03","Ve las Ofertas","Las ofertas disponibles aparecen en tu portal. Tú compara y decides."],["04","Tú Eliges","Selecciona lo que funciona para tu negocio. Sin presión. Sin intermediarios."]]
-            : [["01","Submit Your Request","Fill out a simple form. No interviews. No phone calls."],["02","Partners Review","Your info may be shared with financing partners in our network."],["03","View Offers","Available offers appear in your dashboard. You compare and decide."],["04","You Choose","Select what works for your business. No pressure. No broker."]]
-          ).map(([n,title,desc],i)=>(
-            <div key={n} style={{ background:i===2?G:BK3, color:i===2?"#000":"#fff", padding:"36px 28px", border:`1px solid ${i===2?G:"rgba(255,255,255,.06)"}` }}>
-              <div className="cond" style={{ fontSize:52, fontWeight:900, opacity:.12, marginBottom:16, letterSpacing:"-0.04em" }}>{n}</div>
-              <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:10 }}>{title}</h3>
-              <p style={{ fontSize:13, lineHeight:1.8, opacity:i===2?.7:.5, fontWeight:300 }}>{desc}</p>
+        <div className="how-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+          {t.how.steps.map(([n,title,desc],i)=>(
+            <div key={n} style={{ background:i===1?G:BK3, color:i===1?"#000":"#fff", padding:"40px 32px", border:`1px solid ${i===1?G:"rgba(255,255,255,.06)"}` }}>
+              <div style={{ fontSize:48, fontWeight:700, opacity:.1, marginBottom:16, letterSpacing:"-.04em" }}>{n}</div>
+              <h3 style={{ fontSize:20, fontWeight:700, marginBottom:12, letterSpacing:"-.02em" }}>{title}</h3>
+              <p style={{ fontSize:14, lineHeight:1.8, opacity:i===1?.65:.45, fontWeight:300 }}>{desc}</p>
             </div>
           ))}
         </div>
-      </section>
-
-      {/* ── WHY APROVUIT ── */}
-      <WhyAprovuit lang={lang} onApply={onApply} />
-
-      {/* ── INDUSTRIES ── */}
-      <IndustriesSection lang={lang} onApply={onApply} />
-
-      {/* ── ANIMATED DEMO ── */}
-      <AnimatedDemo lang={lang} />
-
-      {/* ── DASHBOARD SLIDER ── */}
-      <DashboardSlider lang={lang} />
-
-      {/* ── PLATFORM FEATURES ── */}
-      <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ textAlign:"center", marginBottom:56 }}>
-            <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{lang==="es"?"Funciones de la Plataforma":"Platform Features"}</p>
-            <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em" }}>
-              {lang==="es"?"Todo en un Solo Portal":"Everything in One Dashboard"}
-            </h2>
-          </div>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
-            {(t.features?.items||[]).map(f=>(
-              <div key={f.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"28px 24px", borderRadius:4 }}>
-                <div style={{ fontSize:28, marginBottom:14 }}>{f.icon}</div>
-                <h3 style={{ fontSize:15, fontWeight:700, color:"#fff", marginBottom:8 }}>{f.name}</h3>
-                <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, fontWeight:300 }}>{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FINANCING OPTIONS ── */}
-      <section id="products" style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:48 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{t.products.badge}</p>
-          <h2 className="cond" style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", cursor:"pointer" }} onClick={onProducts}>{t.products.h}</h2>
-          <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginTop:12, maxWidth:500, margin:"12px auto 0" }}>
-            {lang==="es"
-              ? "Aprovuit trabaja con una red de socios de confianza para conectar tu negocio con el producto adecuado. Nosotros buscamos la mejor opción — tú eliges la mejor oferta."
-              : "Aprovuit works with a network of trusted funding partners to match your business with the right product. We shop your deal — you choose the best offer."}
-          </p>
-        </div>
-        <div className="products-grid" style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:2 }}>
-          {t.products.items.map(p=>(
-            <div key={p.name} className="prod-card">
-              <div style={{ fontSize:22, marginBottom:12, color:G }}>{p.icon}</div>
-              <h3 className="cond" style={{ fontSize:22, fontWeight:800, textTransform:"uppercase", marginBottom:8 }}>{p.name}</h3>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.75, marginBottom:16, fontWeight:300 }}>{p.desc}</p>
-              <div style={{ display:"flex", gap:20 }}>
-                <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.amount}</p><p style={{ fontSize:13, fontWeight:600, color:G }}>{p.range}</p></div>
-                <div><p style={{ fontSize:10, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:3 }}>{t.products.term}</p><p style={{ fontSize:13, fontWeight:600, color:"#fff" }}>{p.term}</p></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── PLATFORM EXPLANATION ── */}
-      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ width:56, height:56, background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 24px", fontSize:16, fontWeight:800, color:G }}>A</div>
-          <h2 className="cond" style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:20 }}>
-            {lang==="es"?"¿Qué es Aprovuit?":"What is Aprovuit?"}
-          </h2>
-          <p style={{ fontSize:16, color:"rgba(255,255,255,.55)", lineHeight:1.85, marginBottom:28, fontWeight:300 }}>
-            {lang==="es"
-              ? "Aprovuit es una plataforma tecnológica que permite a los dueños de negocios gestionar y explorar opciones de financiamiento en un solo lugar. Piensa en nosotros como el Kayak del financiamiento empresarial — no vendemos vuelos, te mostramos las opciones para que tú elijas."
-              : "Aprovuit is a technology platform that allows business owners to manage and explore financing options in one place. Think of us as the Kayak of business funding — we don't sell flights, we show you the options so you can choose."}
-          </p>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, textAlign:"left", marginBottom:32 }}>
-            {(lang==="es"
-              ? [["→","Prestamista Directo","Fondeamos tratos directamente con nuestro propio capital — decisiones más rápidas, sin intermediarios en nuestros productos propios."],["Done","Lo que SÍ somos","Una plataforma de autoservicio donde envías una solicitud, ves las ofertas disponibles y eliges."],["→","Total Transparencia","Cada oferta muestra todos los términos claramente antes de que firmes. Sin cargos ocultos. Sin sorpresas."]]
-              : [["→","Direct Lender","We fund deals directly from our own capital — faster decisions, no middleman on our own products."],["Done","What we ARE","A self-service platform where you submit one request, view available offers, and choose."],["→","Full Transparency","Every offer shows all terms clearly before you sign. No hidden fees. No bait-and-switch. Ever."]]
-            ).map(([icon,title,desc])=>(
-              <div key={title} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"24px 20px" }}>
-                <div style={{ fontSize:22, marginBottom:12 }}>{icon}</div>
-                <h3 style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:8 }}>{title}</h3>
-                <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", lineHeight:1.7, fontWeight:300 }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-          <button onClick={onApply} className="btn-green" style={{ fontSize:15, padding:"14px 40px" }}>
-            {lang==="es"?"Comenzar Gratis →":"Get Started Free →"}
+        <div style={{ textAlign:"center", marginTop:40 }}>
+          <button onClick={onHowItWorks} style={{ background:"none", border:"none", color:"rgba(255,255,255,.4)", fontSize:13, cursor:"pointer", textDecoration:"underline", fontFamily:"'Sora',sans-serif" }}>
+            {lang==="es"?"Ver proceso completo →":"See full process →"}
           </button>
         </div>
       </section>
 
-      {/* ── ABOUT ── */}
-      <AboutSection lang={lang} onApply={onApply} />
+      {/* WHY APROVUIT — 4 cards */}
+      <WhyAprovuit lang={lang} onApply={onApply} />
 
-      {/* ── REVIEWS (clean, no fake energy) ── */}
-      <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700, textAlign:"center" }}>{t.reviews.badge}</p>
-        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:48 }}>{t.reviews.h}</h2>
+      {/* INDUSTRIES — compact strip */}
+      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:32, flexWrap:"wrap", gap:16 }}>
+            <div>
+              <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:10, fontWeight:700 }}>{lang==="es"?"Industrias":"Industries We Serve"}</p>
+              <h2 style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>
+                {lang==="es"?"Tu industria. Nuestra especialidad.":"Your industry. Our specialty."}
+              </h2>
+            </div>
+            <button onClick={onProducts} style={{ fontSize:13, color:"rgba(255,255,255,.4)", background:"none", border:"none", cursor:"pointer", fontFamily:"'Sora',sans-serif", textDecoration:"underline" }}>
+              {lang==="es"?"Ver todas →":"View all →"}
+            </button>
+          </div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+            {(lang==="es"
+              ? ["Restaurantes","Salud y Médico","Construcción","Transporte","Retail","Manufactura","Auto y Servicios","Servicios Profesionales","Tecnología","Hospitalidad"]
+              : ["Restaurants","Healthcare","Construction","Transportation","Retail","Manufacturing","Auto Services","Professional Services","Technology","Hospitality"]
+            ).map(ind=>(
+              <div key={ind} onClick={onProducts} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:30, padding:"10px 18px", fontSize:13, color:"rgba(255,255,255,.65)", cursor:"pointer", fontWeight:500, transition:"all .15s" }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(168,255,62,.4)";e.currentTarget.style.color="#fff";}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.08)";e.currentTarget.style.color="rgba(255,255,255,.65)";}}>
+                {ind}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS — 3 only */}
+      <section style={{ padding:"88px 5%", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:48 }}>
+          <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.reviews.badge}</p>
+          <h2 style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em" }}>{t.reviews.h}</h2>
+        </div>
         <div className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
           {t.reviews.items.map(r=>(
             <div key={r.name} style={{ background:BK3, border:"1px solid rgba(255,255,255,.06)", padding:"28px 24px", borderRadius:4 }}>
               <div style={{ display:"flex", gap:2, marginBottom:14 }}>
-                {[...Array(r.stars)].map((_,i)=><span key={i} style={{ color:G, fontSize:13 }}>★</span>)}
+                {[...Array(r.stars)].map((_,i)=><span key={i} style={{ color:G, fontSize:14 }}>★</span>)}
               </div>
               <p style={{ fontSize:14, lineHeight:1.85, color:"rgba(255,255,255,.55)", marginBottom:20, fontStyle:"italic", fontWeight:300 }}>"{r.text}"</p>
               <div style={{ borderTop:"1px solid rgba(255,255,255,.07)", paddingTop:14 }}>
@@ -3043,53 +3142,36 @@ function Landing({ lang, onApply, onLogin, onAdmin, onProducts, onHowItWorks, on
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section id="faq" style={{ padding:"80px 5%", maxWidth:720, margin:"0 auto" }}>
-        <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700, textAlign:"center" }}>{t.faq.badge}</p>
-        <h2 className="cond" style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.02em", textAlign:"center", marginBottom:44 }}>{t.faq.h}</h2>
-        {t.faq.items.map(([q,a],i)=>(
-          <div key={i}>
-            <button className="faq-btn" onClick={()=>setFaqOpen(faqOpen===i?null:i)}>
-              <span style={{ fontSize:15, fontWeight:600 }}>{q}</span>
-              <span style={{ fontSize:20, color:"rgba(255,255,255,.3)", flexShrink:0, transition:"transform .2s", transform:faqOpen===i?"rotate(45deg)":"none" }}>+</span>
-            </button>
-            {faqOpen===i && <p style={{ fontSize:14, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:20, fontWeight:300, borderBottom:"1px solid rgba(255,255,255,.07)" }}>{a}</p>}
-          </div>
-        ))}
-      </section>
-
-      {/* ── CTA ── */}
-      <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
-        <h2 className="cond" style={{ fontSize:"clamp(32px,5vw,64px)", fontWeight:900, color:"#000", textTransform:"uppercase", letterSpacing:"-0.02em", marginBottom:14 }}>{t.cta.h}</h2>
-        <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:32, fontWeight:300 }}>{t.cta.sub}</p>
-        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"16px 48px", fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"0.04em", textTransform:"uppercase", borderRadius:4 }}>
+      {/* CTA */}
+      <section style={{ background:G, padding:"80px 5%", textAlign:"center" }}>
+        <h2 style={{ fontSize:"clamp(32px,5vw,60px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>{t.cta.h}</h2>
+        <p style={{ fontSize:16, color:"rgba(0,0,0,.55)", marginBottom:32, fontWeight:300 }}>{t.cta.sub}</p>
+        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"16px 48px", fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", letterSpacing:"-.01em", borderRadius:6 }}>
           {t.cta.btn}
         </button>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"48px 5% 32px" }}>
+      {/* FOOTER */}
+      <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"40px 5% 28px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:24, paddingBottom:24, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-              <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ fontSize:13, fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", color:"#000" }}>A</span>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:20, paddingBottom:20, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+              <div style={{ width:24, height:24, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ fontSize:11, fontWeight:800, color:"#000" }}>A</span>
               </div>
-              <span className="cond" style={{ fontSize:18, fontWeight:800, letterSpacing:"0.02em" }}>APROVUIT</span>
+              <span style={{ fontSize:15, fontWeight:700, letterSpacing:"-.02em" }}>APROVUIT</span>
             </div>
             <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
-              <button className="nav-link" onClick={onApply}>{lang==="es"?"Comenzar":"Get Started"}</button>
-              <button className="nav-link" onClick={onLogin}>{lang==="es"?"Entrar":"Log In"}</button>
-              <button className="nav-link" onClick={onProducts}>{lang==="es"?"Opciones":"Options"}</button>
-              <button className="nav-link" onClick={onHowItWorks}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
-              <button className="nav-link" onClick={onFaq}>FAQ</button>
+              {[[t.nav.products,onProducts],[t.nav.howItWorks,onHowItWorks],["About",onAbout],[t.nav.faq,onFaq],[t.nav.login,onLogin]].map(([l,fn])=>(
+                <button key={l} className="nav-link" onClick={()=>{fn?.();window.scrollTo(0,0);}}>{l}</button>
+              ))}
             </div>
           </div>
-          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.07)", borderRadius:10, padding:"14px 18px", marginBottom:16 }}>
-            <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.8 }}>
+          <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.06)", borderRadius:8, padding:"12px 16px", marginBottom:16 }}>
+            <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", lineHeight:1.7 }}>
               {lang==="es"
-                ? "Aviso Legal: Aprovuit es una plataforma de mercado tecnológico, prestamista directo y broker de financiamiento con licencia. Parte del financiamiento es proporcionado directamente por Aprovuit; otro por socios prestamistas terceros. Los términos y la aprobación varían según el producto y el solicitante. Aprovuit no garantiza la aprobación."
-                : "Legal: Aprovuit operates as a direct lender and licensed funding broker. Some funding is provided directly by Aprovuit; other funding is provided by third-party lending partners. Terms and approval vary by product and applicant. Aprovuit does not guarantee funding approval."}
+                ? "Aprovuit opera como prestamista directo y broker de financiamiento comercial con licencia. Los términos, tasas y aprobación varían según el producto y el perfil del solicitante. Aprovuit no garantiza la aprobación de financiamiento."
+                : "Aprovuit operates as a direct lender and licensed commercial funding broker. Terms, rates, and approval vary by product and applicant profile. Aprovuit does not guarantee funding approval."}
             </p>
           </div>
           <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
@@ -3180,6 +3262,7 @@ export default function Aprovuit() {
   if (view==="login") return <LoginPage lang={lang} onBack={()=>setView("landing")} onLogin={handleLogin} />;
   if (view==="products") return <><ProductsPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
   if (view==="howitworks") return <><HowItWorksPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
+  if (view==="about") return <><AboutPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
   if (view==="faq") return <><FAQPage lang={lang} onBack={()=>setView("landing")} onApply={()=>setView("apply")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} /><Chatbot lang={lang} onApply={()=>setView("apply")} /></>;
 
   if (view==="admin") return (
@@ -3234,7 +3317,7 @@ export default function Aprovuit() {
           <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={()=>setView("apply")}>{lang==="en"?"Get Started →":"Comenzar →"}</button>
         </div>
       </nav>
-      <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} />
+      <Landing lang={lang} onApply={()=>setView("apply")} onLogin={()=>setView("login")} onAdmin={()=>setView("admin")} onProducts={()=>setView("products")} onHowItWorks={()=>setView("howitworks")} onFaq={()=>setView("faq")} onAbout={()=>setView("about")} />
       <Chatbot lang={lang} onApply={()=>setView("apply")} />
     </div>
   );
