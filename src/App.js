@@ -1506,6 +1506,46 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
   );
 }
 
+
+// ── DONT SEE SECTION ─────────────────────────────────────────────
+function DontSeeSection({ lang, onApply }) {
+  const G = "#a8ff3e";
+  return (
+    <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+      <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
+        <h2 style={{ fontSize:"clamp(22px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
+          {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
+        </h2>
+        <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
+          {lang==="es"
+            ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos conocer tu historia."
+            : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
+        </p>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, maxWidth:640, margin:"0 auto 28px" }} className="how-grid">
+          {(lang==="es"
+            ? [["Servicios Profesionales","Abogados, contadores y otros profesionales."],["Tecnologia","Software, IT y negocios digitales."],["Y Mucho Mas","Hospitalidad, belleza, fitness, educacion y mas."]]
+            : [["Professional Services","Lawyers, accountants, and service professionals."],["Technology","Software companies, IT services, digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and more."]]
+          ).map(([t,d])=>(
+            <div key={t} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:10, padding:"20px 16px" }}>
+              <div style={{ width:28, height:28, background:"rgba(168,255,62,.08)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px" }}>
+                <div style={{ width:7, height:7, background:G, borderRadius:"50%" }}></div>
+              </div>
+              <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
+              <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"11px 32px" }}>
+          {lang==="es" ? "Ver Si Califico" : "See If I Qualify"}
+        </button>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:10 }}>
+          {lang==="es" ? "6+ meses en operacion, sin impacto al credito" : "6+ months in business, no credit impact, no phone calls"}
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── PRODUCTS PAGE ────────────────────────────────────────────────
 
       
@@ -1627,42 +1667,8 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
           </div>
         ))}
       </div>
-
-      
+      <DontSeeSection lang={lang} onApply={onApply} />
     </div>
-      {/* DONT SEE YOUR INDUSTRY */}
-      <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
-          <h2 style={{ fontSize:"clamp(22px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
-            {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
-          </h2>
-          <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
-            {lang==="es"
-              ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos conocer tu historia."
-              : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
-          </p>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, maxWidth:640, margin:"0 auto 28px" }} className="how-grid">
-            {(lang==="es"
-              ? [["Servicios Profesionales","Abogados, contadores y otros profesionales."],["Tecnologia","Empresas de software, IT y negocios digitales."],["Y Mucho Mas","Hospitalidad, belleza, fitness, educacion y mas."]]
-              : [["Professional Services","Lawyers, accountants, and service professionals."],["Technology","Software companies, IT services, and digital businesses."],["And Many More","Hospitality, beauty, fitness, education, and more."]]
-            ).map(([t,d])=>(
-              <div key={t} style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:10, padding:"20px 16px" }}>
-                <div style={{ width:28, height:28, background:"rgba(168,255,62,.08)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px" }}>
-                  <div style={{ width:7, height:7, background:"#a8ff3e", borderRadius:"50%" }}></div>
-                </div>
-                <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
-                <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
-              </div>
-            ))}
-          </div>
-          <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"11px 32px" }}>
-            {lang==="es" ? "Ver Si Califico" : "See If I Qualify"}
-          </button>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:10 }}>
-            {lang==="es" ? "6+ meses en operacion" : "6+ months in business, no credit impact, no phone calls"}
-          </p>
-        </div>
-      </section>
   );
 }
 
@@ -2959,6 +2965,8 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
 
 
       
+      <DontSeeSection lang={lang} onApply={onApply} />
+
       {/* CTA */}
       <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
         <h2 style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>
