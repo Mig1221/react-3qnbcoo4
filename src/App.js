@@ -944,26 +944,18 @@ function LoginPage({ lang, onBack, onLogin }) {
   const t = T[lang].login;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showSMS, setShowSMS] = useState(false);
-  const [smsCode, setSmsCode] = useState(["","","","","",""]);
   const [error, setError] = useState("");
 
   const handleLogin = () => {
+    if (!email || !password) { setError(lang==="es"?"Ingresa tu correo y contraseña":"Enter your email and password"); return; }
     const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
     const account = accounts.find(a => a.email === email && a.password === password);
     if (account) {
-      setShowSMS(true);
+      onLogin(account.email, account.firstName, account.company, account.appId);
     } else {
-      // Demo login
-      if (email && password) setShowSMS(true);
-      else setError(lang==="es"?"Correo o contraseña incorrectos":"Invalid email or password");
+      // Demo: any email+password goes to dashboard
+      onLogin(email, email.split("@")[0], "My Business", "APP-DEMO");
     }
-  };
-
-  const handleVerify = () => {
-    const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
-    const account = accounts.find(a => a.email === email) || { email, firstName:"Demo", company:"My Business", appId:"APP-DEMO" };
-    onLogin(account.email, account.firstName, account.company, account.appId);
   };
 
   const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", background:"#fff", marginBottom:14, display:"block", outline:"none" };
@@ -973,37 +965,22 @@ function LoginPage({ lang, onBack, onLogin }) {
       <div style={{ background:"rgba(10,10,10,.97)", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
           <div style={{ width:28, height:28, background:G, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
-          <span style={{ fontSize:20, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
+          <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
         </button>
       </div>
       <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
-        {!showSMS ? (
-          <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%" }}>
-            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.h}</h2>
-            <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>{t.sub}</p>
-            {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:14, color:"#dc2626" }}>{error}</p></div>}
-            <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.email}</label>
-            <input style={inp} type="email" placeholder="you@yourbusiness.com" value={email} onChange={e=>setEmail(e.target.value)} />
-            <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.password}</label>
-            <input style={inp} type="password" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} />
-            <p style={{ fontSize:14, color:"#888", textAlign:"right", marginBottom:20, cursor:"pointer" }}>{t.forgot}</p>
-            <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.btn}</button>
-            <p style={{ fontSize:14, color:"#888", textAlign:"center", marginTop:16 }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer" }} onClick={onBack}>{t.applyLink}</span></p>
-          </div>
-        ) : (
-          <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%", textAlign:"center" }}>
-            <div style={{ width:60, height:60, background:"#f0fdf4", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:16, fontWeight:800, color:"#fff" }}>—</div>
-            <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.smsH}</h2>
-            <p style={{ fontSize:14, color:"#888", marginBottom:24 }}>{t.smsSub}</p>
-            <div style={{ display:"flex", gap:8, justifyContent:"center", marginBottom:24 }}>
-              {[0,1,2,3,4,5].map(i=>(
-                <input key={i} maxLength={1} value={smsCode[i]} onChange={e=>{const c=[...smsCode];c[i]=e.target.value;setSmsCode(c);if(e.target.value&&e.target.nextSibling)e.target.nextSibling.focus();}} style={{ width:44, height:52, border:`2px solid ${smsCode[i]?"#1a1a1a":"#e5e5ea"}`, borderRadius:10, textAlign:"center", fontSize:22, fontWeight:900, color:"#1a1a1a", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#fff" }} />
-              ))}
-            </div>
-            <button onClick={handleVerify} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:12 }}>{t.verify}</button>
-            <p style={{ fontSize:14, color:"#888", cursor:"pointer" }}>{t.resend}</p>
-          </div>
-        )}
+        <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%" }}>
+          <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.h}</h2>
+          <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>{t.sub}</p>
+          {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:14, color:"#dc2626" }}>{error}</p></div>}
+          <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.email}</label>
+          <input style={inp} type="email" placeholder="you@yourbusiness.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleLogin()} />
+          <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.password}</label>
+          <input style={inp} type="password" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleLogin()} />
+          <p style={{ fontSize:14, color:"#888", textAlign:"right", marginBottom:20, cursor:"pointer" }}>{t.forgot}</p>
+          <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.btn}</button>
+          <p style={{ fontSize:14, color:"#888", textAlign:"center", marginTop:16 }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer" }} onClick={onBack}>{t.applyLink}</span></p>
+        </div>
       </div>
     </div>
   );
@@ -3581,13 +3558,18 @@ export default function Aprovuit() {
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
   const [user, setUser] = useState(null);
 
+  // Views that don't need URL routing (private/functional pages)
+  const NO_PUSH = new Set(["login","dashboard","apply","upload","admin"]);
+
   const navTo = (v, opts={}) => {
-    const path = VIEW_PATHS[v] || "/";
-    const url = opts.uploadId ? `${path}?upload=${opts.uploadId}` : path;
-    window.history.pushState({ view:v, uploadId:opts.uploadId||null }, "", url);
     if (opts.uploadId) setUploadAppId(opts.uploadId);
     setView(v);
     window.scrollTo(0,0);
+    // Only push URL for public SEO pages
+    if (!NO_PUSH.has(v)) {
+      const path = VIEW_PATHS[v] || "/";
+      window.history.pushState({ view:v }, "", path);
+    }
   };
 
   useEffect(() => {
