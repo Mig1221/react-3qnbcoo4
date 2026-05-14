@@ -142,7 +142,7 @@ function fmtAmt(n) {
 
 // ── CSS ──────────────────────────────────────────────────────────
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&display=swap');
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
   body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
@@ -212,7 +212,6 @@ const CSS = `
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
     nav { padding:0 4% !important; height:54px !important; }
-    section { padding-left:5% !important; padding-right:5% !important; padding-top:64px !important; padding-bottom:64px !important; }
     .hero-mockup { display:none !important; }
     .hero-grid { padding-top:80px !important; padding-bottom:60px !important; }
     .why-grid { grid-template-columns:1fr !important; }
@@ -230,11 +229,7 @@ const CSS = `
     .reviews-grid { grid-template-columns:1fr !important; }
     .how-grid { grid-template-columns:1fr !important; }
     .products-grid { grid-template-columns:1fr !important; }
-    h1 { font-size:clamp(34px,9vw,52px) !important; line-height:1.05 !important; }
-    h2 { font-size:clamp(24px,7vw,36px) !important; }
-    p { font-size:14px !important; }
     .ticker-text { font-size:10px !important; }
-    section { padding-left:4% !important; padding-right:4% !important; padding-top:52px !important; padding-bottom:52px !important; }
   }
 `;
 
@@ -3584,117 +3579,155 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 }
 
 
+// ── VIEW → URL PATH MAP ──────────────────────────────────────────
+const VIEW_PATHS = {
+  landing:    "/",
+  products:   "/products",
+  howitworks: "/how-it-works",
+  faq:        "/faq",
+  about:      "/about",
+  contact:    "/contact",
+  apply:      "/apply",
+  login:      "/login",
+  dashboard:  "/dashboard",
+  admin:      "/admin",
+  upload:     "/upload",
+};
+const PATH_VIEWS = Object.fromEntries(Object.entries(VIEW_PATHS).map(([k,v])=>[v,k]));
+
+function getInitialView(uploadId, isAdmin) {
+  if (isAdmin) return "admin";
+  if (uploadId) return "upload";
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  return PATH_VIEWS[path] || "landing";
+}
+
 // ── MAIN APP ─────────────────────────────────────────────────────
 export default function Aprovuit() {
   const initialParams = new URLSearchParams(window.location.search);
   const initialUploadId = initialParams.get("upload");
   const initialAdmin = initialParams.get("admin") === "true";
 
-  const [view, setView] = useState(initialAdmin ? "admin" : initialUploadId ? "upload" : "landing");
-  const [prevView, setPrevView] = useState("landing");
-  const navTo = (v) => { setPrevView(view); setView(v); window.scrollTo(0,0); };
+  const [view, setView] = useState(() => getInitialView(initialUploadId, initialAdmin));
   const [lang, setLang] = useState("en");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
-
-  useEffect(() => {
-    document.title = "Aprovuit — Business Funding Platform | Direct Lender & Broker";
-    const m = (k, v, n) => {
-      let t = document.querySelector('meta[' + (n?'name':'property') + '="' + k + '"]');
-      if (!t) { t = document.createElement('meta'); t.setAttribute(n?'name':'property', k); document.head.appendChild(t); }
-      t.setAttribute('content', v);
-    };
-    m('description','Aprovuit is a direct lender and licensed funding broker powered by technology. Apply in minutes, track your deal live, and get funded in 24 hours. No phone calls. No hidden fees.',true);
-    m('og:title','Aprovuit — Business Funding Platform');
-    m('og:description','Apply in minutes. Track your deal live. Funded in 24 hours. Direct lender + licensed broker.');
-    m('og:url','https://aprovuit.com');
-    m('og:type','website');
-    m('og:image','https://aprovuit.com/og-preview.png');
-    m('og:site_name','Aprovuit');
-    m('twitter:card','summary_large_image',true);
-    m('twitter:title','Aprovuit — Business Funding Platform',true);
-    m('twitter:description','Apply in minutes. Get funded in 24 hours. No phone calls.',true);
-  }, []);
   const [user, setUser] = useState(null);
 
-  // SEO - update title and meta based on view
+  // Navigate: update React state AND push to browser history
+  const navTo = (v, opts = {}) => {
+    const path = VIEW_PATHS[v] || "/";
+    const url = opts.uploadId ? `${path}?upload=${opts.uploadId}` : path;
+    window.history.pushState({ view: v, uploadId: opts.uploadId || null }, "", url);
+    if (opts.uploadId) setUploadAppId(opts.uploadId);
+    setView(v);
+    window.scrollTo(0, 0);
+  };
+
+  // Handle browser back/forward
+  useEffect(() => {
+    // Set initial history entry so the very first back press stays in-app
+    const initPath = VIEW_PATHS[view] || "/";
+    window.history.replaceState({ view, uploadId: uploadAppId }, "", uploadAppId ? `${initPath}?upload=${uploadAppId}` : initPath);
+
+    const handlePop = (e) => {
+      const state = e.state;
+      if (state && state.view) {
+        if (state.uploadId) setUploadAppId(state.uploadId);
+        setView(state.view);
+        window.scrollTo(0, 0);
+      } else {
+        // No state — derive from URL
+        const params = new URLSearchParams(window.location.search);
+        const uid = params.get("upload");
+        const path = window.location.pathname.replace(/\/$/, "") || "/";
+        const v = PATH_VIEWS[path] || "landing";
+        if (uid) setUploadAppId(uid);
+        setView(v);
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, []); // eslint-disable-line
+
+  // Ensure viewport meta is always correct (prevents desktop zoom-out)
+  useEffect(() => {
+    let vp = document.querySelector('meta[name="viewport"]');
+    if (!vp) { vp = document.createElement('meta'); vp.name = "viewport"; document.head.appendChild(vp); }
+    vp.setAttribute('content', 'width=device-width, initial-scale=1');
+  }, []);
+
+  // SEO meta on view change
   useEffect(() => {
     const titles = {
-      landing: "Aprovuit — Business Funding, No Phone Calls",
-      apply: "Apply for Business Funding — Aprovuit",
-      products: "Business Loan Products — Aprovuit",
+      landing:    "Aprovuit — Business Funding, No Phone Calls",
+      apply:      "Apply for Business Funding — Aprovuit",
+      products:   "Business Loan Products — Aprovuit",
       howitworks: "How It Works — Aprovuit Business Funding",
-      faq: "FAQ — Aprovuit Business Funding",
-      login: "Log In — Aprovuit",
-      dashboard: "My Dashboard — Aprovuit",
-      admin: "Admin — Aprovuit",
+      faq:        "FAQ — Aprovuit Business Funding",
+      login:      "Log In — Aprovuit",
+      dashboard:  "My Dashboard — Aprovuit",
+      admin:      "Admin — Aprovuit",
     };
     document.title = titles[view] || "Aprovuit — Business Funding";
-    // Update meta description
+    const descs = {
+      landing:    "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
+      products:   "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
+      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls.",
+      faq:        "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
+    };
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) { meta = document.createElement('meta'); meta.name = "description"; document.head.appendChild(meta); }
-    const descs = {
-      landing: "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
-      products: "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
-      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls.",
-      faq: "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
-    };
     meta.content = descs[view] || descs.landing;
-
-    // OG tags
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (!ogTitle) { ogTitle = document.createElement('meta'); ogTitle.setAttribute('property','og:title'); document.head.appendChild(ogTitle); }
     ogTitle.content = document.title;
-
     let ogDesc = document.querySelector('meta[property="og:description"]');
     if (!ogDesc) { ogDesc = document.createElement('meta'); ogDesc.setAttribute('property','og:description'); document.head.appendChild(ogDesc); }
     ogDesc.content = meta.content;
   }, [view]);
 
-  useEffect(() => {
-    const handlePop = () => {
-      const params = new URLSearchParams(window.location.search);
-      const uploadId = params.get("upload");
-      if (uploadId) { setUploadAppId(uploadId); setView("upload"); }
-    };
-    window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, []);
-
   const handleLogin = (email, firstName, company, appId) => {
     setUser({ email, firstName, company, appId });
-    setView("dashboard");
+    navTo("dashboard");
   };
 
   const handleApplySuccess = (email, firstName, company, appId, goUpload) => {
-    if (goUpload) { setUploadAppId(appId); setView("upload"); return; }
-    const u = { email, firstName, company: company||"My Business", appId };
-    setUser(u);
-    setView("dashboard");
-    window.scrollTo(0,0);
+    if (goUpload) { navTo("upload", { uploadId: appId }); return; }
+    setUser({ email, firstName, company: company||"My Business", appId });
+    navTo("dashboard");
   };
 
-  const handleUpload = (appId) => { setUploadAppId(appId); setView("upload"); };
+  const handleUpload = (appId) => navTo("upload", { uploadId: appId });
 
-  if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>setView(user?"dashboard":"landing")} />;
+  // Shared nav props — all page navigation goes through navTo
+  const nav = {
+    onBack:       () => navTo("landing"),
+    onApply:      () => navTo("apply"),
+    onLogin:      () => navTo("login"),
+    onProducts:   () => navTo("products"),
+    onHowItWorks: () => navTo("howitworks"),
+    onFaq:        () => navTo("faq"),
+    onAbout:      () => navTo("about"),
+    onContact:    () => navTo("contact"),
+  };
 
-  if (view==="apply") return <ApplyPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
+  if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>navTo(user?"dashboard":"landing")} />;
+  if (view==="apply")  return <ApplyPage lang={lang} onBack={nav.onBack} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
+  if (view==="login")  return <LoginPage lang={lang} onBack={nav.onBack} onLogin={handleLogin} />;
+  if (view==="admin")  return <AdminGate onExit={nav.onBack} />;
 
-  if (view==="login") return <LoginPage lang={lang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onLogin={handleLogin} />;
-  if (view==="products") return <><ProductsPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="contact") return <><ContactPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="about") return <><AboutPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-  if (view==="faq") return <><FAQPage lang={lang} setLang={setLang} onBack={()=>{setView("landing");window.scrollTo(0,0);}} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} /><Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} /></>;
-
-  if (view==="admin") return (
-    <AdminGate onExit={()=>{setView("landing");window.scrollTo(0,0);}} />
-  );
+  if (view==="products")   return <><ProductsPage   lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
+  if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
+  if (view==="contact")    return <><ContactPage    lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
+  if (view==="about")      return <><AboutPage      lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
+  if (view==="faq")        return <><FAQPage        lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
 
   if (view==="dashboard" && user) return (
     <div style={{ background:"#0a0a0a", minHeight:"100vh" }}>
       <style>{CSS}</style>
       <div style={{ background:"rgba(10,10,10,.97)", borderBottom:"1px solid rgba(255,255,255,.07)", padding:"0 5%", height:56, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
-        <button onClick={()=>{setView("landing");window.scrollTo(0,0);}} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+        <button onClick={nav.onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
           <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
           <span style={{ fontSize:18, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
         </button>
@@ -3703,16 +3736,16 @@ export default function Aprovuit() {
           <span style={{ fontSize:12, color:G, fontWeight:700 }}>{user.firstName} · {user.company}</span>
         </div>
       </div>
-      <Dashboard lang={lang} user={user} onSignOut={()=>{setUser(null);setView("landing");}} onUpload={handleUpload} />
-      <Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} />
+      <Dashboard lang={lang} user={user} onSignOut={()=>{ setUser(null); navTo("landing"); }} onUpload={handleUpload} />
+      <Chatbot lang={lang} onApply={nav.onApply} />
     </div>
   );
 
   return (
     <>
       <style>{CSS}</style>
-      <Landing lang={lang} setLang={setLang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} onLogin={()=>{setView("login");window.scrollTo(0,0);}} onAdmin={()=>setView("admin")} onProducts={()=>{setView("products");window.scrollTo(0,0);}} onHowItWorks={()=>{setView("howitworks");window.scrollTo(0,0);}} onFaq={()=>{setView("faq");window.scrollTo(0,0);}} onAbout={()=>{setView("about");window.scrollTo(0,0);}} onContact={()=>{setView("contact");window.scrollTo(0,0);}} />
-      <Chatbot lang={lang} onApply={()=>{setView("apply");window.scrollTo(0,0);}} />
+      <Landing lang={lang} setLang={setLang} {...nav} onAdmin={()=>navTo("admin")} />
+      <Chatbot lang={lang} onApply={nav.onApply} />
     </>
   );
 }
