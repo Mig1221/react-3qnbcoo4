@@ -1027,11 +1027,11 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
   const myApp = apps.find(a=>a.id===user.appId) || apps[apps.length-1];
 
   const TABS = [
-    { id:"overview", icon:"⊞", label:t.tabs[0] },
-    { id:"offers", icon:"◈", label:t.tabs[1], badge:pendingOffers.length },
-    { id:"loans", icon:"◎", label:t.tabs[2] },
-    { id:"docs", icon:"◻", label:t.tabs[3] },
-    { id:"messages", icon:"◉", label:t.tabs[4] },
+    { id:"overview", icon:"⊞", label:t.overview },
+    { id:"offers", icon:"◈", label:t.offers, badge:pendingOffers.length },
+    { id:"loans", icon:"◎", label:t.loans },
+    { id:"docs", icon:"◻", label:t.docs },
+    { id:"messages", icon:"◉", label:t.msgs },
   ];
 
   return (
@@ -1097,7 +1097,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
         {tab==="offers" && (
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[1]}</h2>
+              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.offers}</h2>
               <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Review and accept your funding offers</p>
             </div>
             {pendingOffers.length === 0 && (
@@ -1149,7 +1149,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
         {tab==="loans" && (
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[2]}</h2>
+              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.loans}</h2>
               <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Track your balances and payment schedule</p>
             </div>
             <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
@@ -1179,14 +1179,14 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                 </div>
               ))}
             </div>
-            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.docsUpload}</button>
+            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.uploadBtn}</button>
           </div>
         )}
 
         {tab==="messages" && (
           <div className="fadeup" style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 160px)" }}>
             <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[4]}</h2>
+              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.msgs}</h2>
             </div>
             <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:"14px 16px", marginBottom:16, display:"flex", alignItems:"center", gap:10 }}>
               <div style={{ width:40, height:40, background:"#1a1a1a", border:"2px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
