@@ -144,8 +144,8 @@ function fmtAmt(n) {
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; overflow-x:hidden; }
-  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; max-width:100vw; overflow-x:clip; }
   ::selection { background:#a8ff3e; color:#000; }
   input, select, textarea, button { font-family:'Sora',sans-serif; }
   .cond { font-family:'Sora',sans-serif; letter-spacing:-.03em; }
@@ -2442,7 +2442,7 @@ function DashboardSlider({ lang }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflowX:"clip"}}>
       <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{textAlign:"center", marginBottom:40}}>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
@@ -2697,7 +2697,7 @@ function WhyAprovuit({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflowX:"clip"}}>
       <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{textAlign:"center", marginBottom:40}}>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
@@ -2769,7 +2769,7 @@ function IndustriesSection({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:BK, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+    <section style={{background:BK, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflowX:"clip"}}>
       <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start", marginBottom:36}} className="hero-grid">
           <div>
@@ -2842,7 +2842,7 @@ function TrustBar({ lang }) {
 function AboutSection({ lang, onApply }) {
   const G = "#a8ff3e";
   return (
-    <section style={{background:BK2, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+    <section style={{background:BK2, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflowX:"clip"}}>
       <div style={{maxWidth:1160, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"center"}} className="hero-grid">
         <div>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
@@ -3229,7 +3229,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
   const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
 
   return (
-    <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif", overflowX:"hidden" }}>
+    <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif" }}>
 
       {/* NAV */}
       <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:62 }}>
