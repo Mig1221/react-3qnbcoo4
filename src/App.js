@@ -212,10 +212,11 @@ const CSS = `
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
     nav { padding:0 4% !important; height:54px !important; }
-    section { padding-left:5% !important; padding-right:5% !important; padding-top:64px !important; padding-bottom:64px !important; }
     .hero-mockup { display:none !important; }
     .hero-grid { padding-top:80px !important; padding-bottom:60px !important; }
     .why-grid { grid-template-columns:1fr !important; }
+    .dash-slide-nav { display:none !important; }
+    .dash-slide-wrap { grid-template-columns:1fr !important; gap:0 !important; }
   }
   @media (max-width:480px) {
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
@@ -229,11 +230,7 @@ const CSS = `
     .reviews-grid { grid-template-columns:1fr !important; }
     .how-grid { grid-template-columns:1fr !important; }
     .products-grid { grid-template-columns:1fr !important; }
-    h1 { font-size:clamp(34px,9vw,52px) !important; line-height:1.05 !important; }
-    h2 { font-size:clamp(24px,7vw,36px) !important; }
-    p { font-size:14px !important; }
     .ticker-text { font-size:10px !important; }
-    section { padding-left:4% !important; padding-right:4% !important; padding-top:52px !important; padding-bottom:52px !important; }
   }
 `;
 
@@ -2464,10 +2461,10 @@ function DashboardSlider({ lang }) {
           </p>
         </div>
 
-        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start"}} className="hero-grid">
+        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start"}} className="hero-grid dash-slide-wrap">
 
-          {/* Left — slide nav */}
-          <div style={{display:"flex", flexDirection:"column", gap:3, minWidth:0}}>
+          {/* Left — slide nav (hidden on mobile via dash-slide-nav class) */}
+          <div style={{display:"flex", flexDirection:"column", gap:3, minWidth:0}} className="dash-slide-nav">
             {slideData.map((s,i)=>(
               <button key={s.tab} onClick={()=>{ setSlide(i); scrollRef.current?.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{display:"flex", alignItems:"flex-start", gap:16, padding:"16px 18px", borderRadius:10, border:`1px solid ${slide===i?G+"35":"rgba(255,255,255,.05)"}`, background:slide===i?"rgba(168,255,62,.04)":"transparent", cursor:"pointer", textAlign:"left", transition:"all .2s", width:"100%", overflow:"hidden"}}>
                 <div style={{width:30, height:30, borderRadius:7, background:slide===i?"rgba(168,255,62,.12)":"rgba(255,255,255,.04)", border:`1px solid ${slide===i?G+"30":"rgba(255,255,255,.07)"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:1}}>
