@@ -425,7 +425,7 @@ function UploadPage({ lang, appId, onBack }) {
         {file ? (
           <div><div style={{ fontSize:20, marginBottom:4 }}>Done</div><p style={{ fontSize:12, fontWeight:700, color:"#16a34a" }}>{file.name}</p></div>
         ) : (
-          <div><div style={{ fontSize:24, marginBottom:6, color:"#ccc" }}></div><p style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:2 }}>{label}</p><p style={{ fontSize:11, color:"#aaa" }}>{t.formats}</p></div>
+          <div><div style={{ fontSize:24, marginBottom:6, color:"#ccc" }}></div><p style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:2 }}>{label}</p><p style={{ fontSize:12, color:"#aaa" }}>{t.formats}</p></div>
         )}
       </div>
     );
@@ -459,7 +459,7 @@ function UploadPage({ lang, appId, onBack }) {
       <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"48px 40px", maxWidth:480, width:"100%", textAlign:"center" }}>
         <div style={{ width:80, height:80, background:"#dcfce7", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", fontSize:36 }}>Done</div>
         <h2 style={{ fontSize:26, fontWeight:900, color:"#1a1a1a", marginBottom:10 }}>{t.successH}</h2>
-        <p style={{ fontSize:15, color:"#666", lineHeight:1.7, marginBottom:28 }}>{t.successP}</p>
+        <p style={{ fontSize:16, color:"#666", lineHeight:1.7, marginBottom:28 }}>{t.successP}</p>
         <button onClick={onBack} className="btn-dark" style={{ width:"100%", padding:14 }}>← Back to Aprovuit</button>
       </div>
     </div>
@@ -479,17 +479,17 @@ function UploadPage({ lang, appId, onBack }) {
       </div>
       <div style={{ background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", padding:"40px 24px 48px", textAlign:"center" }}>
         <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(168,255,62,.1)", border:`1px solid ${G}25`, padding:"4px 14px", borderRadius:20, marginBottom:14 }}>
-          <span style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t.appId}: {appId||"APP-NEW"}</span>
+          <span style={{ fontSize:12, color:G, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t.appId}: {appId||"APP-NEW"}</span>
         </div>
         <h1 style={{ fontSize:"clamp(28px,5vw,42px)", fontWeight:900, color:"#fff", marginBottom:8, letterSpacing:"-0.02em" }}>{t.title}</h1>
-        <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", maxWidth:420, margin:"0 auto" }}>{t.sub}</p>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", maxWidth:420, margin:"0 auto" }}>{t.sub}</p>
       </div>
       <div style={{ maxWidth:640, margin:"0 auto", padding:"28px 24px 80px" }}>
         <div style={{ background:"#fff", borderRadius:18, padding:28, marginBottom:16, boxShadow:"0 4px 20px rgba(0,0,0,.08)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
-            <span style={{ fontSize:13, fontWeight:700, color:G }}>BANK</span>
-            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.bankTitle}</h3><p style={{ fontSize:13, color:"#888" }}>{t.bankSub}</p></div>
-            <span style={{ fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+            <span style={{ fontSize:14, fontWeight:700, color:G }}>BANK</span>
+            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.bankTitle}</h3><p style={{ fontSize:14, color:"#888" }}>{t.bankSub}</p></div>
+            <span style={{ fontSize:12, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10 }}>
             {["bank1","bank2","bank3","bank4","bank5","bank6"].map((k,i)=><FileZone key={k} fileKey={k} label={t.months[i]} sublabel="PDF/IMG" />)}
@@ -498,23 +498,23 @@ function UploadPage({ lang, appId, onBack }) {
         <div style={{ background:"#fff", borderRadius:18, padding:28, marginBottom:16, boxShadow:"0 4px 20px rgba(0,0,0,.08)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
             <span style={{ fontSize:22 }}>🪪</span>
-            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.licenseTitle}</h3><p style={{ fontSize:13, color:"#888" }}>{t.licenseSub}</p></div>
-            <span style={{ fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.licenseTitle}</h3><p style={{ fontSize:14, color:"#888" }}>{t.licenseSub}</p></div>
+            <span style={{ fontSize:12, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
           </div>
           <FileZone fileKey="license" label={t.licenseTitle} sublabel="JPG/PNG/PDF" />
         </div>
         <div style={{ background:"#fff", borderRadius:18, padding:28, marginBottom:28, boxShadow:"0 4px 20px rgba(0,0,0,.08)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
-            <span style={{ fontSize:13, fontWeight:700, color:G }}>CHECK</span>
-            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.voidedTitle}</h3><p style={{ fontSize:13, color:"#888" }}>{t.voidedSub}</p></div>
-            <span style={{ fontSize:11, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
+            <span style={{ fontSize:14, fontWeight:700, color:G }}>CHECK</span>
+            <div style={{ flex:1 }}><h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{t.voidedTitle}</h3><p style={{ fontSize:14, color:"#888" }}>{t.voidedSub}</p></div>
+            <span style={{ fontSize:12, fontWeight:700, color:"#ef4444", background:"#fef2f2", padding:"3px 10px", borderRadius:20 }}>{t.required}</span>
           </div>
           <FileZone fileKey="voided" label={t.voidedTitle} sublabel="JPG/PNG/PDF" />
         </div>
         <button onClick={handleSubmit} disabled={uploading} style={{ width:"100%", background:uploading?"#ccc":G, color:"#000", border:"none", padding:18, borderRadius:12, fontSize:16, fontWeight:900, cursor:uploading?"not-allowed":"pointer", fontFamily:"'DM Sans',sans-serif" }}>
           {uploading ? t.uploading : t.uploadBtn}
         </button>
-        <p style={{ textAlign:"center", fontSize:13, color:"#888", marginTop:12 }}>{t.secure}</p>
+        <p style={{ textAlign:"center", fontSize:14, color:"#888", marginTop:12 }}>{t.secure}</p>
       </div>
     </div>
   );
@@ -602,7 +602,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
   // ── STYLES ──────────────────────────────────────────────────────
   const pageStyle = { minHeight:"100vh", background:"#0a0a0a", fontFamily:"'Sora',sans-serif", color:"#fff" };
   const navStyle = { background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", height:58, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 };
-  const labelStyle = { fontSize:11, fontWeight:700, color:"rgba(255,255,255,.7)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:10, display:"block" };
+  const labelStyle = { fontSize:12, fontWeight:700, color:"rgba(255,255,255,.7)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:10, display:"block" };
   const errStyle = { fontSize:12, color:"#ef4444", marginTop:-8, marginBottom:10 };
 
   // ── SUCCESS SCREEN ───────────────────────────────────────────────
@@ -611,8 +611,8 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
       <style>{APPLY_CSS}</style>
       <div style={navStyle}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:700, color:"#000" }}>A</div>
-          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:700, color:"#000" }}>A</div>
+          <span style={{ fontSize:16, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
         </button>
       </div>
       <div style={{ display:"flex", alignItems:"center", justifyContent:"center", minHeight:"calc(100vh - 58px)", padding:24 }}>
@@ -621,17 +621,17 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <h2 style={{ fontSize:32, fontWeight:700, color:"#fff", marginBottom:12, letterSpacing:"-.03em" }}>
             {lang==="es"?"Solicitud Enviada":"Request Submitted"}
           </h2>
-          <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.75, marginBottom:40 }}>
+          <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.75, marginBottom:40 }}>
             {lang==="es"
               ? "Tu solicitud está siendo revisada por nuestro equipo. Trabajaremos para conseguirte una oferta en 2–4 horas hábiles. Rastrea el estado de tu trato en tiempo real en tu portal."
               : "Your application is being reviewed by our team. We'll work to get you an offer within 2–4 business hours. Track your deal status live in your dashboard."}
           </p>
           <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"24px", marginBottom:24, textAlign:"left" }}>
-            <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
+            <p style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
               {lang==="es"?"Pre-calificación estimada":"Estimated pre-qualification"}
             </p>
             <p style={{ fontSize:48, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1 }}>{fmtSlider(qualAmt())}</p>
-            <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:8 }}>
+            <p style={{ fontSize:12, color:"rgba(255,255,255,.25)", marginTop:8 }}>
               {lang==="es"?"Para fines ilustrativos. Sujeto a revisión.":"For illustrative purposes. Subject to review."}
             </p>
           </div>
@@ -653,13 +653,13 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
     <div style={{ maxWidth:680, margin:"0 auto", padding:"60px 24px 80px" }}>
       {/* Header */}
       <div style={{ textAlign:"center", marginBottom:56 }}>
-        <p style={{ fontSize:11, fontWeight:600, color:G, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:16 }}>
+        <p style={{ fontSize:12, fontWeight:600, color:G, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:16 }}>
           {lang==="es"?"Aprobaciones Rápidas · Asesores Reales · Sin Cargos Ocultos":"Fast Approvals · Real Advisors · No Hidden Fees"}
         </p>
-        <h1 style={{ fontSize:"clamp(32px,5vw,52px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", lineHeight:1.1, marginBottom:16 }}>
+        <h1 style={{ fontSize:"clamp(38px,5vw,60px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", lineHeight:1.1, marginBottom:16 }}>
           {lang==="es" ? <>Solicita<br /><span style={{color:G}}>Capital de Trabajo</span></> : <>Apply for<br /><span style={{color:G}}>Working Capital</span></>}
         </h1>
-        <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", lineHeight:1.7 }}>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,.4)", lineHeight:1.7 }}>
           {lang==="es"
             ? "Nuestro equipo revisa tu solicitud y trabaja para conseguirte fondos — a menudo en 24 horas."
             : "Our team reviews your application for direct funding and partner options. Decisions often within 24 hours. No phone interview required."}
@@ -676,7 +676,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           ).map(([val,label,range])=>(
             <button key={val} onClick={()=>setCreditSel(val)} style={{ background:creditSel===val?"#fff":"rgba(255,255,255,.04)", border:`1px solid ${creditSel===val?"#fff":"rgba(255,255,255,.1)"}`, borderRadius:8, padding:"16px 8px", cursor:"pointer", textAlign:"center", transition:"all .15s" }}>
               <p style={{ fontSize:14, fontWeight:600, color:creditSel===val?"#0a0a0a":"#fff", marginBottom:4, letterSpacing:"-.01em" }}>{label}</p>
-              <p style={{ fontSize:11, color:creditSel===val?"rgba(0,0,0,.5)":"rgba(255,255,255,.3)", fontWeight:500 }}>{range}</p>
+              <p style={{ fontSize:12, color:creditSel===val?"rgba(0,0,0,.5)":"rgba(255,255,255,.3)", fontWeight:500 }}>{range}</p>
             </button>
           ))}
         </div>
@@ -690,14 +690,14 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
         </div>
         <input type="range" min={10000} max={2000000} step={5000} value={loanAmt} onChange={e=>setLoanAmt(Number(e.target.value))} style={{ width:"100%" }} />
         <div style={{ display:"flex", justifyContent:"space-between", marginTop:8 }}>
-          <span style={{ fontSize:11, color:"rgba(255,255,255,.25)" }}>$10K</span>
-          <span style={{ fontSize:11, color:"rgba(255,255,255,.25)" }}>$2M+</span>
+          <span style={{ fontSize:12, color:"rgba(255,255,255,.25)" }}>$10K</span>
+          <span style={{ fontSize:12, color:"rgba(255,255,255,.25)" }}>$2M+</span>
         </div>
       </div>
 
       {/* Qualification result */}
       <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"32px", marginBottom:32, textAlign:"center" }}>
-        <p style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
+        <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
           {lang==="es"?"¿Cuánto podría calificar?":"How much could I qualify for?"}
         </p>
         <p style={{ fontSize:64, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1, marginBottom:8 }}>{fmtSlider(qualAmt())}</p>
@@ -708,7 +708,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
 
       {/* Requirements */}
       <div style={{ background:"rgba(168,255,62,.07)", border:`1px solid ${G}30`, borderRadius:12, padding:"24px 28px", marginBottom:32 }}>
-        <p style={{ fontSize:13, fontWeight:700, color:G, marginBottom:16, letterSpacing:"-.01em" }}>
+        <p style={{ fontSize:14, fontWeight:700, color:G, marginBottom:16, letterSpacing:"-.01em" }}>
           {lang==="es"?"Todo lo que necesitas:":"All you need to qualify:"}
         </p>
         {(lang==="es"
@@ -722,7 +722,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
         ))}
       </div>
 
-      <button onClick={()=>{setStep(1);window.scrollTo(0,0);}} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"16px", borderRadius:8, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
+      <button onClick={()=>{setStep(1);window.scrollTo(0,0);}} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"16px", borderRadius:8, fontSize:16, fontWeight:600, cursor:"pointer", letterSpacing:"-.01em" }}>
         {lang==="es"?"Comenzar Mi Solicitud →":"Start My Request →"}
       </button>
       <p style={{ textAlign:"center", fontSize:12, color:"rgba(255,255,255,.25)", marginTop:14 }}>
@@ -764,13 +764,13 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
             {lang==="es"?"¿Para qué necesitas los fondos?":"What are you looking for?"}
           </h2>
-          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
             {lang==="es"?"Cuéntanos sobre tu solicitud.":"Tell us about your request."}
           </p>
 
           {/* Loan amount display */}
           <div style={{ background:"rgba(168,255,62,.04)", border:`1px solid ${G}20`, borderRadius:10, padding:"20px 24px", marginBottom:24, textAlign:"center" }}>
-            <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
+            <p style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>
               {lang==="es"?"Monto estimado":"Estimated amount"}
             </p>
             <p style={{ fontSize:44, fontWeight:700, color:G, letterSpacing:"-.04em", lineHeight:1 }}>{fmtSlider(qualAmt())}</p>
@@ -797,7 +797,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
             {lang==="es"?"Tu Negocio":"Your Business"}
           </h2>
-          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
             {lang==="es"?"Cuéntanos sobre tu negocio.":"Tell us about your business."}
           </p>
 
@@ -836,7 +836,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
             {lang==="es"?"Crea Tu Cuenta":"Create Your Account"}
           </h2>
-          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
             {lang==="es"?"Tu portal para rastrear todo.":"Your dashboard to track everything."}
           </p>
 
@@ -876,7 +876,7 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
           <h2 style={{ fontSize:24, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.03em" }}>
             {lang==="es"?"Revisa tu Solicitud":"Review Your Request"}
           </h2>
-          <p style={{ fontSize:13, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,.35)", marginBottom:28, letterSpacing:"-.01em" }}>
             {lang==="es"?"¿Todo correcto? Envía para continuar.":"Everything look right? Submit to continue."}
           </p>
 
@@ -892,8 +892,8 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
               ["Email", form.email||"—"],
             ].map(([k,v])=>(
               <div key={k} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"10px 0", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-                <span style={{ fontSize:13, color:"rgba(255,255,255,.35)", letterSpacing:"-.01em" }}>{k}</span>
-                <span style={{ fontSize:13, fontWeight:600, color:"#fff", letterSpacing:"-.01em", textAlign:"right", maxWidth:"60%" }}>{v}</span>
+                <span style={{ fontSize:14, color:"rgba(255,255,255,.35)", letterSpacing:"-.01em" }}>{k}</span>
+                <span style={{ fontSize:14, fontWeight:600, color:"#fff", letterSpacing:"-.01em", textAlign:"right", maxWidth:"60%" }}>{v}</span>
               </div>
             ))}
           </div>
@@ -924,12 +924,12 @@ function ApplyPage({ lang, onBack, onSuccess, onUpload }) {
       {/* Nav */}
       <div style={navStyle}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:700, color:"#000" }}>A</div>
-          <span style={{ fontSize:15, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:700, color:"#000" }}>A</div>
+          <span style={{ fontSize:16, fontWeight:700, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
         </button>
         <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(168,255,62,.06)", border:`1px solid ${G}20`, padding:"5px 14px", borderRadius:20 }}>
           <div style={{ width:5, height:5, background:G, borderRadius:"50%" }}></div>
-          <span style={{ fontSize:11, color:G, fontWeight:600, letterSpacing:"0.05em" }}>
+          <span style={{ fontSize:12, color:G, fontWeight:600, letterSpacing:"0.05em" }}>
             {lang==="es"?"Sin Cargos Ocultos · Asesores Reales":"No Hidden Fees · Real Advisors"}
           </span>
         </div>
@@ -969,7 +969,7 @@ function LoginPage({ lang, onBack, onLogin }) {
     onLogin(account.email, account.firstName, account.company, account.appId);
   };
 
-  const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:15, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", background:"#fff", marginBottom:14, display:"block", outline:"none" };
+  const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", background:"#fff", marginBottom:14, display:"block", outline:"none" };
 
   return (
     <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", flexDirection:"column" }}>
@@ -984,14 +984,14 @@ function LoginPage({ lang, onBack, onLogin }) {
           <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%" }}>
             <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.h}</h2>
             <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>{t.sub}</p>
-            {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:13, color:"#dc2626" }}>{error}</p></div>}
+            {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:14, color:"#dc2626" }}>{error}</p></div>}
             <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.email}</label>
             <input style={inp} type="email" placeholder="you@yourbusiness.com" value={email} onChange={e=>setEmail(e.target.value)} />
             <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.password}</label>
             <input style={inp} type="password" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} />
-            <p style={{ fontSize:13, color:"#888", textAlign:"right", marginBottom:20, cursor:"pointer" }}>{t.forgot}</p>
-            <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.btn}</button>
-            <p style={{ fontSize:13, color:"#888", textAlign:"center", marginTop:16 }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer" }} onClick={onBack}>{t.applyLink}</span></p>
+            <p style={{ fontSize:14, color:"#888", textAlign:"right", marginBottom:20, cursor:"pointer" }}>{t.forgot}</p>
+            <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.btn}</button>
+            <p style={{ fontSize:14, color:"#888", textAlign:"center", marginTop:16 }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer" }} onClick={onBack}>{t.applyLink}</span></p>
           </div>
         ) : (
           <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%", textAlign:"center" }}>
@@ -1003,8 +1003,8 @@ function LoginPage({ lang, onBack, onLogin }) {
                 <input key={i} maxLength={1} value={smsCode[i]} onChange={e=>{const c=[...smsCode];c[i]=e.target.value;setSmsCode(c);if(e.target.value&&e.target.nextSibling)e.target.nextSibling.focus();}} style={{ width:44, height:52, border:`2px solid ${smsCode[i]?"#1a1a1a":"#e5e5ea"}`, borderRadius:10, textAlign:"center", fontSize:22, fontWeight:900, color:"#1a1a1a", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#fff" }} />
               ))}
             </div>
-            <button onClick={handleVerify} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:12 }}>{t.verify}</button>
-            <p style={{ fontSize:13, color:"#888", cursor:"pointer" }}>{t.resend}</p>
+            <button onClick={handleVerify} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:12 }}>{t.verify}</button>
+            <p style={{ fontSize:14, color:"#888", cursor:"pointer" }}>{t.resend}</p>
           </div>
         )}
       </div>
@@ -1065,21 +1065,21 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
       {/* Sidebar */}
       <div style={{ width:200, background:"#111", borderRight:"1px solid rgba(255,255,255,.06)", flexShrink:0 }}>
         <div style={{ padding:"20px 16px", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", marginBottom:4, textTransform:"uppercase", letterSpacing:"0.06em" }}>Logged in as</p>
+          <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginBottom:4, textTransform:"uppercase", letterSpacing:"0.06em" }}>Logged in as</p>
           <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{user.firstName}</p>
           <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:2 }}>{user.company}</p>
         </div>
         <div style={{ padding:"8px 0" }}>
           {TABS.map(tb=>(
             <div key={tb.id} className={`sb-item${tab===tb.id?" active":""}`} onClick={()=>setTab(tb.id)} style={{ position:"relative" }}>
-              <span style={{ fontSize:15, width:20, textAlign:"center" }}>{tb.icon}</span>
+              <span style={{ fontSize:16, width:20, textAlign:"center" }}>{tb.icon}</span>
               {tb.label}
               {tb.badge>0 && <div style={{ position:"absolute", right:12, width:18, height:18, background:"#ef4444", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:800, color:"#fff" }}>{tb.badge}</div>}
             </div>
           ))}
         </div>
         <div style={{ padding:"12px 16px", borderTop:"1px solid rgba(255,255,255,.06)", marginTop:"auto" }}>
-          <button onClick={onSignOut} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← {t.signout}</button>
+          <button onClick={onSignOut} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← {t.signout}</button>
         </div>
       </div>
 
@@ -1090,14 +1090,14 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.greeting}, {user.firstName} </h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>{t.snapshot}</p>
+              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>{t.snapshot}</p>
             </div>
             <div className="metrics-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
               {[["Active Credit","$0","No active loans yet",""],["Pending Offers",pendingOffers.length.toString(),"Awaiting review",""],["Application",myApp?"Under Review":"—","Submitted",""],["Next Payment","—","No payments yet",""]].map(([l,v,s])=>(
                 <div key={l} className="metric">
-                  <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8 }}>{l}</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8 }}>{l}</p>
                   <p style={{ fontSize:22, fontWeight:900, color:l==="Active Credit"?G:"#fff", letterSpacing:"-0.5px" }}>{v}</p>
-                  <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", marginTop:4 }}>{s}</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginTop:4 }}>{s}</p>
                 </div>
               ))}
             </div>
@@ -1124,7 +1124,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[1]}</h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>Review and accept your funding offers</p>
+              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Review and accept your funding offers</p>
             </div>
             {pendingOffers.length === 0 && (
               <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
@@ -1144,7 +1144,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                   {[["Term",offer.term],["Payment",offer.payment],["Rate",offer.rate],["Funding","Same Day"]].map(([k,v])=>(
                     <div key={k} style={{ background:"rgba(255,255,255,.04)", borderRadius:8, padding:10 }}>
                       <p style={{ fontSize:10, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:3 }}>{k}</p>
-                      <p style={{ fontSize:13, fontWeight:700, color:"#fff" }}>{v}</p>
+                      <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{v}</p>
                     </div>
                   ))}
                 </div>
@@ -1152,12 +1152,12 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                   <button onClick={()=>acceptOffer(offer.id)} style={{ flex:1, background:G, color:"#000", border:"none", padding:13, borderRadius:10, fontSize:14, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Accept Offer Done</button>
                   <button onClick={()=>declineOffer(offer.id)} style={{ flex:1, background:"rgba(255,255,255,.06)", color:"rgba(255,255,255,.5)", border:"1px solid rgba(255,255,255,.1)", padding:13, borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Decline</button>
                 </div>
-                {offer.expires && <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", textAlign:"center", marginTop:8 }}>Expires {offer.expires}</p>}
+                {offer.expires && <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", textAlign:"center", marginTop:8 }}>Expires {offer.expires}</p>}
               </div>
             ))}
             {offers.filter(o=>o.status!=="pending").length > 0 && (
               <div style={{ marginTop:24 }}>
-                <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", marginBottom:12, textTransform:"uppercase", letterSpacing:"0.06em", fontWeight:700 }}>Previous Offers</p>
+                <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginBottom:12, textTransform:"uppercase", letterSpacing:"0.06em", fontWeight:700 }}>Previous Offers</p>
                 {offers.filter(o=>o.status!=="pending").map(offer=>(
                   <div key={offer.id} style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:12, padding:"14px 18px", marginBottom:10, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                     <div>
@@ -1176,7 +1176,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[2]}</h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>Track your balances and payment schedule</p>
+              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Track your balances and payment schedule</p>
             </div>
             <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
               <div style={{ fontSize:40, marginBottom:16 }}></div>
@@ -1190,7 +1190,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
           <div className="fadeup">
             <div style={{ marginBottom:24 }}>
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.docsTitle}</h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,.4)" }}>Upload and manage your documents</p>
+              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Upload and manage your documents</p>
             </div>
             <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:22, marginBottom:16 }}>
               <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:16 }}>Required Documents</p>
@@ -1205,7 +1205,7 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
                 </div>
               ))}
             </div>
-            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:15, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.docsUpload}</button>
+            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.docsUpload}</button>
           </div>
         )}
 
@@ -1215,12 +1215,12 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
               <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.tabs[4]}</h2>
             </div>
             <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:"14px 16px", marginBottom:16, display:"flex", alignItems:"center", gap:10 }}>
-              <div style={{ width:40, height:40, background:"#1a1a1a", border:"2px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
+              <div style={{ width:40, height:40, background:"#1a1a1a", border:"2px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
               <div style={{ flex:1 }}>
                 <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>Tanya Williams</p>
                 <p style={{ fontSize:12, color:G, fontWeight:600 }}>Online · {t.msgAdvisor}</p>
               </div>
-              <div style={{ background:"rgba(239,68,68,.1)", borderRadius:20, padding:"4px 12px", fontSize:11, fontWeight:700, color:"#ef4444" }}>No Calls</div>
+              <div style={{ background:"rgba(239,68,68,.1)", borderRadius:20, padding:"4px 12px", fontSize:12, fontWeight:700, color:"#ef4444" }}>No Calls</div>
             </div>
             <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:10, paddingBottom:16 }}>
               {msgs.map((m,i)=>(
@@ -1273,11 +1273,11 @@ function AdminGate({ onExit }) {
       <style>{CSS}</style>
       <div style={{ background:"#0a0a0a", padding:"0 5%", height:56, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
           <span style={{ fontSize:18, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
-          <span style={{ marginLeft:8, fontSize:11, color:"rgba(255,255,255,.4)", background:"rgba(255,255,255,.08)", padding:"3px 10px", borderRadius:20, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em" }}>Admin</span>
+          <span style={{ marginLeft:8, fontSize:12, color:"rgba(255,255,255,.4)", background:"rgba(255,255,255,.08)", padding:"3px 10px", borderRadius:20, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em" }}>Admin</span>
         </div>
-        <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.4)", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit</button>
+        <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.4)", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit</button>
       </div>
       <AdminDashboard onExit={onExit} />
     </div>
@@ -1292,7 +1292,7 @@ function AdminGate({ onExit }) {
         </div>
         <h2 style={{ fontSize:22, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>Admin Access</h2>
         <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>Enter your admin password to continue.</p>
-        {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:13, color:"#dc2626" }}>{error}</p></div>}
+        {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:14, color:"#dc2626" }}>{error}</p></div>}
         <div style={{ position:"relative", marginBottom:20 }}>
           <input
             type={showPw?"text":"password"}
@@ -1300,12 +1300,12 @@ function AdminGate({ onExit }) {
             value={pw}
             onChange={e=>setPw(e.target.value)}
             onKeyDown={e=>e.key==="Enter"&&handleLogin()}
-            style={{ width:"100%", padding:"13px 44px 13px 16px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:15, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }}
+            style={{ width:"100%", padding:"13px 44px 13px 16px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }}
           />
           <button onClick={()=>setShowPw(p=>!p)} style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#aaa", fontSize:14 }}>{showPw?"Hide":"Show"}</button>
         </div>
-        <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:16 }}>Enter Admin Panel →</button>
-        <button onClick={onExit} style={{ background:"none", border:"none", color:"#888", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Back to site</button>
+        <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:14, borderRadius:10, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginBottom:16 }}>Enter Admin Panel →</button>
+        <button onClick={onExit} style={{ background:"none", border:"none", color:"#888", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Back to site</button>
       </div>
     </div>
   );
@@ -1337,11 +1337,11 @@ function AdminDashboard({ onExit }) {
       <div style={{ width:200, background:"#0a0a0a", flexShrink:0, display:"flex", flexDirection:"column" }}>
         {[["◻","apps","Applications"],["◈","offer","Send Offer"],["◉","merchants","Merchants"]].map(([icon,id,label])=>(
           <div key={id} className={`sb-item${tab===id?" active":""}`} onClick={()=>setTab(id)}>
-            <span style={{ fontSize:15, width:20, textAlign:"center" }}>{icon}</span>{label}
+            <span style={{ fontSize:16, width:20, textAlign:"center" }}>{icon}</span>{label}
           </div>
         ))}
         <div style={{ marginTop:"auto", padding:"16px 20px", borderTop:"1px solid rgba(255,255,255,.06)" }}>
-          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit Admin</button>
+          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit Admin</button>
         </div>
       </div>
 
@@ -1349,12 +1349,12 @@ function AdminDashboard({ onExit }) {
         {tab==="apps" && (
           <div>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
-              <div><h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", letterSpacing:"-0.02em" }}>Applications</h2><p style={{ fontSize:13, color:"#888" }}>{apps.length} total</p></div>
+              <div><h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", letterSpacing:"-0.02em" }}>Applications</h2><p style={{ fontSize:14, color:"#888" }}>{apps.length} total</p></div>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:24 }}>
               {[["Total",apps.length],["Under Review",apps.filter(a=>a.status==="Under Review").length],["Approved",apps.filter(a=>a.status==="Approved").length],["Funded",apps.filter(a=>a.status==="Funded").length]].map(([l,v])=>(
                 <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"18px 20px" }}>
-                  <p style={{ fontSize:11, color:"#888", fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:8 }}>{l}</p>
+                  <p style={{ fontSize:12, color:"#888", fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:8 }}>{l}</p>
                   <p style={{ fontSize:36, fontWeight:900, color:"#1a1a1a", letterSpacing:"-1px" }}>{v}</p>
                 </div>
               ))}
@@ -1369,7 +1369,7 @@ function AdminDashboard({ onExit }) {
                   <thead>
                     <tr style={{ borderBottom:"1px solid #e5e3de" }}>
                       {["Company","Name","Amount","Purpose","Credit","Status",""].map(h=>(
-                        <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:11, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
+                        <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:12, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -1379,12 +1379,12 @@ function AdminDashboard({ onExit }) {
                       return (
                         <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0", cursor:"pointer" }} onClick={()=>setDrawer(app)}>
                           <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.company||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:13, color:"#555" }}>{app.firstName} {app.lastName}</td>
+                          <td style={{ padding:"13px 16px", fontSize:14, color:"#555" }}>{app.firstName} {app.lastName}</td>
                           <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.loanAmt||app.loan_amount||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:13, color:"#666" }}>{app.purpose||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:13, color:"#666", textTransform:"capitalize" }}>{app.creditRating||"—"}</td>
-                          <td style={{ padding:"13px 16px" }}><span style={{ fontSize:11, padding:"4px 12px", fontWeight:700, borderRadius:20, background:s[0], color:s[1] }}>{app.status||"Under Review"}</span></td>
-                          <td style={{ padding:"13px 16px" }}><button style={{ background:"none", border:"none", fontSize:13, color:"#a8ff3e", cursor:"pointer", fontWeight:700 }} onClick={e=>{e.stopPropagation();setDrawer(app);setTab("offer");}}>Send Offer →</button></td>
+                          <td style={{ padding:"13px 16px", fontSize:14, color:"#666" }}>{app.purpose||"—"}</td>
+                          <td style={{ padding:"13px 16px", fontSize:14, color:"#666", textTransform:"capitalize" }}>{app.creditRating||"—"}</td>
+                          <td style={{ padding:"13px 16px" }}><span style={{ fontSize:12, padding:"4px 12px", fontWeight:700, borderRadius:20, background:s[0], color:s[1] }}>{app.status||"Under Review"}</span></td>
+                          <td style={{ padding:"13px 16px" }}><button style={{ background:"none", border:"none", fontSize:14, color:"#a8ff3e", cursor:"pointer", fontWeight:700 }} onClick={e=>{e.stopPropagation();setDrawer(app);setTab("offer");}}>Send Offer →</button></td>
                         </tr>
                       );
                     })}
@@ -1398,19 +1398,19 @@ function AdminDashboard({ onExit }) {
         {tab==="offer" && (
           <div>
             <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:4, letterSpacing:"-0.02em" }}>Send Offer</h2>
-            <p style={{ fontSize:13, color:"#888", marginBottom:24 }}>Create and send a funding offer to a merchant.</p>
+            <p style={{ fontSize:14, color:"#888", marginBottom:24 }}>Create and send a funding offer to a merchant.</p>
             {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 16px", marginBottom:20 }}><p style={{ fontSize:14, fontWeight:700, color:"#16a34a" }}>Offer sent! Merchant can see it in their dashboard.</p></div>}
             <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:28, maxWidth:560 }}>
               {drawer && (
                 <div style={{ background:"#f9fafb", borderRadius:10, padding:"14px 16px", marginBottom:22 }}>
-                  <p style={{ fontSize:11, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:6 }}>Sending to</p>
-                  <p style={{ fontSize:15, fontWeight:800, color:"#1a1a1a" }}>{drawer.company}</p>
-                  <p style={{ fontSize:13, color:"#888" }}>{drawer.firstName} {drawer.lastName} · {drawer.id}</p>
+                  <p style={{ fontSize:12, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:6 }}>Sending to</p>
+                  <p style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{drawer.company}</p>
+                  <p style={{ fontSize:14, color:"#888" }}>{drawer.firstName} {drawer.lastName} · {drawer.id}</p>
                 </div>
               )}
               {!drawer && (
                 <div style={{ background:"#fef9f0", border:"1px solid #fed7aa", borderRadius:10, padding:"12px 16px", marginBottom:22 }}>
-                  <p style={{ fontSize:13, color:"#ea580c" }}>Select an application from the Applications tab first, or enter an App ID below.</p>
+                  <p style={{ fontSize:14, color:"#ea580c" }}>Select an application from the Applications tab first, or enter an App ID below.</p>
                   <input placeholder="App ID (e.g. APP-123456)" style={{ marginTop:10, width:"100%", padding:"10px 14px", border:"1.5px solid #e5e5ea", borderRadius:8, fontSize:14, fontFamily:"'DM Sans',sans-serif", outline:"none" }} onChange={e=>{const app=apps.find(a=>a.id===e.target.value);if(app)setDrawer(app);}} />
                 </div>
               )}
@@ -1418,15 +1418,15 @@ function AdminDashboard({ onExit }) {
                 <div key={key} style={{ marginBottom:14 }}>
                   <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{label}</label>
                   {Array.isArray(opts) ? (
-                    <select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:15, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", appearance:"none", cursor:"pointer", outline:"none" }}>
+                    <select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", appearance:"none", cursor:"pointer", outline:"none" }}>
                       {opts.map(o=><option key={o}>{o}</option>)}
                     </select>
                   ) : (
-                    <input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:15, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }} />
+                    <input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }} />
                   )}
                 </div>
               ))}
-              <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:15, borderRadius:12, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:8 }}>
+              <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:8 }}>
                 Send Offer to Merchant →
               </button>
               <p style={{ fontSize:12, color:"#888", textAlign:"center", marginTop:10 }}>Offer appears in merchant dashboard + email instantly</p>
@@ -1442,7 +1442,7 @@ function AdminDashboard({ onExit }) {
                 <thead>
                   <tr style={{ borderBottom:"1px solid #e5e3de" }}>
                     {["Company","Owner","Email","Phone","App ID","Submitted"].map(h=>(
-                      <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:11, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
+                      <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:12, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -1452,11 +1452,11 @@ function AdminDashboard({ onExit }) {
                   ) : apps.map((app,i)=>(
                     <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0" }}>
                       <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.company||"—"}</td>
-                      <td style={{ padding:"13px 16px", fontSize:13, color:"#555" }}>{app.firstName} {app.lastName}</td>
-                      <td style={{ padding:"13px 16px", fontSize:13, color:"#3b82f6" }}>{app.email||"—"}</td>
-                      <td style={{ padding:"13px 16px", fontSize:13, color:"#666" }}>{app.phone||"—"}</td>
+                      <td style={{ padding:"13px 16px", fontSize:14, color:"#555" }}>{app.firstName} {app.lastName}</td>
+                      <td style={{ padding:"13px 16px", fontSize:14, color:"#3b82f6" }}>{app.email||"—"}</td>
+                      <td style={{ padding:"13px 16px", fontSize:14, color:"#666" }}>{app.phone||"—"}</td>
                       <td style={{ padding:"13px 16px", fontSize:12, color:"#888", fontFamily:"monospace" }}>{app.id}</td>
-                      <td style={{ padding:"13px 16px", fontSize:13, color:"#888" }}>{app.submittedAt||"—"}</td>
+                      <td style={{ padding:"13px 16px", fontSize:14, color:"#888" }}>{app.submittedAt||"—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1494,14 +1494,14 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
   const [menuOpen, setMenuOpen] = useState(false);
   const G = "#a8ff3e";
   return (
-    <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
+    <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
       <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
           <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
         </svg>
-        <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
+        <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
       </button>
       {/* Desktop — unchanged from original */}
       <div className="nav-desktop" style={{ display:"flex", gap:28, alignItems:"center" }}>
@@ -1537,13 +1537,13 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
               [lang==="es"?"Contacto":"Contact", onContact],
               ...(onLogin ? [[lang==="es"?"Entrar":"Log In", onLogin]] : []),
             ].filter(([,fn])=>fn).map(([label,fn]) => (
-              <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:15, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
+              <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
                 {label}
               </button>
             ))}
             {setLang && (
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:14 }}>
-                <span style={{ fontSize:11, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
+                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
                 <div className="lang-pill">
                   <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
                   <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
@@ -1562,12 +1562,12 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
 function DontSeeSection({ lang, onApply }) {
   const G = "#a8ff3e";
   return (
-    <section style={{ background:BK2, padding:"64px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+    <section style={{ background:BK2, padding:"44px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
       <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
-        <h2 style={{ fontSize:"clamp(22px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
+        <h2 style={{ fontSize:"clamp(26px,3vw,44px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
           {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
         </h2>
-        <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,.45)", maxWidth:520, margin:"0 auto 28px", lineHeight:1.8, fontWeight:300 }}>
           {lang==="es"
             ? "Fondeamos negocios en prácticamente cualquier industria. Si tu negocio lleva 6+ meses en operación y genera ingresos, queremos conocer tu historia."
             : "We fund businesses across virtually any industry. If your business has been operating for 6+ months and generates revenue, we want to hear your story."}
@@ -1581,15 +1581,15 @@ function DontSeeSection({ lang, onApply }) {
               <div style={{ width:28, height:28, background:"rgba(168,255,62,.08)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px" }}>
                 <div style={{ width:7, height:7, background:G, borderRadius:"50%" }}></div>
               </div>
-              <p style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
-              <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
+              <p style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:5 }}>{t}</p>
+              <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", lineHeight:1.6, fontWeight:300 }}>{d}</p>
             </div>
           ))}
         </div>
         <button onClick={onApply} className="btn-green" style={{ fontSize:14, padding:"11px 32px" }}>
           {lang==="es" ? "Ver Si Califico" : "See If I Qualify"}
         </button>
-        <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginTop:10 }}>
+        <p style={{ fontSize:12, color:"rgba(255,255,255,.25)", marginTop:10 }}>
           {lang==="es" ? "6+ meses en operacion, sin impacto al credito" : "6+ months in business, no credit impact, no phone calls"}
         </p>
       </div>
@@ -1658,11 +1658,11 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"64px 5% 80px", maxWidth:1100, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:1280, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Encuentra el producto correcto para tu negocio. Sin vendedores. Sin llamadas.":"Find the right product for your business. No salespeople. No phone calls."}</p>
+          <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
+          <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Encuentra el producto correcto para tu negocio. Sin vendedores. Sin llamadas.":"Find the right product for your business. No salespeople. No phone calls."}</p>
         </div>
 
         {products.map((p,i)=>(
@@ -1674,10 +1674,10 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
                   <div style={{ width:48, height:48, background:`${p.color}15`, border:`1px solid ${p.color}40`, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, color:p.color }}>{p.icon}</div>
                   <div>
                     <h2 className="cond" style={{ fontSize:28, fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.01em" }}>{p.name}</h2>
-                    <p style={{ fontSize:13, color:p.color, fontWeight:700 }}>{p.tagline}</p>
+                    <p style={{ fontSize:14, color:p.color, fontWeight:700 }}>{p.tagline}</p>
                   </div>
                 </div>
-                <p style={{ fontSize:15, color:"rgba(255,255,255,.55)", lineHeight:1.85, marginBottom:24, fontWeight:300 }}>{p.desc}</p>
+                <p style={{ fontSize:16, color:"rgba(255,255,255,.55)", lineHeight:1.85, marginBottom:24, fontWeight:300 }}>{p.desc}</p>
                 <div style={{ display:"flex", gap:20, marginBottom:24 }}>
                   <div style={{ background:"rgba(255,255,255,.04)", borderRadius:10, padding:"14px 18px", flex:1 }}>
                     <p style={{ fontSize:10, color:"rgba(255,255,255,.35)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:5 }}>{lang==="es"?"Monto":"Amount"}</p>
@@ -1692,11 +1692,11 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
               </div>
               <div>
                 <div style={{ marginBottom:24 }}>
-                  <p style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:14 }}>{lang==="es"?"Ideal para":"Best For"}</p>
+                  <p style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:14 }}>{lang==="es"?"Ideal para":"Best For"}</p>
                   {p.best.map(b=>(
                     <div key={b} style={{ display:"flex", alignItems:"center", gap:12, marginBottom:10, paddingBottom:10, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
                       <div style={{ width:4, height:4, background:p.color, borderRadius:"50%", flexShrink:0 }}></div>
-                      <span style={{ fontSize:13, color:"rgba(255,255,255,.6)", fontWeight:400, letterSpacing:"-.01em" }}>{b}</span>
+                      <span style={{ fontSize:14, color:"rgba(255,255,255,.6)", fontWeight:400, letterSpacing:"-.01em" }}>{b}</span>
                     </div>
                   ))}
                 </div>
@@ -1709,7 +1709,7 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
                   {p.reqs.map(r=>(
                     <div key={r} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
                       <div style={{ width:6, height:6, background:G, borderRadius:"50%", flexShrink:0 }}></div>
-                      <span style={{ fontSize:13, color:"rgba(255,255,255,.5)" }}>{r}</span>
+                      <span style={{ fontSize:14, color:"rgba(255,255,255,.5)" }}>{r}</span>
                     </div>
                   ))}
                 </div>
@@ -1758,11 +1758,11 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"64px 5% 80px", maxWidth:900, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:1060, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — our team works the deal, you track every step."}</p>
+          <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
+          <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", maxWidth:520, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"De la solicitud a los fondos — sin llamadas, sin vendedores, sin sorpresas.":"From application to funded — our team works the deal, you track every step."}</p>
         </div>
         {steps.map((s,i)=>(
           <div key={s.n} style={{ display:"flex", gap:32, marginBottom:40, position:"relative" }}>
@@ -1773,17 +1773,17 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
             <div style={{ flex:1, background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:14, padding:"28px 32px" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:12, flexWrap:"wrap", gap:8 }}>
                 <div>
-                  <span className="cond" style={{ fontSize:13, color:"rgba(255,255,255,.3)", letterSpacing:"0.1em" }}>{s.n}</span>
+                  <span className="cond" style={{ fontSize:14, color:"rgba(255,255,255,.3)", letterSpacing:"0.1em" }}>{s.n}</span>
                   <h3 className="cond" style={{ fontSize:24, fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.01em" }}>{s.title}</h3>
                 </div>
                 <span style={{ background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", color:G, fontSize:12, fontWeight:700, padding:"4px 12px", borderRadius:20, whiteSpace:"nowrap" }}>⏱ {s.time}</span>
               </div>
-              <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:20, fontWeight:300 }}>{s.desc}</p>
+              <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:20, fontWeight:300 }}>{s.desc}</p>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:8 }}>
                 {s.details.map(d=>(
                   <div key={d} style={{ display:"flex", alignItems:"center", gap:8 }}>
                     <div style={{ width:6, height:6, background:G, borderRadius:"50%", flexShrink:0 }}></div>
-                    <span style={{ fontSize:13, color:"rgba(255,255,255,.45)" }}>{d}</span>
+                    <span style={{ fontSize:14, color:"rgba(255,255,255,.45)" }}>{d}</span>
                   </div>
                 ))}
               </div>
@@ -1802,7 +1802,7 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
         <div style={{ background:G, borderRadius:16, padding:"40px 48px", textAlign:"center", marginTop:24 }}>
           <h2 className="cond" style={{ fontSize:36, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:12 }}>{lang==="es"?"¿Listo para Comenzar?":"Ready to Get Started?"}</h2>
           <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:24 }}>{lang==="es"?"Aplica en 5 minutos. Sin llamadas. Sin compromiso.":"Apply in 5 minutes. No calls. No commitment."}</p>
-          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"14px 40px", borderRadius:10, fontSize:15, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
+          <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"14px 40px", borderRadius:10, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         </div>
       </div>
     </div>
@@ -1876,11 +1876,11 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"64px 5% 80px", maxWidth:860, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:1020, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
-          <h1 className="cond" style={{ fontSize:"clamp(48px,8vw,88px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", maxWidth:480, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Todo lo que necesitas saber sobre financiamiento con Aprovuit.":"Everything you need to know about funding with Aprovuit."}</p>
+          <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
+          <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
+          <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", maxWidth:480, margin:"0 auto", lineHeight:1.75 }}>{lang==="es"?"Todo lo que necesitas saber sobre financiamiento con Aprovuit.":"Everything you need to know about funding with Aprovuit."}</p>
         </div>
         {categories.map((cat,ci)=>(
           <div key={cat.cat} style={{ marginBottom:40 }}>
@@ -1893,7 +1893,7 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
                     <span style={{ fontSize:16, fontWeight:600, lineHeight:1.4 }}>{q}</span>
                     <span style={{ fontSize:20, color:"rgba(255,255,255,.3)", flexShrink:0, transition:"transform .2s", transform:open===key?"rotate(45deg)":"none" }}>+</span>
                   </button>
-                  {open===key && <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:20, fontWeight:300 }}>{a}</p>}
+                  {open===key && <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.85, paddingBottom:20, fontWeight:300 }}>{a}</p>}
                 </div>
               );
             })}
@@ -1901,7 +1901,7 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
         ))}
         <div style={{ background:G, borderRadius:16, padding:"36px 48px", textAlign:"center", marginTop:16 }}>
           <h2 className="cond" style={{ fontSize:32, fontWeight:900, color:"#000", textTransform:"uppercase", marginBottom:10 }}>{lang==="es"?"¿Tienes más preguntas?":"Still have questions?"}</h2>
-          <p style={{ fontSize:15, color:"rgba(0,0,0,.6)", marginBottom:20 }}>{lang==="es"?"Aplica y tu asesor responderá todo en tu portal.":"Apply and your advisor will answer everything in your portal."}</p>
+          <p style={{ fontSize:16, color:"rgba(0,0,0,.6)", marginBottom:20 }}>{lang==="es"?"Aplica y tu asesor responderá todo en tu portal.":"Apply and your advisor will answer everything in your portal."}</p>
           <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"13px 36px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         </div>
       </div>
@@ -2000,7 +2000,7 @@ function Chatbot({ lang, onApply }) {
               <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
             </svg>
             <div>
-              <p style={{ fontSize:13, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
+              <p style={{ fontSize:14, fontWeight:700, color:"#fff", margin:0 }}>Aprovuit Assistant</p>
               <p style={{ fontSize:10, color:G, margin:0 }}>● {lang==="es"?"En línea · Sin llamadas":"Online · No phone calls"}</p>
             </div>
           </div>
@@ -2009,7 +2009,7 @@ function Chatbot({ lang, onApply }) {
           <div style={{ flex:1, overflowY:"auto", padding:"14px", display:"flex", flexDirection:"column", gap:10, background:"#f9fafb" }}>
             {msgs.map((m,i) => (
               <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start" }}>
-                <div style={{ maxWidth:"82%", padding:"9px 13px", borderRadius:m.role==="user"?"12px 4px 12px 12px":"4px 12px 12px 12px", background:m.role==="user"?"#1a1a1a":"#fff", color:m.role==="user"?"#fff":"#1a1a1a", fontSize:13, lineHeight:1.55, boxShadow:"0 1px 4px rgba(0,0,0,0.08)", fontFamily:"'Sora',sans-serif" }}>
+                <div style={{ maxWidth:"82%", padding:"9px 13px", borderRadius:m.role==="user"?"12px 4px 12px 12px":"4px 12px 12px 12px", background:m.role==="user"?"#1a1a1a":"#fff", color:m.role==="user"?"#fff":"#1a1a1a", fontSize:14, lineHeight:1.55, boxShadow:"0 1px 4px rgba(0,0,0,0.08)", fontFamily:"'Sora',sans-serif" }}>
                   {m.content}
                 </div>
               </div>
@@ -2021,7 +2021,7 @@ function Chatbot({ lang, onApply }) {
           {msgs.length <= 2 && (
             <div style={{ padding:"8px 10px", display:"flex", gap:5, flexWrap:"wrap", background:"#f9fafb", borderTop:"1px solid #eee" }}>
               {quickReplies.map(q => (
-                <button key={q} onClick={() => { setInput(q); setTimeout(()=>{ setInput(""); const lower=q.toLowerCase(); const match=rules.find(r=>r.keys.some(k=>lower.includes(k))); const reply=match?match.reply:(lang==="es"?"Para obtener información específica, completa una solicitud gratuita.":"For specific info, complete a free application."); setMsgs(p=>[...p,{role:"user",content:q},{role:"assistant",content:reply}]); if(match?.action==="apply") setTimeout(()=>onApply(),1200); },100); }} style={{ background:"#fff", border:"1px solid #e5e8ee", borderRadius:20, padding:"5px 11px", fontSize:11, cursor:"pointer", fontFamily:"'Sora',sans-serif", color:"#555", whiteSpace:"nowrap" }}>{q}</button>
+                <button key={q} onClick={() => { setInput(q); setTimeout(()=>{ setInput(""); const lower=q.toLowerCase(); const match=rules.find(r=>r.keys.some(k=>lower.includes(k))); const reply=match?match.reply:(lang==="es"?"Para obtener información específica, completa una solicitud gratuita.":"For specific info, complete a free application."); setMsgs(p=>[...p,{role:"user",content:q},{role:"assistant",content:reply}]); if(match?.action==="apply") setTimeout(()=>onApply(),1200); },100); }} style={{ background:"#fff", border:"1px solid #e5e8ee", borderRadius:20, padding:"5px 11px", fontSize:12, cursor:"pointer", fontFamily:"'Sora',sans-serif", color:"#555", whiteSpace:"nowrap" }}>{q}</button>
               ))}
             </div>
           )}
@@ -2033,7 +2033,7 @@ function Chatbot({ lang, onApply }) {
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key==="Enter" && send()}
               placeholder={lang==="es"?"Escribe tu pregunta...":"Ask me anything..."}
-              style={{ flex:1, border:"1.5px solid #e5e8ee", borderRadius:10, padding:"9px 13px", fontSize:13, fontFamily:"'Sora',sans-serif", outline:"none", color:"#1a1a1a" }}
+              style={{ flex:1, border:"1.5px solid #e5e8ee", borderRadius:10, padding:"9px 13px", fontSize:14, fontFamily:"'Sora',sans-serif", outline:"none", color:"#1a1a1a" }}
             />
             <button onClick={send} style={{ width:38, height:38, background:G, border:"none", borderRadius:9, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
@@ -2198,7 +2198,7 @@ function AnimatedDemo({ lang }) {
           <p style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: G, marginBottom: 14, fontWeight: 600 }}>
             {lang==="es"?"Así Funciona":"See How It Works"}
           </p>
-          <h2 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 20, color: "#fff" }}>
+          <h2 style={{ fontSize: "clamp(34px,4vw,56px)", fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 20, color: "#fff" }}>
             {lang==="es" ? <>De la solicitud<br />a los fondos.<br /><span style={{color:G}}>En 24 horas.</span></> : <>From application<br />to funded.<br /><span style={{color:G}}>In 24 hours.</span></>}
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,.45)", lineHeight: 1.75, marginBottom: 32, fontWeight: 300 }}>
@@ -2323,7 +2323,7 @@ function DashboardSlider({ lang }) {
               {status==="done"&&<div style={{width:6,height:6,background:"#000",borderRadius:"50%"}}></div>}
               {status==="active"&&<div style={{width:5,height:5,background:G,borderRadius:"50%"}}></div>}
             </div>
-            <p style={{flex:1,fontSize:11,color:status==="done"?"rgba(255,255,255,.75)":status==="active"?"#fff":"rgba(255,255,255,.25)",fontWeight:status==="active"?600:400}}>{label}</p>
+            <p style={{flex:1,fontSize:12,color:status==="done"?"rgba(255,255,255,.75)":status==="active"?"#fff":"rgba(255,255,255,.25)",fontWeight:status==="active"?600:400}}>{label}</p>
             <p style={{fontSize:9,color:"rgba(255,255,255,.25)"}}>{date}</p>
           </div>
         ))}
@@ -2372,7 +2372,7 @@ function DashboardSlider({ lang }) {
         <div key={date} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,.04)"}}>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
             <div style={{width:6,height:6,borderRadius:"50%",background:G,flexShrink:0}}></div>
-            <p style={{fontSize:11,color:"rgba(255,255,255,.75)",fontWeight:500}}>{amt}</p>
+            <p style={{fontSize:12,color:"rgba(255,255,255,.75)",fontWeight:500}}>{amt}</p>
           </div>
           <p style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>{date}</p>
           <p style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>{bal}</p>
@@ -2402,7 +2402,7 @@ function DashboardSlider({ lang }) {
         </div>
       ))}
       <button style={{width:"100%",marginTop:12,background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.09)",borderRadius:8,padding:"10px",cursor:"pointer"}}>
-        <p style={{fontSize:11,fontWeight:600,color:"rgba(255,255,255,.5)"}}>+ {lang==="es"?"Subir Documento":"Upload Document"}</p>
+        <p style={{fontSize:12,fontWeight:600,color:"rgba(255,255,255,.5)"}}>+ {lang==="es"?"Subir Documento":"Upload Document"}</p>
       </button>
     </div>,
 
@@ -2410,33 +2410,33 @@ function DashboardSlider({ lang }) {
     <div key="msgs" style={{display:"flex",flexDirection:"column",gap:8}}>
       <div style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:"#161616",borderRadius:10,marginBottom:4,border:"1px solid rgba(255,255,255,.06)"}}>
         <div style={{width:30,height:30,background:G,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-          <p style={{fontSize:11,fontWeight:800,color:"#000"}}>A</p>
+          <p style={{fontSize:12,fontWeight:800,color:"#000"}}>A</p>
         </div>
         <div>
-          <p style={{fontSize:11,fontWeight:700,color:"#fff"}}>Aprovuit Advisor</p>
+          <p style={{fontSize:12,fontWeight:700,color:"#fff"}}>Aprovuit Advisor</p>
           <p style={{fontSize:9,color:G}}>● {lang==="es"?"En línea":"Online"}</p>
         </div>
       </div>
       <div style={{alignSelf:"flex-start",maxWidth:"85%"}}>
         <div style={{background:"#1c1c1c",borderRadius:"4px 12px 12px 12px",padding:"10px 13px"}}>
-          <p style={{fontSize:11,color:"rgba(255,255,255,.75)",lineHeight:1.55}}>{lang==="es"?"¡Hola Marcus! Tu financiamiento de $50,000 ha sido depositado. Tu primer pago de $625 vence el 15 de mayo.":"Hi Marcus! Your $50,000 has been deposited. First payment of $625 is due May 15. Questions? I'm here."}</p>
+          <p style={{fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.55}}>{lang==="es"?"¡Hola Marcus! Tu financiamiento de $50,000 ha sido depositado. Tu primer pago de $625 vence el 15 de mayo.":"Hi Marcus! Your $50,000 has been deposited. First payment of $625 is due May 15. Questions? I'm here."}</p>
         </div>
         <p style={{fontSize:8,color:"rgba(255,255,255,.2)",marginTop:3}}>Apr 1 · 9:14 AM</p>
       </div>
       <div style={{alignSelf:"flex-end",maxWidth:"85%"}}>
         <div style={{background:G,borderRadius:"12px 4px 12px 12px",padding:"10px 13px"}}>
-          <p style={{fontSize:11,color:"#000",fontWeight:500,lineHeight:1.55}}>{lang==="es"?"Perfecto, gracias. ¿Qué descuento tengo si pago en 6 meses?":"Perfect, thanks. What discount do I get if I pay off in 6 months?"}</p>
+          <p style={{fontSize:12,color:"#000",fontWeight:500,lineHeight:1.55}}>{lang==="es"?"Perfecto, gracias. ¿Qué descuento tengo si pago en 6 meses?":"Perfect, thanks. What discount do I get if I pay off in 6 months?"}</p>
         </div>
         <p style={{fontSize:8,color:"rgba(255,255,255,.2)",marginTop:3,textAlign:"right"}}>Apr 1 · 9:22 AM</p>
       </div>
       <div style={{alignSelf:"flex-start",maxWidth:"85%"}}>
         <div style={{background:"#1c1c1c",borderRadius:"4px 12px 12px 12px",padding:"10px 13px"}}>
-          <p style={{fontSize:11,color:"rgba(255,255,255,.75)",lineHeight:1.55}}>{lang==="es"?"Con 6 meses obtienes un 12% de descuento — ahorras $900. Puedes calcular tu ahorro en la sección de Mi Financiamiento en cualquier momento.":"At 6 months you get a 12% prepayment discount — saving $900. Check the early payoff section in My Funding anytime."}</p>
+          <p style={{fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.55}}>{lang==="es"?"Con 6 meses obtienes un 12% de descuento — ahorras $900. Puedes calcular tu ahorro en la sección de Mi Financiamiento en cualquier momento.":"At 6 months you get a 12% prepayment discount — saving $900. Check the early payoff section in My Funding anytime."}</p>
         </div>
         <p style={{fontSize:8,color:"rgba(255,255,255,.2)",marginTop:3}}>Apr 1 · 9:25 AM</p>
       </div>
       <div style={{display:"flex",gap:8,alignItems:"center",background:"#161616",border:"1px solid rgba(255,255,255,.08)",borderRadius:8,padding:"8px 12px",marginTop:4}}>
-        <input readOnly placeholder={lang==="es"?"Escribe un mensaje...":"Type a message..."} style={{flex:1,background:"transparent",border:"none",outline:"none",fontSize:11,color:"rgba(255,255,255,.4)",fontFamily:"'Sora',sans-serif"}} />
+        <input readOnly placeholder={lang==="es"?"Escribe un mensaje...":"Type a message..."} style={{flex:1,background:"transparent",border:"none",outline:"none",fontSize:12,color:"rgba(255,255,255,.4)",fontFamily:"'Sora',sans-serif"}} />
         <div style={{width:26,height:26,background:G,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0}}>
           <p style={{fontSize:12,color:"#000",fontWeight:700}}>↑</p>
         </div>
@@ -2445,25 +2445,25 @@ function DashboardSlider({ lang }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1100, margin:"0 auto"}}>
-        <div style={{textAlign:"center", marginBottom:64}}>
-          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1280, margin:"0 auto"}}>
+        <div style={{textAlign:"center", marginBottom:40}}>
+          <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Portal del Cliente":"Client Dashboard"}
           </p>
-          <h2 style={{fontSize:"clamp(28px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:16}}>
+          <h2 style={{fontSize:"clamp(34px,4vw,60px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:16}}>
             {lang==="es"
               ? <>Tu dinero. Tu trato.<br /><span style={{color:G}}>Total visibilidad.</span></>
               : <>Your money. Your deal.<br /><span style={{color:G}}>Total visibility.</span></>}
           </h2>
-          <p style={{fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
+          <p style={{fontSize:16, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
             {lang==="es"
               ? "Una vez fondeado, gestiona todo desde un solo portal. Sin llamadas. Sin correos. Sin esperar."
               : "Once funded, manage everything from one place. No calls. No emails. No waiting."}
           </p>
         </div>
 
-        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"start"}} className="hero-grid">
+        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start"}} className="hero-grid">
 
           {/* Left — slide nav */}
           <div style={{display:"flex", flexDirection:"column", gap:3}}>
@@ -2488,7 +2488,7 @@ function DashboardSlider({ lang }) {
               {/* App top bar */}
               <div style={{background:"#0f0f0f", padding:"12px 16px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
                 <div style={{display:"flex", alignItems:"center", gap:7}}>
-                  <div style={{width:22, height:22, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:800, color:"#000"}}>A</div>
+                  <div style={{width:22, height:22, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#000"}}>A</div>
                   <span style={{fontSize:12, fontWeight:700, color:"#fff", letterSpacing:"-.01em"}}>APROVUIT</span>
                 </div>
                 <div style={{display:"flex", alignItems:"center", gap:4}}>
@@ -2568,7 +2568,7 @@ function WhyAprovuit({ lang, onApply }) {
             ))}
           </div>
           <div style={{background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:8,padding:"10px 12px"}}>
-            <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>Paga en 3 meses → <span style={{color:G,fontWeight:700}}>ahorras $1,350</span></p>
+            <p style={{fontSize:12,color:"rgba(255,255,255,.6)"}}>Paga en 3 meses → <span style={{color:G,fontWeight:700}}>ahorras $1,350</span></p>
           </div>
         </div>
       )
@@ -2582,10 +2582,10 @@ function WhyAprovuit({ lang, onApply }) {
           {[["¡Hola! Una pregunta rápida — ¿cuál es la razón principal por la que necesitas fondos ahora?","","Tu Asesor · 9:14 AM"],["Abrir una segunda ubicación.","Tu · 9:18 AM",""],["Entendido. Basado en tu perfil tengo algunas opciones fuertes. Tendré ofertas en tu portal en menos de una hora.","","Tu Asesor · 9:22 AM"]].map(([msg,reply,time],i)=>(
             <div key={i} style={{marginBottom:8}}>
               {reply&&<div style={{background:"rgba(168,255,62,.08)",border:"1px solid rgba(168,255,62,.15)",borderRadius:"4px 10px 10px 10px",padding:"8px 12px",marginBottom:4}}>
-                <p style={{fontSize:11,color:"rgba(255,255,255,.7)",lineHeight:1.5}}>{reply||msg}</p>
+                <p style={{fontSize:12,color:"rgba(255,255,255,.7)",lineHeight:1.5}}>{reply||msg}</p>
               </div>}
               {!reply&&<div style={{background:"rgba(255,255,255,.04)",borderRadius:"10px 10px 10px 4px",padding:"8px 12px",marginBottom:4}}>
-                <p style={{fontSize:11,color:"rgba(255,255,255,.5)",lineHeight:1.5}}>{msg}</p>
+                <p style={{fontSize:12,color:"rgba(255,255,255,.5)",lineHeight:1.5}}>{msg}</p>
               </div>}
               <p style={{fontSize:8,color:"rgba(255,255,255,.2)"}}>{time}</p>
             </div>
@@ -2602,8 +2602,8 @@ function WhyAprovuit({ lang, onApply }) {
           <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Tu Perfil de Negocio</p>
           {[["Industria","Restaurante / Alimentos"],["Tiempo en Operación","2–5 años"],["Ingresos Mensuales","$85,000"],["Puntaje de Crédito","680 (Bueno)"]].map(([l,v])=>(
             <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid rgba(255,255,255,.05)"}}>
-              <p style={{fontSize:11,color:"rgba(255,255,255,.35)"}}>{l}</p>
-              <p style={{fontSize:11,fontWeight:600,color:"#fff"}}>{v}</p>
+              <p style={{fontSize:12,color:"rgba(255,255,255,.35)"}}>{l}</p>
+              <p style={{fontSize:12,fontWeight:600,color:"#fff"}}>{v}</p>
             </div>
           ))}
           <div style={{marginTop:10,display:"flex",gap:6}}>
@@ -2654,7 +2654,7 @@ function WhyAprovuit({ lang, onApply }) {
             ))}
           </div>
           <div style={{background:"rgba(168,255,62,.06)",border:"1px solid rgba(168,255,62,.15)",borderRadius:8,padding:"10px 12px"}}>
-            <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>Pay off in 3 months → <span style={{color:G,fontWeight:700}}>save $1,350</span></p>
+            <p style={{fontSize:12,color:"rgba(255,255,255,.6)"}}>Pay off in 3 months → <span style={{color:G,fontWeight:700}}>save $1,350</span></p>
           </div>
         </div>
       )
@@ -2668,7 +2668,7 @@ function WhyAprovuit({ lang, onApply }) {
           {[["Hi! Quick question — what's the main reason you need funding right now?",false],["Opening a second location.",true],["Got it. Based on your profile I have a few strong options for you. I'll have offers in your dashboard within the hour.",false]].map(([msg,isUser],i)=>(
             <div key={i} style={{marginBottom:8,display:"flex",justifyContent:isUser?"flex-end":"flex-start"}}>
               <div style={{maxWidth:"85%",background:isUser?G:"rgba(255,255,255,.06)",borderRadius:isUser?"10px 4px 10px 10px":"4px 10px 10px 10px",padding:"8px 12px"}}>
-                <p style={{fontSize:11,color:isUser?"#000":"rgba(255,255,255,.65)",lineHeight:1.5,fontWeight:isUser?500:400}}>{msg}</p>
+                <p style={{fontSize:12,color:isUser?"#000":"rgba(255,255,255,.65)",lineHeight:1.5,fontWeight:isUser?500:400}}>{msg}</p>
               </div>
             </div>
           ))}
@@ -2684,8 +2684,8 @@ function WhyAprovuit({ lang, onApply }) {
           <p style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.4)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:10}}>Your Business Profile</p>
           {[["Industry","Restaurant & Food"],["Time in Business","2–5 years"],["Monthly Revenue","$85,000"],["Credit Score","680 (Good)"]].map(([l,v])=>(
             <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid rgba(255,255,255,.05)"}}>
-              <p style={{fontSize:11,color:"rgba(255,255,255,.35)"}}>{l}</p>
-              <p style={{fontSize:11,fontWeight:600,color:"#fff"}}>{v}</p>
+              <p style={{fontSize:12,color:"rgba(255,255,255,.35)"}}>{l}</p>
+              <p style={{fontSize:12,fontWeight:600,color:"#fff"}}>{v}</p>
             </div>
           ))}
           <div style={{marginTop:10,display:"flex",gap:6}}>
@@ -2701,18 +2701,18 @@ function WhyAprovuit({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1100, margin:"0 auto"}}>
-        <div style={{textAlign:"center", marginBottom:64}}>
-          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1280, margin:"0 auto"}}>
+        <div style={{textAlign:"center", marginBottom:40}}>
+          <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Por qué Aprovuit":"Why Aprovuit"}
           </p>
-          <h2 style={{fontSize:"clamp(28px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:16}}>
+          <h2 style={{fontSize:"clamp(34px,4vw,60px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:16}}>
             {lang==="es"
               ? <>¿Por qué elegir<br /><span style={{color:G}}>Aprovuit?</span></>
               : <>Why Choose<br /><span style={{color:G}}>Aprovuit?</span></>}
           </h2>
-          <p style={{fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
+          <p style={{fontSize:16, color:"rgba(255,255,255,.4)", maxWidth:500, margin:"0 auto", lineHeight:1.8, fontWeight:300}}>
             {lang==="es"
               ? "Cuatro razones por las que los dueños de negocios eligen Aprovuit sobre cualquier otra opción."
               : "Four reasons business owners choose Aprovuit over every other option."}
@@ -2724,11 +2724,11 @@ function WhyAprovuit({ lang, onApply }) {
             <div key={c.n} style={{background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:14, padding:"28px 28px 24px"}}>
               <div style={{display:"flex", alignItems:"center", gap:12, marginBottom:14}}>
                 <div style={{width:32, height:32, background:"rgba(168,255,62,.1)", border:"1px solid rgba(168,255,62,.2)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
-                  <p style={{fontSize:11, fontWeight:800, color:G}}>{c.n}</p>
+                  <p style={{fontSize:12, fontWeight:800, color:G}}>{c.n}</p>
                 </div>
-                <h3 style={{fontSize:17, fontWeight:700, color:"#fff", letterSpacing:"-.02em"}}>{c.title}</h3>
+                <h3 style={{fontSize:18, fontWeight:700, color:"#fff", letterSpacing:"-.02em"}}>{c.title}</h3>
               </div>
-              <p style={{fontSize:13, color:"rgba(255,255,255,.45)", lineHeight:1.8, marginBottom:10, fontWeight:300}}>{c.desc}</p>
+              <p style={{fontSize:14, color:"rgba(255,255,255,.45)", lineHeight:1.8, marginBottom:10, fontWeight:300}}>{c.desc}</p>
               <p style={{fontSize:12, color:G, fontWeight:500, letterSpacing:"-.01em"}}>{c.highlight}</p>
               {c.ui}
             </div>
@@ -2736,7 +2736,7 @@ function WhyAprovuit({ lang, onApply }) {
         </div>
 
         <div style={{textAlign:"center", marginTop:48}}>
-          <button onClick={onApply} className="btn-green" style={{fontSize:15, padding:"14px 44px"}}>
+          <button onClick={onApply} className="btn-green" style={{fontSize:16, padding:"14px 44px"}}>
             {lang==="es"?"Comenzar Ahora →":"Get Started Now →"}
           </button>
           <p style={{fontSize:12, color:"rgba(255,255,255,.25)", marginTop:12}}>
@@ -2773,19 +2773,19 @@ function IndustriesSection({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:BK, padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1100, margin:"0 auto"}}>
-        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"start", marginBottom:56}} className="hero-grid">
+    <section style={{background:BK, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1280, margin:"0 auto"}}>
+        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start", marginBottom:36}} className="hero-grid">
           <div>
-            <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+            <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
               {lang==="es"?"Industrias":"Industries We Serve"}
             </p>
-            <h2 style={{fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:20}}>
+            <h2 style={{fontSize:"clamp(34px,4vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:20}}>
               {lang==="es"
                 ? <>Tu industria.<br /><span style={{color:G}}>Nuestra especialidad.</span></>
                 : <>Your industry.<br /><span style={{color:G}}>Our specialty.</span></>}
             </h2>
-            <p style={{fontSize:15, color:"rgba(255,255,255,.4)", lineHeight:1.8, fontWeight:300, marginBottom:28}}>
+            <p style={{fontSize:16, color:"rgba(255,255,255,.4)", lineHeight:1.8, fontWeight:300, marginBottom:28}}>
               {lang==="es"
                 ? "Hemos fondeado negocios en docenas de industrias. Cada sector tiene sus propias necesidades de flujo de caja — y nosotros las entendemos."
                 : "We've funded businesses across dozens of industries. Every sector has its own cash flow needs — and we understand yours."}
@@ -2800,8 +2800,8 @@ function IndustriesSection({ lang, onApply }) {
                 onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(168,255,62,.3)"}
                 onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.07)"}>
                 {ind.tag && <span style={{position:"absolute", top:12, right:12, fontSize:8, fontWeight:700, color:G, background:"rgba(168,255,62,.1)", padding:"2px 7px", borderRadius:10, letterSpacing:".04em"}}>{ind.tag}</span>}
-                <p style={{fontSize:13, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.01em"}}>{ind.name}</p>
-                <p style={{fontSize:11, color:"rgba(255,255,255,.35)", lineHeight:1.6, fontWeight:300}}>{ind.desc}</p>
+                <p style={{fontSize:14, fontWeight:700, color:"#fff", marginBottom:6, letterSpacing:"-.01em"}}>{ind.name}</p>
+                <p style={{fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.6, fontWeight:300}}>{ind.desc}</p>
               </div>
             ))}
           </div>
@@ -2829,7 +2829,7 @@ function TrustBar({ lang }) {
   ];
   return (
     <div style={{background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)"}}>
-      <div style={{maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(5,1fr)"}} className="stats-grid">
+      <div style={{maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(5,1fr)"}} className="stats-grid">
         {items.map(([v,l,sub],i)=>(
           <div key={l} style={{padding:"28px 0", textAlign:"center", borderRight:i<4?"1px solid rgba(255,255,255,.05)":"none"}}>
             <p style={{fontSize:28, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1, marginBottom:4}}>{v}</p>
@@ -2846,23 +2846,23 @@ function TrustBar({ lang }) {
 function AboutSection({ lang, onApply }) {
   const G = "#a8ff3e";
   return (
-    <section style={{background:BK2, padding:"88px 5%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center"}} className="hero-grid">
+    <section style={{background:BK2, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"center"}} className="hero-grid">
         <div>
-          <p style={{fontSize:11, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
+          <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Nuestra Misión":"Our Mission"}
           </p>
-          <h2 style={{fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:24}}>
+          <h2 style={{fontSize:"clamp(34px,4vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", lineHeight:1.1, marginBottom:24}}>
             {lang==="es"
               ? <>Pequeños negocios<br />son la columna vertebral<br /><span style={{color:G}}>de la economía.</span></>
               : <>Small businesses are the<br />backbone of the economy.<br /><span style={{color:G}}>We're here for them.</span></>}
           </h2>
-          <p style={{fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:20, fontWeight:300}}>
+          <p style={{fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:20, fontWeight:300}}>
             {lang==="es"
               ? "Aprovuit nació de una idea simple: los dueños de negocios merecen acceso rápido y transparente al capital que necesitan para crecer — sin los obstáculos del sistema bancario tradicional."
               : "Aprovuit was built on a simple idea: business owners deserve fast, transparent access to the capital they need to grow — without the barriers of the traditional banking system."}
           </p>
-          <p style={{fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:32, fontWeight:300}}>
+          <p style={{fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.85, marginBottom:32, fontWeight:300}}>
             {lang==="es"
               ? "Somos un equipo de profesionales financieros y tecnólogos que creen que el financiamiento empresarial puede ser más rápido, más honesto y más humano. Por eso construimos Aprovuit."
               : "We're a team of finance professionals and technologists who believe business funding can be faster, more honest, and more human. That's why we built Aprovuit."}
@@ -2882,7 +2882,7 @@ function AboutSection({ lang, onApply }) {
         {/* Right — visual */}
         <div>
           <div style={{background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"32px 28px"}}>
-            <p style={{fontSize:11, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:24}}>
+            <p style={{fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:24}}>
               {lang==="es"?"Nuestros Principios":"Our Principles"}
             </p>
             {(lang==="es"
@@ -2908,7 +2908,7 @@ function AboutSection({ lang, onApply }) {
                   <div style={{width:6, height:6, background:G, borderRadius:"50%"}}></div>
                 </div>
                 <div>
-                  <p style={{fontSize:13, fontWeight:600, color:"#fff", marginBottom:3, letterSpacing:"-.01em"}}>{title}</p>
+                  <p style={{fontSize:14, fontWeight:600, color:"#fff", marginBottom:3, letterSpacing:"-.01em"}}>{title}</p>
                   <p style={{fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.55, fontWeight:300}}>{desc}</p>
                 </div>
               </div>
@@ -2930,11 +2930,11 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
 
       {/* HERO */}
-      <section style={{ padding:"88px 5% 72px", maxWidth:900, margin:"0 auto", textAlign:"center" }}>
-        <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:16, fontWeight:700 }}>
+      <section style={{ padding:"88px 5% 72px", maxWidth:1060, margin:"0 auto", textAlign:"center" }}>
+        <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:16, fontWeight:700 }}>
           {lang==="es"?"Sobre Nosotros":"About Aprovuit"}
         </p>
-        <h1 style={{ fontSize:"clamp(36px,6vw,72px)", fontWeight:700, letterSpacing:"-.03em", lineHeight:1.0, marginBottom:24, color:"#fff" }}>
+        <h1 style={{ fontSize:"clamp(42px,6vw,80px)", fontWeight:700, letterSpacing:"-.03em", lineHeight:1.0, marginBottom:24, color:"#fff" }}>
           {lang==="es"
             ? <>{`Construido para los`}<br /><span style={{color:G}}>{`pequeños negocios.`}</span></>
             : <>Built for the<br /><span style={{color:G}}>small business owner.</span></>}
@@ -2948,7 +2948,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
 
       {/* MISSION STATS */}
       <div style={{ background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }} className="stats-grid">
+        <div style={{ maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }} className="stats-grid">
           {(lang==="es"
             ? [["$500M+","Fondeado"],["10,000+","Negocios"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]]
             : [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Time to Fund"],["580+","Min. Credit Score"]]
@@ -2962,30 +2962,30 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       </div>
 
       {/* STORY */}
-      <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"start" }} className="hero-grid">
+      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start" }} className="hero-grid">
           <div>
-            <h2 style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
+            <h2 style={{ fontSize:"clamp(30px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
               {lang==="es"?"¿Por qué existe Aprovuit?":"Why does Aprovuit exist?"}
             </h2>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
+            <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
               {lang==="es"
                 ? "Los dueños de pequeños negocios son la columna vertebral de la economía — pero el sistema financiero tradicional los trata como ciudadanos de segunda clase. Proceso interminable, semanas de espera, respuestas vagas."
                 : "Small business owners are the backbone of the economy — but the traditional financial system treats them like second-class citizens. Endless paperwork, weeks of waiting, vague answers."}
             </p>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
+            <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.9, marginBottom:20, fontWeight:300 }}>
               {lang==="es"
                 ? "Nosotros lo arreglamos. Aprovuit combina el expertise de un broker con la velocidad y transparencia de la tecnología. Presentamos tu expediente a nuestra red de fondeadores, negociamos en tu nombre y te mantenemos informado en cada paso — a través de tu portal, no por teléfono."
                 : "We fixed that. Aprovuit combines the expertise of a seasoned broker with the speed and transparency of technology. We present your file to our network of funders, work the deal on your behalf, and keep you informed at every step — through your dashboard, not over the phone."}
             </p>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,.5)", lineHeight:1.9, fontWeight:300 }}>
+            <p style={{ fontSize:16, color:"rgba(255,255,255,.5)", lineHeight:1.9, fontWeight:300 }}>
               {lang==="es"
                 ? "El resultado: más opciones, mejores términos y total visibilidad. Sin sorpresas. Sin llamadas de ventas. Sin papeleo interminable."
                 : "The result: more options, better terms, and total visibility. No surprises. No sales calls. No endless paperwork."}
             </p>
           </div>
           <div>
-            <h2 style={{ fontSize:"clamp(26px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
+            <h2 style={{ fontSize:"clamp(30px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
               {lang==="es"?"Nuestros Principios":"Our Principles"}
             </h2>
             {(lang==="es"
@@ -3013,7 +3013,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
                   <div style={{ width:5, height:5, background:G, borderRadius:"50%" }}></div>
                 </div>
                 <div>
-                  <p style={{ fontSize:13, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
+                  <p style={{ fontSize:14, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
                   <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", lineHeight:1.6, fontWeight:300 }}>{desc}</p>
                 </div>
               </div>
@@ -3023,16 +3023,16 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       </section>
 
       {/* INDUSTRIES */}
-      <section style={{ background:BK2, padding:"72px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+      <section style={{ background:BK2, padding:"48px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:48 }}>
-            <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
+            <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
               {lang==="es"?"Industrias":"Industries We Serve"}
             </p>
-            <h2 style={{ fontSize:"clamp(24px,4vw,44px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:12 }}>
+            <h2 style={{ fontSize:"clamp(28px,4vw,50px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:12 }}>
               {lang==="es"?"Tu industria. Nuestra especialidad.":"Your industry. Our specialty."}
             </h2>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", maxWidth:520, margin:"0 auto", lineHeight:1.75, fontWeight:300 }}>
+            <p style={{ fontSize:16, color:"rgba(255,255,255,.4)", maxWidth:520, margin:"0 auto", lineHeight:1.75, fontWeight:300 }}>
               {lang==="es"
                 ? "Hemos fondeado negocios en docenas de industrias. Cada sector tiene necesidades únicas de capital — y nosotros las entendemos."
                 : "We've funded businesses across dozens of industries. Every sector has unique capital needs — and we understand yours."}
@@ -3059,14 +3059,14 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       <DontSeeSection lang={lang} onApply={onApply} />
 
       {/* CTA */}
-      <section style={{ background:G, padding:"72px 5%", textAlign:"center" }}>
-        <h2 style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>
+      <section style={{ background:G, padding:"48px 6%", textAlign:"center" }}>
+        <h2 style={{ fontSize:"clamp(34px,4vw,60px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:14 }}>
           {lang==="es"?"¿Listo para Comenzar?":"Ready to Get Started?"}
         </h2>
         <p style={{ fontSize:16, color:"rgba(0,0,0,.55)", marginBottom:28, fontWeight:300 }}>
           {lang==="es"?"Aplica en minutos. Sin impacto al crédito.":"Apply in minutes. No impact to your credit score."}
         </p>
-        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"15px 44px", fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", borderRadius:6 }}>
+        <button onClick={onApply} style={{ background:"#000", color:G, border:"none", padding:"15px 44px", fontSize:16, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", borderRadius:6 }}>
           {lang==="es"?"Comenzar →":"Get Started →"}
         </button>
       </section>
@@ -3104,8 +3104,8 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
 
       {/* HERO */}
-      <section style={{ padding:"72px 5% 56px", textAlign:"center", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <p style={{ fontSize:11, letterSpacing:".14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
+      <section style={{ padding:"48px 6% 40px", textAlign:"center", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
+        <p style={{ fontSize:12, letterSpacing:".14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
           {lang==="es"?"Contáctanos":"Contact Us"}
         </p>
         <h1 style={{ fontSize:"clamp(32px,5vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:16 }}>
@@ -3118,15 +3118,15 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
         </p>
       </section>
 
-      <section style={{ padding:"64px 5%", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"start" }} className="hero-grid">
+      <section style={{ padding:"44px 6%", maxWidth:1280, margin:"0 auto" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }} className="hero-grid">
 
           {/* LEFT — contact info */}
           <div>
             <h2 style={{ fontSize:"clamp(22px,3vw,32px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:16 }}>
               {lang==="es"?"¿En qué podemos ayudarte?":"What can we help you with?"}
             </h2>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,.45)", lineHeight:1.85, marginBottom:32, fontWeight:300 }}>
+            <p style={{ fontSize:16, color:"rgba(255,255,255,.45)", lineHeight:1.85, marginBottom:32, fontWeight:300 }}>
               {lang==="es"
                 ? "Usa el formulario para enviarnos un mensaje sobre financiamiento, tu solicitud o cualquier pregunta. Te respondemos en menos de 24 horas."
                 : "Use the form to send us a message about funding, your application, or any questions you have. We'll get back to you within 24 hours."}
@@ -3139,7 +3139,7 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
                 <div key={title} style={{ display:"flex", gap:12, padding:"16px 18px", background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:10 }}>
                   <div style={{ width:8, height:8, background:G, borderRadius:"50%", flexShrink:0, marginTop:5 }}></div>
                   <div>
-                    <p style={{ fontSize:13, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
+                    <p style={{ fontSize:14, fontWeight:600, color:"#fff", marginBottom:3 }}>{title}</p>
                     <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", fontWeight:300 }}>{desc}</p>
                   </div>
                 </div>
@@ -3170,13 +3170,13 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
                 </h3>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:0 }}>
                   <div>
-                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                    <label style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
                       {lang==="es"?"Nombre":"Name"} *
                     </label>
                     <input value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder={lang==="es"?"Tu nombre":"Your name"} style={inp} />
                   </div>
                   <div>
-                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                    <label style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
                       {lang==="es"?"Correo":"Email"} *
                     </label>
                     <input value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))} placeholder="you@business.com" style={inp} type="email" />
@@ -3184,13 +3184,13 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
                 </div>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
                   <div>
-                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                    <label style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
                       {lang==="es"?"Teléfono":"Phone"}
                     </label>
                     <input value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))} placeholder="(555) 000-0000" style={inp} />
                   </div>
                   <div>
-                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                    <label style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
                       {lang==="es"?"Asunto":"Subject"}
                     </label>
                     <select value={form.subject} onChange={e=>setForm(f=>({...f,subject:e.target.value}))} style={{...inp, appearance:"none", cursor:"pointer"}}>
@@ -3204,7 +3204,7 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
                   </div>
                 </div>
                 <div>
-                  <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
+                  <label style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.5)", textTransform:"uppercase", letterSpacing:".08em", display:"block", marginBottom:7 }}>
                     {lang==="es"?"Mensaje":"Message"} *
                   </label>
                   <textarea value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))} placeholder={lang==="es"?"¿En qué podemos ayudarte?":"How can we help you?"} rows={5} style={{...inp, resize:"vertical", lineHeight:1.6}} />
@@ -3212,7 +3212,7 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
                 <button onClick={submit} disabled={sending || !form.name || !form.email || !form.message} className="btn-green" style={{ width:"100%", fontSize:14, padding:"13px", opacity:(sending||!form.name||!form.email||!form.message)?0.5:1, cursor:(sending||!form.name||!form.email||!form.message)?"not-allowed":"pointer" }}>
                   {sending ? (lang==="es"?"Enviando...":"Sending...") : (lang==="es"?"Enviar Mensaje →":"Send Message →")}
                 </button>
-                <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", textAlign:"center", marginTop:12 }}>
+                <p style={{ fontSize:12, color:"rgba(255,255,255,.25)", textAlign:"center", marginTop:12 }}>
                   {lang==="es"?"Te respondemos en menos de 24 horas":"We typically respond within 24 hours"}
                 </p>
               </>
@@ -3236,14 +3236,14 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
     <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif" }}>
 
       {/* NAV */}
-      <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:58 }}>
+      <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:62 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
             <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             <line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
           </svg>
-          <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
+          <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
         </div>
         {/* Desktop — unchanged */}
         <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
@@ -3275,12 +3275,12 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                 [lang==="es"?"Contacto":"Contact", onContact],
                 [t.nav.login, onLogin],
               ].map(([label, fn]) => fn && (
-                <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:15, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
+                <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
                   {label}
                 </button>
               ))}
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:14 }}>
-                <span style={{ fontSize:11, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
+                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
                 <div className="lang-pill">
                   <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
                   <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
@@ -3292,18 +3292,18 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{ minHeight:"93vh", display:"flex", alignItems:"center", padding:"0 5%", position:"relative", overflow:"hidden" }}>
+      <section style={{ minHeight:"88vh", display:"flex", alignItems:"center", padding:"0 5%", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 12% 55%, ${G}0d 0%, transparent 50%), radial-gradient(ellipse at 88% 15%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
-        <div style={{ maxWidth:1200, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"center" }} className="hero-grid">
+        <div style={{ maxWidth:1380, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"center" }} className="hero-grid">
 
           {/* LEFT — funding first, platform second */}
           <div className="fadeup">
-            <h1 style={{ fontSize:"clamp(40px,5.5vw,70px)", fontWeight:700, lineHeight:1.0, marginBottom:20, letterSpacing:"-.03em", color:"#fff" }}>
+            <h1 style={{ fontSize:"clamp(48px,6vw,80px)", fontWeight:700, lineHeight:1.0, marginBottom:20, letterSpacing:"-.03em", color:"#fff" }}>
               {lang==="es"
                 ? <>{`Tu negocio ya`}<br />{`está listo.`}<br /><span style={{color:G}}>{`Los fondos también.`}</span></>
                 : <>{`Your business`}<br />{`is ready.`}<br /><span style={{color:G}}>{`The funding should be too.`}</span></>}
             </h1>
-            <p style={{ fontSize:17, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:32, fontWeight:300, maxWidth:460 }}>
+            <p style={{ fontSize:18, color:"rgba(255,255,255,.5)", lineHeight:1.8, marginBottom:32, fontWeight:300, maxWidth:460 }}>
               {lang==="es"
                 ? "Capital de trabajo rápido para negocios establecidos. Aplica en minutos, recibe una oferta en horas y rastrea todo en tiempo real desde tu portal."
                 : "Fast working capital for established businesses. Apply in minutes, get an offer in hours, and track everything in real time from your dashboard."}
@@ -3311,7 +3311,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 
             {/* Qualify checklist — Capital Gurus style */}
             <div style={{ background:"rgba(255,255,255,.04)", border:"1px solid rgba(255,255,255,.08)", borderRadius:12, padding:"20px 24px", marginBottom:28 }}>
-              <p style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".1em", marginBottom:14 }}>
+              <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:".1em", marginBottom:14 }}>
                 {lang==="es"?"Todo lo que necesitas para calificar:":"All you need to qualify:"}
               </p>
               {(lang==="es"
@@ -3328,14 +3328,14 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
             </div>
 
             <div style={{ display:"flex", gap:12, flexWrap:"wrap" }} className="hero-btns">
-              <button className="btn-green" style={{ fontSize:15, padding:"14px 36px" }} onClick={()=>{onApply();window.scrollTo(0,0);}}>
+              <button className="btn-green" style={{ fontSize:16, padding:"14px 36px" }} onClick={()=>{onApply();window.scrollTo(0,0);}}>
                 {lang==="es"?"Ver Cuánto Califico →":"See How Much I Qualify For →"}
               </button>
               <button className="btn-ghost" onClick={()=>{onLogin();window.scrollTo(0,0);}}>
                 {lang==="es"?"Entrar al Portal":"Log In"}
               </button>
             </div>
-            <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", marginTop:14 }}>
+            <p style={{ fontSize:12, color:"rgba(255,255,255,.2)", marginTop:14 }}>
               {lang==="es"?"Gratis · Sin impacto al crédito · Decisión en horas":"Free · No credit impact · Decision in hours"}
             </p>
           </div>
@@ -3348,7 +3348,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                 <div style={{ background:"#0a0a0a", padding:"13px 18px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                     <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#a8ff3e"/><path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/></svg>
-                    <span style={{ fontSize:13, fontWeight:800, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
+                    <span style={{ fontSize:14, fontWeight:800, color:"#fff", letterSpacing:"-.02em" }}>APROVUIT</span>
                   </div>
                   <div style={{ display:"flex", alignItems:"center", gap:5 }}>
                     <div style={{ width:6, height:6, background:G, borderRadius:"50%" }}></div>
@@ -3357,13 +3357,13 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                 </div>
                 <div style={{ display:"flex", background:"#111", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
                   {(lang==="es"?["Resumen","Ofertas","Docs"]:["Overview","Offers","Docs"]).map((tab,i)=>(
-                    <div key={tab} style={{ flex:1, padding:"10px 4px", textAlign:"center", fontSize:11, fontWeight:600, color:i===1?G:"rgba(255,255,255,.3)", borderBottom:i===1?`2px solid ${G}`:"2px solid transparent" }}>{tab}</div>
+                    <div key={tab} style={{ flex:1, padding:"10px 4px", textAlign:"center", fontSize:12, fontWeight:600, color:i===1?G:"rgba(255,255,255,.3)", borderBottom:i===1?`2px solid ${G}`:"2px solid transparent" }}>{tab}</div>
                   ))}
                 </div>
                 <div style={{ padding:18 }}>
                   <div style={{ background:"linear-gradient(135deg,#0f1f0f,#111)", border:`1px solid ${G}20`, borderRadius:12, padding:"16px", marginBottom:12 }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:10 }}>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,.4)" }}>{lang==="es"?"Nueva Oferta":"New Offer"}</span>
+                      <span style={{ fontSize:12, color:"rgba(255,255,255,.4)" }}>{lang==="es"?"Nueva Oferta":"New Offer"}</span>
                       <span style={{ fontSize:10, fontWeight:700, color:G, background:"rgba(168,255,62,.1)", padding:"2px 8px", borderRadius:10 }}>{lang==="es"?"Revisar":"Review"}</span>
                     </div>
                     <p style={{ fontSize:32, fontWeight:700, color:G, letterSpacing:"-.03em", marginBottom:12 }}>$50,000</p>
@@ -3376,7 +3376,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{onApply();window.scrollTo(0,0);}} style={{ width:"100%", background:G, border:"none", borderRadius:8, padding:"10px", fontSize:13, fontWeight:700, color:"#000", cursor:"pointer" }}>
+                    <button onClick={()=>{onApply();window.scrollTo(0,0);}} style={{ width:"100%", background:G, border:"none", borderRadius:8, padding:"10px", fontSize:14, fontWeight:700, color:"#000", cursor:"pointer" }}>
                       {lang==="es"?"Ver y Aceptar Oferta →":"View & Accept Offer →"}
                     </button>
                   </div>
@@ -3390,7 +3390,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                         <div style={{ width:14, height:14, borderRadius:"50%", background:done?G:"rgba(255,255,255,.06)", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
                           {done&&<div style={{ width:5, height:5, background:"#000", borderRadius:"50%" }}></div>}
                         </div>
-                        <p style={{ flex:1, fontSize:11, color:done?"rgba(255,255,255,.7)":"rgba(255,255,255,.25)" }}>{s}</p>
+                        <p style={{ flex:1, fontSize:12, color:done?"rgba(255,255,255,.7)":"rgba(255,255,255,.25)" }}>{s}</p>
                         <p style={{ fontSize:10, color:"rgba(255,255,255,.25)" }}>{d}</p>
                       </div>
                     ))}
@@ -3409,7 +3409,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
             <span key={ti} style={{ display:"flex" }}>
               {t.ticker.map(text=>(
                 <span key={text} style={{ display:"inline-flex", alignItems:"center", gap:12, padding:"0 28px" }}>
-                  <span style={{ fontSize:11, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
+                  <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000", whiteSpace:"nowrap" }}>{text}</span>
                   <span style={{ color:"rgba(0,0,0,.3)", fontSize:10 }}>◆</span>
                 </span>
               ))}
@@ -3420,7 +3420,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 
       {/* STATS */}
       <div style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <div className="stats-grid" style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
+        <div className="stats-grid" style={{ maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
           {t.stats.map(([v,l],i)=>(
             <div key={l} style={{ padding:"32px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.05)":"none" }}>
               <div style={{ fontSize:38, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1 }}>{v}</div>
@@ -3431,15 +3431,15 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       </div>
 
       {/* PRODUCTS — show what we offer prominently */}
-      <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
+      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:48 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
+          <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
             {lang==="es"?"Nuestros Productos":"Funding Products"}
           </p>
-          <h2 style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:12 }}>
+          <h2 style={{ fontSize:"clamp(34px,4vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff", marginBottom:12 }}>
             {lang==="es"?"Capital para cada necesidad.":"Capital for every need."}
           </h2>
-          <p style={{ fontSize:15, color:"rgba(255,255,255,.4)", fontWeight:300 }}>
+          <p style={{ fontSize:16, color:"rgba(255,255,255,.4)", fontWeight:300 }}>
             {lang==="es"?"Desde $10K hasta $5M. Decisión en horas, no semanas.":"From $10K to $5M. Decision in hours, not weeks."}
           </p>
         </div>
@@ -3453,14 +3453,14 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
               onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.07)";e.currentTarget.style.transform="translateY(0)";}}>
               <div style={{ fontSize:22, marginBottom:12, color }}>{icon}</div>
               <p style={{ fontSize:14, fontWeight:700, color:"#fff", marginBottom:4, letterSpacing:"-.01em" }}>{name}</p>
-              <p style={{ fontSize:13, fontWeight:700, color, marginBottom:4 }}>{range}</p>
-              <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", marginBottom:10 }}>{term}</p>
+              <p style={{ fontSize:14, fontWeight:700, color, marginBottom:4 }}>{range}</p>
+              <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginBottom:10 }}>{term}</p>
               <p style={{ fontSize:12, color:"rgba(255,255,255,.45)", lineHeight:1.6, fontWeight:300 }}>{desc}</p>
             </div>
           ))}
         </div>
         <div style={{ textAlign:"center", marginTop:28 }}>
-          <button onClick={()=>{onProducts();window.scrollTo(0,0);}} style={{ background:"none", border:"1px solid rgba(255,255,255,.12)", color:"rgba(255,255,255,.5)", padding:"10px 28px", borderRadius:8, fontSize:13, cursor:"pointer", fontFamily:"'Sora',sans-serif", transition:"all .2s" }}
+          <button onClick={()=>{onProducts();window.scrollTo(0,0);}} style={{ background:"none", border:"1px solid rgba(255,255,255,.12)", color:"rgba(255,255,255,.5)", padding:"10px 28px", borderRadius:8, fontSize:14, cursor:"pointer", fontFamily:"'Sora',sans-serif", transition:"all .2s" }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.3)";e.currentTarget.style.color="#fff";}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.12)";e.currentTarget.style.color="rgba(255,255,255,.5)";}}>
             {lang==="es"?"Ver todos los productos →":"View all products →"}
@@ -3469,23 +3469,23 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       </section>
 
       {/* HOW IT WORKS — 3 steps */}
-      <section style={{ background:BK2, padding:"80px 5%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+      <section style={{ background:BK2, padding:"52px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:48 }}>
-            <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
-            <h2 style={{ fontSize:"clamp(28px,4vw,48px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>{t.how.h}</h2>
+            <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
+            <h2 style={{ fontSize:"clamp(34px,4vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>{t.how.h}</h2>
           </div>
           <div className="how-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
             {t.how.steps.map(([n,title,desc],i)=>(
               <div key={n} style={{ background:i===1?G:BK3, color:i===1?"#000":"#fff", padding:"36px 28px", border:`1px solid ${i===1?G:"rgba(255,255,255,.06)"}` }}>
                 <div style={{ fontSize:44, fontWeight:700, opacity:.1, marginBottom:14, letterSpacing:"-.04em" }}>{n}</div>
                 <h3 style={{ fontSize:19, fontWeight:700, marginBottom:10, letterSpacing:"-.02em" }}>{title}</h3>
-                <p style={{ fontSize:13, lineHeight:1.8, opacity:i===1?.6:.4, fontWeight:300 }}>{desc}</p>
+                <p style={{ fontSize:14, lineHeight:1.8, opacity:i===1?.6:.4, fontWeight:300 }}>{desc}</p>
               </div>
             ))}
           </div>
           <div style={{ textAlign:"center", marginTop:28 }}>
-            <button onClick={()=>{onHowItWorks();window.scrollTo(0,0);}} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:13, cursor:"pointer", textDecoration:"underline", fontFamily:"'Sora',sans-serif" }}>
+            <button onClick={()=>{onHowItWorks();window.scrollTo(0,0);}} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:14, cursor:"pointer", textDecoration:"underline", fontFamily:"'Sora',sans-serif" }}>
               {lang==="es"?"Ver proceso completo →":"See the full process →"}
             </button>
           </div>
@@ -3499,9 +3499,9 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       <DashboardSlider lang={lang} />
 
       {/* REVIEWS */}
-      <section style={{ padding:"80px 5%", maxWidth:1100, margin:"0 auto" }}>
+      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:44 }}>
-          <p style={{ fontSize:11, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.reviews.badge}</p>
+          <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.reviews.badge}</p>
           <h2 style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>{t.reviews.h}</h2>
         </div>
         <div className="reviews-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
@@ -3512,8 +3512,8 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
               </div>
               <p style={{ fontSize:14, lineHeight:1.85, color:"rgba(255,255,255,.5)", marginBottom:18, fontStyle:"italic", fontWeight:300 }}>"{r.text}"</p>
               <div style={{ borderTop:"1px solid rgba(255,255,255,.06)", paddingTop:12 }}>
-                <p style={{ fontWeight:700, fontSize:13, color:"#fff" }}>{r.name}</p>
-                <p style={{ fontSize:11, color:"rgba(255,255,255,.3)", marginTop:2 }}>{r.biz}</p>
+                <p style={{ fontWeight:700, fontSize:14, color:"#fff" }}>{r.name}</p>
+                <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginTop:2 }}>{r.biz}</p>
               </div>
             </div>
           ))}
@@ -3521,25 +3521,25 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       </section>
 
       {/* CTA */}
-      <section style={{ background:G, padding:"80px 5%", textAlign:"center" }}>
-        <h2 style={{ fontSize:"clamp(28px,5vw,56px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:12 }}>
+      <section style={{ background:G, padding:"52px 6%", textAlign:"center" }}>
+        <h2 style={{ fontSize:"clamp(34px,5vw,64px)", fontWeight:700, color:"#000", letterSpacing:"-.03em", marginBottom:12 }}>
           {lang==="es"?"¿Listo para ver cuánto calificas?":"Ready to see how much you qualify for?"}
         </h2>
         <p style={{ fontSize:16, color:"rgba(0,0,0,.55)", marginBottom:28, fontWeight:300 }}>
           {lang==="es"?"Gratis. Sin impacto al crédito. Decisión en horas.":"Free. No credit impact. Decision in hours."}
         </p>
-        <button onClick={()=>{onApply();window.scrollTo(0,0);}} style={{ background:"#000", color:G, border:"none", padding:"15px 44px", fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", borderRadius:6, letterSpacing:"-.01em" }}>
+        <button onClick={()=>{onApply();window.scrollTo(0,0);}} style={{ background:"#000", color:G, border:"none", padding:"15px 44px", fontSize:16, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif", borderRadius:6, letterSpacing:"-.01em" }}>
           {lang==="es"?"Comenzar Ahora →":"Get Started Now →"}
         </button>
       </section>
 
       {/* FOOTER */}
       <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"40px 5% 28px" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:20, paddingBottom:20, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
               <svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#a8ff3e"/><path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/></svg>
-              <span style={{ fontSize:15, fontWeight:800, letterSpacing:"-.03em", color:"#fff" }}>APROVUIT</span>
+              <span style={{ fontSize:16, fontWeight:800, letterSpacing:"-.03em", color:"#fff" }}>APROVUIT</span>
             </div>
             <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
               {[[t.nav.products,onProducts],[t.nav.howItWorks,onHowItWorks],["About",onAbout],[t.nav.faq,onFaq],[lang==="es"?"Contacto":"Contact",onContact],[t.nav.login,onLogin]].map(([l,fn])=>(
@@ -3548,13 +3548,13 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
             </div>
           </div>
           <div style={{ background:"rgba(255,255,255,.03)", border:"1px solid rgba(255,255,255,.05)", borderRadius:8, padding:"12px 16px", marginBottom:16 }}>
-            <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", lineHeight:1.7 }}>
+            <p style={{ fontSize:12, color:"rgba(255,255,255,.25)", lineHeight:1.7 }}>
               {lang==="es"
                 ? "Aprovuit actúa como guía de confianza en tu camino hacia el financiamiento empresarial. Nuestra plataforma está diseñada para conectarte con opciones de capital adaptadas a las necesidades únicas de tu negocio. Si bien nos esforzamos por ofrecer información precisa y actualizada, no podemos garantizar su exactitud debido a la naturaleza dinámica de la industria financiera. Te recomendamos realizar tu propia diligencia debida y buscar asesoría financiera o legal independiente antes de tomar decisiones financieras. Al usar nuestros servicios, aceptas nuestros términos y reconoces que cualquier decisión basada en la información de nuestro sitio es tu propia responsabilidad."
                 : "Aprovuit serves as a trusted guide on your journey toward business financing. Our platform is designed to connect you with capital options tailored to your unique business needs. While we strive to provide accurate and up-to-date information, we cannot guarantee its completeness due to the dynamic nature of the financial industry. We strongly encourage all users to conduct their own due diligence and seek independent financial or legal advice before making any financial decisions. By using our services, you agree to our terms and acknowledge that any decisions based on information found on our platform are your own responsibility."}
             </p>
           </div>
-          <p style={{ fontSize:11, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
+          <p style={{ fontSize:12, color:"rgba(255,255,255,.2)", textAlign:"center" }}>{t.footer.rights}</p>
         </div>
       </footer>
       <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}`}</style>
@@ -3707,7 +3707,7 @@ export default function Aprovuit() {
       <style>{CSS}</style>
       <div style={{ background:"rgba(10,10,10,.97)", borderBottom:"1px solid rgba(255,255,255,.07)", padding:"0 5%", height:56, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
         <button onClick={nav.onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, color:"#000" }}>A</div>
+          <div style={{ width:26, height:26, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
           <span style={{ fontSize:18, fontWeight:800, fontFamily:"'Barlow Condensed',sans-serif", color:"#fff", letterSpacing:"0.03em" }}>APROVUIT</span>
         </button>
         <div style={{ display:"flex", alignItems:"center", gap:8, background:"rgba(168,255,62,.08)", border:`1px solid ${G}20`, padding:"5px 14px", borderRadius:20 }}>
