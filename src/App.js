@@ -3550,7 +3550,15 @@ export default function Aprovuit() {
     if (initialAdmin) return "admin";
     if (initialUploadId) return "upload";
     const path = window.location.pathname.replace(/\/$/,"") || "/";
-    return PATH_VIEWS[path] || "landing";
+    const v = PATH_VIEWS[path] || "landing";
+    // Private views can't be accessed by URL directly (no user session)
+    const PRIVATE = new Set(["dashboard","login","apply","upload","admin"]);
+    if (PRIVATE.has(v) && v !== "admin") {
+      // Clean the URL back to home without a page reload
+      window.history.replaceState({}, "", "/");
+      return "landing";
+    }
+    return v;
   };
 
   const [view, setView] = useState(getInitialView);
