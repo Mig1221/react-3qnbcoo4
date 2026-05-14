@@ -1487,8 +1487,8 @@ function AdminDashboard({ onExit }) {
 
 // ── INNER PAGE NAV ───────────────────────────────────────────────
 function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout, onContact }) {
-  const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
   const [menuOpen, setMenuOpen] = useState(false);
+  const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
   const G = "#a8ff3e";
   return (
     <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
