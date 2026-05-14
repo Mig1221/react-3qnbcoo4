@@ -216,6 +216,7 @@ const CSS = `
     .hero-mockup { display:none !important; }
     .hero-grid { padding-top:80px !important; padding-bottom:60px !important; }
     .why-grid { grid-template-columns:1fr !important; }
+    .prod-card-inner { padding:24px 18px !important; }
   }
   @media (max-width:480px) {
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
@@ -1490,10 +1491,12 @@ function AdminDashboard({ onExit }) {
 
 // ── INNER PAGE NAV ───────────────────────────────────────────────
 function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout, onContact }) {
-  const go = (fn) => { fn && fn(); window.scrollTo(0,0); };
+  const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
+  const [menuOpen, setMenuOpen] = useState(false);
+  const G = "#a8ff3e";
   return (
-    <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
-      <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
+    <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
+      <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
           <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1501,11 +1504,12 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         </svg>
         <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
       </button>
-      <div style={{ display:"flex", gap:28, alignItems:"center" }}>
-        <button onClick={()=>go(onBack)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
-        <button onClick={()=>go(onProducts)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
-        <button onClick={()=>go(onHowItWorks)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
-        <button onClick={()=>go(onFaq)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
+      {/* Desktop nav */}
+      <div className="nav-desktop" style={{ display:"flex", gap:20, alignItems:"center" }}>
+        <button onClick={()=>go(onBack)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
+        <button onClick={()=>go(onProducts)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
+        <button onClick={()=>go(onHowItWorks)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
+        <button onClick={()=>go(onFaq)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>FAQ</button>
         {onAbout && <button onClick={()=>go(onAbout)} className="nav-link">{lang==="es"?"Nosotros":"About"}</button>}
         {onContact && <button onClick={()=>go(onContact)} className="nav-link">{lang==="es"?"Contacto":"Contact"}</button>}
         {onLogin && <button onClick={()=>go(onLogin)} className="nav-link">{lang==="es"?"Entrar":"Log In"}</button>}
@@ -1514,6 +1518,43 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
           <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?"#a8ff3e":"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
         </div>}
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
+      </div>
+      {/* Mobile nav */}
+      <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center", position:"relative" }}>
+        <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 16px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
+        {/* Hamburger */}
+        <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.07)", border:"1px solid rgba(255,255,255,.12)", borderRadius:8, width:38, height:38, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0, flexShrink:0 }}>
+          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(45deg) translate(3px,3px)":"none" }}></span>
+          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"transparent":"#fff", borderRadius:2, transition:"all .2s" }}></span>
+          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(-45deg) translate(3px,-3px)":"none" }}></span>
+        </button>
+        {/* Dropdown */}
+        {menuOpen && (
+          <div style={{ position:"fixed", top:60, right:0, left:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"12px 5% 20px", zIndex:199, backdropFilter:"blur(20px)" }}>
+            {[
+              [lang==="es"?"Inicio":"Home", onBack],
+              [lang==="es"?"Productos":"Products", onProducts],
+              [lang==="es"?"Cómo Funciona":"How It Works", onHowItWorks],
+              ["FAQ", onFaq],
+              [lang==="es"?"Nosotros":"About", onAbout],
+              [lang==="es"?"Contacto":"Contact", onContact],
+              ...(onLogin ? [[lang==="es"?"Entrar":"Log In", onLogin]] : []),
+            ].filter(([,fn])=>fn).map(([label, fn]) => (
+              <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"14px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.75)", cursor:"pointer", fontFamily:"'Sora',sans-serif", letterSpacing:"-.01em" }}>
+                {label}
+              </button>
+            ))}
+            {setLang && (
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:16 }}>
+                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:".06em", textTransform:"uppercase" }}>Language</span>
+                <div className="lang-pill">
+                  <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
+                  <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );
@@ -1628,9 +1669,9 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
         </div>
 
         {products.map((p,i)=>(
-          <div key={p.name} style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"40px 44px", marginBottom:20, position:"relative", overflow:"hidden" }}>
+          <div key={p.name} className="prod-card-inner" style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"40px 44px", marginBottom:20, position:"relative", overflow:"hidden" }}>
             <div style={{ position:"absolute", top:0, left:0, width:4, bottom:0, background:p.color, borderRadius:"16px 0 0 16px" }}></div>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }} className="hero-grid">
               <div>
                 <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
                   <div style={{ width:48, height:48, background:`${p.color}15`, border:`1px solid ${p.color}40`, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, color:p.color }}>{p.icon}</div>
@@ -2014,6 +2055,7 @@ function Chatbot({ lang, onApply }) {
 function AnimatedDemo({ lang }) {
   const [activeStep, setActiveStep] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const phoneScrollRef = React.useRef(null);
   const steps = lang === "es"
     ? ["Aplica","Revisión","Oferta","Fondeado"]
     : ["Apply","Review","Offer","Funded"];
@@ -2028,6 +2070,20 @@ function AnimatedDemo({ lang }) {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Sync auto-advance to scroll position
+  useEffect(() => {
+    if (phoneScrollRef.current) {
+      phoneScrollRef.current.scrollTo({ left: activeStep * phoneScrollRef.current.offsetWidth, behavior: "smooth" });
+    }
+  }, [activeStep]);
+
+  const handlePhoneScroll = () => {
+    const el = phoneScrollRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.offsetWidth);
+    if (idx !== activeStep) setActiveStep(idx);
+  };
 
   const G = "#a8ff3e";
 
@@ -2157,7 +2213,7 @@ function AnimatedDemo({ lang }) {
           {/* Step indicators */}
           <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
             {steps.map((s, i) => (
-              <button key={s} onClick={() => setActiveStep(i)} style={{ flex: 1, padding: "10px 8px", borderRadius: 8, border: `1px solid ${activeStep===i?G:"rgba(255,255,255,.1)"}`, background: activeStep===i?"rgba(168,255,62,.08)":"transparent", cursor: "pointer", transition: "all .2s" }}>
+              <button key={s} onClick={() => { setActiveStep(i); phoneScrollRef.current?.scrollTo({left:i*phoneScrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{ flex: 1, padding: "10px 8px", borderRadius: 8, border: `1px solid ${activeStep===i?G:"rgba(255,255,255,.1)"}`, background: activeStep===i?"rgba(168,255,62,.08)":"transparent", cursor: "pointer", transition: "all .2s" }}>
                 <p style={{ fontSize: 10, fontWeight: 700, color: activeStep===i?G:"rgba(255,255,255,.3)", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>0{i+1}</p>
                 <p style={{ fontSize: 11, fontWeight: 600, color: activeStep===i?"#fff":"rgba(255,255,255,.3)" }}>{s}</p>
               </button>
@@ -2185,14 +2241,22 @@ function AnimatedDemo({ lang }) {
                 {lang==="es"?"Paso":"Step"} {activeStep + 1} — {steps[activeStep]}
               </p>
             </div>
-            {/* Screen content */}
-            <div style={{ padding: "20px 18px", minHeight: 280 }}>
-              {screens[activeStep]}
+            {/* Screen content — swipeable */}
+            <div
+              ref={phoneScrollRef}
+              onScroll={handlePhoneScroll}
+              style={{ display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:280 }}
+            >
+              {screens.map((screen, i) => (
+                <div key={i} style={{ minWidth:"100%", scrollSnapAlign:"start", padding:"20px 18px", boxSizing:"border-box" }}>
+                  {screen}
+                </div>
+              ))}
             </div>
             {/* Progress dots */}
             <div style={{ padding: "12px 18px", display: "flex", justifyContent: "center", gap: 6, borderTop: "1px solid rgba(255,255,255,.04)" }}>
               {[0,1,2,3].map(i => (
-                <div key={i} onClick={() => setActiveStep(i)} style={{ width: i===activeStep?20:6, height: 6, background: i===activeStep?G:"rgba(255,255,255,.15)", borderRadius: 3, transition: "all .3s", cursor: "pointer" }}></div>
+                <div key={i} onClick={() => { setActiveStep(i); phoneScrollRef.current?.scrollTo({left:i*phoneScrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{ width: i===activeStep?20:6, height: 6, background: i===activeStep?G:"rgba(255,255,255,.15)", borderRadius: 3, transition: "all .3s", cursor: "pointer" }}></div>
               ))}
             </div>
           </div>
@@ -2208,6 +2272,15 @@ function AnimatedDemo({ lang }) {
 function DashboardSlider({ lang }) {
   const [slide, setSlide] = useState(0);
   const G = "#a8ff3e";
+  const scrollRef = React.useRef(null);
+
+  // Detect mobile scroll position → update active slide
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.offsetWidth);
+    setSlide(idx);
+  };
 
   const slideData = lang === "es" ? [
     { tab:"Resumen", label:"Tu Portal. En Tiempo Real.", desc:"Ve exactamente dónde está tu trato en todo momento. Sin llamadas. Sin esperar respuestas." },
@@ -2437,20 +2510,29 @@ function DashboardSlider({ lang }) {
               {/* Tab bar */}
               <div style={{display:"flex", borderBottom:"1px solid rgba(255,255,255,.05)", background:"#0f0f0f", overflowX:"auto"}}>
                 {slideData.map((s,i)=>(
-                  <button key={s.tab} onClick={()=>setSlide(i)} style={{padding:"10px 14px", fontSize:10, fontWeight:600, color:slide===i?G:"rgba(255,255,255,.25)", background:"none", border:"none", cursor:"pointer", borderBottom:`2px solid ${slide===i?G:"transparent"}`, whiteSpace:"nowrap", fontFamily:"'Sora',sans-serif", transition:"all .15s", flexShrink:0}}>
+                  <button key={s.tab} onClick={()=>{ setSlide(i); if(scrollRef.current){ scrollRef.current.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); } }} style={{padding:"10px 14px", fontSize:10, fontWeight:600, color:slide===i?G:"rgba(255,255,255,.25)", background:"none", border:"none", cursor:"pointer", borderBottom:`2px solid ${slide===i?G:"transparent"}`, whiteSpace:"nowrap", fontFamily:"'Sora',sans-serif", transition:"all .15s", flexShrink:0}}>
                     {s.tab}
                   </button>
                 ))}
               </div>
-              {/* Screen content */}
-              <div style={{padding:"18px 18px 22px", minHeight:360}}>
-                {screens[slide]}
+              {/* Screen content — touch-scrollable on mobile */}
+              <div
+                ref={scrollRef}
+                onScroll={handleScroll}
+                style={{display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:360}}
+              >
+                <style>{`.dash-scroll::-webkit-scrollbar{display:none}`}</style>
+                {screens.map((screen, i) => (
+                  <div key={i} style={{minWidth:"100%", scrollSnapAlign:"start", padding:"18px 18px 22px", boxSizing:"border-box"}}>
+                    {screen}
+                  </div>
+                ))}
               </div>
             </div>
             {/* Slide dots */}
             <div style={{display:"flex", justifyContent:"center", gap:6, marginTop:14}}>
               {slideData.map((_,i)=>(
-                <div key={i} onClick={()=>setSlide(i)} style={{width:i===slide?18:6, height:6, background:i===slide?G:"rgba(255,255,255,.12)", borderRadius:3, transition:"all .25s", cursor:"pointer"}}></div>
+                <div key={i} onClick={()=>{ setSlide(i); if(scrollRef.current){ scrollRef.current.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); } }} style={{width:i===slide?18:6, height:6, background:i===slide?G:"rgba(255,255,255,.12)", borderRadius:3, transition:"all .25s", cursor:"pointer"}}></div>
               ))}
             </div>
           </div>
@@ -3165,12 +3247,14 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
 function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, onFaq, onAbout, onContact }) {
   const t = T[lang];
   const G = "#a8ff3e";
+  const [menuOpen, setMenuOpen] = useState(false);
+  const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
 
   return (
     <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif" }}>
 
       {/* NAV */}
-      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:58 }}>
+      <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:58 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
@@ -3179,6 +3263,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
           </svg>
           <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
         </div>
+        {/* Desktop */}
         <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
           {[[t.nav.products,"products"],[t.nav.howItWorks,"howitworks"],[t.nav.faq,"faq"],["About","about"]].map(([l,v])=>(
             <button key={v} className="nav-link" onClick={()=>{ ({products:onProducts,howitworks:onHowItWorks,faq:onFaq,about:onAbout})[v]?.(); window.scrollTo(0,0); }}>{l}</button>
@@ -3190,8 +3275,40 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
           <button className="nav-link" onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{t.nav.apply}</button>
         </div>
-        <div className="nav-mobile" style={{ display:"none", gap:10, alignItems:"center" }}>
-          <button className="btn-green" style={{ padding:"9px 18px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{lang==="es"?"Aplicar →":"Apply →"}</button>
+        {/* Mobile */}
+        <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center", position:"relative" }}>
+          <button className="btn-green" style={{ padding:"9px 16px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{lang==="es"?"Aplicar →":"Apply →"}</button>
+          {/* Hamburger */}
+          <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.07)", border:"1px solid rgba(255,255,255,.12)", borderRadius:8, width:38, height:38, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0, flexShrink:0 }}>
+            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(45deg) translate(3px,3px)":"none" }}></span>
+            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"transparent":"#fff", borderRadius:2, transition:"all .2s" }}></span>
+            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(-45deg) translate(3px,-3px)":"none" }}></span>
+          </button>
+          {/* Dropdown */}
+          {menuOpen && (
+            <div style={{ position:"fixed", top:58, right:0, left:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"12px 5% 20px", zIndex:199, backdropFilter:"blur(20px)" }}>
+              {[
+                [t.nav.products, onProducts],
+                [t.nav.howItWorks, onHowItWorks],
+                [t.nav.faq, onFaq],
+                [lang==="es"?"Nosotros":"About", onAbout],
+                [lang==="es"?"Contacto":"Contact", onContact],
+                [t.nav.login, onLogin],
+              ].map(([label, fn]) => (
+                <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"14px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.75)", cursor:"pointer", fontFamily:"'Sora',sans-serif", letterSpacing:"-.01em" }}>
+                  {label}
+                </button>
+              ))}
+              {/* EN/ES toggle in menu */}
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:16 }}>
+                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:".06em", textTransform:"uppercase" }}>Language</span>
+                <div className="lang-pill">
+                  <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
+                  <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
