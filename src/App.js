@@ -142,7 +142,7 @@ function fmtAmt(n) {
 
 // ── CSS ──────────────────────────────────────────────────────────
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
   body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
@@ -212,10 +212,10 @@ const CSS = `
     .admin-side { width:100% !important; display:flex !important; overflow-x:auto !important; }
     .dash-main { padding:16px !important; }
     nav { padding:0 4% !important; height:54px !important; }
+    section { padding-left:5% !important; padding-right:5% !important; padding-top:64px !important; padding-bottom:64px !important; }
     .hero-mockup { display:none !important; }
     .hero-grid { padding-top:80px !important; padding-bottom:60px !important; }
     .why-grid { grid-template-columns:1fr !important; }
-    .prod-card-inner { padding:24px 18px !important; }
   }
   @media (max-width:480px) {
     .metrics-grid { grid-template-columns:1fr 1fr !important; }
@@ -229,7 +229,11 @@ const CSS = `
     .reviews-grid { grid-template-columns:1fr !important; }
     .how-grid { grid-template-columns:1fr !important; }
     .products-grid { grid-template-columns:1fr !important; }
+    h1 { font-size:clamp(34px,9vw,52px) !important; line-height:1.05 !important; }
+    h2 { font-size:clamp(24px,7vw,36px) !important; }
+    p { font-size:14px !important; }
     .ticker-text { font-size:10px !important; }
+    section { padding-left:4% !important; padding-right:4% !important; padding-top:52px !important; padding-bottom:52px !important; }
   }
 `;
 
@@ -1491,7 +1495,7 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
   const G = "#a8ff3e";
   return (
     <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
-      <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+      <button onClick={()=>go(onBack)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="28" height="28" rx="6" fill="#a8ff3e"/>
           <path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1499,12 +1503,12 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         </svg>
         <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
       </button>
-      {/* Desktop nav */}
-      <div className="nav-desktop" style={{ display:"flex", gap:20, alignItems:"center" }}>
-        <button onClick={()=>go(onBack)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
-        <button onClick={()=>go(onProducts)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
-        <button onClick={()=>go(onHowItWorks)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
-        <button onClick={()=>go(onFaq)} style={{ fontSize:13, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'Sora',sans-serif" }}>FAQ</button>
+      {/* Desktop — unchanged from original */}
+      <div className="nav-desktop" style={{ display:"flex", gap:28, alignItems:"center" }}>
+        <button onClick={()=>go(onBack)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
+        <button onClick={()=>go(onProducts)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
+        <button onClick={()=>go(onHowItWorks)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
+        <button onClick={()=>go(onFaq)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
         {onAbout && <button onClick={()=>go(onAbout)} className="nav-link">{lang==="es"?"Nosotros":"About"}</button>}
         {onContact && <button onClick={()=>go(onContact)} className="nav-link">{lang==="es"?"Contacto":"Contact"}</button>}
         {onLogin && <button onClick={()=>go(onLogin)} className="nav-link">{lang==="es"?"Entrar":"Log In"}</button>}
@@ -1514,18 +1518,16 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         </div>}
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
       </div>
-      {/* Mobile nav */}
-      <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center", position:"relative" }}>
-        <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 16px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
-        {/* Hamburger */}
-        <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.07)", border:"1px solid rgba(255,255,255,.12)", borderRadius:8, width:38, height:38, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0, flexShrink:0 }}>
-          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(45deg) translate(3px,3px)":"none" }}></span>
-          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"transparent":"#fff", borderRadius:2, transition:"all .2s" }}></span>
-          <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(-45deg) translate(3px,-3px)":"none" }}></span>
+      {/* Mobile — Apply + hamburger */}
+      <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center" }}>
+        <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"8px 14px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
+        <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.08)", border:"1px solid rgba(255,255,255,.12)", borderRadius:7, width:36, height:36, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0 }}>
+          <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(45deg) translate(0px,3.5px)":"none" }}></span>
+          <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", opacity:menuOpen?0:1 }}></span>
+          <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(-45deg) translate(0px,-3.5px)":"none" }}></span>
         </button>
-        {/* Dropdown */}
         {menuOpen && (
-          <div style={{ position:"fixed", top:60, right:0, left:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"12px 5% 20px", zIndex:199, backdropFilter:"blur(20px)" }}>
+          <div style={{ position:"fixed", top:60, left:0, right:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"8px 5% 16px", zIndex:199 }}>
             {[
               [lang==="es"?"Inicio":"Home", onBack],
               [lang==="es"?"Productos":"Products", onProducts],
@@ -1534,14 +1536,14 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
               [lang==="es"?"Nosotros":"About", onAbout],
               [lang==="es"?"Contacto":"Contact", onContact],
               ...(onLogin ? [[lang==="es"?"Entrar":"Log In", onLogin]] : []),
-            ].filter(([,fn])=>fn).map(([label, fn]) => (
-              <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"14px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.75)", cursor:"pointer", fontFamily:"'Sora',sans-serif", letterSpacing:"-.01em" }}>
+            ].filter(([,fn])=>fn).map(([label,fn]) => (
+              <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:15, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
                 {label}
               </button>
             ))}
             {setLang && (
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:16 }}>
-                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:".06em", textTransform:"uppercase" }}>Language</span>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:14 }}>
+                <span style={{ fontSize:11, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
                 <div className="lang-pill">
                   <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
                   <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
@@ -1664,7 +1666,7 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
         </div>
 
         {products.map((p,i)=>(
-          <div key={p.name} className="prod-card-inner" style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"40px 44px", marginBottom:20, position:"relative", overflow:"hidden" }}>
+          <div key={p.name} style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:16, padding:"40px 44px", marginBottom:20, position:"relative", overflow:"hidden" }}>
             <div style={{ position:"absolute", top:0, left:0, width:4, bottom:0, background:p.color, borderRadius:"16px 0 0 16px" }}></div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }} className="hero-grid">
               <div>
@@ -2066,10 +2068,9 @@ function AnimatedDemo({ lang }) {
     return () => clearInterval(interval);
   }, []);
 
-  // Sync auto-advance to scroll position
   useEffect(() => {
     if (phoneScrollRef.current) {
-      phoneScrollRef.current.scrollTo({ left: activeStep * phoneScrollRef.current.offsetWidth, behavior: "smooth" });
+      phoneScrollRef.current.scrollTo({ left: activeStep * phoneScrollRef.current.offsetWidth, behavior:"smooth" });
     }
   }, [activeStep]);
 
@@ -2236,16 +2237,10 @@ function AnimatedDemo({ lang }) {
                 {lang==="es"?"Paso":"Step"} {activeStep + 1} — {steps[activeStep]}
               </p>
             </div>
-            {/* Screen content — swipeable */}
-            <div
-              ref={phoneScrollRef}
-              onScroll={handlePhoneScroll}
-              style={{ display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:280 }}
-            >
-              {screens.map((screen, i) => (
-                <div key={i} style={{ minWidth:"100%", scrollSnapAlign:"start", padding:"20px 18px", boxSizing:"border-box" }}>
-                  {screen}
-                </div>
+            {/* Screen content — swipeable on mobile */}
+            <div ref={phoneScrollRef} onScroll={handlePhoneScroll} style={{ display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:280 }}>
+              {screens.map((screen,i) => (
+                <div key={i} style={{ minWidth:"100%", scrollSnapAlign:"start", padding:"20px 18px", boxSizing:"border-box" }}>{screen}</div>
               ))}
             </div>
             {/* Progress dots */}
@@ -2269,12 +2264,11 @@ function DashboardSlider({ lang }) {
   const G = "#a8ff3e";
   const scrollRef = React.useRef(null);
 
-  // Detect mobile scroll position → update active slide
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
     const idx = Math.round(el.scrollLeft / el.offsetWidth);
-    setSlide(idx);
+    if (idx !== slide) setSlide(idx);
   };
 
   const slideData = lang === "es" ? [
@@ -2505,29 +2499,22 @@ function DashboardSlider({ lang }) {
               {/* Tab bar */}
               <div style={{display:"flex", borderBottom:"1px solid rgba(255,255,255,.05)", background:"#0f0f0f", overflowX:"auto"}}>
                 {slideData.map((s,i)=>(
-                  <button key={s.tab} onClick={()=>{ setSlide(i); if(scrollRef.current){ scrollRef.current.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); } }} style={{padding:"10px 14px", fontSize:10, fontWeight:600, color:slide===i?G:"rgba(255,255,255,.25)", background:"none", border:"none", cursor:"pointer", borderBottom:`2px solid ${slide===i?G:"transparent"}`, whiteSpace:"nowrap", fontFamily:"'Sora',sans-serif", transition:"all .15s", flexShrink:0}}>
+                  <button key={s.tab} onClick={()=>{ setSlide(i); scrollRef.current?.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{padding:"10px 14px", fontSize:10, fontWeight:600, color:slide===i?G:"rgba(255,255,255,.25)", background:"none", border:"none", cursor:"pointer", borderBottom:`2px solid ${slide===i?G:"transparent"}`, whiteSpace:"nowrap", fontFamily:"'Sora',sans-serif", transition:"all .15s", flexShrink:0}}>
                     {s.tab}
                   </button>
                 ))}
               </div>
-              {/* Screen content — touch-scrollable on mobile */}
-              <div
-                ref={scrollRef}
-                onScroll={handleScroll}
-                style={{display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:360}}
-              >
-                <style>{`.dash-scroll::-webkit-scrollbar{display:none}`}</style>
-                {screens.map((screen, i) => (
-                  <div key={i} style={{minWidth:"100%", scrollSnapAlign:"start", padding:"18px 18px 22px", boxSizing:"border-box"}}>
-                    {screen}
-                  </div>
+              {/* Screen content — swipeable on mobile */}
+              <div ref={scrollRef} onScroll={handleScroll} style={{display:"flex", overflowX:"auto", scrollSnapType:"x mandatory", WebkitOverflowScrolling:"touch", scrollbarWidth:"none", msOverflowStyle:"none", minHeight:360}}>
+                {screens.map((screen,i) => (
+                  <div key={i} style={{minWidth:"100%", scrollSnapAlign:"start", padding:"18px 18px 22px", boxSizing:"border-box"}}>{screen}</div>
                 ))}
               </div>
             </div>
             {/* Slide dots */}
             <div style={{display:"flex", justifyContent:"center", gap:6, marginTop:14}}>
               {slideData.map((_,i)=>(
-                <div key={i} onClick={()=>{ setSlide(i); if(scrollRef.current){ scrollRef.current.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); } }} style={{width:i===slide?18:6, height:6, background:i===slide?G:"rgba(255,255,255,.12)", borderRadius:3, transition:"all .25s", cursor:"pointer"}}></div>
+                <div key={i} onClick={()=>{ setSlide(i); scrollRef.current?.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{width:i===slide?18:6, height:6, background:i===slide?G:"rgba(255,255,255,.12)", borderRadius:3, transition:"all .25s", cursor:"pointer"}}></div>
               ))}
             </div>
           </div>
@@ -3258,7 +3245,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
           </svg>
           <span style={{ fontSize:15, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
         </div>
-        {/* Desktop */}
+        {/* Desktop — unchanged */}
         <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
           {[[t.nav.products,"products"],[t.nav.howItWorks,"howitworks"],[t.nav.faq,"faq"],["About","about"]].map(([l,v])=>(
             <button key={v} className="nav-link" onClick={()=>{ ({products:onProducts,howitworks:onHowItWorks,faq:onFaq,about:onAbout})[v]?.(); window.scrollTo(0,0); }}>{l}</button>
@@ -3270,18 +3257,16 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
           <button className="nav-link" onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{t.nav.apply}</button>
         </div>
-        {/* Mobile */}
-        <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center", position:"relative" }}>
-          <button className="btn-green" style={{ padding:"9px 16px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{lang==="es"?"Aplicar →":"Apply →"}</button>
-          {/* Hamburger */}
-          <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.07)", border:"1px solid rgba(255,255,255,.12)", borderRadius:8, width:38, height:38, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0, flexShrink:0 }}>
-            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(45deg) translate(3px,3px)":"none" }}></span>
-            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"transparent":"#fff", borderRadius:2, transition:"all .2s" }}></span>
-            <span style={{ display:"block", width:16, height:1.5, background: menuOpen?"rgba(255,255,255,.3)":"#fff", borderRadius:2, transition:"all .2s", transform: menuOpen?"rotate(-45deg) translate(3px,-3px)":"none" }}></span>
+        {/* Mobile — Apply + hamburger */}
+        <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center" }}>
+          <button className="btn-green" style={{ padding:"8px 14px", fontSize:13 }} onClick={()=>go(onApply)}>{lang==="es"?"Aplicar →":"Apply →"}</button>
+          <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.08)", border:"1px solid rgba(255,255,255,.12)", borderRadius:7, width:36, height:36, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0 }}>
+            <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(45deg) translate(0px,3.5px)":"none" }}></span>
+            <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", opacity:menuOpen?0:1 }}></span>
+            <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(-45deg) translate(0px,-3.5px)":"none" }}></span>
           </button>
-          {/* Dropdown */}
           {menuOpen && (
-            <div style={{ position:"fixed", top:58, right:0, left:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"12px 5% 20px", zIndex:199, backdropFilter:"blur(20px)" }}>
+            <div style={{ position:"fixed", top:58, left:0, right:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"8px 5% 16px", zIndex:199 }}>
               {[
                 [t.nav.products, onProducts],
                 [t.nav.howItWorks, onHowItWorks],
@@ -3289,14 +3274,13 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
                 [lang==="es"?"Nosotros":"About", onAbout],
                 [lang==="es"?"Contacto":"Contact", onContact],
                 [t.nav.login, onLogin],
-              ].map(([label, fn]) => (
-                <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"14px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.75)", cursor:"pointer", fontFamily:"'Sora',sans-serif", letterSpacing:"-.01em" }}>
+              ].map(([label, fn]) => fn && (
+                <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:15, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
                   {label}
                 </button>
               ))}
-              {/* EN/ES toggle in menu */}
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:16 }}>
-                <span style={{ fontSize:12, color:"rgba(255,255,255,.3)", fontWeight:600, letterSpacing:".06em", textTransform:"uppercase" }}>Language</span>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:14 }}>
+                <span style={{ fontSize:11, color:"rgba(255,255,255,.3)", textTransform:"uppercase", letterSpacing:".08em" }}>Language</span>
                 <div className="lang-pill">
                   <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
                   <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
@@ -3579,105 +3563,100 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 }
 
 
-// ── VIEW → URL PATH MAP ──────────────────────────────────────────
-const VIEW_PATHS = {
-  landing:    "/",
-  products:   "/products",
-  howitworks: "/how-it-works",
-  faq:        "/faq",
-  about:      "/about",
-  contact:    "/contact",
-  apply:      "/apply",
-  login:      "/login",
-  dashboard:  "/dashboard",
-  admin:      "/admin",
-  upload:     "/upload",
-};
+// ── MAIN APP ─────────────────────────────────────────────────────
+const VIEW_PATHS = { landing:"/", products:"/products", howitworks:"/how-it-works", faq:"/faq", about:"/about", contact:"/contact", apply:"/apply", login:"/login", dashboard:"/dashboard", admin:"/admin", upload:"/upload" };
 const PATH_VIEWS = Object.fromEntries(Object.entries(VIEW_PATHS).map(([k,v])=>[v,k]));
 
-function getInitialView(uploadId, isAdmin) {
-  if (isAdmin) return "admin";
-  if (uploadId) return "upload";
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
-  return PATH_VIEWS[path] || "landing";
-}
-
-// ── MAIN APP ─────────────────────────────────────────────────────
 export default function Aprovuit() {
   const initialParams = new URLSearchParams(window.location.search);
   const initialUploadId = initialParams.get("upload");
   const initialAdmin = initialParams.get("admin") === "true";
 
-  const [view, setView] = useState(() => getInitialView(initialUploadId, initialAdmin));
+  const getInitialView = () => {
+    if (initialAdmin) return "admin";
+    if (initialUploadId) return "upload";
+    const path = window.location.pathname.replace(/\/$/,"") || "/";
+    return PATH_VIEWS[path] || "landing";
+  };
+
+  const [view, setView] = useState(getInitialView);
   const [lang, setLang] = useState("en");
   const [uploadAppId, setUploadAppId] = useState(initialUploadId || null);
   const [user, setUser] = useState(null);
 
-  // Navigate: update React state AND push to browser history
-  const navTo = (v, opts = {}) => {
+  const navTo = (v, opts={}) => {
     const path = VIEW_PATHS[v] || "/";
     const url = opts.uploadId ? `${path}?upload=${opts.uploadId}` : path;
-    window.history.pushState({ view: v, uploadId: opts.uploadId || null }, "", url);
+    window.history.pushState({ view:v, uploadId:opts.uploadId||null }, "", url);
     if (opts.uploadId) setUploadAppId(opts.uploadId);
     setView(v);
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
   };
 
-  // Handle browser back/forward
   useEffect(() => {
-    // Set initial history entry so the very first back press stays in-app
-    const initPath = VIEW_PATHS[view] || "/";
-    window.history.replaceState({ view, uploadId: uploadAppId }, "", uploadAppId ? `${initPath}?upload=${uploadAppId}` : initPath);
+    // Stamp the initial entry so back never leaves the site
+    const path = VIEW_PATHS[view] || "/";
+    window.history.replaceState({ view, uploadId:uploadAppId }, "", uploadAppId ? `${path}?upload=${uploadAppId}` : path);
 
     const handlePop = (e) => {
       const state = e.state;
-      if (state && state.view) {
+      if (state?.view) {
         if (state.uploadId) setUploadAppId(state.uploadId);
         setView(state.view);
-        window.scrollTo(0, 0);
+        window.scrollTo(0,0);
       } else {
-        // No state — derive from URL
         const params = new URLSearchParams(window.location.search);
         const uid = params.get("upload");
-        const path = window.location.pathname.replace(/\/$/, "") || "/";
-        const v = PATH_VIEWS[path] || "landing";
+        const p = window.location.pathname.replace(/\/$/,"") || "/";
         if (uid) setUploadAppId(uid);
-        setView(v);
-        window.scrollTo(0, 0);
+        setView(PATH_VIEWS[p] || "landing");
+        window.scrollTo(0,0);
       }
     };
     window.addEventListener("popstate", handlePop);
     return () => window.removeEventListener("popstate", handlePop);
   }, []); // eslint-disable-line
 
-  // Ensure viewport meta is always correct (prevents desktop zoom-out)
   useEffect(() => {
-    let vp = document.querySelector('meta[name="viewport"]');
-    if (!vp) { vp = document.createElement('meta'); vp.name = "viewport"; document.head.appendChild(vp); }
-    vp.setAttribute('content', 'width=device-width, initial-scale=1');
+    document.title = "Aprovuit — Business Funding Platform | Direct Lender & Broker";
+    const m = (k, v, n) => {
+      let t = document.querySelector('meta[' + (n?'name':'property') + '="' + k + '"]');
+      if (!t) { t = document.createElement('meta'); t.setAttribute(n?'name':'property', k); document.head.appendChild(t); }
+      t.setAttribute('content', v);
+    };
+    m('description','Aprovuit is a direct lender and licensed funding broker powered by technology. Apply in minutes, track your deal live, and get funded in 24 hours. No phone calls. No hidden fees.',true);
+    m('og:title','Aprovuit — Business Funding Platform');
+    m('og:description','Apply in minutes. Track your deal live. Funded in 24 hours. Direct lender + licensed broker.');
+    m('og:url','https://aprovuit.com');
+    m('og:type','website');
+    m('og:image','https://aprovuit.com/og-preview.png');
+    m('og:site_name','Aprovuit');
+    m('twitter:card','summary_large_image',true);
+    m('twitter:title','Aprovuit — Business Funding Platform',true);
+    m('twitter:description','Apply in minutes. Get funded in 24 hours. No phone calls.',true);
   }, []);
 
-  // SEO meta on view change
+  // SEO - update title and meta based on view
   useEffect(() => {
     const titles = {
-      landing:    "Aprovuit — Business Funding, No Phone Calls",
-      apply:      "Apply for Business Funding — Aprovuit",
-      products:   "Business Loan Products — Aprovuit",
+      landing: "Aprovuit — Business Funding, No Phone Calls",
+      apply: "Apply for Business Funding — Aprovuit",
+      products: "Business Loan Products — Aprovuit",
       howitworks: "How It Works — Aprovuit Business Funding",
-      faq:        "FAQ — Aprovuit Business Funding",
-      login:      "Log In — Aprovuit",
-      dashboard:  "My Dashboard — Aprovuit",
-      admin:      "Admin — Aprovuit",
+      faq: "FAQ — Aprovuit Business Funding",
+      login: "Log In — Aprovuit",
+      dashboard: "My Dashboard — Aprovuit",
+      admin: "Admin — Aprovuit",
     };
     document.title = titles[view] || "Aprovuit — Business Funding";
-    const descs = {
-      landing:    "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
-      products:   "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
-      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls.",
-      faq:        "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
-    };
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) { meta = document.createElement('meta'); meta.name = "description"; document.head.appendChild(meta); }
+    const descs = {
+      landing: "Business funding that lives entirely online. Apply in minutes, get offers, accept, and manage your funding — no phone calls, no salespeople. 580+ credit score OK.",
+      products: "Explore term loans, lines of credit, revenue advances, and equipment financing from $5K to $5M. No phone calls. Decisions in hours.",
+      howitworks: "See how Aprovuit works — from application to funded in as little as 24 hours. 100% online, no phone calls.",
+      faq: "Answers to common questions about business funding with Aprovuit. Requirements, process, timing, and more.",
+    };
     meta.content = descs[view] || descs.landing;
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (!ogTitle) { ogTitle = document.createElement('meta'); ogTitle.setAttribute('property','og:title'); document.head.appendChild(ogTitle); }
@@ -3687,41 +3666,41 @@ export default function Aprovuit() {
     ogDesc.content = meta.content;
   }, [view]);
 
+  const go = (v, opts={}) => navTo(v, opts);
+
   const handleLogin = (email, firstName, company, appId) => {
     setUser({ email, firstName, company, appId });
-    navTo("dashboard");
+    go("dashboard");
   };
 
   const handleApplySuccess = (email, firstName, company, appId, goUpload) => {
-    if (goUpload) { navTo("upload", { uploadId: appId }); return; }
+    if (goUpload) { go("upload", { uploadId:appId }); return; }
     setUser({ email, firstName, company: company||"My Business", appId });
-    navTo("dashboard");
+    go("dashboard");
   };
 
-  const handleUpload = (appId) => navTo("upload", { uploadId: appId });
+  const handleUpload = (appId) => go("upload", { uploadId:appId });
 
-  // Shared nav props — all page navigation goes through navTo
   const nav = {
-    onBack:       () => navTo("landing"),
-    onApply:      () => navTo("apply"),
-    onLogin:      () => navTo("login"),
-    onProducts:   () => navTo("products"),
-    onHowItWorks: () => navTo("howitworks"),
-    onFaq:        () => navTo("faq"),
-    onAbout:      () => navTo("about"),
-    onContact:    () => navTo("contact"),
+    onBack:       () => go("landing"),
+    onApply:      () => go("apply"),
+    onLogin:      () => go("login"),
+    onProducts:   () => go("products"),
+    onHowItWorks: () => go("howitworks"),
+    onFaq:        () => go("faq"),
+    onAbout:      () => go("about"),
+    onContact:    () => go("contact"),
   };
 
-  if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>navTo(user?"dashboard":"landing")} />;
+  if (view==="upload") return <UploadPage lang={lang} appId={uploadAppId} onBack={()=>go(user?"dashboard":"landing")} />;
   if (view==="apply")  return <ApplyPage lang={lang} onBack={nav.onBack} onSuccess={handleApplySuccess} onUpload={handleUpload} />;
   if (view==="login")  return <LoginPage lang={lang} onBack={nav.onBack} onLogin={handleLogin} />;
-  if (view==="admin")  return <AdminGate onExit={nav.onBack} />;
-
   if (view==="products")   return <><ProductsPage   lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
   if (view==="howitworks") return <><HowItWorksPage lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
   if (view==="contact")    return <><ContactPage    lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
   if (view==="about")      return <><AboutPage      lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
   if (view==="faq")        return <><FAQPage        lang={lang} setLang={setLang} {...nav} /><Chatbot lang={lang} onApply={nav.onApply} /></>;
+  if (view==="admin") return <AdminGate onExit={nav.onBack} />;
 
   if (view==="dashboard" && user) return (
     <div style={{ background:"#0a0a0a", minHeight:"100vh" }}>
@@ -3736,7 +3715,7 @@ export default function Aprovuit() {
           <span style={{ fontSize:12, color:G, fontWeight:700 }}>{user.firstName} · {user.company}</span>
         </div>
       </div>
-      <Dashboard lang={lang} user={user} onSignOut={()=>{ setUser(null); navTo("landing"); }} onUpload={handleUpload} />
+      <Dashboard lang={lang} user={user} onSignOut={()=>{ setUser(null); go("landing"); }} onUpload={handleUpload} />
       <Chatbot lang={lang} onApply={nav.onApply} />
     </div>
   );
@@ -3744,7 +3723,7 @@ export default function Aprovuit() {
   return (
     <>
       <style>{CSS}</style>
-      <Landing lang={lang} setLang={setLang} {...nav} onAdmin={()=>navTo("admin")} />
+      <Landing lang={lang} setLang={setLang} {...nav} onAdmin={()=>go("admin")} />
       <Chatbot lang={lang} onApply={nav.onApply} />
     </>
   );
