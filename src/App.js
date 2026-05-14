@@ -144,8 +144,8 @@ function fmtAmt(n) {
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; }
+  html { scroll-behavior:smooth; overflow-x:hidden; }
+  body { font-family:'Sora',sans-serif; background:#0a0a0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
   ::selection { background:#a8ff3e; color:#000; }
   input, select, textarea, button { font-family:'Sora',sans-serif; }
   .cond { font-family:'Sora',sans-serif; letter-spacing:-.03em; }
@@ -1562,7 +1562,7 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
 function DontSeeSection({ lang, onApply }) {
   const G = "#a8ff3e";
   return (
-    <section style={{ background:BK2, padding:"44px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
+    <section style={{ background:BK2, padding:"44px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden" }}>
       <div style={{ maxWidth:820, margin:"0 auto", textAlign:"center" }}>
         <h2 style={{ fontSize:"clamp(26px,3vw,44px)", fontWeight:700, color:"#fff", letterSpacing:"-.03em", marginBottom:14 }}>
           {lang==="es" ? "No ves tu industria?" : "Don't See Your Industry?"}
@@ -1658,7 +1658,7 @@ function ProductsPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"44px 6% 56px", maxWidth:1280, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:1160, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Productos de Financiamiento":"Funding Products"}</p>
           <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Todo Tipo de Financiamiento":"Every Type of Funding"}</h1>
@@ -1758,7 +1758,7 @@ function HowItWorksPage({ lang, setLang, onBack, onApply, onProducts, onHowItWor
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"44px 6% 56px", maxWidth:1060, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:960, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Proceso Simple":"Simple Process"}</p>
           <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Cómo Funciona":"How It Works"}</h1>
@@ -1876,7 +1876,7 @@ function FAQPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onF
     <div style={{ minHeight:"100vh", background:BK, color:"#fff" }}>
       <style>{CSS}</style>
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
-      <div style={{ padding:"44px 6% 56px", maxWidth:1020, margin:"0 auto" }}>
+      <div style={{ padding:"44px 6% 56px", maxWidth:920, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:64 }}>
           <p style={{ fontSize:12, letterSpacing:"0.15em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{lang==="es"?"Preguntas Frecuentes":"FAQ"}</p>
           <h1 className="cond" style={{ fontSize:"clamp(56px,8vw,100px)", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.03em", marginBottom:16, lineHeight:0.9 }}>{lang==="es"?"Preguntas Comunes":"Common Questions"}</h1>
@@ -2190,7 +2190,7 @@ function AnimatedDemo({ lang }) {
   ];
 
   return (
-    <section style={{ background: "#111", padding: "80px 5%", borderTop: "1px solid rgba(255,255,255,.05)", borderBottom: "1px solid rgba(255,255,255,.05)" }}>
+    <section style={{ background: "#111", padding: "80px 5%", borderTop: "1px solid rgba(255,255,255,.05)", borderBottom: "1px solid rgba(255,255,255,.05)", overflow:"hidden" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="hero-grid">
 
         {/* Left — copy */}
@@ -2445,8 +2445,8 @@ function DashboardSlider({ lang }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1280, margin:"0 auto"}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+      <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{textAlign:"center", marginBottom:40}}>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Portal del Cliente":"Client Dashboard"}
@@ -2701,8 +2701,8 @@ function WhyAprovuit({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1280, margin:"0 auto"}}>
+    <section style={{background:"#0d0d0d", padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+      <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{textAlign:"center", marginBottom:40}}>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Por qué Aprovuit":"Why Aprovuit"}
@@ -2773,8 +2773,8 @@ function IndustriesSection({ lang, onApply }) {
   ];
 
   return (
-    <section style={{background:BK, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1280, margin:"0 auto"}}>
+    <section style={{background:BK, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+      <div style={{maxWidth:1160, margin:"0 auto", width:"100%"}}>
         <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start", marginBottom:36}} className="hero-grid">
           <div>
             <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
@@ -2829,7 +2829,7 @@ function TrustBar({ lang }) {
   ];
   return (
     <div style={{background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)"}}>
-      <div style={{maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(5,1fr)"}} className="stats-grid">
+      <div style={{maxWidth:1160, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(5,1fr)"}} className="stats-grid">
         {items.map(([v,l,sub],i)=>(
           <div key={l} style={{padding:"28px 0", textAlign:"center", borderRight:i<4?"1px solid rgba(255,255,255,.05)":"none"}}>
             <p style={{fontSize:28, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1, marginBottom:4}}>{v}</p>
@@ -2846,8 +2846,8 @@ function TrustBar({ lang }) {
 function AboutSection({ lang, onApply }) {
   const G = "#a8ff3e";
   return (
-    <section style={{background:BK2, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)"}}>
-      <div style={{maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"center"}} className="hero-grid">
+    <section style={{background:BK2, padding:"56px 6%", borderTop:"1px solid rgba(255,255,255,.05)", overflow:"hidden"}}>
+      <div style={{maxWidth:1160, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"center"}} className="hero-grid">
         <div>
           <p style={{fontSize:12, letterSpacing:".12em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:600}}>
             {lang==="es"?"Nuestra Misión":"Our Mission"}
@@ -2930,7 +2930,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       <InnerNav lang={lang} setLang={setLang} onBack={onBack} onApply={onApply} onProducts={onProducts} onHowItWorks={onHowItWorks} onFaq={onFaq} onAbout={onAbout} onContact={onContact} />
 
       {/* HERO */}
-      <section style={{ padding:"88px 5% 72px", maxWidth:1060, margin:"0 auto", textAlign:"center" }}>
+      <section style={{ padding:"88px 5% 72px", maxWidth:960, margin:"0 auto", textAlign:"center" }}>
         <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:16, fontWeight:700 }}>
           {lang==="es"?"Sobre Nosotros":"About Aprovuit"}
         </p>
@@ -2948,7 +2948,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
 
       {/* MISSION STATS */}
       <div style={{ background:"#111", borderTop:"1px solid rgba(255,255,255,.06)", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-        <div style={{ maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }} className="stats-grid">
+        <div style={{ maxWidth:1160, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }} className="stats-grid">
           {(lang==="es"
             ? [["$500M+","Fondeado"],["10,000+","Negocios"],["24 hrs","Tiempo Promedio"],["580+","Puntaje Mínimo"]]
             : [["$500M+","Funded"],["10,000+","Businesses Served"],["24 hrs","Avg. Time to Fund"],["580+","Min. Credit Score"]]
@@ -2962,7 +2962,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
       </div>
 
       {/* STORY */}
-      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
+      <section style={{ padding:"52px 6%", maxWidth:1160, margin:"0 auto" }}>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start" }} className="hero-grid">
           <div>
             <h2 style={{ fontSize:"clamp(30px,4vw,52px)", fontWeight:700, letterSpacing:"-.03em", marginBottom:24, color:"#fff" }}>
@@ -3024,7 +3024,7 @@ function AboutPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, o
 
       {/* INDUSTRIES */}
       <section style={{ background:BK2, padding:"48px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1280, margin:"0 auto" }}>
+        <div style={{ maxWidth:1160, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:48 }}>
             <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
               {lang==="es"?"Industrias":"Industries We Serve"}
@@ -3118,7 +3118,7 @@ function ContactPage({ lang, setLang, onBack, onApply, onProducts, onHowItWorks,
         </p>
       </section>
 
-      <section style={{ padding:"44px 6%", maxWidth:1280, margin:"0 auto" }}>
+      <section style={{ padding:"44px 6%", maxWidth:1160, margin:"0 auto" }}>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }} className="hero-grid">
 
           {/* LEFT — contact info */}
@@ -3233,7 +3233,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
   const go = (fn) => { fn && fn(); window.scrollTo(0,0); setMenuOpen(false); };
 
   return (
-    <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif" }}>
+    <div style={{ background:BK, color:"#fff", fontFamily:"'Sora',sans-serif", overflowX:"hidden" }}>
 
       {/* NAV */}
       <nav style={{ position:"sticky", top:0, zIndex:200, background:"rgba(10,10,10,.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:62 }}>
@@ -3294,7 +3294,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       {/* ── HERO ── */}
       <section style={{ minHeight:"88vh", display:"flex", alignItems:"center", padding:"0 5%", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 12% 55%, ${G}0d 0%, transparent 50%), radial-gradient(ellipse at 88% 15%, ${G}07 0%, transparent 50%)`, pointerEvents:"none" }}></div>
-        <div style={{ maxWidth:1380, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"center" }} className="hero-grid">
+        <div style={{ maxWidth:1200, margin:"0 auto", width:"100%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"center" }} className="hero-grid">
 
           {/* LEFT — funding first, platform second */}
           <div className="fadeup">
@@ -3420,7 +3420,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 
       {/* STATS */}
       <div style={{ background:BK2, borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-        <div className="stats-grid" style={{ maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
+        <div className="stats-grid" style={{ maxWidth:1160, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", padding:"0 5%" }}>
           {t.stats.map(([v,l],i)=>(
             <div key={l} style={{ padding:"32px 0", textAlign:"center", borderRight:i<3?"1px solid rgba(255,255,255,.05)":"none" }}>
               <div style={{ fontSize:38, fontWeight:700, color:G, letterSpacing:"-.03em", lineHeight:1 }}>{v}</div>
@@ -3431,7 +3431,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       </div>
 
       {/* PRODUCTS — show what we offer prominently */}
-      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
+      <section style={{ padding:"52px 6%", maxWidth:1160, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:48 }}>
           <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>
             {lang==="es"?"Nuestros Productos":"Funding Products"}
@@ -3470,7 +3470,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 
       {/* HOW IT WORKS — 3 steps */}
       <section style={{ background:BK2, padding:"52px 6%", borderTop:"1px solid rgba(255,255,255,.05)" }}>
-        <div style={{ maxWidth:1280, margin:"0 auto" }}>
+        <div style={{ maxWidth:1160, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:48 }}>
             <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.how.badge}</p>
             <h2 style={{ fontSize:"clamp(34px,4vw,56px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>{t.how.h}</h2>
@@ -3499,7 +3499,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
       <DashboardSlider lang={lang} />
 
       {/* REVIEWS */}
-      <section style={{ padding:"52px 6%", maxWidth:1280, margin:"0 auto" }}>
+      <section style={{ padding:"52px 6%", maxWidth:1160, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:44 }}>
           <p style={{ fontSize:12, letterSpacing:"0.14em", textTransform:"uppercase", color:G, marginBottom:14, fontWeight:700 }}>{t.reviews.badge}</p>
           <h2 style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:700, letterSpacing:"-.03em", color:"#fff" }}>{t.reviews.h}</h2>
@@ -3535,7 +3535,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
 
       {/* FOOTER */}
       <footer style={{ background:BK, borderTop:"1px solid rgba(255,255,255,.05)", padding:"40px 5% 28px" }}>
-        <div style={{ maxWidth:1280, margin:"0 auto" }}>
+        <div style={{ maxWidth:1160, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20, marginBottom:20, paddingBottom:20, borderBottom:"1px solid rgba(255,255,255,.06)" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
               <svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#a8ff3e"/><path d="M8 20L14 8L20 20" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><line x1="10.5" y1="16" x2="17.5" y2="16" stroke="#000" strokeWidth="2" strokeLinecap="round"/></svg>
