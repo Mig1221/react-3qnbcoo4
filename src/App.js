@@ -1500,24 +1500,24 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         </svg>
         <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:"-.03em", fontFamily:"'Sora',sans-serif" }}>APROVUIT</span>
       </button>
-      {/* Desktop — unchanged from original */}
-      <div className="nav-desktop" style={{ display:"flex", gap:28, alignItems:"center" }}>
-        <button onClick={()=>go(onBack)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Inicio":"Home"}</button>
-        <button onClick={()=>go(onProducts)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Productos":"Products"}</button>
-        <button onClick={()=>go(onHowItWorks)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>{lang==="es"?"Cómo Funciona":"How It Works"}</button>
-        <button onClick={()=>go(onFaq)} style={{ fontSize:14, fontWeight:500, color:"rgba(255,255,255,.55)", cursor:"pointer", background:"none", border:"none", fontFamily:"'DM Sans',sans-serif" }}>FAQ</button>
+      {/* Desktop */}
+      <div className="nav-desktop" style={{ display:"flex", gap:24, alignItems:"center" }}>
+        <button onClick={()=>go(onBack)} className="nav-link">{lang==="es"?"Inicio":"Home"}</button>
+        <button onClick={()=>go(onProducts)} className="nav-link">{lang==="es"?"Productos":"Products"}</button>
+        <button onClick={()=>go(onHowItWorks)} className="nav-link">{lang==="es"?"Cómo Funciona":"How It Works"}</button>
+        <button onClick={()=>go(onFaq)} className="nav-link">FAQ</button>
         {onAbout && <button onClick={()=>go(onAbout)} className="nav-link">{lang==="es"?"Nosotros":"About"}</button>}
         {onContact && <button onClick={()=>go(onContact)} className="nav-link">{lang==="es"?"Contacto":"Contact"}</button>}
-        {onLogin && <button onClick={()=>go(onLogin)} className="nav-link">{lang==="es"?"Entrar":"Log In"}</button>}
         {setLang && <div className="lang-pill">
-          <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?"#a8ff3e":"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
-          <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?"#a8ff3e":"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
+          <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
+          <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
         </div>}
+        <button onClick={()=>go(onLogin)} className="btn-ghost" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Entrar":"Log In"}</button>
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
       </div>
-      {/* Mobile — Apply + Log In + hamburger */}
+      {/* Mobile — Log In + Get Started always visible + hamburger */}
       <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center" }}>
-        {onLogin && <button className="btn-ghost" style={{ padding:"8px 14px", fontSize:13 }} onClick={()=>go(onLogin)}>{lang==="es"?"Entrar":"Log In"}</button>}
+        <button onClick={()=>go(onLogin)} className="btn-ghost" style={{ padding:"8px 14px", fontSize:13 }}>{lang==="es"?"Entrar":"Log In"}</button>
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"8px 14px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.08)", border:"1px solid rgba(255,255,255,.12)", borderRadius:7, width:36, height:36, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0 }}>
           <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(45deg) translate(0px,3.5px)":"none" }}></span>
@@ -1525,7 +1525,7 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
           <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(-45deg) translate(0px,-3.5px)":"none" }}></span>
         </button>
         {menuOpen && (
-          <div style={{ position:"fixed", top:60, left:0, right:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"8px 5% 16px", zIndex:199 }}>
+          <div style={{ position:"fixed", top:64, left:0, right:0, background:"rgba(10,10,10,.99)", borderBottom:"1px solid rgba(255,255,255,.08)", padding:"8px 5% 16px", zIndex:199 }}>
             {[
               [lang==="es"?"Inicio":"Home", onBack],
               [lang==="es"?"Productos":"Products", onProducts],
@@ -1533,7 +1533,6 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
               ["FAQ", onFaq],
               [lang==="es"?"Nosotros":"About", onAbout],
               [lang==="es"?"Contacto":"Contact", onContact],
-              ...(onLogin ? [[lang==="es"?"Entrar":"Log In", onLogin]] : []),
             ].filter(([,fn])=>fn).map(([label,fn]) => (
               <button key={label} onClick={()=>go(fn)} style={{ display:"block", width:"100%", textAlign:"left", background:"none", border:"none", borderBottom:"1px solid rgba(255,255,255,.06)", padding:"13px 0", fontSize:16, fontWeight:500, color:"rgba(255,255,255,.8)", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>
                 {label}
@@ -3251,7 +3250,7 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
             <button className="lb" onClick={()=>setLang("en")} style={{ background:lang==="en"?G:"transparent", color:lang==="en"?"#000":"rgba(255,255,255,.4)" }}>EN</button>
             <button className="lb" onClick={()=>setLang("es")} style={{ background:lang==="es"?G:"transparent", color:lang==="es"?"#000":"rgba(255,255,255,.4)" }}>ES</button>
           </div>
-          <button className="nav-link" onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
+          <button className="btn-ghost" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{t.nav.apply}</button>
         </div>
         {/* Mobile — Apply + Log In + hamburger */}
