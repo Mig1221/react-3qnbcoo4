@@ -1518,8 +1518,9 @@ function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, on
         </div>}
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"9px 20px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
       </div>
-      {/* Mobile — Apply + hamburger */}
+      {/* Mobile — Apply + Log In + hamburger */}
       <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center" }}>
+        {onLogin && <button className="btn-ghost" style={{ padding:"8px 14px", fontSize:13 }} onClick={()=>go(onLogin)}>{lang==="es"?"Entrar":"Log In"}</button>}
         <button onClick={()=>go(onApply)} className="btn-green" style={{ padding:"8px 14px", fontSize:13 }}>{lang==="es"?"Comenzar →":"Get Started →"}</button>
         <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.08)", border:"1px solid rgba(255,255,255,.12)", borderRadius:7, width:36, height:36, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0 }}>
           <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(45deg) translate(0px,3.5px)":"none" }}></span>
@@ -2466,15 +2467,15 @@ function DashboardSlider({ lang }) {
         <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start"}} className="hero-grid">
 
           {/* Left — slide nav */}
-          <div style={{display:"flex", flexDirection:"column", gap:3}}>
+          <div style={{display:"flex", flexDirection:"column", gap:3, minWidth:0}}>
             {slideData.map((s,i)=>(
-              <button key={s.tab} onClick={()=>setSlide(i)} style={{display:"flex", alignItems:"flex-start", gap:16, padding:"16px 18px", borderRadius:10, border:`1px solid ${slide===i?G+"35":"rgba(255,255,255,.05)"}`, background:slide===i?"rgba(168,255,62,.04)":"transparent", cursor:"pointer", textAlign:"left", transition:"all .2s"}}>
+              <button key={s.tab} onClick={()=>{ setSlide(i); scrollRef.current?.scrollTo({left:i*scrollRef.current.offsetWidth,behavior:"smooth"}); }} style={{display:"flex", alignItems:"flex-start", gap:16, padding:"16px 18px", borderRadius:10, border:`1px solid ${slide===i?G+"35":"rgba(255,255,255,.05)"}`, background:slide===i?"rgba(168,255,62,.04)":"transparent", cursor:"pointer", textAlign:"left", transition:"all .2s", width:"100%", overflow:"hidden"}}>
                 <div style={{width:30, height:30, borderRadius:7, background:slide===i?"rgba(168,255,62,.12)":"rgba(255,255,255,.04)", border:`1px solid ${slide===i?G+"30":"rgba(255,255,255,.07)"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:1}}>
                   <p style={{fontSize:10, fontWeight:700, color:slide===i?G:"rgba(255,255,255,.25)"}}>0{i+1}</p>
                 </div>
-                <div>
-                  <p style={{fontSize:14, fontWeight:600, color:slide===i?"#fff":"rgba(255,255,255,.35)", marginBottom:4, letterSpacing:"-.02em", transition:"color .2s"}}>{s.label}</p>
-                  <p style={{fontSize:12, color:"rgba(255,255,255,.25)", lineHeight:1.6, fontWeight:300}}>{s.desc}</p>
+                <div style={{minWidth:0, overflow:"hidden"}}>
+                  <p style={{fontSize:14, fontWeight:600, color:slide===i?"#fff":"rgba(255,255,255,.35)", marginBottom:4, letterSpacing:"-.02em", transition:"color .2s", whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{s.label}</p>
+                  <p style={{fontSize:12, color:"rgba(255,255,255,.25)", lineHeight:1.6, fontWeight:300, overflow:"hidden", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical"}}>{s.desc}</p>
                 </div>
               </button>
             ))}
@@ -2483,9 +2484,8 @@ function DashboardSlider({ lang }) {
           </div>
 
           {/* Right — dashboard mockup */}
-          <div style={{position:"sticky", top:80}}>
-            <div style={{background:"#0a0a0a", border:"1px solid rgba(255,255,255,.09)", borderRadius:20, overflow:"hidden", boxShadow:"0 32px 80px rgba(0,0,0,.7)"}}>
-              {/* App top bar */}
+          <div style={{position:"sticky", top:80, maxWidth:"100%"}}>
+            <div style={{background:"#0a0a0a", border:"1px solid rgba(255,255,255,.09)", borderRadius:20, overflow:"hidden", boxShadow:"0 32px 80px rgba(0,0,0,.7)", maxWidth:"100%"}}>              {/* App top bar */}
               <div style={{background:"#0f0f0f", padding:"12px 16px", borderBottom:"1px solid rgba(255,255,255,.06)", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
                 <div style={{display:"flex", alignItems:"center", gap:7}}>
                   <div style={{width:22, height:22, background:G, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#000"}}>A</div>
@@ -3257,8 +3257,9 @@ function Landing({ lang, setLang, onApply, onLogin, onProducts, onHowItWorks, on
           <button className="nav-link" onClick={()=>{onLogin();window.scrollTo(0,0);}}>{t.nav.login}</button>
           <button className="btn-green" style={{ padding:"9px 20px", fontSize:13 }} onClick={()=>{onApply();window.scrollTo(0,0);}}>{t.nav.apply}</button>
         </div>
-        {/* Mobile — Apply + hamburger */}
+        {/* Mobile — Apply + Log In + hamburger */}
         <div className="nav-mobile" style={{ display:"none", gap:8, alignItems:"center" }}>
+          <button className="btn-ghost" style={{ padding:"8px 14px", fontSize:13 }} onClick={()=>go(onLogin)}>{lang==="es"?"Entrar":"Log In"}</button>
           <button className="btn-green" style={{ padding:"8px 14px", fontSize:13 }} onClick={()=>go(onApply)}>{lang==="es"?"Aplicar →":"Apply →"}</button>
           <button onClick={()=>setMenuOpen(o=>!o)} style={{ background:"rgba(255,255,255,.08)", border:"1px solid rgba(255,255,255,.12)", borderRadius:7, width:36, height:36, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:5, cursor:"pointer", padding:0 }}>
             <span style={{ width:15, height:1.5, background:"#fff", borderRadius:2, display:"block", transition:"all .2s", transform:menuOpen?"rotate(45deg) translate(0px,3.5px)":"none" }}></span>
