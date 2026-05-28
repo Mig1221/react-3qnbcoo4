@@ -1206,6 +1206,57 @@ function Dashboard({ lang, user, onSignOut, onUpload }) {
   );
 }
 
+// ── ADMIN CONSTANTS ───────────────────────────────────────────────
+const PIPELINE_STAGES = ["New Lead","Contacted","Documents Requested","Submitted","Underwriting","Offers Received","Offer Presented","Contract Sent","Funded","Renewal Eligible","Closed/Lost"];
+
+const STAGE_COLORS = {
+  "New Lead":       { bg:"#f0f9ff", text:"#0284c7", border:"#bae6fd" },
+  "Contacted":      { bg:"#faf5ff", text:"#7c3aed", border:"#e9d5ff" },
+  "Documents Requested":{ bg:"#fff7ed", text:"#ea580c", border:"#fed7aa" },
+  "Submitted":      { bg:"#fef9c3", text:"#ca8a04", border:"#fde68a" },
+  "Underwriting":   { bg:"#fff1f2", text:"#e11d48", border:"#fecdd3" },
+  "Offers Received":{ bg:"#f0fdf4", text:"#16a34a", border:"#bbf7d0" },
+  "Offer Presented":{ bg:"#ecfdf5", text:"#059669", border:"#a7f3d0" },
+  "Contract Sent":  { bg:"#eff6ff", text:"#2563eb", border:"#bfdbfe" },
+  "Funded":         { bg:"#dbeafe", text:"#1d4ed8", border:"#93c5fd" },
+  "Renewal Eligible":{ bg:"#fdf4ff", text:"#9333ea", border:"#e879f9" },
+  "Closed/Lost":    { bg:"#f9fafb", text:"#6b7280", border:"#e5e7eb" },
+};
+
+const DEFAULT_LENDERS = [
+  { id:"LND-001", name:"Rapid Capital", minFICO:550, minRevenue:"$10,000", maxFund:"$500K", products:["MCA","Term Loan"], restricted:["Cannabis","Gambling"], fundingSpeed:"24h", buyRate:1.18, notes:"High approval rate, fast funding" },
+  { id:"LND-002", name:"Velocity Advance", minFICO:580, minRevenue:"$15,000", maxFund:"$250K", products:["MCA","Revenue Advance"], restricted:["Cannabis"], fundingSpeed:"48h", buyRate:1.22, notes:"Good for restaurants and retail" },
+  { id:"LND-003", name:"Summit Business Capital", minFICO:620, minRevenue:"$20,000", maxFund:"$1M", products:["Term Loan","Line of Credit"], restricted:["Cannabis","Adult Entertainment"], fundingSpeed:"3–5 days", buyRate:1.15, notes:"Preferred for larger deals" },
+  { id:"LND-004", name:"BlueRidge Funding", minFICO:600, minRevenue:"$12,000", maxFund:"$150K", products:["MCA"], restricted:[], fundingSpeed:"24h", buyRate:1.25, notes:"Flexible with credit, great for stacking" },
+  { id:"LND-005", name:"Apex Commercial", minFICO:650, minRevenue:"$25,000", maxFund:"$2M", products:["Term Loan","SBA Referral","Equipment Financing"], restricted:["Cannabis","Gambling","Adult Entertainment"], fundingSpeed:"5–10 days", buyRate:1.12, notes:"Best rates for strong files" },
+];
+
+function initLenders() {
+  if (!localStorage.getItem("aprovuit_lenders")) localStorage.setItem("aprovuit_lenders", JSON.stringify(DEFAULT_LENDERS));
+}
+
+function seedDemoData() {
+  initLenders();
+  const existing = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
+  if (existing.length > 0) return;
+  const demos = [
+    { id:"APP-001", firstName:"Marcus", lastName:"Thompson", email:"marcus@deltacafe.com", phone:"(718) 555-0142", company:"Delta Café Group", dba:"Delta Coffee", ein:"82-1234567", industry:"Food & Beverage", state:"NY", years:"3–5 years", annualRev:"$500K–$1M", monthlyRev:"65000", avgDailyBalance:"18500", existingPositions:1, creditRating:"680–719", website:"deltacafe.com", referralSource:"Google", assignedRep:"Miguel", loanAmt:"$85,000", purpose:"Equipment Purchase", status:"Funded", probability:100, submittedAt:new Date(Date.now()-12*864e5).toISOString(), fundedAt:new Date(Date.now()-10*864e5).toISOString(), riskGrade:"B+", commissionPct:10, grossComm:8500, repSplit:50 },
+    { id:"APP-002", firstName:"Sofia", lastName:"Reyes", email:"sofia@reyeslogistics.com", phone:"(305) 555-0289", company:"Reyes Logistics LLC", dba:"Reyes Transport", ein:"45-7654321", industry:"Transportation", state:"FL", years:"5–10 years", annualRev:"$1M–$3M", monthlyRev:"140000", avgDailyBalance:"42000", existingPositions:0, creditRating:"720–759", website:"reyeslogistics.com", referralSource:"Referral", assignedRep:"Miguel", loanAmt:"$220,000", purpose:"Fleet Expansion", status:"Offer Presented", probability:75, submittedAt:new Date(Date.now()-8*864e5).toISOString(), riskGrade:"A-", commissionPct:8, grossComm:17600, repSplit:50 },
+    { id:"APP-003", firstName:"James", lastName:"Okafor", email:"james@okafortech.io", phone:"(212) 555-0374", company:"Okafor Tech Solutions", dba:"", ein:"91-3456789", industry:"Technology", state:"NY", years:"1–3 years", annualRev:"$250K–$500K", monthlyRev:"38000", avgDailyBalance:"9200", existingPositions:2, creditRating:"640–679", website:"okafortech.io", referralSource:"LinkedIn", assignedRep:"Miguel", loanAmt:"$145,000", purpose:"Hiring & Payroll", status:"Underwriting", probability:55, submittedAt:new Date(Date.now()-5*864e5).toISOString(), riskGrade:"C+", commissionPct:12, grossComm:17400, repSplit:50 },
+    { id:"APP-004", firstName:"Priya", lastName:"Sharma", email:"priya@sharmamed.com", phone:"(415) 555-0511", company:"Sharma Medical Billing", dba:"SMB Solutions", ein:"77-9876543", industry:"Healthcare", state:"CA", years:"3–5 years", annualRev:"$500K–$1M", monthlyRev:"72000", avgDailyBalance:"21000", existingPositions:1, creditRating:"720–759", website:"sharmamed.com", referralSource:"Cold Call", assignedRep:"Miguel", loanAmt:"$65,000", purpose:"Working Capital", status:"Documents Requested", probability:60, submittedAt:new Date(Date.now()-3*864e5).toISOString(), riskGrade:"B", commissionPct:10, grossComm:6500, repSplit:50 },
+    { id:"APP-005", firstName:"Carlos", lastName:"Mendez", email:"carlos@mendezgrill.com", phone:"(469) 555-0633", company:"Mendez Grill & Bar", dba:"", ein:"33-1112222", industry:"Food & Beverage", state:"TX", years:"1–3 years", annualRev:"$100K–$250K", monthlyRev:"22000", avgDailyBalance:"5800", existingPositions:0, creditRating:"580–619", website:"", referralSource:"Facebook Ad", assignedRep:"Miguel", loanAmt:"$50,000", purpose:"Renovation", status:"New Lead", probability:40, submittedAt:new Date(Date.now()-864e5).toISOString(), riskGrade:"C", commissionPct:12, grossComm:6000, repSplit:50 },
+    { id:"APP-006", firstName:"Anya", lastName:"Patel", email:"anya@patelretail.com", phone:"(770) 555-0788", company:"Patel Retail Group", dba:"Patel Mart", ein:"55-4443333", industry:"Retail", state:"GA", years:"5–10 years", annualRev:"$3M+", monthlyRev:"280000", avgDailyBalance:"85000", existingPositions:0, creditRating:"760+", website:"patelretail.com", referralSource:"Partner", assignedRep:"Miguel", loanAmt:"$310,000", purpose:"New Location", status:"Submitted", probability:70, submittedAt:new Date(Date.now()-2*3600000).toISOString(), riskGrade:"A", commissionPct:8, grossComm:24800, repSplit:50 },
+  ];
+  localStorage.setItem("aprovuit_apps", JSON.stringify(demos));
+  const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
+  if (accounts.length===0) { demos.forEach(d=>accounts.push({ email:d.email, password:"Demo123!", firstName:d.firstName, company:d.company, appId:d.id })); localStorage.setItem("aprovuit_accounts", JSON.stringify(accounts)); }
+  if (!localStorage.getItem("offers_APP-001")) localStorage.setItem("offers_APP-001", JSON.stringify([{ id:"OFF-001", appId:"APP-001", product:"MCA", lender:"Rapid Capital", amount:"$85,000", factorRate:"1.18", payback:"$100,300", dailyPayment:"$625/day", term:"24 weeks", holdback:"15%", commission:"$8,500", buyRate:"1.18", sellRate:"1.25", expires:"Jun 30, 2026", status:"accepted", sentAt:new Date(Date.now()-10*864e5).toLocaleString() }]));
+  if (!localStorage.getItem("offers_APP-002")) localStorage.setItem("offers_APP-002", JSON.stringify([{ id:"OFF-002a", appId:"APP-002", product:"Term Loan", lender:"Summit Business Capital", amount:"$220,000", factorRate:"1.15", payback:"$253,000", dailyPayment:"—", term:"18 months", holdback:"N/A", commission:"$17,600", buyRate:"1.15", sellRate:"1.22", expires:"Jun 15, 2026", status:"pending", sentAt:new Date(Date.now()-2*864e5).toLocaleString() },{ id:"OFF-002b", appId:"APP-002", product:"MCA", lender:"Velocity Advance", amount:"$200,000", factorRate:"1.22", payback:"$244,000", dailyPayment:"$1,220/day", term:"20 weeks", holdback:"18%", commission:"$16,000", buyRate:"1.22", sellRate:"1.30", expires:"Jun 15, 2026", status:"pending", sentAt:new Date(Date.now()-2*864e5).toLocaleString() }]));
+  if (!localStorage.getItem("msgs_APP-003")) localStorage.setItem("msgs_APP-003", JSON.stringify([{ from:"advisor", text:"Hi James! Your application is under review. Do you have 3 months of bank statements ready?", time:"10:30 AM", ts:Date.now()-3600000 },{ from:"client", text:"Yes I can upload those today. Should I use the portal?", time:"11:15 AM", ts:Date.now()-1800000 },{ from:"advisor", text:"Yes, click Documents in your dashboard. We'll review within 2 hours.", time:"11:20 AM", ts:Date.now()-1500000 }]));
+  if (!localStorage.getItem("tasks_APP-003")) localStorage.setItem("tasks_APP-003", JSON.stringify([{ id:1, text:"Request 3 months bank statements", done:false, created:"May 27, 2026" },{ id:2, text:"Run credit check", done:true, created:"May 26, 2026" },{ id:3, text:"Submit to Rapid Capital", done:false, created:"May 27, 2026" }]));
+  if (!localStorage.getItem("renewal_APP-001")) localStorage.setItem("renewal_APP-001", JSON.stringify({ fundedDate:new Date(Date.now()-10*864e5).toISOString(), fundedAmt:85000, payback:100300, dailyPayment:625, paidBack:43750, pctPaid:44 }));
+}
+
 // ── ADMIN GATE ───────────────────────────────────────────────────
 const ADMIN_PASSWORD = "Miguel12211221!";
 
@@ -1270,220 +1321,246 @@ function AdminGate({ onExit }) {
 
 // ── ADMIN DASHBOARD ──────────────────────────────────────────────
 function AdminDashboard({ onExit }) {
-  const [tab, setTab] = useState("apps");
+  useEffect(() => { seedDemoData(); }, []);
+
+  const [tab, setTab] = useState("pipeline");
+  const [apps, setApps] = useState([]);
+  const [lenders, setLenders] = useState([]);
   const [drawer, setDrawer] = useState(null);
+  const [drawerTab, setDrawerTab] = useState("profile");
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [offerForm, setOfferForm] = useState({ product:"Term Loan", amount:"", term:"", payment:"", rate:"", expires:"" });
+  const [stageFilter, setStageFilter] = useState("All");
+  const [toast, setToast] = useState("");
+  const [dragApp, setDragApp] = useState(null);
+  const [dragOver, setDragOver] = useState(null);
+  const [offerForm, setOfferForm] = useState({ product:"MCA", lender:"", amount:"", factorRate:"", payback:"", dailyPayment:"", term:"", holdback:"", buyRate:"", sellRate:"", commission:"", expires:"" });
   const [msgText, setMsgText] = useState("");
-  const [sent, setSent] = useState("");
-  const [drawerTab, setDrawerTab] = useState("details");
+  const [taskText, setTaskText] = useState("");
+  const [noteText, setNoteText] = useState("");
+  const [emailForm, setEmailForm] = useState({ to:"all", subject:"", body:"" });
+  const [lenderForm, setLenderForm] = useState({ name:"", minFICO:"", minRevenue:"", maxFund:"", products:"MCA", fundingSpeed:"24h", buyRate:"", restricted:"", notes:"" });
+  const [editingLender, setEditingLender] = useState(null);
+  const [profileEdit, setProfileEdit] = useState(null);
+  const [showNewLead, setShowNewLead] = useState(false);
+  const [newLead, setNewLead] = useState({ firstName:"", lastName:"", email:"", phone:"", company:"", industry:"Food & Beverage", state:"", loanAmt:"", creditRating:"", assignedRep:"Miguel", referralSource:"", monthlyRev:"", existingPositions:0, status:"New Lead", probability:50 });
 
-  // Live refresh every 3s
-  const [apps, setApps] = useState(JSON.parse(localStorage.getItem("aprovuit_apps")||"[]"));
-  useEffect(() => {
-    const iv = setInterval(() => setApps(JSON.parse(localStorage.getItem("aprovuit_apps")||"[]")), 3000);
-    return () => clearInterval(iv);
-  }, []);
-
-  const STATUS_COLORS = {
-    "Under Review":{ bg:"#fef3c7", text:"#d97706" },
-    "Docs Needed":{ bg:"#fff7ed", text:"#ea580c" },
-    "Approved":{ bg:"#dcfce7", text:"#16a34a" },
-    "Funded":{ bg:"#dbeafe", text:"#2563eb" },
-    "Declined":{ bg:"#fee2e2", text:"#dc2626" },
+  const reload = () => {
+    setApps(JSON.parse(localStorage.getItem("aprovuit_apps")||"[]"));
+    setLenders(JSON.parse(localStorage.getItem("aprovuit_lenders")||"[]"));
   };
-  const ALL_STATUSES = ["Under Review","Docs Needed","Approved","Funded","Declined"];
+  useEffect(() => { reload(); const iv = setInterval(reload, 4000); return ()=>clearInterval(iv); }, []);
 
-  const filteredApps = apps.filter(a => {
-    const matchSearch = !search || [a.company,a.firstName,a.lastName,a.email,a.id].join(" ").toLowerCase().includes(search.toLowerCase());
-    const matchStatus = statusFilter==="All" || (a.status||"Under Review")===statusFilter;
-    return matchSearch && matchStatus;
-  });
-
-  const updateStatus = (appId, newStatus) => {
-    const updated = apps.map(a => a.id===appId ? {...a, status:newStatus} : a);
-    localStorage.setItem("aprovuit_apps", JSON.stringify(updated));
-    setApps(updated);
-    setDrawer(updated.find(a=>a.id===appId)||null);
-    showSent("Status updated!");
+  const showToast = (msg) => { setToast(msg); setTimeout(()=>setToast(""), 3000); };
+  const saveApps = (updated) => { localStorage.setItem("aprovuit_apps", JSON.stringify(updated)); setApps(updated); };
+  const updateApp = (id, fields) => {
+    const updated = apps.map(a => a.id===id ? {...a,...fields} : a);
+    saveApps(updated);
+    if (drawer?.id===id) setDrawer(prev=>({...prev,...fields}));
   };
 
+  const addNote = (appId) => {
+    if (!noteText.trim()) return;
+    const notes = JSON.parse(localStorage.getItem(`notes_${appId}`)||"[]");
+    notes.unshift({ id:Date.now(), text:noteText.trim(), time:new Date().toLocaleString(), rep:"Miguel" });
+    localStorage.setItem(`notes_${appId}`, JSON.stringify(notes));
+    setNoteText(""); showToast("✓ Note saved");
+  };
+  const addTask = (appId) => {
+    if (!taskText.trim()) return;
+    const tasks = JSON.parse(localStorage.getItem(`tasks_${appId}`)||"[]");
+    tasks.push({ id:Date.now(), text:taskText.trim(), done:false, created:new Date().toLocaleDateString() });
+    localStorage.setItem(`tasks_${appId}`, JSON.stringify(tasks));
+    setTaskText(""); showToast("✓ Task added");
+  };
+  const toggleTask = (appId, taskId) => {
+    const tasks = JSON.parse(localStorage.getItem(`tasks_${appId}`)||"[]").map(t=>t.id===taskId?{...t,done:!t.done}:t);
+    localStorage.setItem(`tasks_${appId}`, JSON.stringify(tasks));
+  };
   const sendOffer = async () => {
-    if (!drawer || !offerForm.amount) { showSent("Fill in at least the amount."); return; }
-    const offer = { id:`OFF-${Date.now()}`, appId:drawer.id, product:offerForm.product, amount:offerForm.amount, term:offerForm.term, payment:offerForm.payment, rate:offerForm.rate, expires:offerForm.expires, status:"pending", sentAt:new Date().toLocaleString() };
+    if (!drawer||!offerForm.amount) { showToast("Enter at least the amount."); return; }
+    const offer = { id:`OFF-${Date.now()}`, ...offerForm, appId:drawer.id, status:"pending", sentAt:new Date().toLocaleString() };
     const existing = JSON.parse(localStorage.getItem(`offers_${drawer.id}`)||"[]");
-    existing.push(offer);
-    localStorage.setItem(`offers_${drawer.id}`, JSON.stringify(existing));
-    if (drawer.email) await sendOfferEmail(drawer.email, drawer.firstName||drawer.company||"Merchant", offer);
-    setOfferForm({ product:"Term Loan", amount:"", term:"", payment:"", rate:"", expires:"" });
-    showSent("✓ Offer sent to client dashboard!");
+    localStorage.setItem(`offers_${drawer.id}`, JSON.stringify([...existing, offer]));
+    if (drawer.email) await sendOfferEmail(drawer.email, drawer.firstName||drawer.company, offer);
+    updateApp(drawer.id, { status:"Offers Received" });
+    setOfferForm({ product:"MCA", lender:"", amount:"", factorRate:"", payback:"", dailyPayment:"", term:"", holdback:"", buyRate:"", sellRate:"", commission:"", expires:"" });
+    showToast("✓ Offer sent to client!");
   };
-
   const sendAdminMsg = () => {
-    if (!drawer || !msgText.trim()) return;
+    if (!drawer||!msgText.trim()) return;
     const msgs = JSON.parse(localStorage.getItem(`msgs_${drawer.id}`)||"[]");
     msgs.push({ from:"advisor", text:msgText.trim(), time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}), ts:Date.now() });
     localStorage.setItem(`msgs_${drawer.id}`, JSON.stringify(msgs));
-    setMsgText("");
-    showSent("✓ Message sent to client!");
+    setMsgText(""); showToast("✓ Message sent!");
   };
+  const sendBulkEmail = async () => {
+    if (!emailForm.subject||!emailForm.body) { showToast("Fill in subject and message."); return; }
+    const targets = emailForm.to==="all" ? apps : apps.filter(a=>a.status===emailForm.to);
+    let count = 0;
+    for (const app of targets) {
+      if (app.email) { await sendEmail(FORMSPREE_CLIENT, { _subject:emailForm.subject, email:app.email, "Hi":`${app.firstName},`, "Message":emailForm.body }); count++; }
+    }
+    showToast(`✓ Email sent to ${count} clients`);
+  };
+  const exportCSV = () => {
+    const headers = ["App ID","Company","DBA","First","Last","Email","Phone","EIN","Industry","State","Years","Monthly Rev","Avg Daily Bal","Existing Pos","Credit","Website","Referral","Rep","Loan Amt","Purpose","Risk","Status","Probability","Commission","Submitted"];
+    const rows = apps.map(a=>[a.id,a.company,a.dba||"",a.firstName,a.lastName,a.email,a.phone,a.ein||"",a.industry,a.state||"",a.years,a.monthlyRev||"",a.avgDailyBalance||"",a.existingPositions||0,a.creditRating,a.website||"",a.referralSource||"",a.assignedRep||"",a.loanAmt,a.purpose||"",a.riskGrade||"",a.status||"New Lead",a.probability||0,a.grossComm||"",a.submittedAt?new Date(a.submittedAt).toLocaleDateString():""].map(v=>`"${v||""}"`).join(","));
+    const blob = new Blob([[headers.join(","),...rows].join("\n")], {type:"text/csv"});
+    const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href=url; a.download="aprovuit_crm.csv"; a.click();
+    showToast("✓ Exported!");
+  };
+  const addNewLead = () => {
+    if (!newLead.firstName||!newLead.company) { showToast("Name and company required."); return; }
+    const app = { ...newLead, id:`APP-${Date.now()}`, submittedAt:new Date().toISOString() };
+    saveApps([app, ...apps]);
+    setShowNewLead(false);
+    setNewLead({ firstName:"", lastName:"", email:"", phone:"", company:"", industry:"Food & Beverage", state:"", loanAmt:"", creditRating:"", assignedRep:"Miguel", referralSource:"", monthlyRev:"", existingPositions:0, status:"New Lead", probability:50 });
+    showToast("✓ Lead added!");
+  };
+  const saveLender = () => {
+    const ls = JSON.parse(localStorage.getItem("aprovuit_lenders")||"[]");
+    const updated = editingLender ? ls.map(l=>l.id===editingLender?{...l,...lenderForm}:l) : [...ls, {...lenderForm, id:`LND-${Date.now()}`}];
+    localStorage.setItem("aprovuit_lenders", JSON.stringify(updated));
+    setLenders(updated);
+    setLenderForm({ name:"", minFICO:"", minRevenue:"", maxFund:"", products:"MCA", fundingSpeed:"24h", buyRate:"", restricted:"", notes:"" });
+    setEditingLender(null); showToast("✓ Lender saved");
+  };
+  const matchLenders = (app) => {
+    if (!app) return [];
+    const credit = parseInt((app.creditRating||"0").replace(/\D.*$/,""))||0;
+    const rev = parseInt((app.monthlyRev||"0").replace(/\D/g,""))||0;
+    return lenders.filter(l => {
+      const blocked = (Array.isArray(l.restricted)?l.restricted:[]).some(r=>app.industry?.toLowerCase().includes(r.toLowerCase()));
+      return !blocked && credit>=(parseInt(l.minFICO)||0) && rev>=(parseInt((l.minRevenue||"0").replace(/\D/g,""))||0);
+    });
+  };
+  const getRenewal = (appId) => JSON.parse(localStorage.getItem(`renewal_${appId}`)||"null");
+  const getDrawerData = (key) => drawer ? JSON.parse(localStorage.getItem(`${key}_${drawer.id}`)||"[]") : [];
 
-  const showSent = (msg) => { setSent(msg); setTimeout(()=>setSent(""), 3000); };
+  // Metrics
+  const funded = apps.filter(a=>a.status==="Funded");
+  const active = apps.filter(a=>!["Funded","Closed/Lost"].includes(a.status));
+  const totalPipeline = apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const fundedAmt = funded.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const totalComm = funded.reduce((s,a)=>s+(a.grossComm||0),0);
+  const repComm = funded.reduce((s,a)=>s+((a.grossComm||0)*(a.repSplit||50)/100),0);
+  const weightedPipe = active.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n*((a.probability||50)/100));},0);
+  const convRate = apps.length>0?Math.round(funded.length/apps.length*100):0;
+  const renewalDue = apps.filter(a=>{const r=getRenewal(a.id);return r&&r.pctPaid>=50&&a.status==="Funded";});
 
-  const getDrawerMsgs = () => drawer ? JSON.parse(localStorage.getItem(`msgs_${drawer.id}`)||"[]") : [];
-  const getDrawerOffers = () => drawer ? JSON.parse(localStorage.getItem(`offers_${drawer.id}`)||"[]") : [];
+  const filtered = apps.filter(a=>{
+    const q=[a.company,a.firstName,a.lastName,a.email,a.id,a.phone].join(" ").toLowerCase();
+    return (!search||q.includes(search.toLowerCase()))&&(stageFilter==="All"||(a.status||"New Lead")===stageFilter);
+  });
 
-  const inp = { width:"100%", padding:"10px 14px", border:"1.5px solid #e5e8ee", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", color:"#1a1a1a", outline:"none", display:"block", marginBottom:10 };
+  const inp = { width:"100%", padding:"9px 12px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:13, fontFamily:"'Sora',sans-serif", color:"#1a1a1a", outline:"none", display:"block", marginBottom:8, background:"#fff" };
+  const lbl = { fontSize:10, fontWeight:700, color:"#888", textTransform:"uppercase", letterSpacing:".07em", display:"block", marginBottom:4, marginTop:10 };
+
+  const SIDEBAR_ITEMS = [["📊","pipeline","Pipeline"],["📋","list","All Deals"],["🏦","lenders","Lenders"],["💬","messages","Messages"],["✅","tasks","Tasks"],["🔄","renewals","Renewals"],["📧","email","Email"],["📈","metrics","Metrics"]];
 
   return (
-    <div style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#f5f4f0" }}>
+    <div style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#f5f4f0", fontFamily:"'Sora',sans-serif" }}>
 
-      {/* Sidebar */}
-      <div style={{ width:200, background:"#0a0a0a", flexShrink:0, display:"flex", flexDirection:"column" }}>
-        {[["📋","apps","Applications"],["💬","messages","Messages"],["📊","metrics","Metrics"]].map(([icon,id,label])=>(
-          <div key={id} className={`sb-item${tab===id?" active":""}`} onClick={()=>setTab(id)} style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <span>{icon}</span><span>{label}</span>
+      {/* SIDEBAR */}
+      <div style={{ width:185, background:"#0a0a0a", flexShrink:0, display:"flex", flexDirection:"column" }}>
+        <div style={{ padding:"12px 14px", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
+          <button onClick={()=>setShowNewLead(true)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:"8px 0", borderRadius:6, fontSize:12, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>+ New Lead</button>
+        </div>
+        {SIDEBAR_ITEMS.map(([icon,id,label])=>(
+          <div key={id} className={`sb-item${tab===id?" active":""}`} onClick={()=>setTab(id)} style={{ display:"flex", alignItems:"center", gap:10, position:"relative" }}>
+            <span style={{ fontSize:14 }}>{icon}</span><span style={{ fontSize:12 }}>{label}</span>
+            {id==="renewals"&&renewalDue.length>0&&<span style={{ position:"absolute", right:10, background:"#ef4444", color:"#fff", borderRadius:20, fontSize:10, fontWeight:800, padding:"1px 6px" }}>{renewalDue.length}</span>}
           </div>
         ))}
-        <div style={{ marginTop:"auto", padding:"16px 20px", borderTop:"1px solid rgba(255,255,255,.06)" }}>
-          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:13, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>← Exit Admin</button>
+        <div style={{ marginTop:"auto", padding:"12px 14px", borderTop:"1px solid rgba(255,255,255,.06)", display:"flex", flexDirection:"column", gap:6 }}>
+          <button onClick={exportCSV} style={{ background:"rgba(168,255,62,.1)", border:`1px solid ${G}30`, color:G, padding:"7px 0", borderRadius:6, fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>↓ Export CSV</button>
+          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.3)", fontSize:11, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>← Exit Admin</button>
         </div>
       </div>
 
-      {/* Main content */}
-      <div style={{ flex:1, padding:"28px 32px", overflow:"auto", minWidth:0 }}>
+      {/* MAIN */}
+      <div style={{ flex:1, overflow:"auto", minWidth:0 }}>
+        {toast && <div style={{ position:"fixed", top:16, right:drawer?470:16, background:"#1a1a1a", color:G, padding:"10px 18px", borderRadius:8, fontSize:13, fontWeight:700, zIndex:9999, boxShadow:"0 8px 32px rgba(0,0,0,.3)", transition:"right .2s" }}>{toast}</div>}
 
-        {/* Toast */}
-        {sent && <div style={{ position:"fixed", top:20, right:20, background:"#1a1a1a", color:G, padding:"12px 20px", borderRadius:10, fontSize:14, fontWeight:700, zIndex:999, boxShadow:"0 8px 32px rgba(0,0,0,.3)" }}>{sent}</div>}
-
-        {/* ── APPLICATIONS TAB ── */}
-        {tab==="apps" && (
-          <div>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20, flexWrap:"wrap", gap:12 }}>
-              <div>
-                <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>Applications</h2>
-                <p style={{ fontSize:14, color:"#888" }}>{filteredApps.length} of {apps.length} total</p>
+        {/* NEW LEAD MODAL */}
+        {showNewLead && (
+          <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,.5)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:1000 }} onClick={e=>e.target===e.currentTarget&&setShowNewLead(false)}>
+            <div style={{ background:"#fff", borderRadius:16, padding:28, width:560, maxHeight:"90vh", overflowY:"auto", boxShadow:"0 32px 80px rgba(0,0,0,.3)" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:20 }}>
+                <h3 style={{ fontSize:18, fontWeight:900, color:"#1a1a1a" }}>Add New Lead</h3>
+                <button onClick={()=>setShowNewLead(false)} style={{ background:"none", border:"none", fontSize:22, cursor:"pointer", color:"#ccc" }}>×</button>
               </div>
-            </div>
-
-            {/* Metrics row */}
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:12, marginBottom:24 }}>
-              {[["Total",apps.length,"#1a1a1a"],["Under Review",apps.filter(a=>(a.status||"Under Review")==="Under Review").length,"#d97706"],["Docs Needed",apps.filter(a=>a.status==="Docs Needed").length,"#ea580c"],["Approved",apps.filter(a=>a.status==="Approved").length,"#16a34a"],["Funded",apps.filter(a=>a.status==="Funded").length,"#2563eb"]].map(([l,v,c])=>(
-                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"14px 16px", cursor:"pointer" }} onClick={()=>setStatusFilter(l==="Total"?"All":l)}>
-                  <p style={{ fontSize:11, color:"#888", fontWeight:700, letterSpacing:".08em", textTransform:"uppercase", marginBottom:6 }}>{l}</p>
-                  <p style={{ fontSize:28, fontWeight:900, color:c, letterSpacing:"-1px" }}>{v}</p>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                {[["First Name*","firstName"],["Last Name","lastName"],["Company*","company"],["DBA","dba"],["Email","email"],["Phone","phone"],["State","state"],["Monthly Revenue","monthlyRev"],["Loan Amount","loanAmt"],["Referral Source","referralSource"],["Assigned Rep","assignedRep"]].map(([l,k])=>(
+                  <div key={k}><span style={lbl}>{l}</span><input value={newLead[k]||""} onChange={e=>setNewLead(p=>({...p,[k]:e.target.value}))} style={inp} /></div>
+                ))}
+                <div><span style={lbl}>Industry</span>
+                  <select value={newLead.industry} onChange={e=>setNewLead(p=>({...p,industry:e.target.value}))} style={inp}>
+                    {["Food & Beverage","Retail","Healthcare","Technology","Transportation","Construction","Professional Services","Auto","Entertainment","Education","Other"].map(o=><option key={o}>{o}</option>)}
+                  </select>
                 </div>
-              ))}
-            </div>
-
-            {/* Search + filter */}
-            <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
-              <input placeholder="Search by name, company, email, ID..." value={search} onChange={e=>setSearch(e.target.value)} style={{ flex:1, minWidth:200, padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", outline:"none" }} />
-              <select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} style={{ padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", cursor:"pointer", outline:"none" }}>
-                <option>All</option>
-                {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
-              </select>
-            </div>
-
-            {filteredApps.length===0 ? (
-              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"48px", textAlign:"center" }}>
-                <p style={{ fontSize:16, color:"#888" }}>{apps.length===0?"No applications yet.":"No results match your search."}</p>
+                <div><span style={lbl}>Credit Range</span>
+                  <select value={newLead.creditRating} onChange={e=>setNewLead(p=>({...p,creditRating:e.target.value}))} style={inp}>
+                    {["Below 550","550–579","580–619","620–639","640–679","680–719","720–759","760+"].map(o=><option key={o}>{o}</option>)}
+                  </select>
+                </div>
               </div>
-            ) : (
-              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, overflow:"hidden" }}>
-                <table style={{ width:"100%", borderCollapse:"collapse" }}>
-                  <thead>
-                    <tr style={{ borderBottom:"2px solid #e5e3de" }}>
-                      {["Company","Name","Amount","Email","Credit","Status","Actions"].map(h=>(
-                        <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:11, fontWeight:700, color:"#aaa", letterSpacing:".08em", textTransform:"uppercase", background:"#fafaf8", whiteSpace:"nowrap" }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredApps.map((app,i)=>{
-                      const sc = STATUS_COLORS[app.status||"Under Review"]||{bg:"#f5f5f5",text:"#888"};
-                      return (
-                        <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0" }}>
-                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("details");}}>{app.company||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:14, color:"#555" }}>{app.firstName} {app.lastName}</td>
-                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:600 }}>{app.loanAmt||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:13, color:"#3b82f6" }}>{app.email||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:13, color:"#666", textTransform:"capitalize" }}>{app.creditRating||"—"}</td>
-                          <td style={{ padding:"13px 16px" }}>
-                            <select value={app.status||"Under Review"} onChange={e=>{e.stopPropagation();updateStatus(app.id,e.target.value);}} style={{ fontSize:12, padding:"4px 10px", fontWeight:700, borderRadius:20, background:sc.bg, color:sc.text, border:"none", cursor:"pointer", appearance:"none", fontFamily:"'Sora',sans-serif" }}>
-                              {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
-                            </select>
-                          </td>
-                          <td style={{ padding:"13px 16px" }}>
-                            <div style={{ display:"flex", gap:6 }}>
-                              <button style={{ background:"#1a1a1a", border:"none", color:G, padding:"5px 12px", borderRadius:6, fontSize:12, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("offer");}}>Offer</button>
-                              <button style={{ background:"#f0f0f0", border:"none", color:"#333", padding:"5px 10px", borderRadius:6, fontSize:12, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("message");}}>Msg</button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              <div style={{ display:"flex", gap:10, marginTop:16 }}>
+                <button onClick={()=>setShowNewLead(false)} style={{ flex:1, background:"#f5f4f0", border:"none", padding:12, borderRadius:8, fontSize:13, cursor:"pointer" }}>Cancel</button>
+                <button onClick={addNewLead} style={{ flex:2, background:"#1a1a1a", color:G, border:"none", padding:12, borderRadius:8, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Add Lead →</button>
               </div>
-            )}
+            </div>
           </div>
         )}
 
-        {/* ── MESSAGES TAB ── */}
-        {tab==="messages" && (
-          <div>
-            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:20, letterSpacing:"-.02em" }}>All Client Messages</h2>
-            {apps.length===0 ? <p style={{ color:"#888" }}>No clients yet.</p> : apps.map(app=>{
-              const msgs = JSON.parse(localStorage.getItem(`msgs_${app.id}`)||"[]");
-              const unread = msgs.filter(m=>m.from==="client").length;
-              return (
-                <div key={app.id} onClick={()=>{setDrawer(app);setDrawerTab("message");setTab("apps");}} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"16px 20px", marginBottom:10, cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                  <div>
-                    <p style={{ fontSize:15, fontWeight:700, color:"#1a1a1a" }}>{app.company} <span style={{ fontWeight:400, color:"#888" }}>· {app.firstName} {app.lastName}</span></p>
-                    <p style={{ fontSize:13, color:"#888", marginTop:3 }}>{msgs.length>0?msgs[msgs.length-1].text.slice(0,60)+"...":"No messages yet"}</p>
-                  </div>
-                  {unread>0 && <span style={{ background:"#ef4444", color:"#fff", borderRadius:20, fontSize:11, fontWeight:800, padding:"2px 10px" }}>{unread} new</span>}
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* ── METRICS TAB ── */}
-        {tab==="metrics" && (
-          <div>
-            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:20, letterSpacing:"-.02em" }}>Pipeline Metrics</h2>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:24 }}>
-              {[
-                ["Total Applications", apps.length],
-                ["Total Pipeline", apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0).toLocaleString("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0})],
-                ["Conversion Rate", apps.length>0?Math.round(apps.filter(a=>["Approved","Funded"].includes(a.status)).length/apps.length*100)+"%":"0%"],
-                ["Avg Loan Request", apps.length>0?"$"+Math.round(apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0)/apps.length).toLocaleString():"—"],
-                ["Funded Deals", apps.filter(a=>a.status==="Funded").length],
-                ["Pending Review", apps.filter(a=>(a.status||"Under Review")==="Under Review").length],
-              ].map(([l,v])=>(
-                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:"20px 22px" }}>
-                  <p style={{ fontSize:12, color:"#888", fontWeight:700, letterSpacing:".08em", textTransform:"uppercase", marginBottom:10 }}>{l}</p>
-                  <p style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", letterSpacing:"-1px" }}>{v}</p>
-                </div>
-              ))}
+        {/* ── PIPELINE KANBAN ── */}
+        {tab==="pipeline" && (
+          <div style={{ padding:"18px 22px" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14, flexWrap:"wrap", gap:10 }}>
+              <div><h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>Sales Pipeline</h2><p style={{ fontSize:12, color:"#888" }}>{apps.length} deals · ${totalPipeline.toLocaleString()} total · ${Math.round(weightedPipe).toLocaleString()} weighted</p></div>
+              <input placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)} style={{ padding:"7px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none", width:180 }} />
             </div>
-            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:"24px" }}>
-              <h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a", marginBottom:16 }}>Applications by Status</h3>
-              {ALL_STATUSES.map(s=>{
-                const count = apps.filter(a=>(a.status||"Under Review")===s).length;
-                const pct = apps.length>0?Math.round(count/apps.length*100):0;
-                const sc = STATUS_COLORS[s]||{bg:"#f5f5f5",text:"#888"};
+            <div style={{ display:"flex", gap:8, overflowX:"auto", paddingBottom:12, minHeight:480 }}>
+              {PIPELINE_STAGES.map(stage=>{
+                const stageApps = filtered.filter(a=>(a.status||"New Lead")===stage);
+                const stageAmt = stageApps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+                const sc = STAGE_COLORS[stage]||{ bg:"#f9fafb", text:"#888", border:"#e5e7eb" };
                 return (
-                  <div key={s} style={{ marginBottom:12 }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                      <span style={{ fontSize:13, fontWeight:600, color:"#333" }}>{s}</span>
-                      <span style={{ fontSize:13, color:"#888" }}>{count} ({pct}%)</span>
-                    </div>
-                    <div style={{ height:8, background:"#f0f0f0", borderRadius:4, overflow:"hidden" }}>
-                      <div style={{ width:`${pct}%`, height:"100%", background:sc.text, borderRadius:4, transition:"width .4s" }}></div>
+                  <div key={stage} style={{ minWidth:185, width:185, flexShrink:0 }}
+                    onDragOver={e=>{e.preventDefault();setDragOver(stage);}}
+                    onDragLeave={()=>setDragOver(null)}
+                    onDrop={e=>{e.preventDefault();if(dragApp){updateApp(dragApp.id,{status:stage});showToast(`→ ${stage}`);setDragApp(null);setDragOver(null);}}}>
+                    <div style={{ background:dragOver===stage?sc.bg:"#fff", border:`2px solid ${dragOver===stage?sc.text:sc.border}`, borderRadius:10, minHeight:400, transition:"all .15s" }}>
+                      <div style={{ padding:"9px 11px", borderBottom:`1px solid ${sc.border}`, background:sc.bg, borderRadius:"10px 10px 0 0" }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                          <span style={{ fontSize:10, fontWeight:800, color:sc.text, textTransform:"uppercase", letterSpacing:".05em" }}>{stage}</span>
+                          <span style={{ fontSize:10, fontWeight:700, color:sc.text, background:"rgba(255,255,255,.7)", padding:"1px 6px", borderRadius:20 }}>{stageApps.length}</span>
+                        </div>
+                        {stageAmt>0&&<p style={{ fontSize:9, color:sc.text, marginTop:2, opacity:.7 }}>${stageAmt.toLocaleString()}</p>}
+                      </div>
+                      <div style={{ padding:7 }}>
+                        {stageApps.map(app=>(
+                          <div key={app.id} draggable onDragStart={()=>setDragApp(app)} onDragEnd={()=>setDragApp(null)}
+                            onClick={()=>{setDrawer(app);setDrawerTab("profile");}}
+                            style={{ background:dragApp?.id===app.id?"rgba(168,255,62,.08)":"#fafaf8", border:`1px solid ${dragApp?.id===app.id?G+"40":"#eeece8"}`, borderRadius:8, padding:"10px 11px", marginBottom:6, cursor:"pointer" }}
+                            onMouseEnter={e=>e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,.08)"}
+                            onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                            <p style={{ fontSize:12, fontWeight:700, color:"#1a1a1a", marginBottom:2 }}>{app.company}</p>
+                            <p style={{ fontSize:10, color:"#888" }}>{app.firstName} {app.lastName}</p>
+                            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:7 }}>
+                              <span style={{ fontSize:11, fontWeight:700, color:"#1a1a1a" }}>{app.loanAmt||"—"}</span>
+                              <div style={{ display:"flex", alignItems:"center", gap:3 }}>
+                                <div style={{ width:28, height:3, background:"#e5e3de", borderRadius:2, overflow:"hidden" }}>
+                                  <div style={{ width:`${app.probability||50}%`, height:"100%", background:sc.text }}></div>
+                                </div>
+                                <span style={{ fontSize:9, color:"#aaa" }}>{app.probability||50}%</span>
+                              </div>
+                            </div>
+                            {app.assignedRep&&<p style={{ fontSize:9, color:"#bbb", marginTop:3 }}>{app.assignedRep}</p>}
+                          </div>
+                        ))}
+                        {stageApps.length===0&&<p style={{ fontSize:10, color:"#ddd", textAlign:"center", padding:"18px 0" }}>Drop here</p>}
+                      </div>
                     </div>
                   </div>
                 );
@@ -1491,121 +1568,527 @@ function AdminDashboard({ onExit }) {
             </div>
           </div>
         )}
+
+        {/* ── ALL DEALS ── */}
+        {tab==="list" && (
+          <div style={{ padding:"18px 22px" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10, flexWrap:"wrap", gap:8 }}>
+              <div><h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>All Deals</h2><p style={{ fontSize:12, color:"#888" }}>{filtered.length} of {apps.length}</p></div>
+              <div style={{ display:"flex", gap:8 }}>
+                <input placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)} style={{ padding:"7px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none", width:160 }} />
+                <select value={stageFilter} onChange={e=>setStageFilter(e.target.value)} style={{ padding:"7px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none" }}>
+                  <option>All</option>{PIPELINE_STAGES.map(s=><option key={s}>{s}</option>)}
+                </select>
+              </div>
+            </div>
+            {/* Metrics strip */}
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:8, marginBottom:12 }}>
+              {[["Deals",apps.length,"#1a1a1a"],["Pipeline","$"+Math.round(totalPipeline/1000)+"K","#7c3aed"],["Funded","$"+Math.round(fundedAmt/1000)+"K","#16a34a"],["Weighted","$"+Math.round(weightedPipe/1000)+"K","#2563eb"],["Comm","$"+Math.round(totalComm/1000)+"K","#d97706"],["Conv",convRate+"%","#ea580c"]].map(([l,v,c])=>(
+                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:8, padding:"10px 12px" }}>
+                  <p style={{ fontSize:9, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em", marginBottom:4 }}>{l}</p>
+                  <p style={{ fontSize:17, fontWeight:900, color:c }}>{v}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, overflow:"hidden" }}>
+              <table style={{ width:"100%", borderCollapse:"collapse" }}>
+                <thead><tr style={{ borderBottom:"2px solid #e5e3de" }}>
+                  {["Company","Contact","Amount","Industry","Credit","Risk","Prob","Stage",""].map(h=>(
+                    <th key={h} style={{ padding:"9px 11px", textAlign:"left", fontSize:10, fontWeight:700, color:"#aaa", letterSpacing:".06em", textTransform:"uppercase", background:"#fafaf8", whiteSpace:"nowrap" }}>{h}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {filtered.length===0?<tr><td colSpan={9} style={{ padding:32, textAlign:"center", color:"#888" }}>No results.</td></tr>
+                  :filtered.map((app,i)=>{
+                    const sc=STAGE_COLORS[app.status||"New Lead"]||{bg:"#f9fafb",text:"#888",border:"#e5e7eb"};
+                    return (
+                      <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0" }}>
+                        <td style={{ padding:"9px 11px", fontSize:13, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("profile");}}>{app.company}</td>
+                        <td style={{ padding:"9px 11px", fontSize:12, color:"#555" }}>{app.firstName} {app.lastName}<br/><span style={{ fontSize:10, color:"#aaa" }}>{app.email}</span></td>
+                        <td style={{ padding:"9px 11px", fontSize:12, fontWeight:700 }}>{app.loanAmt||"—"}</td>
+                        <td style={{ padding:"9px 11px", fontSize:11, color:"#666" }}>{app.industry||"—"}</td>
+                        <td style={{ padding:"9px 11px", fontSize:11, color:"#666" }}>{app.creditRating||"—"}</td>
+                        <td style={{ padding:"9px 11px" }}><span style={{ fontSize:11, fontWeight:700, color:app.riskGrade?.startsWith("A")?"#16a34a":app.riskGrade?.startsWith("B")?"#d97706":"#dc2626" }}>{app.riskGrade||"—"}</span></td>
+                        <td style={{ padding:"9px 11px" }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:4 }}>
+                            <div style={{ width:36, height:4, background:"#f0f0f0", borderRadius:2, overflow:"hidden" }}>
+                              <div style={{ width:`${app.probability||50}%`, height:"100%", background:sc.text }}></div>
+                            </div>
+                            <span style={{ fontSize:10, color:"#888" }}>{app.probability||50}%</span>
+                          </div>
+                        </td>
+                        <td style={{ padding:"9px 11px" }}>
+                          <select value={app.status||"New Lead"} onChange={e=>{e.stopPropagation();updateApp(app.id,{status:e.target.value});showToast("✓ Updated");}} style={{ fontSize:10, padding:"3px 7px", fontWeight:700, borderRadius:20, background:sc.bg, color:sc.text, border:`1px solid ${sc.border}`, cursor:"pointer", appearance:"none", fontFamily:"'Sora',sans-serif", maxWidth:120 }}>
+                            {PIPELINE_STAGES.map(s=><option key={s}>{s}</option>)}
+                          </select>
+                        </td>
+                        <td style={{ padding:"9px 11px" }}>
+                          <div style={{ display:"flex", gap:4 }}>
+                            <button style={{ background:"#1a1a1a", border:"none", color:G, padding:"4px 8px", borderRadius:5, fontSize:10, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("offers");}}>Offer</button>
+                            <button style={{ background:"#f0f0f0", border:"none", color:"#333", padding:"4px 7px", borderRadius:5, fontSize:10, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("message");}}>Msg</button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* ── LENDER MARKETPLACE ── */}
+        {tab==="lenders" && (
+          <div style={{ padding:"18px 22px" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
+              <div><h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>Lender Marketplace</h2><p style={{ fontSize:12, color:"#888" }}>{lenders.length} lenders in network</p></div>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 380px", gap:16 }}>
+              <div>
+                {lenders.map(l=>(
+                  <div key={l.id} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"14px 16px", marginBottom:10 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                      <div>
+                        <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a" }}>{l.name}</p>
+                        <p style={{ fontSize:11, color:"#888", marginTop:2 }}>Buy Rate: {l.buyRate}x · Speed: {l.fundingSpeed}</p>
+                      </div>
+                      <button onClick={()=>{setLenderForm(l);setEditingLender(l.id);}} style={{ background:"#f5f4f0", border:"none", padding:"3px 9px", borderRadius:5, fontSize:11, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Edit</button>
+                    </div>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:7, marginTop:10 }}>
+                      {[["Min FICO",l.minFICO],["Min Revenue",l.minRevenue],["Max Fund",l.maxFund]].map(([lab,val])=>(
+                        <div key={lab} style={{ background:"#f9fafb", borderRadius:6, padding:"7px 9px" }}>
+                          <p style={{ fontSize:9, color:"#aaa", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>{lab}</p>
+                          <p style={{ fontSize:12, fontWeight:700, color:"#1a1a1a", marginTop:2 }}>{val||"—"}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ display:"flex", gap:5, marginTop:9, flexWrap:"wrap" }}>
+                      {(Array.isArray(l.products)?l.products:[l.products]).map(p=>(
+                        <span key={p} style={{ background:"#dbeafe", color:"#2563eb", padding:"2px 7px", borderRadius:20, fontSize:10, fontWeight:700 }}>{p}</span>
+                      ))}
+                      {(Array.isArray(l.restricted)?l.restricted:[l.restricted||""]).filter(Boolean).map(r=>(
+                        <span key={r} style={{ background:"#fee2e2", color:"#dc2626", padding:"2px 7px", borderRadius:20, fontSize:10, fontWeight:700 }}>No {r}</span>
+                      ))}
+                    </div>
+                    {l.notes&&<p style={{ fontSize:11, color:"#888", marginTop:7, fontStyle:"italic" }}>{l.notes}</p>}
+                  </div>
+                ))}
+              </div>
+              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"16px 18px", alignSelf:"start" }}>
+                <h3 style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>{editingLender?"Edit Lender":"Add Lender"}</h3>
+                {[["Lender Name","name"],["Min FICO","minFICO"],["Min Monthly Revenue","minRevenue"],["Max Funding","maxFund"],["Funding Speed","fundingSpeed"],["Buy Rate (factor)","buyRate"],["Restricted Industries","restricted"],["Notes","notes"]].map(([l,k])=>(
+                  <div key={k}><span style={lbl}>{l}</span><input value={lenderForm[k]||""} onChange={e=>setLenderForm(f=>({...f,[k]:e.target.value}))} style={inp} /></div>
+                ))}
+                <span style={lbl}>Products</span>
+                <select value={lenderForm.products} onChange={e=>setLenderForm(f=>({...f,products:e.target.value}))} style={inp}>
+                  {["MCA","Term Loan","Line of Credit","Revenue Advance","Equipment Financing","SBA Referral","MCA,Term Loan","MCA,Line of Credit"].map(o=><option key={o}>{o}</option>)}
+                </select>
+                <div style={{ display:"flex", gap:8, marginTop:6 }}>
+                  {editingLender&&<button onClick={()=>{setLenderForm({name:"",minFICO:"",minRevenue:"",maxFund:"",products:"MCA",fundingSpeed:"24h",buyRate:"",restricted:"",notes:""});setEditingLender(null);}} style={{ flex:1, background:"#f5f4f0", border:"none", padding:9, borderRadius:7, fontSize:12, cursor:"pointer" }}>Cancel</button>}
+                  <button onClick={saveLender} style={{ flex:2, background:"#1a1a1a", color:G, border:"none", padding:9, borderRadius:7, fontSize:13, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>{editingLender?"Save":"Add Lender →"}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── MESSAGES ── */}
+        {tab==="messages" && (
+          <div style={{ padding:"18px 22px" }}>
+            <h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", marginBottom:14, letterSpacing:"-.02em" }}>Client Messages</h2>
+            {apps.map(app=>{
+              const msgs=JSON.parse(localStorage.getItem(`msgs_${app.id}`)||"[]");
+              const newMsgs=msgs.filter(m=>m.from==="client").length;
+              return (
+                <div key={app.id} onClick={()=>{setDrawer(app);setDrawerTab("message");}} style={{ background:"#fff", border:`1px solid ${newMsgs>0?"#fca5a5":"#e5e3de"}`, borderRadius:9, padding:"12px 16px", marginBottom:7, cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center" }}
+                  onMouseEnter={e=>e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,.06)"}
+                  onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                  <div>
+                    <p style={{ fontSize:13, fontWeight:700, color:"#1a1a1a" }}>{app.company} <span style={{ color:"#888", fontWeight:400 }}>· {app.firstName} {app.lastName}</span></p>
+                    <p style={{ fontSize:11, color:"#aaa", marginTop:2 }}>{msgs.length>0?`"${msgs[msgs.length-1].text.slice(0,60)}..."` :"No messages yet"}</p>
+                  </div>
+                  {newMsgs>0&&<span style={{ background:"#ef4444", color:"#fff", borderRadius:20, fontSize:11, fontWeight:800, padding:"2px 9px", flexShrink:0 }}>{newMsgs}</span>}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── TASKS ── */}
+        {tab==="tasks" && (
+          <div style={{ padding:"18px 22px" }}>
+            <h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", marginBottom:14, letterSpacing:"-.02em" }}>Task Board</h2>
+            {apps.map(app=>{
+              const tasks=JSON.parse(localStorage.getItem(`tasks_${app.id}`)||"[]");
+              return (
+                <div key={app.id} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"13px 16px", marginBottom:10 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:9 }}>
+                    <p style={{ fontSize:13, fontWeight:700, color:"#1a1a1a" }}>{app.company} <span style={{ fontSize:11, color:"#888", fontWeight:400 }}>· {app.status||"New Lead"}</span></p>
+                    <span style={{ fontSize:11, color:tasks.filter(t=>!t.done).length>0?"#ea580c":"#16a34a", fontWeight:700 }}>{tasks.filter(t=>!t.done).length} open</span>
+                  </div>
+                  {tasks.map(task=>(
+                    <div key={task.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"6px 0", borderBottom:"1px solid #f5f5f5" }}>
+                      <input type="checkbox" checked={task.done} onChange={()=>{toggleTask(app.id,task.id);reload();}} style={{ cursor:"pointer", width:14, height:14, accentColor:"#1a1a1a" }} />
+                      <span style={{ fontSize:12, color:task.done?"#bbb":"#1a1a1a", textDecoration:task.done?"line-through":"none", flex:1 }}>{task.text}</span>
+                      <span style={{ fontSize:10, color:"#ccc" }}>{task.created}</span>
+                    </div>
+                  ))}
+                  <div style={{ display:"flex", gap:7, marginTop:9 }}>
+                    <input placeholder="Add task..." onFocus={()=>setDrawer(app)} value={drawer?.id===app.id?taskText:""} onChange={e=>setTaskText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addTask(app.id)} style={{ flex:1, padding:"6px 10px", border:"1px solid #e5e3de", borderRadius:6, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none" }} />
+                    <button onClick={()=>addTask(app.id)} style={{ background:"#1a1a1a", color:"#fff", border:"none", padding:"6px 12px", borderRadius:6, fontSize:12, cursor:"pointer" }}>+</button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── RENEWALS ── */}
+        {tab==="renewals" && (
+          <div style={{ padding:"18px 22px" }}>
+            <h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", marginBottom:6, letterSpacing:"-.02em" }}>Renewal Engine</h2>
+            <p style={{ fontSize:13, color:"#888", marginBottom:18 }}>Clients flagged at 50%, 65%, and 80% paid back. This is where MCA companies make serious money.</p>
+            {apps.filter(a=>a.status==="Funded").length===0&&<div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:36, textAlign:"center" }}><p style={{ color:"#888" }}>No funded deals yet.</p></div>}
+            {apps.filter(a=>a.status==="Funded").map(app=>{
+              const r = getRenewal(app.id) || { pctPaid:0, paidBack:0, fundedAmt:parseInt((app.loanAmt||"0").replace(/\D/g,""))||0 };
+              const urgency = r.pctPaid>=80?"🔴 High Priority":r.pctPaid>=65?"🟡 Follow Up":r.pctPaid>=50?"🟢 Renewal Eligible":"⏳ Tracking";
+              const renewalEst = Math.round((r.fundedAmt||0)*1.15);
+              return (
+                <div key={app.id} style={{ background:"#fff", border:`1px solid ${r.pctPaid>=80?"#fca5a5":r.pctPaid>=65?"#fde68a":r.pctPaid>=50?"#86efac":"#e5e3de"}`, borderRadius:10, padding:"16px 18px", marginBottom:10 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8, marginBottom:12 }}>
+                    <div>
+                      <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a" }}>{app.company}</p>
+                      <p style={{ fontSize:11, color:"#888" }}>{app.firstName} {app.lastName} · Funded {app.fundedAt?new Date(app.fundedAt).toLocaleDateString():"—"}</p>
+                    </div>
+                    <span style={{ fontSize:13, fontWeight:700 }}>{urgency}</span>
+                  </div>
+                  <div style={{ marginBottom:12 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
+                      <span style={{ fontSize:11, color:"#888" }}>Payback progress</span>
+                      <span style={{ fontSize:12, fontWeight:700 }}>{r.pctPaid}% paid</span>
+                    </div>
+                    <div style={{ height:10, background:"#f0f0f0", borderRadius:5, overflow:"hidden" }}>
+                      <div style={{ width:`${r.pctPaid}%`, height:"100%", background:r.pctPaid>=80?"#16a34a":r.pctPaid>=50?"#d97706":"#2563eb", borderRadius:5, transition:"width .5s" }}></div>
+                    </div>
+                  </div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8 }}>
+                    {[["Original",`$${(r.fundedAmt||0).toLocaleString()}`],["Paid Back",`$${(r.paidBack||0).toLocaleString()}`],["Renewal Est.",`$${renewalEst.toLocaleString()}`]].map(([l,v])=>(
+                      <div key={l} style={{ background:"#f9fafb", borderRadius:7, padding:"9px 11px" }}>
+                        <p style={{ fontSize:9, color:"#aaa", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>{l}</p>
+                        <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginTop:2 }}>{v}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {r.pctPaid>=50&&<button onClick={()=>{setDrawer(app);setDrawerTab("offers");setTab("list");}} style={{ marginTop:12, background:"#1a1a1a", color:G, border:"none", padding:"9px 18px", borderRadius:7, fontSize:13, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Send Renewal Offer →</button>}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── EMAIL CAMPAIGN ── */}
+        {tab==="email" && (
+          <div style={{ padding:"18px 22px", maxWidth:660 }}>
+            <h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", marginBottom:4, letterSpacing:"-.02em" }}>Email Campaign</h2>
+            <p style={{ fontSize:13, color:"#888", marginBottom:18 }}>Send targeted emails to clients by stage. SMS via Twilio — coming soon.</p>
+            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:11, padding:22 }}>
+              <span style={lbl}>Send To</span>
+              <select value={emailForm.to} onChange={e=>setEmailForm(f=>({...f,to:e.target.value}))} style={inp}>
+                <option value="all">All Clients ({apps.filter(a=>a.email).length})</option>
+                {PIPELINE_STAGES.map(s=><option key={s} value={s}>{s} ({apps.filter(a=>a.status===s&&a.email).length})</option>)}
+              </select>
+              <span style={lbl}>Subject</span>
+              <input placeholder="e.g. Your funding offer is ready" value={emailForm.subject} onChange={e=>setEmailForm(f=>({...f,subject:e.target.value}))} style={inp} />
+              <span style={lbl}>Message</span>
+              <textarea placeholder="Write your message..." value={emailForm.body} onChange={e=>setEmailForm(f=>({...f,body:e.target.value}))} rows={5} style={{ ...inp, resize:"vertical" }} />
+              {emailForm.body&&<div style={{ background:"#f9fafb", borderRadius:7, padding:"10px 12px", marginBottom:10 }}>
+                <p style={{ fontSize:11, color:"#888" }}>Preview: <strong>Hi [First Name],</strong> {emailForm.body.slice(0,80)}{emailForm.body.length>80?"...":""}</p>
+              </div>}
+              <button onClick={sendBulkEmail} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:13, borderRadius:8, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Send Campaign →</button>
+              <p style={{ fontSize:11, color:"#aaa", textAlign:"center", marginTop:10 }}>SMS via Twilio — contact us to set up</p>
+            </div>
+          </div>
+        )}
+
+        {/* ── METRICS ── */}
+        {tab==="metrics" && (
+          <div style={{ padding:"18px 22px" }}>
+            <h2 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a", marginBottom:18, letterSpacing:"-.02em" }}>Reporting & Analytics</h2>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10, marginBottom:18 }}>
+              {[["Total Pipeline","$"+totalPipeline.toLocaleString(),"#7c3aed","All active deal value"],["Funded Volume","$"+fundedAmt.toLocaleString(),"#16a34a",funded.length+" deals closed"],["Gross Commission","$"+totalComm.toLocaleString(),"#d97706","Rep: $"+Math.round(repComm).toLocaleString()],["Weighted Pipeline","$"+Math.round(weightedPipe).toLocaleString(),"#2563eb","Probability-adjusted"],["Avg Deal Size","$"+(apps.length>0?Math.round(totalPipeline/apps.length):0).toLocaleString(),"#ea580c","All deals"],["Conversion Rate",convRate+"%","#059669",funded.length+" of "+apps.length],["Open Deals",active.length,"#1a1a1a","Active pipeline"],["Renewal Ready",renewalDue.length,"#9333ea","50%+ paid back"]].map(([l,v,c,sub])=>(
+                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
+                  <p style={{ fontSize:9, color:"#888", fontWeight:700, letterSpacing:".06em", textTransform:"uppercase", marginBottom:7 }}>{l}</p>
+                  <p style={{ fontSize:20, fontWeight:900, color:c }}>{v}</p>
+                  <p style={{ fontSize:10, color:"#aaa", marginTop:3 }}>{sub}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12 }}>
+              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
+                <h3 style={{ fontSize:13, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>Pipeline by Stage</h3>
+                {PIPELINE_STAGES.map(s=>{
+                  const count=apps.filter(a=>(a.status||"New Lead")===s).length;
+                  const pct=apps.length>0?Math.round(count/apps.length*100):0;
+                  const sc=STAGE_COLORS[s]||{text:"#888"};
+                  return count>0?(
+                    <div key={s} style={{ marginBottom:8 }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                        <span style={{ fontSize:11, color:"#555" }}>{s}</span>
+                        <span style={{ fontSize:10, color:"#888" }}>{count}</span>
+                      </div>
+                      <div style={{ height:5, background:"#f0f0f0", borderRadius:3, overflow:"hidden" }}>
+                        <div style={{ width:`${pct}%`, height:"100%", background:sc.text, borderRadius:3 }}></div>
+                      </div>
+                    </div>
+                  ):null;
+                })}
+              </div>
+              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
+                <h3 style={{ fontSize:13, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>Top Deals</h3>
+                {[...apps].sort((a,b)=>(parseInt((b.loanAmt||"0").replace(/\D/g,""))||0)-(parseInt((a.loanAmt||"0").replace(/\D/g,""))||0)).slice(0,7).map((app,i)=>{
+                  const sc=STAGE_COLORS[app.status||"New Lead"]||{bg:"#f9fafb",text:"#888"};
+                  return (
+                    <div key={app.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderBottom:"1px solid #f5f5f5" }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+                        <span style={{ fontSize:9, color:"#ccc", fontWeight:700, width:12 }}>{i+1}</span>
+                        <div><p style={{ fontSize:12, fontWeight:700, color:"#1a1a1a" }}>{app.company}</p><span style={{ fontSize:9, padding:"1px 5px", fontWeight:700, borderRadius:20, background:sc.bg, color:sc.text }}>{app.status||"New Lead"}</span></div>
+                      </div>
+                      <span style={{ fontSize:12, fontWeight:800, color:"#1a1a1a" }}>{app.loanAmt||"—"}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
+                <h3 style={{ fontSize:13, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>Commission Report</h3>
+                {funded.length===0?<p style={{ color:"#aaa", fontSize:12 }}>No funded deals yet.</p>:funded.map(app=>(
+                  <div key={app.id} style={{ padding:"7px 0", borderBottom:"1px solid #f5f5f5" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between" }}>
+                      <p style={{ fontSize:12, fontWeight:700, color:"#1a1a1a" }}>{app.company}</p>
+                      <p style={{ fontSize:12, fontWeight:700, color:"#16a34a" }}>${(app.grossComm||0).toLocaleString()}</p>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginTop:2 }}>
+                      <span style={{ fontSize:10, color:"#888" }}>Rep ({app.repSplit||50}%): ${Math.round((app.grossComm||0)*(app.repSplit||50)/100).toLocaleString()}</span>
+                      <span style={{ fontSize:10, color:"#888" }}>{app.commissionPct||0}% of {app.loanAmt}</span>
+                    </div>
+                  </div>
+                ))}
+                <div style={{ marginTop:10, paddingTop:8, borderTop:"2px solid #e5e3de" }}>
+                  <div style={{ display:"flex", justifyContent:"space-between" }}><p style={{ fontSize:12, fontWeight:700 }}>Gross Total</p><p style={{ fontSize:12, fontWeight:800, color:"#16a34a" }}>${totalComm.toLocaleString()}</p></div>
+                  <div style={{ display:"flex", justifyContent:"space-between", marginTop:3 }}><p style={{ fontSize:11, color:"#888" }}>Rep Total</p><p style={{ fontSize:11, fontWeight:700, color:"#d97706" }}>${Math.round(repComm).toLocaleString()}</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── DRAWER ── */}
       {drawer && (
-        <div style={{ position:"fixed", right:0, top:0, bottom:0, width:420, background:"#fff", borderLeft:"1px solid #e5e3de", overflow:"auto", boxShadow:"-12px 0 48px rgba(0,0,0,.12)", zIndex:200, display:"flex", flexDirection:"column" }}>
-          {/* Drawer header */}
-          <div style={{ padding:"20px 24px", borderBottom:"1px solid #f0f0f0", background:"#fafaf8" }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+        <div style={{ position:"fixed", right:0, top:0, bottom:0, width:460, background:"#fff", borderLeft:"1px solid #e5e3de", overflow:"auto", boxShadow:"-16px 0 60px rgba(0,0,0,.1)", zIndex:200, display:"flex", flexDirection:"column" }}>
+          <div style={{ padding:"14px 18px", borderBottom:"1px solid #f0f0f0", background:"#fafaf8", flexShrink:0 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
               <div>
-                <h3 style={{ fontSize:18, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>{drawer.company||"Applicant"}</h3>
-                <p style={{ fontSize:13, color:"#888", marginTop:2 }}>{drawer.firstName} {drawer.lastName} · {drawer.id}</p>
+                <h3 style={{ fontSize:15, fontWeight:900, color:"#1a1a1a" }}>{drawer.company}</h3>
+                <p style={{ fontSize:11, color:"#888", marginTop:1 }}>{drawer.firstName} {drawer.lastName} · {drawer.email}</p>
               </div>
-              <button onClick={()=>setDrawer(null)} style={{ background:"none", border:"none", fontSize:24, cursor:"pointer", color:"#ccc", lineHeight:1 }}>×</button>
+              <button onClick={()=>setDrawer(null)} style={{ background:"none", border:"none", fontSize:22, cursor:"pointer", color:"#ccc" }}>×</button>
             </div>
-            {/* Status selector in drawer */}
-            <div style={{ marginTop:12 }}>
-              <label style={{ fontSize:11, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>Deal Status</label>
-              <select value={drawer.status||"Under Review"} onChange={e=>updateStatus(drawer.id,e.target.value)} style={{ marginTop:6, width:"100%", padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", cursor:"pointer", outline:"none" }}>
-                {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
-              </select>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:10 }}>
+              <div>
+                <span style={lbl}>Stage</span>
+                <select value={drawer.status||"New Lead"} onChange={e=>updateApp(drawer.id,{status:e.target.value})} style={{ ...inp, marginBottom:0 }}>
+                  {PIPELINE_STAGES.map(s=><option key={s}>{s}</option>)}
+                </select>
+              </div>
+              <div>
+                <span style={lbl}>Close Prob: {drawer.probability||50}%</span>
+                <input type="range" min={0} max={100} value={drawer.probability||50} onChange={e=>updateApp(drawer.id,{probability:parseInt(e.target.value)})} style={{ marginTop:6, width:"100%" }} />
+              </div>
             </div>
-            {/* Drawer tab bar */}
-            <div style={{ display:"flex", gap:0, marginTop:14, borderRadius:8, overflow:"hidden", border:"1px solid #e5e3de" }}>
-              {[["details","Details"],["offer","Send Offer"],["message","Message"],["history","History"]].map(([id,label])=>(
-                <button key={id} onClick={()=>setDrawerTab(id)} style={{ flex:1, padding:"8px 4px", fontSize:12, fontWeight:700, background:drawerTab===id?"#1a1a1a":"transparent", color:drawerTab===id?"#fff":"#888", border:"none", cursor:"pointer", fontFamily:"'Sora',sans-serif", transition:"all .15s" }}>{label}</button>
+            <div style={{ display:"flex", gap:0, borderRadius:6, overflow:"hidden", border:"1px solid #e5e3de" }}>
+              {[["profile","Profile"],["underwriting","UW"],["offers","Offers"],["message","Chat"],["tasks","Tasks"],["notes","Notes"],["history","History"]].map(([id,label])=>(
+                <button key={id} onClick={()=>setDrawerTab(id)} style={{ flex:1, padding:"6px 1px", fontSize:10, fontWeight:700, background:drawerTab===id?"#1a1a1a":"transparent", color:drawerTab===id?"#fff":"#888", border:"none", cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>{label}</button>
               ))}
             </div>
           </div>
 
-          <div style={{ flex:1, padding:24, overflow:"auto" }}>
+          <div style={{ flex:1, padding:18, overflowY:"auto" }}>
 
-            {/* Details tab */}
-            {drawerTab==="details" && (
+            {drawerTab==="profile" && (
               <div>
-                {[["App ID",drawer.id],["Email",drawer.email||"—"],["Phone",drawer.phone||"—"],["Loan Amount",drawer.loanAmt||"—"],["Purpose",drawer.purpose||"—"],["Timeline",drawer.timeline||"—"],["Industry",drawer.industry||"—"],["Years in Business",drawer.years||"—"],["Annual Revenue",drawer.annualRev||"—"],["Credit Rating",drawer.creditRating||"—"],["Submitted",drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—"]].map(([k,v])=>(
-                  <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom:"1px solid #f5f5f5", fontSize:13 }}>
-                    <span style={{ color:"#888", flexShrink:0 }}>{k}</span>
-                    <span style={{ fontWeight:600, color:"#1a1a1a", textAlign:"right", maxWidth:"60%", wordBreak:"break-word" }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Send Offer tab */}
-            {drawerTab==="offer" && (
-              <div>
-                <p style={{ fontSize:14, color:"#888", marginBottom:16 }}>Send a funding offer to <strong>{drawer.firstName}</strong>. It will appear instantly in their dashboard.</p>
-                {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:8, padding:"10px 14px", marginBottom:14 }}><p style={{ fontSize:13, fontWeight:700, color:"#16a34a" }}>{sent}</p></div>}
-                {[["Product",["Term Loan","Line of Credit","Revenue Advance","Equipment Financing"],"product"],["Approved Amount","e.g. $145,000","amount"],["Term","e.g. 18 months","term"],["Monthly Payment","e.g. $8,055","payment"],["Factor Rate / APR","e.g. 1.22 factor","rate"],["Offer Expires","e.g. May 30, 2026","expires"]].map(([label,opts,key])=>(
-                  <div key={key}>
-                    <label style={{ fontSize:11, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6, display:"block" }}>{label}</label>
-                    {Array.isArray(opts) ? (
-                      <select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{...inp, appearance:"none", cursor:"pointer"}}>
-                        {opts.map(o=><option key={o}>{o}</option>)}
-                      </select>
-                    ) : (
-                      <input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={inp} />
-                    )}
-                  </div>
-                ))}
-                <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:14, borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif", marginTop:4 }}>
-                  Send Offer to {drawer.firstName} →
-                </button>
-                {/* Existing offers */}
-                {getDrawerOffers().length>0 && (
-                  <div style={{ marginTop:20 }}>
-                    <p style={{ fontSize:12, fontWeight:700, color:"#888", textTransform:"uppercase", letterSpacing:".06em", marginBottom:10 }}>Offers Sent</p>
-                    {getDrawerOffers().map(o=>(
-                      <div key={o.id} style={{ background:"#f9fafb", borderRadius:8, padding:"12px 14px", marginBottom:8, fontSize:13 }}>
-                        <div style={{ display:"flex", justifyContent:"space-between" }}>
-                          <span style={{ fontWeight:700 }}>{o.product} · {o.amount}</span>
-                          <span style={{ color:o.status==="accepted"?"#16a34a":o.status==="declined"?"#dc2626":"#d97706", fontWeight:700, textTransform:"capitalize" }}>{o.status}</span>
-                        </div>
-                        <p style={{ color:"#888", marginTop:2 }}>Term: {o.term} · Payment: {o.payment}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Message tab */}
-            {drawerTab==="message" && (
-              <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-                <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:8, marginBottom:12 }}>
-                  {getDrawerMsgs().length===0 && <p style={{ color:"#888", fontSize:13, textAlign:"center", marginTop:20 }}>No messages yet. Send the first one.</p>}
-                  {getDrawerMsgs().map((m,i)=>(
-                    <div key={i} style={{ maxWidth:"80%", padding:"10px 14px", borderRadius:10, fontSize:13, lineHeight:1.55, alignSelf:m.from==="advisor"?"flex-end":"flex-start", background:m.from==="advisor"?"#1a1a1a":"#f5f5f5", color:m.from==="advisor"?"#fff":"#333" }}>
-                      <p>{m.text}</p>
-                      <p style={{ fontSize:10, opacity:.5, marginTop:4 }}>{m.from==="advisor"?"You (Advisor)":"Client"} · {m.time}</p>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6 }}>
+                  {[["Business Name","company"],["DBA","dba"],["EIN","ein"],["Owner First","firstName"],["Owner Last","lastName"],["Email","email"],["Phone","phone"],["Industry","industry"],["State","state"],["Website","website"],["Referral Source","referralSource"],["Assigned Rep","assignedRep"],["Time in Business","years"],["Monthly Revenue","monthlyRev"],["Avg Daily Balance","avgDailyBalance"],["Existing Positions","existingPositions"],["Credit Score","creditRating"],["Risk Grade","riskGrade"],["Loan Amount","loanAmt"],["Purpose","purpose"],["Gross Commission ($)","grossComm"],["Rep Split (%)","repSplit"],["Commission % of Deal","commissionPct"]].map(([lab,key])=>(
+                    <div key={key}>
+                      <span style={lbl}>{lab}</span>
+                      <input value={profileEdit?.[key]??drawer[key]??""} onChange={e=>setProfileEdit(p=>({...(p||drawer),[key]:e.target.value}))} style={{ ...inp, marginBottom:0 }} />
                     </div>
                   ))}
                 </div>
-                <div style={{ display:"flex", gap:8, marginTop:"auto" }}>
-                  <input placeholder="Message to client..." value={msgText} onChange={e=>setMsgText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendAdminMsg()} style={{ flex:1, padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", outline:"none" }} />
-                  <button onClick={sendAdminMsg} style={{ background:"#1a1a1a", color:G, border:"none", padding:"10px 16px", borderRadius:8, fontSize:13, fontWeight:700, cursor:"pointer" }}>Send</button>
+                <button onClick={()=>{if(profileEdit){updateApp(drawer.id,profileEdit);setProfileEdit(null);showToast("✓ Profile saved!");}}} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:11, borderRadius:7, fontSize:13, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif", marginTop:14 }}>Save Profile →</button>
+              </div>
+            )}
+
+            {drawerTab==="underwriting" && (() => {
+              const credit = parseInt((drawer.creditRating||"0").replace(/\D.*$/,""))||0;
+              const rev = parseInt((drawer.monthlyRev||"0").replace(/\D/g,""))||0;
+              const adb = parseInt((drawer.avgDailyBalance||"0").replace(/\D/g,""))||0;
+              const positions = parseInt(drawer.existingPositions)||0;
+              const riskScore = Math.min(100, Math.max(0,
+                (credit>=700?30:credit>=650?20:credit>=600?10:5) +
+                (rev>=50000?25:rev>=25000?15:rev>=10000?8:3) +
+                (adb>=20000?20:adb>=10000?12:adb>=5000?6:2) +
+                (positions===0?15:positions===1?8:positions===2?3:0) +
+                (drawer.years?.includes("5–10")||drawer.years?.includes("10+")?10:drawer.years?.includes("3–5")?6:3)
+              ));
+              const grade = riskScore>=80?"A":riskScore>=65?"B+":riskScore>=50?"B":riskScore>=35?"C+":"C";
+              const suggestedAmt = Math.round(rev*(riskScore>=70?2.5:riskScore>=50?1.8:1.2));
+              const eligible = matchLenders(drawer);
+              const color = riskScore>=70?"#16a34a":riskScore>=50?"#d97706":"#dc2626";
+              const bg = riskScore>=70?"#f0fdf4":riskScore>=50?"#fef9c3":"#fef2f2";
+              const border = riskScore>=70?"#bbf7d0":riskScore>=50?"#fde68a":"#fecaca";
+              return (
+                <div>
+                  <div style={{ background:bg, border:`1px solid ${border}`, borderRadius:9, padding:"14px 16px", marginBottom:14 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                      <p style={{ fontSize:13, fontWeight:800, color:"#1a1a1a" }}>Risk Assessment</p>
+                      <span style={{ fontSize:20, fontWeight:900, color }}>Grade: {grade}</span>
+                    </div>
+                    <div style={{ height:8, background:"rgba(0,0,0,.08)", borderRadius:4, overflow:"hidden", marginBottom:6 }}>
+                      <div style={{ width:`${riskScore}%`, height:"100%", background:color, borderRadius:4 }}></div>
+                    </div>
+                    <p style={{ fontSize:11, color:"#888" }}>Risk Score: {riskScore}/100</p>
+                  </div>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+                    {[["Credit Score",drawer.creditRating||"—"],["Monthly Revenue","$"+rev.toLocaleString()],["Avg Daily Balance","$"+adb.toLocaleString()],["Existing Positions",positions],["Suggested Amount","$"+suggestedAmt.toLocaleString()],["Risk Grade",grade]].map(([l,v])=>(
+                      <div key={l} style={{ background:"#f9fafb", borderRadius:7, padding:"9px 11px" }}>
+                        <p style={{ fontSize:9, color:"#aaa", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>{l}</p>
+                        <p style={{ fontSize:14, fontWeight:800, color:"#1a1a1a", marginTop:2 }}>{v}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"12px 14px" }}>
+                    <p style={{ fontSize:12, fontWeight:800, color:"#1a1a1a", marginBottom:9 }}>Eligible Lenders ({eligible.length})</p>
+                    {eligible.length===0?<p style={{ fontSize:11, color:"#888" }}>No matching lenders. Check profile and lender guidelines.</p>
+                    :eligible.map(l=>(
+                      <div key={l.id} style={{ display:"flex", justifyContent:"space-between", padding:"7px 0", borderBottom:"1px solid #f5f5f5", alignItems:"center" }}>
+                        <div>
+                          <p style={{ fontSize:12, fontWeight:700, color:"#1a1a1a" }}>{l.name}</p>
+                          <p style={{ fontSize:10, color:"#888" }}>Buy {l.buyRate}x · {l.fundingSpeed} · Up to {l.maxFund}</p>
+                        </div>
+                        <button onClick={()=>{setOfferForm(f=>({...f,lender:l.name,buyRate:String(l.buyRate)}));setDrawerTab("offers");}} style={{ background:"#1a1a1a", color:G, border:"none", padding:"3px 9px", borderRadius:4, fontSize:10, fontWeight:700, cursor:"pointer" }}>Submit →</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {drawerTab==="offers" && (
+              <div>
+                {getDrawerData("offers").length>1&&(
+                  <div style={{ marginBottom:14 }}>
+                    <p style={{ fontSize:11, fontWeight:700, color:"#888", textTransform:"uppercase", letterSpacing:".06em", marginBottom:7 }}>Side-by-Side Comparison</p>
+                    <div style={{ overflowX:"auto" }}>
+                      <table style={{ width:"100%", borderCollapse:"collapse", fontSize:11 }}>
+                        <thead><tr style={{ background:"#f9fafb" }}>
+                          {["Lender","Amount","Factor","Payment","Term","Comm"].map(h=>(
+                            <th key={h} style={{ padding:"6px 8px", textAlign:"left", fontSize:9, fontWeight:700, color:"#888", textTransform:"uppercase", letterSpacing:".06em", borderBottom:"1px solid #e5e3de" }}>{h}</th>
+                          ))}
+                        </tr></thead>
+                        <tbody>
+                          {getDrawerData("offers").map(o=>(
+                            <tr key={o.id} style={{ borderBottom:"1px solid #f5f5f5" }}>
+                              <td style={{ padding:"6px 8px", fontWeight:700 }}>{o.lender||"—"}</td>
+                              <td style={{ padding:"6px 8px" }}>{o.amount}</td>
+                              <td style={{ padding:"6px 8px" }}>{o.factorRate}x</td>
+                              <td style={{ padding:"6px 8px" }}>{o.dailyPayment}</td>
+                              <td style={{ padding:"6px 8px" }}>{o.term}</td>
+                              <td style={{ padding:"6px 8px", color:"#16a34a", fontWeight:700 }}>{o.commission||"—"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+                <p style={{ fontSize:11, color:"#888", marginBottom:10 }}>Send new offer to <strong>{drawer.firstName}</strong></p>
+                {[["Product",["MCA","Term Loan","Line of Credit","Revenue Advance","Equipment Financing"],"product"],["Lender","e.g. Rapid Capital","lender"],["Approved Amount","e.g. $85,000","amount"],["Factor Rate","e.g. 1.22","factorRate"],["Total Payback","e.g. $100,300","payback"],["Daily Payment","e.g. $625/day","dailyPayment"],["Term","e.g. 24 weeks","term"],["Holdback %","e.g. 15%","holdback"],["Buy Rate","e.g. 1.18","buyRate"],["Sell Rate","e.g. 1.25","sellRate"],["Commission","e.g. $8,500","commission"],["Expires","e.g. Jun 30, 2026","expires"]].map(([lab,opts,key])=>(
+                  <div key={key}>
+                    <span style={lbl}>{lab}</span>
+                    {Array.isArray(opts)?<select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{...inp,appearance:"none",cursor:"pointer"}}>{opts.map(o=><option key={o}>{o}</option>)}</select>
+                    :<input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={inp} />}
+                  </div>
+                ))}
+                <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:11, borderRadius:7, fontSize:13, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Send Offer →</button>
+              </div>
+            )}
+
+            {drawerTab==="message" && (
+              <div style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 310px)" }}>
+                <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:7 }}>
+                  {getDrawerData("msgs").length===0&&<p style={{ color:"#aaa", fontSize:12, textAlign:"center", marginTop:20 }}>No messages yet.</p>}
+                  {getDrawerData("msgs").map((m,i)=>(
+                    <div key={i} style={{ maxWidth:"80%", padding:"8px 12px", borderRadius:9, fontSize:12, lineHeight:1.55, alignSelf:m.from==="advisor"?"flex-end":"flex-start", background:m.from==="advisor"?"#1a1a1a":"#f0f0f0", color:m.from==="advisor"?"#fff":"#333" }}>
+                      <p>{m.text}</p>
+                      <p style={{ fontSize:9, opacity:.5, marginTop:2 }}>{m.from==="advisor"?"You":"Client"} · {m.time}</p>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display:"flex", gap:7, paddingTop:10, borderTop:"1px solid #f0f0f0", marginTop:7 }}>
+                  <input placeholder="Message..." value={msgText} onChange={e=>setMsgText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendAdminMsg()} style={{ flex:1, padding:"8px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none" }} />
+                  <button onClick={sendAdminMsg} style={{ background:"#1a1a1a", color:G, border:"none", padding:"8px 13px", borderRadius:7, fontSize:12, fontWeight:700, cursor:"pointer" }}>Send</button>
                 </div>
               </div>
             )}
 
-            {/* History tab */}
+            {drawerTab==="tasks" && (
+              <div>
+                {getDrawerData("tasks").length===0&&<p style={{ color:"#aaa", fontSize:12, textAlign:"center", marginTop:20 }}>No tasks yet.</p>}
+                {getDrawerData("tasks").map(task=>(
+                  <div key={task.id} style={{ display:"flex", alignItems:"center", gap:9, padding:"8px 0", borderBottom:"1px solid #f5f5f5" }}>
+                    <input type="checkbox" checked={task.done} onChange={()=>{toggleTask(drawer.id,task.id);reload();}} style={{ cursor:"pointer", width:14, height:14, accentColor:"#1a1a1a" }} />
+                    <span style={{ fontSize:12, color:task.done?"#bbb":"#1a1a1a", textDecoration:task.done?"line-through":"none", flex:1 }}>{task.text}</span>
+                    <span style={{ fontSize:9, color:"#ccc" }}>{task.created}</span>
+                  </div>
+                ))}
+                <div style={{ display:"flex", gap:7, marginTop:11 }}>
+                  <input placeholder="Add task..." value={taskText} onChange={e=>setTaskText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addTask(drawer.id)} style={{ flex:1, padding:"8px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none" }} />
+                  <button onClick={()=>addTask(drawer.id)} style={{ background:"#1a1a1a", color:"#fff", border:"none", padding:"8px 13px", borderRadius:7, fontSize:13, cursor:"pointer" }}>+</button>
+                </div>
+              </div>
+            )}
+
+            {drawerTab==="notes" && (
+              <div>
+                <div style={{ display:"flex", gap:7, marginBottom:12 }}>
+                  <textarea placeholder="Add a note..." value={noteText} onChange={e=>setNoteText(e.target.value)} rows={3} style={{ flex:1, padding:"8px 11px", border:"1.5px solid #e5e3de", borderRadius:7, fontSize:12, fontFamily:"'Sora',sans-serif", outline:"none", resize:"vertical" }} />
+                  <button onClick={()=>addNote(drawer.id)} style={{ background:"#1a1a1a", color:"#fff", border:"none", padding:"8px 12px", borderRadius:7, fontSize:12, cursor:"pointer", alignSelf:"flex-start" }}>Save</button>
+                </div>
+                {getDrawerData("notes").length===0&&<p style={{ color:"#aaa", fontSize:12, textAlign:"center" }}>No notes yet.</p>}
+                {getDrawerData("notes").map(n=>(
+                  <div key={n.id} style={{ background:"#fefce8", border:"1px solid #fde68a", borderRadius:7, padding:"10px 12px", marginBottom:7 }}>
+                    <p style={{ fontSize:12, color:"#1a1a1a", lineHeight:1.55 }}>{n.text}</p>
+                    <p style={{ fontSize:9, color:"#aaa", marginTop:5 }}>{n.rep} · {n.time}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {drawerTab==="history" && (
               <div>
-                <p style={{ fontSize:13, color:"#888", marginBottom:12 }}>Full activity log for this application.</p>
                 {[
-                  { time:drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—", event:"Application submitted", color:"#3b82f6" },
-                  ...getDrawerOffers().map(o=>({ time:o.sentAt||"—", event:`Offer sent: ${o.product} · ${o.amount}`, color:"#8b5cf6" })),
-                  ...getDrawerOffers().filter(o=>o.status==="accepted").map(o=>({ time:"—", event:`Offer accepted by client`, color:"#16a34a" })),
-                  ...getDrawerMsgs().map(m=>({ time:m.time, event:`${m.from==="advisor"?"Advisor":"Client"}: "${m.text.slice(0,40)}${m.text.length>40?"...":""}`, color:"#888" })),
+                  { time:drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—", event:"Lead created", color:"#3b82f6" },
+                  ...getDrawerData("offers").map(o=>({ time:o.sentAt||"—", event:`Offer sent: ${o.product} · ${o.amount} (${o.lender||"?"})`, color:"#8b5cf6" })),
+                  ...getDrawerData("offers").filter(o=>o.status==="accepted").map(o=>({ time:"—", event:`Offer accepted: ${o.amount}`, color:"#16a34a" })),
+                  ...getDrawerData("msgs").map(m=>({ time:m.time, event:`${m.from==="advisor"?"Advisor":"Client"}: "${m.text.slice(0,50)}${m.text.length>50?"...":""}"`, color:"#888" })),
+                  ...getDrawerData("tasks").map(t=>({ time:t.created, event:`Task${t.done?" ✓":" added"}: "${t.text}"`, color:t.done?"#16a34a":"#d97706" })),
+                  ...getDrawerData("notes").map(n=>({ time:n.time, event:`Note: "${n.text.slice(0,50)}${n.text.length>50?"...":""}"`, color:"#ca8a04" })),
                 ].map((item,i)=>(
-                  <div key={i} style={{ display:"flex", gap:12, paddingBottom:14, borderBottom:"1px solid #f5f5f5", marginBottom:2 }}>
-                    <div style={{ width:8, height:8, borderRadius:"50%", background:item.color, flexShrink:0, marginTop:4 }}></div>
+                  <div key={i} style={{ display:"flex", gap:11, paddingBottom:11, marginBottom:2 }}>
+                    <div style={{ width:6, height:6, borderRadius:"50%", background:item.color, flexShrink:0, marginTop:5 }}></div>
                     <div>
-                      <p style={{ fontSize:13, color:"#1a1a1a", fontWeight:600 }}>{item.event}</p>
-                      <p style={{ fontSize:11, color:"#aaa", marginTop:2 }}>{item.time}</p>
+                      <p style={{ fontSize:12, color:"#1a1a1a", fontWeight:500, lineHeight:1.4 }}>{item.event}</p>
+                      <p style={{ fontSize:9, color:"#aaa", marginTop:2 }}>{item.time}</p>
                     </div>
                   </div>
                 ))}
@@ -1617,8 +2100,6 @@ function AdminDashboard({ onExit }) {
     </div>
   );
 }
-
-
 
 // ── INNER PAGE NAV ───────────────────────────────────────────────
 function InnerNav({ lang, setLang, onBack, onApply, onProducts, onHowItWorks, onFaq, onLogin, onAbout, onContact }) {
@@ -3709,10 +4190,11 @@ export default function Aprovuit() {
     if (initialUploadId) return "upload";
     const path = window.location.pathname.replace(/\/$/,"") || "/";
     const v = PATH_VIEWS[path] || "landing";
-    // Private views can't be accessed by URL directly (no user session)
-    const PRIVATE = new Set(["dashboard","login","apply","upload","admin"]);
-    if (PRIVATE.has(v) && v !== "admin") {
-      // Clean the URL back to home without a page reload
+    // Admin is always allowed by URL
+    if (v === "admin") return "admin";
+    // Other private views need a session - redirect to landing
+    const PRIVATE = new Set(["dashboard","login","apply","upload"]);
+    if (PRIVATE.has(v)) {
       window.history.replaceState({}, "", "/");
       return "landing";
     }
