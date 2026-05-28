@@ -1440,11 +1440,11 @@ function AdminDashboard({ onExit }) {
   // Metrics
   const funded = apps.filter(a=>a.status==="Funded");
   const active = apps.filter(a=>!["Funded","Closed/Lost"].includes(a.status));
-  const totalPipeline = apps.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
-  const fundedAmt = funded.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const totalPipeline = apps.reduce((s,a)=>{const n=parseInt(String(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const fundedAmt = funded.reduce((s,a)=>{const n=parseInt(String(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
   const totalComm = funded.reduce((s,a)=>s+(a.grossComm||0),0);
   const repComm = funded.reduce((s,a)=>s+((a.grossComm||0)*(a.repSplit||50)/100),0);
-  const weightedPipe = active.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n*((a.probability||50)/100));},0);
+  const weightedPipe = active.reduce((s,a)=>{const n=parseInt(String(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n*((a.probability||50)/100));},0);
   const convRate = apps.length>0?Math.round(funded.length/apps.length*100):0;
   const renewalDue = apps.filter(a=>{const r=getRenewal(a.id);return r&&r.pctPaid>=50&&a.status==="Funded";});
 
@@ -1523,7 +1523,7 @@ function AdminDashboard({ onExit }) {
             <div style={{ display:"flex", gap:8, overflowX:"auto", paddingBottom:12, minHeight:480 }}>
               {PIPELINE_STAGES.map(stage=>{
                 const stageApps = filtered.filter(a=>(a.status||"New Lead")===stage);
-                const stageAmt = stageApps.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+                const stageAmt = stageApps.reduce((s,a)=>{const n=parseInt(String(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
                 const sc = STAGE_COLORS[stage]||{ bg:"#f9fafb", text:"#888", border:"#e5e7eb" };
                 return (
                   <div key={stage} style={{ minWidth:185, width:185, flexShrink:0 }}
@@ -1845,7 +1845,7 @@ function AdminDashboard({ onExit }) {
               </div>
               <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
                 <h3 style={{ fontSize:13, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>Top Deals</h3>
-                {[...apps].sort((a,b)=>(parseInt(StringStringString(b.loanAmt||"0").replace(/\D/g,""))||0)-(parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""))||0)).slice(0,7).map((app,i)=>{
+                {[...apps].sort((a,b)=>(parseInt(String(b.loanAmt||"0").replace(/\D/g,""))||0)-(parseInt(String(a.loanAmt||"0").replace(/\D/g,""))||0)).slice(0,7).map((app,i)=>{
                   const sc=STAGE_COLORS[app.status||"New Lead"]||{bg:"#f9fafb",text:"#888"};
                   return (
                     <div key={app.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderBottom:"1px solid #f5f5f5" }}>
