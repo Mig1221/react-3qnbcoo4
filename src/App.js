@@ -1428,10 +1428,10 @@ function AdminDashboard({ onExit }) {
   const matchLenders = (app) => {
     if (!app) return [];
     const credit = parseInt((app.creditRating||"0").replace(/\D.*$/,""))||0;
-    const rev = parseInt((app.monthlyRev||"0").replace(/\D/g,""))||0;
+    const rev = parseInt(String(app.monthlyRev||"0").replace(/\D/g,""))||0;
     return lenders.filter(l => {
       const blocked = (Array.isArray(l.restricted)?l.restricted:[]).some(r=>app.industry?.toLowerCase().includes(r.toLowerCase()));
-      return !blocked && credit>=(parseInt(l.minFICO)||0) && rev>=(parseInt((l.minRevenue||"0").replace(/\D/g,""))||0);
+      return !blocked && credit>=(parseInt(l.minFICO)||0) && rev>=(parseInt(String(l.minRevenue||"0").replace(/\D/g,""))||0);
     });
   };
   const getRenewal = (appId) => JSON.parse(localStorage.getItem(`renewal_${appId}`)||"null");
@@ -1440,11 +1440,11 @@ function AdminDashboard({ onExit }) {
   // Metrics
   const funded = apps.filter(a=>a.status==="Funded");
   const active = apps.filter(a=>!["Funded","Closed/Lost"].includes(a.status));
-  const totalPipeline = apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
-  const fundedAmt = funded.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const totalPipeline = apps.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+  const fundedAmt = funded.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
   const totalComm = funded.reduce((s,a)=>s+(a.grossComm||0),0);
   const repComm = funded.reduce((s,a)=>s+((a.grossComm||0)*(a.repSplit||50)/100),0);
-  const weightedPipe = active.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n*((a.probability||50)/100));},0);
+  const weightedPipe = active.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n*((a.probability||50)/100));},0);
   const convRate = apps.length>0?Math.round(funded.length/apps.length*100):0;
   const renewalDue = apps.filter(a=>{const r=getRenewal(a.id);return r&&r.pctPaid>=50&&a.status==="Funded";});
 
@@ -1523,7 +1523,7 @@ function AdminDashboard({ onExit }) {
             <div style={{ display:"flex", gap:8, overflowX:"auto", paddingBottom:12, minHeight:480 }}>
               {PIPELINE_STAGES.map(stage=>{
                 const stageApps = filtered.filter(a=>(a.status||"New Lead")===stage);
-                const stageAmt = stageApps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
+                const stageAmt = stageApps.reduce((s,a)=>{const n=parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0);
                 const sc = STAGE_COLORS[stage]||{ bg:"#f9fafb", text:"#888", border:"#e5e7eb" };
                 return (
                   <div key={stage} style={{ minWidth:185, width:185, flexShrink:0 }}
@@ -1750,7 +1750,7 @@ function AdminDashboard({ onExit }) {
             <p style={{ fontSize:13, color:"#888", marginBottom:18 }}>Clients flagged at 50%, 65%, and 80% paid back. This is where MCA companies make serious money.</p>
             {apps.filter(a=>a.status==="Funded").length===0&&<div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:36, textAlign:"center" }}><p style={{ color:"#888" }}>No funded deals yet.</p></div>}
             {apps.filter(a=>a.status==="Funded").map(app=>{
-              const r = getRenewal(app.id) || { pctPaid:0, paidBack:0, fundedAmt:parseInt((app.loanAmt||"0").replace(/\D/g,""))||0 };
+              const r = getRenewal(app.id) || { pctPaid:0, paidBack:0, fundedAmt:parseInt(String(app.loanAmt||"0").replace(/\D/g,""))||0 };
               const urgency = r.pctPaid>=80?"🔴 High Priority":r.pctPaid>=65?"🟡 Follow Up":r.pctPaid>=50?"🟢 Renewal Eligible":"⏳ Tracking";
               const renewalEst = Math.round((r.fundedAmt||0)*1.15);
               return (
@@ -1845,7 +1845,7 @@ function AdminDashboard({ onExit }) {
               </div>
               <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:9, padding:"14px 16px" }}>
                 <h3 style={{ fontSize:13, fontWeight:800, color:"#1a1a1a", marginBottom:12 }}>Top Deals</h3>
-                {[...apps].sort((a,b)=>(parseInt((b.loanAmt||"0").replace(/\D/g,""))||0)-(parseInt((a.loanAmt||"0").replace(/\D/g,""))||0)).slice(0,7).map((app,i)=>{
+                {[...apps].sort((a,b)=>(parseInt(StringStringString(b.loanAmt||"0").replace(/\D/g,""))||0)-(parseInt(StringStringString(a.loanAmt||"0").replace(/\D/g,""))||0)).slice(0,7).map((app,i)=>{
                   const sc=STAGE_COLORS[app.status||"New Lead"]||{bg:"#f9fafb",text:"#888"};
                   return (
                     <div key={app.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderBottom:"1px solid #f5f5f5" }}>
@@ -1930,8 +1930,8 @@ function AdminDashboard({ onExit }) {
 
             {drawerTab==="underwriting" && (() => {
               const credit = parseInt((drawer.creditRating||"0").replace(/\D.*$/,""))||0;
-              const rev = parseInt((drawer.monthlyRev||"0").replace(/\D/g,""))||0;
-              const adb = parseInt((drawer.avgDailyBalance||"0").replace(/\D/g,""))||0;
+              const rev = parseInt(String(drawer.monthlyRev||"0").replace(/\D/g,""))||0;
+              const adb = parseInt(String(drawer.avgDailyBalance||"0").replace(/\D/g,""))||0;
               const positions = parseInt(drawer.existingPositions)||0;
               const riskScore = Math.min(100, Math.max(0,
                 (credit>=700?30:credit>=650?20:credit>=600?10:5) +
