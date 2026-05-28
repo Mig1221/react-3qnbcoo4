@@ -945,41 +945,54 @@ function LoginPage({ lang, onBack, onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
-    if (!email || !password) { setError(lang==="es"?"Ingresa tu correo y contraseña":"Enter your email and password"); return; }
-    const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
-    const account = accounts.find(a => a.email === email && a.password === password);
-    if (account) {
-      onLogin(account.email, account.firstName, account.company, account.appId);
-    } else {
-      // Demo: any email+password goes to dashboard
-      onLogin(email, email.split("@")[0], "My Business", "APP-DEMO");
-    }
+    setError("");
+    if (!email || !password) { setError(lang==="es"?"Ingresa tu correo y contraseña":"Enter your email and password."); return; }
+    setLoading(true);
+    setTimeout(() => {
+      const accounts = JSON.parse(localStorage.getItem("aprovuit_accounts")||"[]");
+      const account = accounts.find(a => a.email.toLowerCase() === email.toLowerCase() && a.password === password);
+      if (account) {
+        onLogin(account.email, account.firstName, account.company, account.appId);
+      } else {
+        setError(lang==="es"?"Correo o contraseña incorrectos. Si acabas de aplicar, usa el correo y contraseña que registraste.":"Incorrect email or password. If you just applied, use the email and password you registered.");
+        setLoading(false);
+      }
+    }, 600);
   };
 
-  const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", background:"#fff", marginBottom:14, display:"block", outline:"none" };
+  const inp = { width:"100%", padding:"13px 16px", borderRadius:10, border:"1.5px solid #e5e8ee", fontSize:15, fontFamily:"'Sora',sans-serif", color:"#1a1a1a", background:"#fff", marginBottom:6, display:"block", outline:"none", transition:"border-color .15s" };
 
   return (
-    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a,#0d1f0d)", display:"flex", flexDirection:"column" }}>
-      <div style={{ background:"rgba(10,10,10,.97)", padding:"0 5%", height:60, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0a0a0a 0%,#0d1f0d 100%)", display:"flex", flexDirection:"column" }}>
+      <div style={{ background:"rgba(10,10,10,.97)", padding:"0 5%", height:64, display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
         <button onClick={onBack} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:8 }}>
           <div style={{ width:28, height:28, background:G, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#000" }}>A</div>
           <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:"-.03em" }}>APROVUIT</span>
         </button>
+        <button onClick={onBack} style={{ background:"none", border:"none", color:"rgba(255,255,255,.4)", fontSize:14, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>← Back</button>
       </div>
       <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
-        <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%" }}>
-          <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:6 }}>{t.h}</h2>
-          <p style={{ fontSize:14, color:"#888", marginBottom:28 }}>{t.sub}</p>
-          {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"10px 14px", marginBottom:16 }}><p style={{ fontSize:14, color:"#dc2626" }}>{error}</p></div>}
-          <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.email}</label>
+        <div className="fadeup" style={{ background:"#fff", borderRadius:20, padding:"44px 40px", maxWidth:440, width:"100%", boxShadow:"0 24px 80px rgba(0,0,0,.4)" }}>
+          <div style={{ width:48, height:48, background:"#0a0a0a", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:20 }}>
+            <span style={{ fontSize:22, fontWeight:900, color:G }}>A</span>
+          </div>
+          <h2 style={{ fontSize:26, fontWeight:900, color:"#1a1a1a", marginBottom:6, letterSpacing:"-.03em" }}>{t.h}</h2>
+          <p style={{ fontSize:14, color:"#888", marginBottom:28, lineHeight:1.5 }}>{t.sub}</p>
+          {error && <div style={{ background:"#fef2f2", border:"1px solid #fecaca", borderRadius:10, padding:"12px 16px", marginBottom:18 }}><p style={{ fontSize:13, color:"#dc2626", lineHeight:1.5 }}>{error}</p></div>}
+          <label style={{ fontSize:11, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:8, display:"block" }}>{t.email}</label>
           <input style={inp} type="email" placeholder="you@yourbusiness.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleLogin()} />
-          <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{t.password}</label>
+          <label style={{ fontSize:11, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:8, display:"block", marginTop:14 }}>{t.password}</label>
           <input style={inp} type="password" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleLogin()} />
-          <p style={{ fontSize:14, color:"#888", textAlign:"right", marginBottom:20, cursor:"pointer" }}>{t.forgot}</p>
-          <button onClick={handleLogin} style={{ width:"100%", background:"#1a1a1a", color:"#fff", border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.btn}</button>
-          <p style={{ fontSize:14, color:"#888", textAlign:"center", marginTop:16 }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer" }} onClick={onBack}>{t.applyLink}</span></p>
+          <p style={{ fontSize:13, color:"#3b82f6", textAlign:"right", marginBottom:24, cursor:"pointer", marginTop:6 }}>{t.forgot}</p>
+          <button onClick={handleLogin} disabled={loading} style={{ width:"100%", background:loading?"#555":"#1a1a1a", color:"#fff", border:"none", padding:16, borderRadius:12, fontSize:15, fontWeight:800, cursor:loading?"not-allowed":"pointer", fontFamily:"'Sora',sans-serif", transition:"background .15s" }}>
+            {loading ? "Signing in..." : t.btn}
+          </button>
+          <div style={{ textAlign:"center", marginTop:20, paddingTop:20, borderTop:"1px solid #f0f0f0" }}>
+            <p style={{ fontSize:13, color:"#888" }}>{t.noAccount} <span style={{ color:"#1a1a1a", fontWeight:700, cursor:"pointer", textDecoration:"underline" }} onClick={onBack}>{t.applyLink}</span></p>
+          </div>
         </div>
       </div>
     </div>
@@ -990,238 +1003,208 @@ function LoginPage({ lang, onBack, onLogin }) {
 function Dashboard({ lang, user, onSignOut, onUpload }) {
   const t = T[lang].dash;
   const [tab, setTab] = useState("overview");
-  const [msgs, setMsgs] = useState([
-    { from:"advisor", text:"Hi! Your application has been received and is under review. We'll update you within 2–4 hours.", time:"2h ago" },
-    { from:"advisor", text:"No phone call needed — track everything right here in your dashboard.", time:"2h ago" },
-  ]);
   const [msgTxt, setMsgTxt] = useState("");
-  const [offers, setOffers] = useState(JSON.parse(localStorage.getItem(`offers_${user.appId}`)||"[]"));
 
-  // Check for new offers
+  const getApp = () => JSON.parse(localStorage.getItem("aprovuit_apps")||"[]").find(a=>a.id===user.appId) || null;
+  const getOffers = () => JSON.parse(localStorage.getItem(`offers_${user.appId}`)||"[]");
+  const getMsgs = () => JSON.parse(localStorage.getItem(`msgs_${user.appId}`)||"[]");
+
+  const [app, setApp] = useState(getApp);
+  const [offers, setOffers] = useState(getOffers);
+  const [msgs, setMsgs] = useState(getMsgs);
+
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem(`offers_${user.appId}`)||"[]");
-    setOffers(stored);
-  }, [tab]);
+    const interval = setInterval(() => {
+      setApp(getApp());
+      setOffers(getOffers());
+      setMsgs(getMsgs());
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [user.appId]);
 
   const sendMsg = () => {
     if (!msgTxt.trim()) return;
-    setMsgs(p=>[...p,{from:"client",text:msgTxt,time:"Just now"}]);
+    const updated = [...msgs, { from:"client", text:msgTxt.trim(), time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}), ts:Date.now() }];
+    localStorage.setItem(`msgs_${user.appId}`, JSON.stringify(updated));
+    setMsgs(updated);
     setMsgTxt("");
-    setTimeout(()=>setMsgs(p=>[...p,{from:"advisor",text:"Got it! I'll look into that right away and get back to you here.",time:"Just now"}]),1500);
   };
 
   const acceptOffer = (offerId) => {
-    const updated = offers.map(o=>o.id===offerId?{...o,status:"accepted"}:o);
-    setOffers(updated);
+    const updated = offers.map(o => o.id===offerId ? {...o, status:"accepted"} : o);
     localStorage.setItem(`offers_${user.appId}`, JSON.stringify(updated));
+    setOffers(updated);
+    const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
+    const newApps = apps.map(a => a.id===user.appId ? {...a, status:"Approved"} : a);
+    localStorage.setItem("aprovuit_apps", JSON.stringify(newApps));
+    setApp(newApps.find(a=>a.id===user.appId)||null);
   };
 
   const declineOffer = (offerId) => {
-    const updated = offers.map(o=>o.id===offerId?{...o,status:"declined"}:o);
-    setOffers(updated);
+    const updated = offers.map(o => o.id===offerId ? {...o, status:"declined"} : o);
     localStorage.setItem(`offers_${user.appId}`, JSON.stringify(updated));
+    setOffers(updated);
   };
 
   const pendingOffers = offers.filter(o=>o.status==="pending");
-  const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
-  const myApp = apps.find(a=>a.id===user.appId) || apps[apps.length-1];
+  const status = app?.status || "Under Review";
+
+  const STATUS_STEPS = [
+    { key:"submitted", label:"Application Submitted", done:true },
+    { key:"review", label:"Under Review", done:["Under Review","Docs Needed","Approved","Funded"].includes(status) },
+    { key:"offer", label:"Offer Sent", done:["Approved","Funded"].includes(status)||offers.some(o=>o.status==="accepted") },
+    { key:"funded", label:"Funded", done:status==="Funded" },
+    { key:"repayment", label:"Active — In Repayment", done:status==="Funded" },
+  ];
 
   const TABS = [
-    { id:"overview", icon:"⊞", label:t.overview },
-    { id:"offers", icon:"◈", label:t.offers, badge:pendingOffers.length },
-    { id:"loans", icon:"◎", label:t.loans },
-    { id:"docs", icon:"◻", label:t.docs },
-    { id:"messages", icon:"◉", label:t.msgs },
+    { id:"overview", label:"Overview" },
+    { id:"offers", label:"Offers", badge:pendingOffers.length },
+    { id:"docs", label:"Documents" },
+    { id:"messages", label:"Messages", badge:msgs.filter(m=>m.from==="advisor").length },
   ];
 
   return (
-    <div style={{ display:"flex", minHeight:"calc(100vh - 56px)" }}>
-      {/* Sidebar */}
-      <div style={{ width:200, background:"#111", borderRight:"1px solid rgba(255,255,255,.06)", flexShrink:0 }}>
-        <div style={{ padding:"20px 16px", borderBottom:"1px solid rgba(255,255,255,.06)" }}>
-          <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginBottom:4, textTransform:"uppercase", letterSpacing:"0.06em" }}>Logged in as</p>
-          <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{user.firstName}</p>
-          <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:2 }}>{user.company}</p>
-        </div>
-        <div style={{ padding:"8px 0" }}>
-          {TABS.map(tb=>(
-            <div key={tb.id} className={`sb-item${tab===tb.id?" active":""}`} onClick={()=>setTab(tb.id)} style={{ position:"relative" }}>
-              <span style={{ fontSize:16, width:20, textAlign:"center" }}>{tb.icon}</span>
-              {tb.label}
-              {tb.badge>0 && <div style={{ position:"absolute", right:12, width:18, height:18, background:"#ef4444", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:800, color:"#fff" }}>{tb.badge}</div>}
-            </div>
-          ))}
-        </div>
-        <div style={{ padding:"12px 16px", borderTop:"1px solid rgba(255,255,255,.06)", marginTop:"auto" }}>
-          <button onClick={onSignOut} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← {t.signout}</button>
+    <div className="dash-wrap" style={{ display:"flex", minHeight:"calc(100vh - 56px)" }}>
+      <div className="sidebar" style={{ width:200, background:"#111", borderRight:"1px solid rgba(255,255,255,.06)", flexShrink:0, display:"flex", flexDirection:"column" }}>
+        {TABS.map(tb=>(
+          <div key={tb.id} className={`sb-item${tab===tb.id?" active":""}`} onClick={()=>setTab(tb.id)} style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+            <span>{tb.label}</span>
+            {tb.badge>0 && <span style={{ background:G, color:"#000", borderRadius:20, fontSize:10, fontWeight:800, padding:"1px 7px" }}>{tb.badge}</span>}
+          </div>
+        ))}
+        <div style={{ marginTop:"auto", padding:"16px 20px", borderTop:"1px solid rgba(255,255,255,.06)" }}>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,.25)", marginBottom:6, textTransform:"uppercase", letterSpacing:".04em" }}>App ID</p>
+          <p style={{ fontSize:11, color:"rgba(255,255,255,.35)", fontFamily:"monospace", wordBreak:"break-all" }}>{user.appId}</p>
+          <button onClick={onSignOut} style={{ marginTop:14, background:"none", border:"none", color:"rgba(255,255,255,.3)", fontSize:13, cursor:"pointer", padding:0, fontFamily:"'Sora',sans-serif" }}>Sign Out</button>
         </div>
       </div>
 
-      {/* Main */}
-      <div style={{ flex:1, padding:28, background:"#0d0d0d", overflowY:"auto" }}>
-
+      <div className="dash-main">
         {tab==="overview" && (
-          <div className="fadeup">
-            <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.greeting}, {user.firstName} </h2>
-              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>{t.snapshot}</p>
+          <div>
+            <div style={{ background:"rgba(168,255,62,.06)", border:`1px solid ${G}20`, borderRadius:12, padding:"20px 24px", marginBottom:20 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:10 }}>
+                <div>
+                  <p style={{ fontSize:11, color:G, fontWeight:700, letterSpacing:".08em", textTransform:"uppercase", marginBottom:4 }}>WELCOME BACK</p>
+                  <p style={{ fontSize:22, fontWeight:800, color:"#fff", letterSpacing:"-.02em" }}>{user.firstName}.</p>
+                  <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", marginTop:2 }}>{user.company}</p>
+                </div>
+                <span style={{ background:status==="Funded"?"rgba(168,255,62,.15)":status==="Approved"?"rgba(96,165,250,.15)":status==="Declined"?"rgba(239,68,68,.15)":"rgba(245,158,11,.15)", color:status==="Funded"?G:status==="Approved"?"#60a5fa":status==="Declined"?"#ef4444":"#f59e0b", border:"1px solid currentColor", borderRadius:20, padding:"4px 12px", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>{status}</span>
+              </div>
             </div>
-            <div className="metrics-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
-              {[["Active Credit","$0","No active loans yet",""],["Pending Offers",pendingOffers.length.toString(),"Awaiting review",""],["Application",myApp?"Under Review":"—","Submitted",""],["Next Payment","—","No payments yet",""]].map(([l,v,s])=>(
-                <div key={l} className="metric">
-                  <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:8 }}>{l}</p>
-                  <p style={{ fontSize:22, fontWeight:900, color:l==="Active Credit"?G:"#fff", letterSpacing:"-0.5px" }}>{v}</p>
-                  <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginTop:4 }}>{s}</p>
+            <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"20px 24px", marginBottom:16 }}>
+              <p style={{ fontSize:11, color:"rgba(255,255,255,.35)", fontWeight:700, letterSpacing:".1em", textTransform:"uppercase", marginBottom:16 }}>DEAL STATUS</p>
+              {STATUS_STEPS.map((step,i)=>(
+                <div key={step.key} style={{ display:"flex", alignItems:"center", gap:14, marginBottom:i<STATUS_STEPS.length-1?12:0 }}>
+                  <div style={{ width:20, height:20, borderRadius:"50%", border:`2px solid ${step.done?G:"rgba(255,255,255,.12)"}`, background:step.done?"rgba(168,255,62,.15)":"transparent", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    {step.done && <div style={{ width:8, height:8, borderRadius:"50%", background:G }}></div>}
+                  </div>
+                  <span style={{ fontSize:14, color:step.done?"#fff":"rgba(255,255,255,.3)", fontWeight:step.done?600:400 }}>{step.label}</span>
                 </div>
               ))}
             </div>
-
-            {/* Application status timeline */}
-            <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:"22px" }}>
-              <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:20 }}>Application Status</p>
-              <div style={{ display:"flex", alignItems:"center" }}>
-                {["Applied","Under Review","Decision","Offer Sent","Funded"].map((step,i)=>(
-                  <React.Fragment key={step}>
-                    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                      <div style={{ width:32, height:32, borderRadius:"50%", background:i<=1?G:"rgba(255,255,255,.08)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:i<=1?"#000":"rgba(255,255,255,.3)" }}>{i<=1?"Done":(i+1)}</div>
-                      <p style={{ fontSize:10, color:i<=1?G:"rgba(255,255,255,.3)", textAlign:"center", fontWeight:700, whiteSpace:"nowrap" }}>{step}</p>
-                    </div>
-                    {i<4 && <div style={{ flex:1, height:2, background:i<1?G:"rgba(255,255,255,.06)", margin:"0 4px 16px" }}></div>}
-                  </React.Fragment>
-                ))}
+            {app && (
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"16px 20px" }}>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", marginBottom:6 }}>Requested Amount</p>
+                  <p style={{ fontSize:22, fontWeight:800, color:"#fff" }}>{app.loanAmt||"—"}</p>
+                </div>
+                <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"16px 20px" }}>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.35)", marginBottom:6 }}>Submitted</p>
+                  <p style={{ fontSize:14, fontWeight:600, color:"#fff" }}>{app.submittedAt?new Date(app.submittedAt).toLocaleDateString():"—"}</p>
+                </div>
               </div>
-            </div>
+            )}
+            {pendingOffers.length>0 && (
+              <div onClick={()=>setTab("offers")} style={{ marginTop:14, background:"rgba(168,255,62,.06)", border:`1px solid ${G}30`, borderRadius:10, padding:"14px 18px", cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                <div>
+                  <p style={{ fontSize:13, fontWeight:700, color:G }}>🎉 You have {pendingOffers.length} new offer{pendingOffers.length>1?"s":""}!</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:2 }}>Click to review and accept or decline.</p>
+                </div>
+                <span style={{ color:G }}>→</span>
+              </div>
+            )}
           </div>
         )}
 
         {tab==="offers" && (
-          <div className="fadeup">
-            <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.offers}</h2>
-              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Review and accept your funding offers</p>
-            </div>
-            {pendingOffers.length === 0 && (
-              <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
-                <div style={{ fontSize:40, marginBottom:16 }}></div>
-                <p style={{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,.5)", marginBottom:8 }}>{t.noOffers}</p>
-                <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Financing offers from our partner network will appear here as partners review your application. You compare and choose — no one decides for you.</p>
+          <div>
+            <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:20, letterSpacing:"-.02em" }}>Funding Offers</h2>
+            {offers.length===0 ? (
+              <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"40px 24px", textAlign:"center" }}>
+                <p style={{ fontSize:32, marginBottom:12 }}>⏳</p>
+                <p style={{ color:"rgba(255,255,255,.4)", fontSize:14 }}>No offers yet. Our team is reviewing your application and will send offers within 2–4 business hours.</p>
               </div>
-            )}
-            {offers.filter(o=>o.status==="pending").map(offer=>(
+            ) : offers.map(offer=>(
               <div key={offer.id} className="offer-card">
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
-                  <p style={{ fontSize:14, color:"rgba(255,255,255,.5)" }}>{offer.product} · {offer.appId}</p>
-                  <span className="pill green">New Offer</span>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:16, flexWrap:"wrap", gap:8 }}>
+                  <div>
+                    <p style={{ fontSize:18, fontWeight:800, color:"#fff", letterSpacing:"-.02em" }}>{offer.product}</p>
+                    <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginTop:2 }}>Sent {offer.sentAt||""}</p>
+                  </div>
+                  <span style={{ background:offer.status==="pending"?"rgba(245,158,11,.15)":offer.status==="accepted"?"rgba(168,255,62,.15)":"rgba(239,68,68,.1)", color:offer.status==="pending"?"#f59e0b":offer.status==="accepted"?G:"#ef4444", border:"1px solid currentColor", borderRadius:20, padding:"3px 12px", fontSize:11, fontWeight:700, textTransform:"uppercase" }}>{offer.status}</span>
                 </div>
-                <p style={{ fontSize:42, fontWeight:900, color:G, fontFamily:"'Barlow Condensed',sans-serif", letterSpacing:"-1px", marginBottom:4 }}>{offer.amount}</p>
-                <div className="offer-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, margin:"16px 0" }}>
-                  {[["Term",offer.term],["Payment",offer.payment],["Rate",offer.rate],["Funding","Same Day"]].map(([k,v])=>(
-                    <div key={k} style={{ background:"rgba(255,255,255,.04)", borderRadius:8, padding:10 }}>
-                      <p style={{ fontSize:10, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:3 }}>{k}</p>
-                      <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{v}</p>
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:10, marginBottom:16 }}>
+                  {[["Amount",offer.amount],["Term",offer.term],["Est. Payment",offer.payment],["Rate",offer.rate],["Expires",offer.expires]].filter(([,v])=>v).map(([l,v])=>(
+                    <div key={l} style={{ background:"rgba(255,255,255,.04)", borderRadius:8, padding:"12px 14px" }}>
+                      <p style={{ fontSize:11, color:"rgba(255,255,255,.35)", marginBottom:4, textTransform:"uppercase", letterSpacing:".06em" }}>{l}</p>
+                      <p style={{ fontSize:16, fontWeight:700, color:"#fff" }}>{v}</p>
                     </div>
                   ))}
                 </div>
-                <div style={{ display:"flex", gap:10 }}>
-                  <button onClick={()=>acceptOffer(offer.id)} style={{ flex:1, background:G, color:"#000", border:"none", padding:13, borderRadius:10, fontSize:14, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Accept Offer Done</button>
-                  <button onClick={()=>declineOffer(offer.id)} style={{ flex:1, background:"rgba(255,255,255,.06)", color:"rgba(255,255,255,.5)", border:"1px solid rgba(255,255,255,.1)", padding:13, borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Decline</button>
-                </div>
-                {offer.expires && <p style={{ fontSize:12, color:"rgba(255,255,255,.3)", textAlign:"center", marginTop:8 }}>Expires {offer.expires}</p>}
+                {offer.status==="pending" && (
+                  <div style={{ display:"flex", gap:10 }}>
+                    <button onClick={()=>acceptOffer(offer.id)} style={{ flex:2, background:G, color:"#000", border:"none", padding:"13px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Accept Offer →</button>
+                    <button onClick={()=>declineOffer(offer.id)} style={{ flex:1, background:"transparent", color:"rgba(255,255,255,.4)", border:"1px solid rgba(255,255,255,.12)", padding:"13px", borderRadius:10, fontSize:14, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>Decline</button>
+                  </div>
+                )}
+                {offer.status==="accepted" && <p style={{ color:G, fontSize:13, fontWeight:700, textAlign:"center", padding:"10px 0" }}>✓ Offer Accepted — Our team will be in touch to finalize funding.</p>}
               </div>
             ))}
-            {offers.filter(o=>o.status!=="pending").length > 0 && (
-              <div style={{ marginTop:24 }}>
-                <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginBottom:12, textTransform:"uppercase", letterSpacing:"0.06em", fontWeight:700 }}>Previous Offers</p>
-                {offers.filter(o=>o.status!=="pending").map(offer=>(
-                  <div key={offer.id} style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:12, padding:"14px 18px", marginBottom:10, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                    <div>
-                      <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{offer.product} · {offer.amount}</p>
-                      <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", marginTop:2 }}>{offer.term} · {offer.rate}</p>
-                    </div>
-                    <span className={`pill ${offer.status==="accepted"?"green":"red"}`}>{offer.status==="accepted"?"Accepted Done":"Declined"}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {tab==="loans" && (
-          <div className="fadeup">
-            <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.loans}</h2>
-              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Track your balances and payment schedule</p>
-            </div>
-            <div style={{ textAlign:"center", padding:"60px 24px", background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14 }}>
-              <div style={{ fontSize:40, marginBottom:16 }}></div>
-              <p style={{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,.5)", marginBottom:8 }}>{t.loansEmpty}</p>
-              <p style={{ fontSize:14, color:"rgba(255,255,255,.3)" }}>Once your offer is accepted and funded, your loan details will appear here.</p>
-            </div>
           </div>
         )}
 
         {tab==="docs" && (
-          <div className="fadeup">
-            <div style={{ marginBottom:24 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.docsTitle}</h2>
-              <p style={{ fontSize:14, color:"rgba(255,255,255,.4)" }}>Upload and manage your documents</p>
+          <div>
+            <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:8, letterSpacing:"-.02em" }}>Documents</h2>
+            <p style={{ fontSize:14, color:"rgba(255,255,255,.4)", marginBottom:24 }}>Upload your bank statements and any required documents securely.</p>
+            <button onClick={()=>onUpload(user.appId)} style={{ display:"inline-flex", alignItems:"center", gap:8, background:G, color:"#000", border:"none", padding:"14px 24px", borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif", marginBottom:24 }}>
+              ↑ Upload Documents
+            </button>
+            <div style={{ background:"#111", border:"1px solid rgba(255,255,255,.07)", borderRadius:12, padding:"20px 24px" }}>
+              <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", textAlign:"center" }}>Documents are reviewed by your advisor within 2–4 hours.</p>
             </div>
-            <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:22, marginBottom:16 }}>
-              <p style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,.4)", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:16 }}>Required Documents</p>
-              {[["Bank Statements","Last 6 months",""],["Driver's License","Government-issued ID","🪪"],["Voided Check","Business checking account","C"]].map(([name,desc,icon])=>(
-                <div key={name} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,.05)" }}>
-                  <div style={{ width:36, height:36, background:"rgba(255,255,255,.06)", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>{icon}</div>
-                  <div style={{ flex:1 }}>
-                    <p style={{ fontSize:14, fontWeight:600, color:"#fff" }}>{name}</p>
-                    <p style={{ fontSize:12, color:"rgba(255,255,255,.4)" }}>{desc}</p>
-                  </div>
-                  <span className="pill yellow">Pending</span>
-                </div>
-              ))}
-            </div>
-            <button onClick={()=>onUpload(user.appId)} style={{ width:"100%", background:G, color:"#000", border:"none", padding:16, borderRadius:12, fontSize:16, fontWeight:900, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>{t.uploadBtn}</button>
           </div>
         )}
 
         {tab==="messages" && (
-          <div className="fadeup" style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 160px)" }}>
-            <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:4 }}>{t.msgs}</h2>
-            </div>
-            <div style={{ background:"#161616", border:"1px solid rgba(255,255,255,.06)", borderRadius:14, padding:"14px 16px", marginBottom:16, display:"flex", alignItems:"center", gap:10 }}>
-              <div style={{ width:40, height:40, background:"#1a1a1a", border:"2px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
-              <div style={{ flex:1 }}>
-                <p style={{ fontSize:14, fontWeight:700, color:"#fff" }}>Tanya Williams</p>
-                <p style={{ fontSize:12, color:G, fontWeight:600 }}>Online · {t.msgAdvisor}</p>
-              </div>
-              <div style={{ background:"rgba(239,68,68,.1)", borderRadius:20, padding:"4px 12px", fontSize:12, fontWeight:700, color:"#ef4444" }}>No Calls</div>
-            </div>
-            <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:10, paddingBottom:16 }}>
+          <div style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 160px)" }}>
+            <h2 style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:16, letterSpacing:"-.02em" }}>Your Advisor</h2>
+            <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:10, marginBottom:16 }}>
+              {msgs.length===0 && (
+                <div style={{ background:"#161616", borderRadius:12, padding:"14px 18px", maxWidth:"75%", alignSelf:"flex-start" }}>
+                  <p style={{ fontSize:13, color:"rgba(255,255,255,.75)", lineHeight:1.55 }}>Hi! Your application has been received and is under review. We'll update you within 2–4 hours. No phone calls needed — track everything right here.</p>
+                  <p style={{ fontSize:10, color:"rgba(255,255,255,.25)", marginTop:6 }}>Aprovuit Advisor</p>
+                </div>
+              )}
               {msgs.map((m,i)=>(
-                <div key={i} style={{ display:"flex", flexDirection:"column", alignItems:m.from==="client"?"flex-end":"flex-start" }}>
-                  {m.from==="advisor" && (
-                    <div style={{ display:"flex", gap:8, alignItems:"flex-end" }}>
-                      <div style={{ width:28, height:28, background:"#1a1a1a", border:"1px solid #a8ff3e", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:800, color:G, flexShrink:0 }}>TW</div>
-                      <div className="msg advisor">{m.text}</div>
-                    </div>
-                  )}
-                  {m.from==="client" && <div className="msg client">{m.text}</div>}
-                  <p style={{ fontSize:10, color:"rgba(255,255,255,.25)", marginTop:3, paddingLeft:m.from==="advisor"?36:0 }}>{m.time}</p>
+                <div key={i} className={`msg ${m.from==="advisor"?"advisor":"client"}`}>
+                  <p style={{ lineHeight:1.55 }}>{m.text}</p>
+                  <p style={{ fontSize:10, opacity:.5, marginTop:4 }}>{m.from==="advisor"?"Advisor":"You"} · {m.time}</p>
                 </div>
               ))}
             </div>
-            <div style={{ background:"#1a1a1a", border:"1px solid rgba(255,255,255,.08)", borderRadius:14, padding:"10px 14px", display:"flex", gap:10, alignItems:"center" }}>
-              <input value={msgTxt} onChange={e=>setMsgTxt(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendMsg()} placeholder={t.msgPlaceholder} style={{ flex:1, background:"none", border:"none", color:"#fff", fontSize:14, fontFamily:"'DM Sans',sans-serif", outline:"none" }} />
-              <button onClick={sendMsg} style={{ width:36, height:36, background:G, border:"none", borderRadius:10, cursor:"pointer", fontSize:16, fontWeight:900, color:"#000", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>↑</button>
+            <div style={{ display:"flex", gap:10 }}>
+              <input className="fc-inp" placeholder="Message your advisor..." value={msgTxt} onChange={e=>setMsgTxt(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&sendMsg()} style={{ flex:1, marginBottom:0 }} />
+              <button onClick={sendMsg} style={{ background:G, color:"#000", border:"none", padding:"12px 20px", borderRadius:8, fontSize:14, fontWeight:700, cursor:"pointer", flexShrink:0 }}>Send</button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
 }
-
 
 // ── ADMIN GATE ───────────────────────────────────────────────────
 const ADMIN_PASSWORD = "Miguel12211221!";
@@ -1289,76 +1272,155 @@ function AdminGate({ onExit }) {
 function AdminDashboard({ onExit }) {
   const [tab, setTab] = useState("apps");
   const [drawer, setDrawer] = useState(null);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [offerForm, setOfferForm] = useState({ product:"Term Loan", amount:"", term:"", payment:"", rate:"", expires:"" });
-  const [sent, setSent] = useState(false);
+  const [msgText, setMsgText] = useState("");
+  const [sent, setSent] = useState("");
+  const [drawerTab, setDrawerTab] = useState("details");
 
-  const apps = JSON.parse(localStorage.getItem("aprovuit_apps")||"[]");
-  const STATUS_COLORS = { "Under Review":["#fef3c7","#d97706"], "Approved":["#dcfce7","#16a34a"], "Funded":["#dbeafe","#2563eb"], "Declined":["#fee2e2","#dc2626"], "Docs Needed":["#fff7ed","#ea580c"] };
+  // Live refresh every 3s
+  const [apps, setApps] = useState(JSON.parse(localStorage.getItem("aprovuit_apps")||"[]"));
+  useEffect(() => {
+    const iv = setInterval(() => setApps(JSON.parse(localStorage.getItem("aprovuit_apps")||"[]")), 3000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const STATUS_COLORS = {
+    "Under Review":{ bg:"#fef3c7", text:"#d97706" },
+    "Docs Needed":{ bg:"#fff7ed", text:"#ea580c" },
+    "Approved":{ bg:"#dcfce7", text:"#16a34a" },
+    "Funded":{ bg:"#dbeafe", text:"#2563eb" },
+    "Declined":{ bg:"#fee2e2", text:"#dc2626" },
+  };
+  const ALL_STATUSES = ["Under Review","Docs Needed","Approved","Funded","Declined"];
+
+  const filteredApps = apps.filter(a => {
+    const matchSearch = !search || [a.company,a.firstName,a.lastName,a.email,a.id].join(" ").toLowerCase().includes(search.toLowerCase());
+    const matchStatus = statusFilter==="All" || (a.status||"Under Review")===statusFilter;
+    return matchSearch && matchStatus;
+  });
+
+  const updateStatus = (appId, newStatus) => {
+    const updated = apps.map(a => a.id===appId ? {...a, status:newStatus} : a);
+    localStorage.setItem("aprovuit_apps", JSON.stringify(updated));
+    setApps(updated);
+    setDrawer(updated.find(a=>a.id===appId)||null);
+    showSent("Status updated!");
+  };
 
   const sendOffer = async () => {
-    if (!drawer || !offerForm.amount) return;
-    const offer = { id:`OFF-${Date.now()}`, appId:drawer.id, product:offerForm.product, amount:offerForm.amount, term:offerForm.term, payment:offerForm.payment, rate:offerForm.rate, expires:offerForm.expires, status:"pending" };
+    if (!drawer || !offerForm.amount) { showSent("Fill in at least the amount."); return; }
+    const offer = { id:`OFF-${Date.now()}`, appId:drawer.id, product:offerForm.product, amount:offerForm.amount, term:offerForm.term, payment:offerForm.payment, rate:offerForm.rate, expires:offerForm.expires, status:"pending", sentAt:new Date().toLocaleString() };
     const existing = JSON.parse(localStorage.getItem(`offers_${drawer.id}`)||"[]");
     existing.push(offer);
     localStorage.setItem(`offers_${drawer.id}`, JSON.stringify(existing));
     if (drawer.email) await sendOfferEmail(drawer.email, drawer.firstName||drawer.company||"Merchant", offer);
-    setSent(true);
-    setTimeout(()=>setSent(false), 3000);
+    setOfferForm({ product:"Term Loan", amount:"", term:"", payment:"", rate:"", expires:"" });
+    showSent("✓ Offer sent to client dashboard!");
   };
+
+  const sendAdminMsg = () => {
+    if (!drawer || !msgText.trim()) return;
+    const msgs = JSON.parse(localStorage.getItem(`msgs_${drawer.id}`)||"[]");
+    msgs.push({ from:"advisor", text:msgText.trim(), time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}), ts:Date.now() });
+    localStorage.setItem(`msgs_${drawer.id}`, JSON.stringify(msgs));
+    setMsgText("");
+    showSent("✓ Message sent to client!");
+  };
+
+  const showSent = (msg) => { setSent(msg); setTimeout(()=>setSent(""), 3000); };
+
+  const getDrawerMsgs = () => drawer ? JSON.parse(localStorage.getItem(`msgs_${drawer.id}`)||"[]") : [];
+  const getDrawerOffers = () => drawer ? JSON.parse(localStorage.getItem(`offers_${drawer.id}`)||"[]") : [];
+
+  const inp = { width:"100%", padding:"10px 14px", border:"1.5px solid #e5e8ee", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", color:"#1a1a1a", outline:"none", display:"block", marginBottom:10 };
 
   return (
     <div style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#f5f4f0" }}>
+
+      {/* Sidebar */}
       <div style={{ width:200, background:"#0a0a0a", flexShrink:0, display:"flex", flexDirection:"column" }}>
-        {[["◻","apps","Applications"],["◈","offer","Send Offer"],["◉","merchants","Merchants"]].map(([icon,id,label])=>(
-          <div key={id} className={`sb-item${tab===id?" active":""}`} onClick={()=>setTab(id)}>
-            <span style={{ fontSize:16, width:20, textAlign:"center" }}>{icon}</span>{label}
+        {[["📋","apps","Applications"],["💬","messages","Messages"],["📊","metrics","Metrics"]].map(([icon,id,label])=>(
+          <div key={id} className={`sb-item${tab===id?" active":""}`} onClick={()=>setTab(id)} style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <span>{icon}</span><span>{label}</span>
           </div>
         ))}
         <div style={{ marginTop:"auto", padding:"16px 20px", borderTop:"1px solid rgba(255,255,255,.06)" }}>
-          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:14, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>← Exit Admin</button>
+          <button onClick={onExit} style={{ background:"none", border:"none", color:"rgba(255,255,255,.35)", fontSize:13, cursor:"pointer", fontFamily:"'Sora',sans-serif" }}>← Exit Admin</button>
         </div>
       </div>
 
-      <div style={{ flex:1, padding:"28px 32px", overflow:"auto" }}>
+      {/* Main content */}
+      <div style={{ flex:1, padding:"28px 32px", overflow:"auto", minWidth:0 }}>
+
+        {/* Toast */}
+        {sent && <div style={{ position:"fixed", top:20, right:20, background:"#1a1a1a", color:G, padding:"12px 20px", borderRadius:10, fontSize:14, fontWeight:700, zIndex:999, boxShadow:"0 8px 32px rgba(0,0,0,.3)" }}>{sent}</div>}
+
+        {/* ── APPLICATIONS TAB ── */}
         {tab==="apps" && (
           <div>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
-              <div><h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", letterSpacing:"-0.02em" }}>Applications</h2><p style={{ fontSize:14, color:"#888" }}>{apps.length} total</p></div>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20, flexWrap:"wrap", gap:12 }}>
+              <div>
+                <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>Applications</h2>
+                <p style={{ fontSize:14, color:"#888" }}>{filteredApps.length} of {apps.length} total</p>
+              </div>
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:24 }}>
-              {[["Total",apps.length],["Under Review",apps.filter(a=>a.status==="Under Review").length],["Approved",apps.filter(a=>a.status==="Approved").length],["Funded",apps.filter(a=>a.status==="Funded").length]].map(([l,v])=>(
-                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"18px 20px" }}>
-                  <p style={{ fontSize:12, color:"#888", fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:8 }}>{l}</p>
-                  <p style={{ fontSize:36, fontWeight:900, color:"#1a1a1a", letterSpacing:"-1px" }}>{v}</p>
+
+            {/* Metrics row */}
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:12, marginBottom:24 }}>
+              {[["Total",apps.length,"#1a1a1a"],["Under Review",apps.filter(a=>(a.status||"Under Review")==="Under Review").length,"#d97706"],["Docs Needed",apps.filter(a=>a.status==="Docs Needed").length,"#ea580c"],["Approved",apps.filter(a=>a.status==="Approved").length,"#16a34a"],["Funded",apps.filter(a=>a.status==="Funded").length,"#2563eb"]].map(([l,v,c])=>(
+                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"14px 16px", cursor:"pointer" }} onClick={()=>setStatusFilter(l==="Total"?"All":l)}>
+                  <p style={{ fontSize:11, color:"#888", fontWeight:700, letterSpacing:".08em", textTransform:"uppercase", marginBottom:6 }}>{l}</p>
+                  <p style={{ fontSize:28, fontWeight:900, color:c, letterSpacing:"-1px" }}>{v}</p>
                 </div>
               ))}
             </div>
-            {apps.length === 0 ? (
+
+            {/* Search + filter */}
+            <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
+              <input placeholder="Search by name, company, email, ID..." value={search} onChange={e=>setSearch(e.target.value)} style={{ flex:1, minWidth:200, padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", outline:"none" }} />
+              <select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} style={{ padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", cursor:"pointer", outline:"none" }}>
+                <option>All</option>
+                {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+
+            {filteredApps.length===0 ? (
               <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"48px", textAlign:"center" }}>
-                <p style={{ fontSize:16, color:"#888" }}>No applications yet. They'll appear here when clients apply.</p>
+                <p style={{ fontSize:16, color:"#888" }}>{apps.length===0?"No applications yet.":"No results match your search."}</p>
               </div>
             ) : (
               <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, overflow:"hidden" }}>
                 <table style={{ width:"100%", borderCollapse:"collapse" }}>
                   <thead>
-                    <tr style={{ borderBottom:"1px solid #e5e3de" }}>
-                      {["Company","Name","Amount","Purpose","Credit","Status",""].map(h=>(
-                        <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:12, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
+                    <tr style={{ borderBottom:"2px solid #e5e3de" }}>
+                      {["Company","Name","Amount","Email","Credit","Status","Actions"].map(h=>(
+                        <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:11, fontWeight:700, color:"#aaa", letterSpacing:".08em", textTransform:"uppercase", background:"#fafaf8", whiteSpace:"nowrap" }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {apps.map((app,i)=>{
-                      const s = STATUS_COLORS[app.status]||["#f5f5f5","#888"];
+                    {filteredApps.map((app,i)=>{
+                      const sc = STATUS_COLORS[app.status||"Under Review"]||{bg:"#f5f5f5",text:"#888"};
                       return (
-                        <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0", cursor:"pointer" }} onClick={()=>setDrawer(app)}>
-                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.company||"—"}</td>
+                        <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0" }}>
+                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("details");}}>{app.company||"—"}</td>
                           <td style={{ padding:"13px 16px", fontSize:14, color:"#555" }}>{app.firstName} {app.lastName}</td>
-                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.loanAmt||app.loan_amount||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:14, color:"#666" }}>{app.purpose||"—"}</td>
-                          <td style={{ padding:"13px 16px", fontSize:14, color:"#666", textTransform:"capitalize" }}>{app.creditRating||"—"}</td>
-                          <td style={{ padding:"13px 16px" }}><span style={{ fontSize:12, padding:"4px 12px", fontWeight:700, borderRadius:20, background:s[0], color:s[1] }}>{app.status||"Under Review"}</span></td>
-                          <td style={{ padding:"13px 16px" }}><button style={{ background:"none", border:"none", fontSize:14, color:"#a8ff3e", cursor:"pointer", fontWeight:700 }} onClick={e=>{e.stopPropagation();setDrawer(app);setTab("offer");}}>Send Offer →</button></td>
+                          <td style={{ padding:"13px 16px", fontSize:14, fontWeight:600 }}>{app.loanAmt||"—"}</td>
+                          <td style={{ padding:"13px 16px", fontSize:13, color:"#3b82f6" }}>{app.email||"—"}</td>
+                          <td style={{ padding:"13px 16px", fontSize:13, color:"#666", textTransform:"capitalize" }}>{app.creditRating||"—"}</td>
+                          <td style={{ padding:"13px 16px" }}>
+                            <select value={app.status||"Under Review"} onChange={e=>{e.stopPropagation();updateStatus(app.id,e.target.value);}} style={{ fontSize:12, padding:"4px 10px", fontWeight:700, borderRadius:20, background:sc.bg, color:sc.text, border:"none", cursor:"pointer", appearance:"none", fontFamily:"'Sora',sans-serif" }}>
+                              {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
+                            </select>
+                          </td>
+                          <td style={{ padding:"13px 16px" }}>
+                            <div style={{ display:"flex", gap:6 }}>
+                              <button style={{ background:"#1a1a1a", border:"none", color:G, padding:"5px 12px", borderRadius:6, fontSize:12, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("offer");}}>Offer</button>
+                              <button style={{ background:"#f0f0f0", border:"none", color:"#333", padding:"5px 10px", borderRadius:6, fontSize:12, fontWeight:700, cursor:"pointer" }} onClick={()=>{setDrawer(app);setDrawerTab("message");}}>Msg</button>
+                            </div>
+                          </td>
                         </tr>
                       );
                     })}
@@ -1369,91 +1431,187 @@ function AdminDashboard({ onExit }) {
           </div>
         )}
 
-        {tab==="offer" && (
+        {/* ── MESSAGES TAB ── */}
+        {tab==="messages" && (
           <div>
-            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:4, letterSpacing:"-0.02em" }}>Send Offer</h2>
-            <p style={{ fontSize:14, color:"#888", marginBottom:24 }}>Create and send a funding offer to a merchant.</p>
-            {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:10, padding:"12px 16px", marginBottom:20 }}><p style={{ fontSize:14, fontWeight:700, color:"#16a34a" }}>Offer sent! Merchant can see it in their dashboard.</p></div>}
-            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:28, maxWidth:560 }}>
-              {drawer && (
-                <div style={{ background:"#f9fafb", borderRadius:10, padding:"14px 16px", marginBottom:22 }}>
-                  <p style={{ fontSize:12, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:6 }}>Sending to</p>
-                  <p style={{ fontSize:16, fontWeight:800, color:"#1a1a1a" }}>{drawer.company}</p>
-                  <p style={{ fontSize:14, color:"#888" }}>{drawer.firstName} {drawer.lastName} · {drawer.id}</p>
+            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:20, letterSpacing:"-.02em" }}>All Client Messages</h2>
+            {apps.length===0 ? <p style={{ color:"#888" }}>No clients yet.</p> : apps.map(app=>{
+              const msgs = JSON.parse(localStorage.getItem(`msgs_${app.id}`)||"[]");
+              const unread = msgs.filter(m=>m.from==="client").length;
+              return (
+                <div key={app.id} onClick={()=>{setDrawer(app);setDrawerTab("message");setTab("apps");}} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, padding:"16px 20px", marginBottom:10, cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                  <div>
+                    <p style={{ fontSize:15, fontWeight:700, color:"#1a1a1a" }}>{app.company} <span style={{ fontWeight:400, color:"#888" }}>· {app.firstName} {app.lastName}</span></p>
+                    <p style={{ fontSize:13, color:"#888", marginTop:3 }}>{msgs.length>0?msgs[msgs.length-1].text.slice(0,60)+"...":"No messages yet"}</p>
+                  </div>
+                  {unread>0 && <span style={{ background:"#ef4444", color:"#fff", borderRadius:20, fontSize:11, fontWeight:800, padding:"2px 10px" }}>{unread} new</span>}
                 </div>
-              )}
-              {!drawer && (
-                <div style={{ background:"#fef9f0", border:"1px solid #fed7aa", borderRadius:10, padding:"12px 16px", marginBottom:22 }}>
-                  <p style={{ fontSize:14, color:"#ea580c" }}>Select an application from the Applications tab first, or enter an App ID below.</p>
-                  <input placeholder="App ID (e.g. APP-123456)" style={{ marginTop:10, width:"100%", padding:"10px 14px", border:"1.5px solid #e5e5ea", borderRadius:8, fontSize:14, fontFamily:"'DM Sans',sans-serif", outline:"none" }} onChange={e=>{const app=apps.find(a=>a.id===e.target.value);if(app)setDrawer(app);}} />
-                </div>
-              )}
-              {[["Product",["Term Loan","Line of Credit","Revenue Advance","Equipment Financing"],"product"],["Approved Amount","e.g. $145,000","amount"],["Term","e.g. 18 months","term"],["Monthly Payment","e.g. $8,055","payment"],["Factor Rate","e.g. 1.22 factor","rate"],["Offer Expires","e.g. Apr 30, 2026","expires"]].map(([label,opts,key])=>(
-                <div key={key} style={{ marginBottom:14 }}>
-                  <label style={{ fontSize:12, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:7, display:"block" }}>{label}</label>
-                  {Array.isArray(opts) ? (
-                    <select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", appearance:"none", cursor:"pointer", outline:"none" }}>
-                      {opts.map(o=><option key={o}>{o}</option>)}
-                    </select>
-                  ) : (
-                    <input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{ width:"100%", padding:"12px 14px", border:"1.5px solid #e5e8ee", borderRadius:10, fontSize:16, fontFamily:"'DM Sans',sans-serif", color:"#1a1a1a", outline:"none", display:"block" }} />
-                  )}
-                </div>
-              ))}
-              <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:15, borderRadius:12, fontSize:16, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:8 }}>
-                Send Offer to Merchant →
-              </button>
-              <p style={{ fontSize:12, color:"#888", textAlign:"center", marginTop:10 }}>Offer appears in merchant dashboard + email instantly</p>
-            </div>
+              );
+            })}
           </div>
         )}
 
-        {tab==="merchants" && (
+        {/* ── METRICS TAB ── */}
+        {tab==="metrics" && (
           <div>
-            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:24, letterSpacing:"-0.02em" }}>Merchants</h2>
-            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:10, overflow:"hidden" }}>
-              <table style={{ width:"100%", borderCollapse:"collapse" }}>
-                <thead>
-                  <tr style={{ borderBottom:"1px solid #e5e3de" }}>
-                    {["Company","Owner","Email","Phone","App ID","Submitted"].map(h=>(
-                      <th key={h} style={{ padding:"12px 16px", textAlign:"left", fontSize:12, fontWeight:700, color:"#aaa", letterSpacing:"0.1em", textTransform:"uppercase", background:"#fafaf8" }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {apps.length === 0 ? (
-                    <tr><td colSpan={6} style={{ padding:"40px", textAlign:"center", color:"#888", fontSize:14 }}>No merchants yet.</td></tr>
-                  ) : apps.map((app,i)=>(
-                    <tr key={i} className="tbl-row" style={{ borderBottom:"1px solid #f5f4f0" }}>
-                      <td style={{ padding:"13px 16px", fontSize:14, fontWeight:700 }}>{app.company||"—"}</td>
-                      <td style={{ padding:"13px 16px", fontSize:14, color:"#555" }}>{app.firstName} {app.lastName}</td>
-                      <td style={{ padding:"13px 16px", fontSize:14, color:"#3b82f6" }}>{app.email||"—"}</td>
-                      <td style={{ padding:"13px 16px", fontSize:14, color:"#666" }}>{app.phone||"—"}</td>
-                      <td style={{ padding:"13px 16px", fontSize:12, color:"#888", fontFamily:"monospace" }}>{app.id}</td>
-                      <td style={{ padding:"13px 16px", fontSize:14, color:"#888" }}>{app.submittedAt||"—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <h2 style={{ fontSize:24, fontWeight:900, color:"#1a1a1a", marginBottom:20, letterSpacing:"-.02em" }}>Pipeline Metrics</h2>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:24 }}>
+              {[
+                ["Total Applications", apps.length],
+                ["Total Pipeline", apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0).toLocaleString("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0})],
+                ["Conversion Rate", apps.length>0?Math.round(apps.filter(a=>["Approved","Funded"].includes(a.status)).length/apps.length*100)+"%":"0%"],
+                ["Avg Loan Request", apps.length>0?"$"+Math.round(apps.reduce((s,a)=>{const n=parseInt((a.loanAmt||"0").replace(/\D/g,""));return s+(isNaN(n)?0:n);},0)/apps.length).toLocaleString():"—"],
+                ["Funded Deals", apps.filter(a=>a.status==="Funded").length],
+                ["Pending Review", apps.filter(a=>(a.status||"Under Review")==="Under Review").length],
+              ].map(([l,v])=>(
+                <div key={l} style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:"20px 22px" }}>
+                  <p style={{ fontSize:12, color:"#888", fontWeight:700, letterSpacing:".08em", textTransform:"uppercase", marginBottom:10 }}>{l}</p>
+                  <p style={{ fontSize:28, fontWeight:900, color:"#1a1a1a", letterSpacing:"-1px" }}>{v}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ background:"#fff", border:"1px solid #e5e3de", borderRadius:12, padding:"24px" }}>
+              <h3 style={{ fontSize:16, fontWeight:800, color:"#1a1a1a", marginBottom:16 }}>Applications by Status</h3>
+              {ALL_STATUSES.map(s=>{
+                const count = apps.filter(a=>(a.status||"Under Review")===s).length;
+                const pct = apps.length>0?Math.round(count/apps.length*100):0;
+                const sc = STATUS_COLORS[s]||{bg:"#f5f5f5",text:"#888"};
+                return (
+                  <div key={s} style={{ marginBottom:12 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                      <span style={{ fontSize:13, fontWeight:600, color:"#333" }}>{s}</span>
+                      <span style={{ fontSize:13, color:"#888" }}>{count} ({pct}%)</span>
+                    </div>
+                    <div style={{ height:8, background:"#f0f0f0", borderRadius:4, overflow:"hidden" }}>
+                      <div style={{ width:`${pct}%`, height:"100%", background:sc.text, borderRadius:4, transition:"width .4s" }}></div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
       </div>
 
-      {/* Drawer */}
-      {drawer && tab==="apps" && (
-        <div style={{ position:"fixed", right:0, top:0, bottom:0, width:380, background:"#fff", borderLeft:"1px solid #e5e3de", padding:28, overflow:"auto", boxShadow:"-8px 0 32px rgba(0,0,0,.08)", zIndex:200 }}>
-          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:20 }}>
-            <h3 style={{ fontSize:20, fontWeight:900, color:"#1a1a1a" }}>{drawer.company||"Applicant"}</h3>
-            <button onClick={()=>setDrawer(null)} style={{ background:"none", border:"none", fontSize:22, cursor:"pointer", color:"#ccc" }}>×</button>
-          </div>
-          {[["App ID",drawer.id],["Name",`${drawer.firstName||""} ${drawer.lastName||""}`],["Email",drawer.email||"—"],["Phone",drawer.phone||"—"],["Loan Amount",drawer.loanAmt||drawer.loan_amount||"—"],["Purpose",drawer.purpose||"—"],["Timeline",drawer.timeline||"—"],["Industry",drawer.industry||"—"],["Years",drawer.years||"—"],["Annual Revenue",drawer.annualRev||"—"],["Credit",drawer.creditRating||"—"],["Submitted",drawer.submittedAt||"—"]].map(([k,v])=>(
-            <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom:"1px solid #f5f4f0", fontSize:13 }}>
-              <span style={{ color:"#888" }}>{k}</span><span style={{ fontWeight:700, color:"#1a1a1a", textAlign:"right", maxWidth:"60%", wordBreak:"break-word" }}>{v}</span>
+      {/* ── DRAWER ── */}
+      {drawer && (
+        <div style={{ position:"fixed", right:0, top:0, bottom:0, width:420, background:"#fff", borderLeft:"1px solid #e5e3de", overflow:"auto", boxShadow:"-12px 0 48px rgba(0,0,0,.12)", zIndex:200, display:"flex", flexDirection:"column" }}>
+          {/* Drawer header */}
+          <div style={{ padding:"20px 24px", borderBottom:"1px solid #f0f0f0", background:"#fafaf8" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+              <div>
+                <h3 style={{ fontSize:18, fontWeight:900, color:"#1a1a1a", letterSpacing:"-.02em" }}>{drawer.company||"Applicant"}</h3>
+                <p style={{ fontSize:13, color:"#888", marginTop:2 }}>{drawer.firstName} {drawer.lastName} · {drawer.id}</p>
+              </div>
+              <button onClick={()=>setDrawer(null)} style={{ background:"none", border:"none", fontSize:24, cursor:"pointer", color:"#ccc", lineHeight:1 }}>×</button>
             </div>
-          ))}
-          <button onClick={()=>{setTab("offer");setDrawer(drawer);}} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:14, borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:20 }}>Send Offer →</button>
-          <button onClick={()=>setDrawer(null)} style={{ width:"100%", background:"#f5f4f0", color:"#1a1a1a", border:"none", padding:13, borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", marginTop:10 }}>Close</button>
+            {/* Status selector in drawer */}
+            <div style={{ marginTop:12 }}>
+              <label style={{ fontSize:11, color:"#888", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>Deal Status</label>
+              <select value={drawer.status||"Under Review"} onChange={e=>updateStatus(drawer.id,e.target.value)} style={{ marginTop:6, width:"100%", padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", cursor:"pointer", outline:"none" }}>
+                {ALL_STATUSES.map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+            {/* Drawer tab bar */}
+            <div style={{ display:"flex", gap:0, marginTop:14, borderRadius:8, overflow:"hidden", border:"1px solid #e5e3de" }}>
+              {[["details","Details"],["offer","Send Offer"],["message","Message"],["history","History"]].map(([id,label])=>(
+                <button key={id} onClick={()=>setDrawerTab(id)} style={{ flex:1, padding:"8px 4px", fontSize:12, fontWeight:700, background:drawerTab===id?"#1a1a1a":"transparent", color:drawerTab===id?"#fff":"#888", border:"none", cursor:"pointer", fontFamily:"'Sora',sans-serif", transition:"all .15s" }}>{label}</button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ flex:1, padding:24, overflow:"auto" }}>
+
+            {/* Details tab */}
+            {drawerTab==="details" && (
+              <div>
+                {[["App ID",drawer.id],["Email",drawer.email||"—"],["Phone",drawer.phone||"—"],["Loan Amount",drawer.loanAmt||"—"],["Purpose",drawer.purpose||"—"],["Timeline",drawer.timeline||"—"],["Industry",drawer.industry||"—"],["Years in Business",drawer.years||"—"],["Annual Revenue",drawer.annualRev||"—"],["Credit Rating",drawer.creditRating||"—"],["Submitted",drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—"]].map(([k,v])=>(
+                  <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom:"1px solid #f5f5f5", fontSize:13 }}>
+                    <span style={{ color:"#888", flexShrink:0 }}>{k}</span>
+                    <span style={{ fontWeight:600, color:"#1a1a1a", textAlign:"right", maxWidth:"60%", wordBreak:"break-word" }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Send Offer tab */}
+            {drawerTab==="offer" && (
+              <div>
+                <p style={{ fontSize:14, color:"#888", marginBottom:16 }}>Send a funding offer to <strong>{drawer.firstName}</strong>. It will appear instantly in their dashboard.</p>
+                {sent && <div style={{ background:"#dcfce7", border:"1px solid #bbf7d0", borderRadius:8, padding:"10px 14px", marginBottom:14 }}><p style={{ fontSize:13, fontWeight:700, color:"#16a34a" }}>{sent}</p></div>}
+                {[["Product",["Term Loan","Line of Credit","Revenue Advance","Equipment Financing"],"product"],["Approved Amount","e.g. $145,000","amount"],["Term","e.g. 18 months","term"],["Monthly Payment","e.g. $8,055","payment"],["Factor Rate / APR","e.g. 1.22 factor","rate"],["Offer Expires","e.g. May 30, 2026","expires"]].map(([label,opts,key])=>(
+                  <div key={key}>
+                    <label style={{ fontSize:11, fontWeight:700, color:"#555", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6, display:"block" }}>{label}</label>
+                    {Array.isArray(opts) ? (
+                      <select value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={{...inp, appearance:"none", cursor:"pointer"}}>
+                        {opts.map(o=><option key={o}>{o}</option>)}
+                      </select>
+                    ) : (
+                      <input placeholder={opts} value={offerForm[key]} onChange={e=>setOfferForm(f=>({...f,[key]:e.target.value}))} style={inp} />
+                    )}
+                  </div>
+                ))}
+                <button onClick={sendOffer} style={{ width:"100%", background:"#1a1a1a", color:G, border:"none", padding:14, borderRadius:10, fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:"'Sora',sans-serif", marginTop:4 }}>
+                  Send Offer to {drawer.firstName} →
+                </button>
+                {/* Existing offers */}
+                {getDrawerOffers().length>0 && (
+                  <div style={{ marginTop:20 }}>
+                    <p style={{ fontSize:12, fontWeight:700, color:"#888", textTransform:"uppercase", letterSpacing:".06em", marginBottom:10 }}>Offers Sent</p>
+                    {getDrawerOffers().map(o=>(
+                      <div key={o.id} style={{ background:"#f9fafb", borderRadius:8, padding:"12px 14px", marginBottom:8, fontSize:13 }}>
+                        <div style={{ display:"flex", justifyContent:"space-between" }}>
+                          <span style={{ fontWeight:700 }}>{o.product} · {o.amount}</span>
+                          <span style={{ color:o.status==="accepted"?"#16a34a":o.status==="declined"?"#dc2626":"#d97706", fontWeight:700, textTransform:"capitalize" }}>{o.status}</span>
+                        </div>
+                        <p style={{ color:"#888", marginTop:2 }}>Term: {o.term} · Payment: {o.payment}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Message tab */}
+            {drawerTab==="message" && (
+              <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
+                <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:8, marginBottom:12 }}>
+                  {getDrawerMsgs().length===0 && <p style={{ color:"#888", fontSize:13, textAlign:"center", marginTop:20 }}>No messages yet. Send the first one.</p>}
+                  {getDrawerMsgs().map((m,i)=>(
+                    <div key={i} style={{ maxWidth:"80%", padding:"10px 14px", borderRadius:10, fontSize:13, lineHeight:1.55, alignSelf:m.from==="advisor"?"flex-end":"flex-start", background:m.from==="advisor"?"#1a1a1a":"#f5f5f5", color:m.from==="advisor"?"#fff":"#333" }}>
+                      <p>{m.text}</p>
+                      <p style={{ fontSize:10, opacity:.5, marginTop:4 }}>{m.from==="advisor"?"You (Advisor)":"Client"} · {m.time}</p>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display:"flex", gap:8, marginTop:"auto" }}>
+                  <input placeholder="Message to client..." value={msgText} onChange={e=>setMsgText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendAdminMsg()} style={{ flex:1, padding:"10px 14px", border:"1.5px solid #e5e3de", borderRadius:8, fontSize:14, fontFamily:"'Sora',sans-serif", outline:"none" }} />
+                  <button onClick={sendAdminMsg} style={{ background:"#1a1a1a", color:G, border:"none", padding:"10px 16px", borderRadius:8, fontSize:13, fontWeight:700, cursor:"pointer" }}>Send</button>
+                </div>
+              </div>
+            )}
+
+            {/* History tab */}
+            {drawerTab==="history" && (
+              <div>
+                <p style={{ fontSize:13, color:"#888", marginBottom:12 }}>Full activity log for this application.</p>
+                {[
+                  { time:drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—", event:"Application submitted", color:"#3b82f6" },
+                  ...getDrawerOffers().map(o=>({ time:o.sentAt||"—", event:`Offer sent: ${o.product} · ${o.amount}`, color:"#8b5cf6" })),
+                  ...getDrawerOffers().filter(o=>o.status==="accepted").map(o=>({ time:"—", event:`Offer accepted by client`, color:"#16a34a" })),
+                  ...getDrawerMsgs().map(m=>({ time:m.time, event:`${m.from==="advisor"?"Advisor":"Client"}: "${m.text.slice(0,40)}${m.text.length>40?"...":"}"`, color:"#888" })),
+                ].map((item,i)=>(
+                  <div key={i} style={{ display:"flex", gap:12, paddingBottom:14, borderBottom:"1px solid #f5f5f5", marginBottom:2 }}>
+                    <div style={{ width:8, height:8, borderRadius:"50%", background:item.color, flexShrink:0, marginTop:4 }}></div>
+                    <div>
+                      <p style={{ fontSize:13, color:"#1a1a1a", fontWeight:600 }}>{item.event}</p>
+                      <p style={{ fontSize:11, color:"#aaa", marginTop:2 }}>{item.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
