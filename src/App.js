@@ -1599,7 +1599,7 @@ function AdminDashboard({ onExit }) {
                   { time:drawer.submittedAt?new Date(drawer.submittedAt).toLocaleString():"—", event:"Application submitted", color:"#3b82f6" },
                   ...getDrawerOffers().map(o=>({ time:o.sentAt||"—", event:`Offer sent: ${o.product} · ${o.amount}`, color:"#8b5cf6" })),
                   ...getDrawerOffers().filter(o=>o.status==="accepted").map(o=>({ time:"—", event:`Offer accepted by client`, color:"#16a34a" })),
-                  ...getDrawerMsgs().map(m=>({ time:m.time, event:`${m.from==="advisor"?"Advisor":"Client"}: "${m.text.slice(0,40)}${m.text.length>40?"...":"}"`, color:"#888" })),
+                  ...getDrawerMsgs().map(m=>({ time:m.time, event:`${m.from==="advisor"?"Advisor":"Client"}: "${m.text.slice(0,40)}${m.text.length>40?"...":""}`, color:"#888" })),
                 ].map((item,i)=>(
                   <div key={i} style={{ display:"flex", gap:12, paddingBottom:14, borderBottom:"1px solid #f5f5f5", marginBottom:2 }}>
                     <div style={{ width:8, height:8, borderRadius:"50%", background:item.color, flexShrink:0, marginTop:4 }}></div>
